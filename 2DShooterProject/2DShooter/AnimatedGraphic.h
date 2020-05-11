@@ -1,0 +1,30 @@
+#ifndef __AnimatedGraphic__
+#define __AnimatedGraphic__
+
+#include <SDL.h>
+#include "ShooterObject.h"
+#include "BaseCreator.h"
+
+class AnimatedGraphic : public ShooterObject
+{
+public:
+	AnimatedGraphic() : ShooterObject() {}
+	virtual ~AnimatedGraphic() {}
+
+	virtual void load(std::unique_ptr<LoaderParams> const &pParams);
+	virtual void draw();
+	virtual void update();
+	virtual void clean();
+
+private:
+	int m_animSpeed;
+	int m_frameCount;
+};
+
+class AnimatedGraphicCreator : public BaseCreator
+{
+public:
+	virtual GameObject* createGameObject() const { return new AnimatedGraphic(); }
+};
+
+#endif /* defined ( __AnimatedGraphic__ ) */
