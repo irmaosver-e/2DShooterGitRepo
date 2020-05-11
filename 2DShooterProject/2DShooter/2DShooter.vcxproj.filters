@@ -61,20 +61,20 @@
     <Filter Include="Source Files\GameCPPs\States">
       <UniqueIdentifier>{2d924f17-bf8f-4b94-ba5f-a84f1262b824}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Header Files\Handlers &amp; Managers">
-      <UniqueIdentifier>{ac4a9287-fa91-4344-81cd-33251784cc83}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Header Files\Handlers &amp; Managers\DataHandlers">
-      <UniqueIdentifier>{c79e6d1b-f71a-4866-a011-1704ffcb7cde}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Header Files\Handlers &amp; Managers\DataHandlers\Parsers">
-      <UniqueIdentifier>{af6a4c20-15b4-405f-ac6a-8f4248c715e8}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Source Files\GameCPPs\Handlers &amp; Managers">
       <UniqueIdentifier>{ec759d74-2656-4577-bdea-409638f434e0}</UniqueIdentifier>
     </Filter>
     <Filter Include="Source Files\GameCPPs\GameObjs">
       <UniqueIdentifier>{fc4c82e8-dcef-4356-8bb7-59f1eceb36e9}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\Parsers">
+      <UniqueIdentifier>{af6a4c20-15b4-405f-ac6a-8f4248c715e8}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\Handlers">
+      <UniqueIdentifier>{8891240c-27bd-4b5e-b882-848ef217de97}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\Managers">
+      <UniqueIdentifier>{ac4a9287-fa91-4344-81cd-33251784cc83}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -231,13 +231,10 @@
       <Filter>Header Files\States</Filter>
     </ClInclude>
     <ClInclude Include="LevelParser.h">
-      <Filter>Header Files\Handlers &amp; Managers\DataHandlers\Parsers</Filter>
-    </ClInclude>
-    <ClInclude Include="LoaderParams.h">
-      <Filter>Header Files\Handlers &amp; Managers\DataHandlers</Filter>
+      <Filter>Header Files\Parsers</Filter>
     </ClInclude>
     <ClInclude Include="StateParser.h">
-      <Filter>Header Files\Handlers &amp; Managers\DataHandlers\Parsers</Filter>
+      <Filter>Header Files\Parsers</Filter>
     </ClInclude>
     <ClInclude Include="tinystr.h">
       <Filter>Resource Files\TinyXML</Filter>
@@ -257,14 +254,11 @@
     <ClInclude Include="ShooterObject.h">
       <Filter>Header Files\GameObjects\BaseObjects</Filter>
     </ClInclude>
-    <ClInclude Include="InputHandler.h">
-      <Filter>Header Files\Handlers &amp; Managers</Filter>
-    </ClInclude>
     <ClInclude Include="SoundManager.h">
-      <Filter>Header Files\Handlers &amp; Managers</Filter>
+      <Filter>Header Files\Managers</Filter>
     </ClInclude>
     <ClInclude Include="TextureManager.h">
-      <Filter>Header Files\Handlers &amp; Managers</Filter>
+      <Filter>Header Files\Managers</Filter>
     </ClInclude>
     <ClInclude Include="ObjectLayer.h">
       <Filter>Header Files\Layers</Filter>
@@ -296,20 +290,26 @@
     <ClInclude Include="Bullet.h">
       <Filter>Header Files\GameObjects</Filter>
     </ClInclude>
-    <ClInclude Include="BulletHandler.h">
-      <Filter>Header Files\Handlers &amp; Managers</Filter>
-    </ClInclude>
     <ClInclude Include="Collision.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="CollisionManager.h">
-      <Filter>Header Files\Handlers &amp; Managers</Filter>
+      <Filter>Header Files\Managers</Filter>
     </ClInclude>
     <ClInclude Include="Callback.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="Level1Boss.h">
       <Filter>Header Files\GameObjects\EnemyObjs</Filter>
+    </ClInclude>
+    <ClInclude Include="LoaderParams.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="BulletHandler.h">
+      <Filter>Header Files\Handlers</Filter>
+    </ClInclude>
+    <ClInclude Include="InputHandler.h">
+      <Filter>Header Files\Handlers</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
