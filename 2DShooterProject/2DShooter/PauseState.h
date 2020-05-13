@@ -17,6 +17,8 @@
 class PauseState : public MenuState
 {
 public:
+	virtual ~PauseState() {}
+
 	virtual void update();
 	virtual void render();
 	virtual bool onEnter();
@@ -24,12 +26,12 @@ public:
 
 	virtual std::string getStateID() const { return s_pauseID; }
 
+	virtual void setCallbacks(const std::vector<Callback>& callbacks);
+
 private:
 	static const std::string s_pauseID;
 
 	std::vector<GameObject*> m_gameObjects;
-
-	virtual void setCallbacks(const std::vector<Callback>& callbacks);
 
 	//call back functions for menu items
 	static void s_pauseToMain();

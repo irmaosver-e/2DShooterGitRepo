@@ -4,7 +4,20 @@
 
 void Player::load(std::unique_ptr<LoaderParams>& pParams)
 {
-	ShooterObject::load(pParams);
+	// inherited load function
+	ShooterObject::load(std::move(pParams));
+
+	// can set up the players inherited values here
+
+	// set up bullets
+	m_bulletFiringSpeed = 13;
+	m_moveSpeed = 3;
+
+	// we want to be able to fire instantly
+	m_bulletCounter = m_bulletFiringSpeed;
+
+	// time it takes for death explosion
+	m_dyingTime = 100;
 }
 
 void Player::draw()
@@ -54,10 +67,14 @@ void Player::update()
 	}
 }
 
+void Player::clean()
+{
+	ShooterObject::clean();
+}
+
 void Player::ressurect()
 {
 	TheGame::Instance()->setPlayerLives(TheGame::Instance()->getPlayerLives() - 1);
-	std::cout << "HARDCODED values in Player::ressurect()";
 	
 	m_position.setX(10);
 	m_position.setY(200);
@@ -76,12 +93,75 @@ void Player::ressurect()
 
 void Player::handleInput()
 {
-	Vector2D* target = TheInputHandler::Instance()->getMousePosition();
-
-	if (TheInputHandler::Instance()->getMouseButtonState(LEFT))
+	if (!m_bDead)
 	{
-		m_velocity = *target - m_position;
-		m_velocity /= 50;
+		// handle keys
+		if (TheInputHandler::Instance()->isKeyDown(SDL_SCANCODE_UP) && m_position.getY() > 0)
+		{
+			m_velocity.setY(-m_moveSpeed);
+		}
+		else if (TheInputHandler::Instance()->isKeyDown(SDL_SCANCODE_DOWN) && (m_position.getY() + m_height) < TheGame::Instance()->getGameHeight() - 10)
+		{
+			m_velocity.setY(m_moveSpeed);
+		}
+
+		if (TheInputHandler::Instance()->isKeyDown(SDL_SCANCODE_LEFT) && m_position.getX() > 0)
+		{
+			m_velocity.setX(-m_moveSpeed);
+		}
+		else if (TheInputHandler::Instance()->isKeyDown(SDL_SCANCODE_RIGHT) && (m_position.getX() + m_width) < TheGame::Instance()->getGameWidth())
+		{
+			m_velocity.setX(m_moveSpeed);
+		}
+
+		if (TheInputHandler::Instance()->isKeyDown(SDL_SCANCODE_SPACE))
+		{
+			if (m_bulletCounter == m_bulletFiringSpeed)
+			{
+				TheSoundManager::Instance()->playSound("shoot", 0);
+				TheBulletHandler::Instance()->addPlayerBullet(m_position.getX() + 90, m_position.getY() + 12, 11, 11, "bullet1", 1, Vector2D(10, 0));
+				m_bulletCounter = 0;
+			}
+
+			m_bulletCounter++;
+		}
+		else
+		{
+			m_bulletCounter = m_bulletFiringSpeed;
+		}
+		// */
+
+		/* handle joysticks /
+		if(TheInputHandler::Instance()->joysticksInitialised())
+		{
+			if(TheInputHandler::Instance()->getButtonState(0, 2))
+			{
+				if(m_bulletCounter == m_bulletFiringSpeed)
+				{
+					TheSoundManager::Instance()->playSound("shoot", 0);
+					TheBulletHandler::Instance()->addPlayerBullet(m_position.getX() + 90, m_position.getY() + 12, 11, 11, "bullet1", 1, Vector2D(10,0));
+					m_bulletCounter = 0;
+				}
+
+				m_bulletCounter++;
+			}
+			else
+			{
+				m_bulletCounter = m_bulletFiringSpeed;
+			}
+
+			if((TheInputHandler::Instance()->getAxisX(0, 1) > 0 && (m_position.getX() + m_width) < TheGame::Instance()->getGameWidth()) || (TheInputHandler::Instance()->getAxisX(0, 1) < 0 && m_position.getX() > 0))
+			{
+				m_velocity.setX(m_moveSpeed * TheInputHandler::Instance()->getAxisX(0, 1));
+			}
+
+			if((TheInputHandler::Instance()->getAxisY(0, 1) > 0 && (m_position.getY() + m_height) < TheGame::Instance()->getGameHeight() - 10 ) || (TheInputHandler::Instance()->getAxisY(0, 1) < 0 && m_position.getY() > 0))
+			{
+				m_velocity.setY(m_moveSpeed * TheInputHandler::Instance()->getAxisY(0, 1));
+			}
+		}
+		//*/
+
 	}
 }
 
