@@ -4,35 +4,39 @@ const std::string MainMenuState::s_menuID = "MENU";
 
 void MainMenuState::update()
 {
-	for (unsigned int i = 0; i < m_gameObjects.size(); i++)
+	if (TheInputHandler::Instance()->isKeyDown(SDL_SCANCODE_SPACE))
 	{
-		if (m_exiting)
+		s_menuToPlay();
+	}
+
+	if (!m_gameObjects.empty())
+	{
+		for (unsigned int i = 0; i < m_gameObjects.size(); i++)
 		{
-			break;
+			if (m_gameObjects[i] != 0)
+			{
+				m_gameObjects[i]->update();
+			}
 		}
-		m_gameObjects[i]->update();
 	}
 }
 
 void MainMenuState::render()
 {
-	for (unsigned int i = 0; i < m_gameObjects.size(); i++)
+	if (m_loadingComplete && !m_gameObjects.empty())
 	{
-		if (m_exiting)
+		for (unsigned int i = 0; i < m_gameObjects.size(); i++)
 		{
-			break;
+			m_gameObjects[i]->draw();
 		}
-		m_gameObjects[i]->draw();
 	}
 }
 
 bool MainMenuState::onEnter()
 {
-	m_exiting = false;
-
 	//parse the state
 	StateParser stateParser;
-	stateParser.parseState("test.xml", s_menuID, &m_gameObjects, &m_textureIDList);
+	stateParser.parseState("assets/attack.xml", s_menuID, &m_gameObjects, &m_textureIDList);
 	m_callbacks.push_back(0); //pushback 0 callbackID start from 1
 	m_callbacks.push_back(s_menuToPlay);
 	m_callbacks.push_back(s_exitFromMenu);
@@ -40,6 +44,7 @@ bool MainMenuState::onEnter()
 	//set the callbacks for menu items
 	setCallbacks(m_callbacks);
 
+	m_loadingComplete = true;
 	std::cout << "Entering MainMenuState \n";
 
 	return true;
@@ -49,18 +54,17 @@ bool MainMenuState::onExit()
 {
 	m_exiting = true;
 
-	for (unsigned int i = 0; i < m_gameObjects.size(); i++)
+	// clean the game objects
+	if (m_loadingComplete && !m_gameObjects.empty())
 	{
-		m_gameObjects[i]->clean();
+		m_gameObjects.back()->clean();
+		m_gameObjects.pop_back();
 	}
 
 	m_gameObjects.clear();
 
-	//clear the texture manager
-	for (unsigned int i = 0; i < m_textureIDList.size(); i++)
-	{
-		TheTextureManager::Instance()->clearFromTextureMap(m_textureIDList[i]);
-	}
+	// reset the input handler
+	TheInputHandler::Instance()->reset();
 
 	std::cout << "Exiting menu state \n";
 	return true;
@@ -69,13 +73,16 @@ bool MainMenuState::onExit()
 void MainMenuState::setCallbacks(const std::vector<Callback>& callbacks)
 {
 	//go through the game objects
-	for (unsigned int i = 0; i < m_gameObjects.size(); i++)
+	if (!m_gameObjects.empty())
 	{
-		// if they are of type menu button assign callbacks based on IDs
-		if (dynamic_cast<MenuButton*>(m_gameObjects[i]))
+		for (unsigned int i = 0; i < m_gameObjects.size(); i++)
 		{
-			MenuButton* pButton = dynamic_cast<MenuButton*>(m_gameObjects[i]);
-			pButton->setCallback(callbacks[pButton->getCallbackID()]);
+			// if they are of type menu button assign callbacks based on IDs
+			if (dynamic_cast<MenuButton*>(m_gameObjects[i]))
+			{
+				MenuButton* pButton = dynamic_cast<MenuButton*>(m_gameObjects[i]);
+				pButton->setCallback(callbacks[pButton->getCallbackID()]);
+			}
 		}
 	}
 }

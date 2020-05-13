@@ -168,8 +168,8 @@
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <LinkIncremental>true</LinkIncremental>
-    <IncludePath>C:\Users\socia\source\repos\Libraries\zlib128-dll\include;C:\Users\socia\source\repos\Libraries\SDL2_mixer-2.0.4\include;C:\Users\socia\source\repos\Libraries\SDL2\include;$(IncludePath)</IncludePath>
-    <LibraryPath>C:\Users\socia\source\repos\Libraries\zlib128-dll\lib;C:\Users\socia\source\repos\Libraries\SDL2_mixer-2.0.4\lib\x86;C:\Users\socia\source\repos\Libraries\SDL2\lib\x86;$(LibraryPath)</LibraryPath>
+    <IncludePath>C:\Users\User\source\repos\Libraries\zlib128-dll\include;C:\Users\User\source\repos\Libraries\SDL2_mixer-2.0.4\include;C:\Users\User\source\repos\Libraries\SDL2\include;C:\Users\socia\source\repos\Libraries\zlib128-dll\include;C:\Users\socia\source\repos\Libraries\SDL2_mixer-2.0.4\include;C:\Users\socia\source\repos\Libraries\SDL2\include;$(IncludePath)</IncludePath>
+    <LibraryPath>C:\Users\User\source\repos\Libraries\zlib128-dll\lib;C:\Users\User\source\repos\Libraries\SDL2_mixer-2.0.4\lib\x86;C:\Users\User\source\repos\Libraries\SDL2\lib\x86;C:\Users\socia\source\repos\Libraries\zlib128-dll\lib;C:\Users\socia\source\repos\Libraries\SDL2_mixer-2.0.4\lib\x86;C:\Users\socia\source\repos\Libraries\SDL2\lib\x86;$(LibraryPath)</LibraryPath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
     <LinkIncremental>false</LinkIncremental>

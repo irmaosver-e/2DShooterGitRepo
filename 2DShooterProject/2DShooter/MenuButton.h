@@ -2,15 +2,16 @@
 #define __MenuButton__
 
 #include "BaseCreator.h"
-#include "SDLGameObject.h"
+#include "ShooterObject.h"
 #include "InputHandler.h"
 
-class MenuButton :	public SDLGameObject
+class MenuButton :	public ShooterObject
 {
 public:
-	MenuButton() : SDLGameObject() {}
+	MenuButton() : ShooterObject(), m_callback(0), m_bReleased(true) {}
+	virtual ~MenuButton() {}
 
-	virtual void load(const LoaderParams* pParams);
+	virtual void load(std::unique_ptr<LoaderParams> const& pParams);
 	virtual void draw();
 	virtual void update();
 	virtual void clean();
@@ -25,7 +26,7 @@ private:
 
 	bool m_bReleased;
 
-	int m_callbackID; // temp
+	int m_callbackID;
 };
 
 class MenuButtonCreator : public BaseCreator
