@@ -4,97 +4,73 @@ const std::string PlayState::s_playID = "PLAY";
 
 void PlayState::update()
 {
-	if (TheInputHandler::Instance()->isKeyDown(SDL_SCANCODE_PAUSE))
+	if (m_loadingComplete && !m_exiting)
 	{
-		TheGame::Instance()->getStateMachine()->pushState(new PauseState());
-	}
+		if (TheInputHandler::Instance()->isKeyDown(SDL_SCANCODE_ESCAPE))
+		{
+			TheGame::Instance()->getStateMachine()->pushState(new PauseState());
+		}
 
-	pLevel->update();
+		TheBulletHandler::Instance()->updateBullets();
 
-	/*
-	for (unsigned int i = 0; i < m_gameObjects.size(); i++)
-	{
-		m_gameObjects[i]->update();
-	}
+		if (TheGame::Instance()->getPlayerLives() == 0)
+		{
+			TheGame::Instance()->getStateMachine()->changeState(new GameOverState());
+		}
 
-	if (checkCollision(dynamic_cast<SDLGameObject*>(m_gameObjects[0]), dynamic_cast<SDLGameObject*>(m_gameObjects[1])))
-	{
-		TheGame::Instance()->getStateMachine()->changeState(new GameOverState());
+		if (pLevel != 0)
+		{
+			pLevel->update();
+		}
 	}
-	*/
 }
 
 void PlayState::render()
 {
-	pLevel->render();
-	/*
-	for (unsigned int i = 0; i < m_gameObjects.size(); i++)
+	if (m_loadingComplete)
 	{
-		m_gameObjects[i]->draw();
+		if (pLevel != 0)
+		{
+			pLevel->render();
+		}
+
+		for (int i = 0; i < TheGame::Instance()->getPlayerLives(); i++)
+		{
+			TheTextureManager::Instance()->drawFrame("lives", i * 30, 0, 32, 30, 0, 0, TheGame::Instance()->getRenderer(), 0.0, 255);
+		}
+
+		TheBulletHandler::Instance()->drawBullets();
 	}
-	*/
 }
 
 bool PlayState::onEnter()
 {
-	//parse the state
-	//StateParser stateParser;
-	//stateParser.parseState("test.xml", s_playID, &m_gameObjects, &m_textureIDList);
+	TheGame::Instance()->setPlayerLives(3);
 
 	LevelParser levelParser;
-	pLevel = levelParser.parseLevel("assets/map1.tmx");
+	pLevel = levelParser.parseLevel(TheGame::Instance()->getLevelFiles()[TheGame::Instance()->getCurrentLevel() - 1].c_str());
 
-	std::cout << "Entering PlayState \n";
+	TheTextureManager::Instance()->load("assets/bullet1.png", "bullet1", TheGame::Instance()->getRenderer());
+	TheTextureManager::Instance()->load("assets/bullet2.png", "bullet2", TheGame::Instance()->getRenderer());
+	TheTextureManager::Instance()->load("assets/bullet3.png", "bullet3", TheGame::Instance()->getRenderer());
+	TheTextureManager::Instance()->load("assets/lives.png", "lives", TheGame::Instance()->getRenderer());
 
+	if (pLevel != 0)
+	{
+		m_loadingComplete = true;
+	}
+
+	std::cout << "entering PlayState\n";
 	return true;
 }
 
 bool PlayState::onExit()
 {
-	std::cout << "Exiting play state \n";
+	m_exiting = true;
 
-	for (unsigned int i = 0; i < m_gameObjects.size(); i++)
-	{
-		m_gameObjects[i]->clean();
-		TheTextureManager::Instance()->clearFromTextureMap(dynamic_cast<SDLGameObject*>(m_gameObjects[i])->getTextureID());
-	}
+	TheInputHandler::Instance()->reset();
+	TheBulletHandler::Instance()->clearBullets();
 
-	m_gameObjects.clear();
-
-	//clear the texture manager
-	for (unsigned int i = 0; i < m_textureIDList.size(); i++)
-	{
-		TheTextureManager::Instance()->clearFromTextureMap(m_textureIDList[i]);
-	}
-
+	std::cout << "exiting PlayState\n";
 	return true;
 }
-
-bool PlayState::checkCollision(SDLGameObject* p1, SDLGameObject* p2)
-{
-	int leftA, leftB;
-	int rightA, rightB;
-	int topA, topB;
-	int bottomA, bottomB;
-	
-	//rect A
-	leftA = (int)p1->getPosition().getX();
-	topA = (int)p1->getPosition().getY();
-	rightA = (int)(p1->getPosition().getX() + p1->getWidth());
-	bottomA = (int)(p1->getPosition().getY() + p1->getHeight());
-
-	//rect B
-	leftB = (int)p2->getPosition().getX();
-	topB = (int)p2->getPosition().getY();
-	rightB = (int)(p2->getPosition().getX() + p2->getWidth());
-	bottomB = (int)(p2->getPosition().getY() + p2->getHeight());
-
-	//checks if any sides are outside of rect B
-	if (bottomA <= topB) { return false; }
-	if (topA >= bottomB) { return false; }
-	if (rightA <= leftB) { return false; }
-	if (leftA >= rightB) { return false; }
-
-	return true;
-}
-

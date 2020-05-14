@@ -1,10 +1,5 @@
 #include "ScrollingBackground.h"
 
-ScrollingBackground::ScrollingBackground() : ShooterObject()
-{
-    m_count = 0;
-    m_maxcount = 10;
-}
 
 void ScrollingBackground::load(std::unique_ptr<LoaderParams> const& pParams)
 {

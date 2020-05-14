@@ -9,15 +9,13 @@
 class ScrollingBackground : public ShooterObject
 {
 public:
-	ScrollingBackground();
+	ScrollingBackground() : ShooterObject(), m_count(0), m_maxcount(10) {}
 	virtual ~ScrollingBackground() {}
 
     virtual void load(std::unique_ptr<LoaderParams> const& pParams);
     virtual void draw();
     virtual void update();
     virtual void clean();
-
-    virtual void collision() {}
 
 private:
 

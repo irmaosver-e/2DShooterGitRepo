@@ -8,6 +8,8 @@
 class RoofTurret : 	public Turret
 {
 public:
+    virtual ~RoofTurret() {}
+
     virtual void draw();
     virtual void update();
 
@@ -20,12 +22,6 @@ class RoofTurretCreator : public BaseCreator
         return new RoofTurret();
     }
 };
-
-/* possible template implementation
-
-ObjCreator<RoofTurret> RoofTurretCreator;
-
-*/
 
 #endif /* defined ( __RoofTurret__ ) */
 
