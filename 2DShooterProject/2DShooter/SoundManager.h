@@ -23,7 +23,7 @@ private:
 	~SoundManager();
 
 	SoundManager(const SoundManager&);
-	SoundManager& operator= (const SoundManager&) {}
+	SoundManager& operator=(const SoundManager&) {}
 
 	std::map<std::string, Mix_Chunk*> m_sfxs;
 	std::map<std::string, Mix_Music*> m_music;

@@ -1,6 +1,7 @@
-#ifndef __BulletHandler__
-#define __BulletHandler__
+#ifndef __Bullet_Handler__
+#define __Bullet_Handler__
 
+#include <vector>
 #include "Bullet.h"
 
 class BulletHandler
@@ -21,7 +22,7 @@ public:
 private:
 
     BulletHandler() {}
-    ~BulletHandler();
+    ~BulletHandler() {}
 
     BulletHandler(const BulletHandler&);
     BulletHandler& operator=(const BulletHandler&) {}
@@ -35,4 +36,4 @@ private:
 
 typedef BulletHandler TheBulletHandler;
 
-#endif /* defined ( __BulletHandler__ ) */
+#endif /* defined ( __Bullet_Handler__ ) */

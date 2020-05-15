@@ -34,5 +34,5 @@ public:
     virtual std::string objType() { return "EnemyBullet"; }
 };
 
-#endif /* defined ( __ShooterObject__ ) */
+#endif /* defined ( __Bullet__ ) */
 

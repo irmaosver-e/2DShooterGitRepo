@@ -4,6 +4,9 @@
 #include "Glider.h"
 #include "BaseCreator.h"
 
+//cpp includes
+#include "BulletHandler.h"
+
 class ShotGlider : public Glider
 {
 public:
