@@ -1,5 +1,7 @@
 #include "ShotGlider.h"
 
+#include "BulletHandler.h"
+
 ShotGlider::ShotGlider() : Glider()
 {
     m_bulletFiringSpeed = 25;

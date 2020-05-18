@@ -6,16 +6,9 @@
 #include "CollisionManager.h"
 #include "Level.h"
 
-#include <iostream>
-#include "TextureManager.h"
-#include "Game.h"
-#include "PauseState.h"
-#include "GameOverState.h"
-#include "StateParser.h"
-#include "LevelParser.h"
-
-#include "Player.h"
-#include "Enemy.h"
+class GameObject;
+class SDLGameObject;
+class Level;
 
 class PlayState : public GameState
 {

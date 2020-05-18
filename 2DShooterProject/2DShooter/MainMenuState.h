@@ -6,13 +6,6 @@
 #include "MenuState.h"
 #include "GameObject.h"
 
-#include "TextureManager.h"
-#include "Game.h"
-#include "StateParser.h"
-
-#include "MenuButton.h"
-#include "PlayState.h"
-
 class MainMenuState : public MenuState
 {
 public:

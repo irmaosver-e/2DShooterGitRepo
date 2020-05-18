@@ -12,7 +12,6 @@ enum mouse_buttons { LEFT, MIDDLE, RIGHT };
 class InputHandler
 {
 public:
-	~InputHandler() {}
 
 	static InputHandler* Instance();
 

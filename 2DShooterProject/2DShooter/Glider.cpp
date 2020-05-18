@@ -12,11 +12,11 @@ void Glider::load(std::unique_ptr<LoaderParams>& pParams)
 {
     ShooterObject::load(std::move(pParams));
 
-    m_velocity.setX(-m_moveSpeed);
-    m_velocity.setY(m_moveSpeed / 2);
+    m_velocity.setX((float)-m_moveSpeed);
+    m_velocity.setY((float)m_moveSpeed / 2);
 
-    m_maxHeight = m_position.getY() + m_gap;
-    m_minHeight = m_position.getY() - m_gap;
+    m_maxHeight = (int)m_position.getY() + m_gap;
+    m_minHeight = (int)m_position.getY() - m_gap;
 }
 
 void Glider::update()
@@ -25,11 +25,11 @@ void Glider::update()
     {
         if (m_position.getY() >= m_maxHeight)
         {
-            m_velocity.setY(-m_moveSpeed);
+            m_velocity.setY((float)-m_moveSpeed);
         }
         else if (m_position.getY() <= m_minHeight)
         {
-            m_velocity.setY(m_moveSpeed);
+            m_velocity.setY((float)m_moveSpeed);
         }
     }
     else

@@ -15,7 +15,7 @@ public:
 	void setX(float x) { m_x = x; }
 	void setY(float y) { m_y = y; }
 
-	float lenght() { return sqrt((m_x * m_x) + (m_y * m_y)); }
+	float lenght() { return (float)sqrt((m_x * m_x) + (m_y * m_y)); }
 
 	void normalize()
 	{

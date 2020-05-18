@@ -9,10 +9,10 @@
 void CollisionManager::checkPlayerEnemyBulletCollision(Player* pPlayer)
 {
     SDL_Rect* pRect1 = new SDL_Rect();
-    pRect1->x = pPlayer->getPosition().getX();
-    pRect1->y = pPlayer->getPosition().getY();
-    pRect1->w = pPlayer->getWidth();
-    pRect1->h = pPlayer->getHeight();
+    pRect1->x = (int)pPlayer->getPosition().getX();
+    pRect1->y = (int)pPlayer->getPosition().getY();
+    pRect1->w = (int)pPlayer->getWidth();
+    pRect1->h = (int)pPlayer->getHeight();
 
     for (int i = 0; i < TheBulletHandler::Instance()->getEnemyBullets().size(); i++)
     {
@@ -43,10 +43,10 @@ void CollisionManager::checkPlayerEnemyBulletCollision(Player* pPlayer)
 void CollisionManager::checkPlayerEnemyCollision(Player* pPlayer, const std::vector<GameObject*>& objects)
 {
     SDL_Rect* pRect1 = new SDL_Rect();
-    pRect1->x = pPlayer->getPosition().getX();
-    pRect1->y = pPlayer->getPosition().getY();
-    pRect1->w = pPlayer->getWidth();
-    pRect1->h = pPlayer->getHeight();
+    pRect1->x = (int)pPlayer->getPosition().getX();
+    pRect1->y = (int)pPlayer->getPosition().getY();
+    pRect1->w = (int)pPlayer->getWidth();
+    pRect1->h = (int)pPlayer->getHeight();
 
     for (int i = 0; i < objects.size(); i++)
     {
@@ -90,18 +90,18 @@ void CollisionManager::checkEnemyPlayerBulletCollision(const std::vector<GameObj
             }
 
             SDL_Rect* pRect1 = new SDL_Rect();
-            pRect1->x = pObject->getPosition().getX();
-            pRect1->y = pObject->getPosition().getY();
-            pRect1->w = pObject->getWidth();
-            pRect1->h = pObject->getHeight();
+            pRect1->x = (int)pObject->getPosition().getX();
+            pRect1->y = (int)pObject->getPosition().getY();
+            pRect1->w = (int)pObject->getWidth();
+            pRect1->h = (int)pObject->getHeight();
 
             PlayerBullet* pPlayerBullet = TheBulletHandler::Instance()->getPlayerBullets()[j];
 
             SDL_Rect* pRect2 = new SDL_Rect();
-            pRect2->x = pPlayerBullet->getPosition().getX();
-            pRect2->y = pPlayerBullet->getPosition().getY();
-            pRect2->w = pPlayerBullet->getWidth();
-            pRect2->h = pPlayerBullet->getHeight();
+            pRect2->x = (int)pPlayerBullet->getPosition().getX();
+            pRect2->y = (int)pPlayerBullet->getPosition().getY();
+            pRect2->w = (int)pPlayerBullet->getWidth();
+            pRect2->h = (int)pPlayerBullet->getHeight();
 
             if (RectRect(pRect1, pRect2))
             {
@@ -131,19 +131,19 @@ void CollisionManager::checkPlayerTileCollision(Player* pPlayer, const std::vect
 
         int x, y, tileColumn, tileRow, tileid = 0;
 
-        x = layerPos.getX() / pTileLayer->getTileSize();
-        y = layerPos.getY() / pTileLayer->getTileSize();
+        x = (int)layerPos.getX() / pTileLayer->getTileSize();
+        y = (int)layerPos.getY() / pTileLayer->getTileSize();
 
         if (pPlayer->getVelocity().getX() >= 0 || pPlayer->getVelocity().getY() >= 0)
         {
-            tileColumn = ((pPlayer->getPosition().getX() + pPlayer->getWidth()) / pTileLayer->getTileSize());
-            tileRow = ((pPlayer->getPosition().getY() + pPlayer->getHeight()) / pTileLayer->getTileSize());
+            tileColumn = ((int)(pPlayer->getPosition().getX() + pPlayer->getWidth()) / pTileLayer->getTileSize());
+            tileRow = ((int)(pPlayer->getPosition().getY() + pPlayer->getHeight()) / pTileLayer->getTileSize());
             tileid = tiles[tileRow + y][tileColumn + x];
         }
         else if (pPlayer->getVelocity().getX() < 0 || pPlayer->getVelocity().getY() < 0)
         {
-            tileColumn = pPlayer->getPosition().getX() / pTileLayer->getTileSize();
-            tileRow = pPlayer->getPosition().getY() / pTileLayer->getTileSize();
+            tileColumn = (int)pPlayer->getPosition().getX() / pTileLayer->getTileSize();
+            tileRow = (int)pPlayer->getPosition().getY() / pTileLayer->getTileSize();
             tileid = tiles[tileRow + y][tileColumn + x];
         }
 

@@ -3,14 +3,9 @@
 
 #include <vector>
 
-#include "Game.h"
-#include "GameState.h"
-#include "GameObject.h"
 #include "MenuState.h"
-#include "PlayState.h"
 
-#include "AnimatedGraphic.h"
-#include "MenuButton.h"
+class GameObject;
 
 class GameOverState : public MenuState
 {

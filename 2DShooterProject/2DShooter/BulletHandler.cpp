@@ -1,4 +1,5 @@
 #include "BulletHandler.h"
+#include "Game.h"
 
 //Define static instance
 BulletHandler* BulletHandler::s_pInstance = nullptr;

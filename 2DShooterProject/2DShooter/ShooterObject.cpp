@@ -1,5 +1,6 @@
-#include "Game.h"
 #include "ShooterObject.h"
+
+#include "Game.h"
 #include "TextureManager.h"
 
 void ShooterObject::load(std::unique_ptr<LoaderParams> const& pParams)
@@ -25,6 +26,10 @@ void ShooterObject::update()
 {
 	m_position += m_velocity;
 	m_currentFrame = int(((SDL_GetTicks() / (1000 / 3)) % m_numFrames));
+}
+
+ShooterObject::ShooterObject() : GameObject(), m_bulletFiringSpeed(0), m_bulletCounter(0), m_moveSpeed(0), m_dyingTime(0), m_dyingCounter(0), m_bPlayedDeathSound(false)
+{
 }
 
 void ShooterObject::doDyingAnimation()

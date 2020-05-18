@@ -1,15 +1,13 @@
-#ifndef __Shooterbject__
+#ifndef __ShooterObject__
 #define __ShooterObject__
 
 #include "GameObject.h"
-#include "Vector2D.h"
-
 #include <iostream>
 
 class ShooterObject : public GameObject
 {
 public:
-	~ShooterObject() {}
+	virtual ~ShooterObject() {}
 
 	virtual void load(std::unique_ptr<LoaderParams> const &pParams);
 	virtual void draw();
@@ -21,12 +19,12 @@ public:
 
 protected:
 	ShooterObject() : GameObject(),
-		m_bulletFiringSpeed(0),
-		m_bulletCounter(0),
-		m_moveSpeed(0),
-		m_dyingTime(0),
-		m_dyingCounter(0),
-		m_bPlayedDeathSound(false)
+						m_bulletFiringSpeed(0),
+						m_bulletCounter(0),
+						m_moveSpeed(0),
+						m_dyingTime(0),
+						m_dyingCounter(0),
+						m_bPlayedDeathSound(false)
 	{}
 
 	void doDyingAnimation();

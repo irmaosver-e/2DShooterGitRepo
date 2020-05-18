@@ -1,5 +1,15 @@
 #include "PlayState.h"
 
+#include <iostream>
+#include "Game.h"
+#include "BulletHandler.h"
+#include "InputHandler.h"
+#include "PauseState.h"
+#include "GameOverState.h"
+#include "LevelParser.h"
+#include "Level.h"
+
+
 const std::string PlayState::s_playID = "PLAY";
 
 void PlayState::update()

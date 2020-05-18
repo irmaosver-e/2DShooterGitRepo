@@ -62,7 +62,7 @@ private:
 
 	int m_gameWidth;
 	int m_gameHeight;
-	int m_scrollSpeed;
+	float m_scrollSpeed;
 	
 	int m_playerLives;
 

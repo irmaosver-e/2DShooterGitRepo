@@ -49,8 +49,7 @@ protected:
 		m_bDying(false),
 		m_angle(0),
 		m_alpha(255)
-	{
-	}
+	{}
 
 	//movement variables
 	Vector2D m_position;
