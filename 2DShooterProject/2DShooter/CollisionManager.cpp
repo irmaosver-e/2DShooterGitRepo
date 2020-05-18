@@ -1,5 +1,11 @@
 #include "CollisionManager.h"
 
+#include "Collision.h"
+#include "Player.h"
+#include "Enemy.h"
+#include "BulletHandler.h"
+#include "TileLayer.h"
+
 void CollisionManager::checkPlayerEnemyBulletCollision(Player* pPlayer)
 {
     SDL_Rect* pRect1 = new SDL_Rect();

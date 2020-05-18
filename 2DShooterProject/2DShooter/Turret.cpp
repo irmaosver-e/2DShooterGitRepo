@@ -1,8 +1,10 @@
 #include "Turret.h"
 
+#include "Game.h"
+#include "SoundManager.h"
+
 Turret::Turret()
 {
-    std::cout << " values initialized shoud be from a load function not HARDCODED in Turret::Turret()\n";
     m_dyingTime = 1000;
     m_health = 15;
     m_bulletFiringSpeed = 50;
@@ -10,8 +12,6 @@ Turret::Turret()
 
 void Turret::collision()
 {
-    std::cout << " HARDCODED Values in Turret::collision() \n";
-
     m_health -= 1;
 
     if (m_health == 0)
@@ -27,13 +27,11 @@ void Turret::collision()
             m_height = 60;
             m_bDying = true;
         }
-
     }
 }
 
 void Turret::update()
 {
-    std::cout << " HARDCODED Values in Turret::update() \n";
     if (!m_bDying)
     {
         // we want to scroll this object with the rest
@@ -41,9 +39,9 @@ void Turret::update()
 
         if (m_bulletCounter == m_bulletFiringSpeed)
         {
-           // TheBulletHandler::Instance()->addEnemyBullet(m_position.getX(), m_position.getY(), 16, 16, "bullet2", 1, Vector2D(-3, -3));
-           // TheBulletHandler::Instance()->addEnemyBullet(m_position.getX() + 20, m_position.getY(), 16, 16, "bullet2", 1, Vector2D(0, -3));
-           // TheBulletHandler::Instance()->addEnemyBullet(m_position.getX() + 40, m_position.getY(), 16, 16, "bullet2", 1, Vector2D(3, -3));
+           TheBulletHandler::Instance()->addEnemyBullet(m_position.getX(), m_position.getY(), 16, 16, "bullet2", 1, Vector2D(-3, -3));
+           TheBulletHandler::Instance()->addEnemyBullet(m_position.getX() + 20, m_position.getY(), 16, 16, "bullet2", 1, Vector2D(0, -3));
+           TheBulletHandler::Instance()->addEnemyBullet(m_position.getX() + 40, m_position.getY(), 16, 16, "bullet2", 1, Vector2D(3, -3));
             m_bulletCounter = 0;
         }
 

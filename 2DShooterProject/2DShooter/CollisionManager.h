@@ -3,14 +3,9 @@
 
 #include <vector>
 
-#include "BulletHandler.h"
-#include "Collision.h"
-#include "TileLayer.h"
-#include "Player.h"
-#include "Enemy.h"
-
-
+class Player;
 class GameObject;
+class TileLayer;
 
 class CollisionManager
 {

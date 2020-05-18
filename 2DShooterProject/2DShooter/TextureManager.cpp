@@ -1,5 +1,4 @@
 #include "TextureManager.h"
-#include <SDL_image.h>
 
 //Define static instance
 TextureManager* TextureManager::s_pInstance = nullptr;

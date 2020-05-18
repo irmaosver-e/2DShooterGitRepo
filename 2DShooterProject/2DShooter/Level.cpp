@@ -1,5 +1,11 @@
 #include "Level.h"
 
+#include <math.h>
+#include "TextureManager.h"
+#include "Game.h"
+#include "Layer.h"
+#include "TileLayer.h"
+
 Level::~Level()
 {
 	for (unsigned int i = 0; i < m_layers.size(); i++)

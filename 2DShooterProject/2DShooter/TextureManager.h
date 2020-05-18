@@ -3,7 +3,10 @@
 
 #include <iostream>
 #include <map>
-#include "SDL.h"
+#include <SDL.h>
+
+//used in cpp
+#include <SDL_image.h>
 
 class TextureManager
 {
@@ -32,6 +35,7 @@ private:
 	TextureManager& operator=(const TextureManager&);
 
 	static TextureManager* s_pInstance; //the singleton instance
+	
 	std::map<std::string, SDL_Texture*> m_textureMap;
 };
 

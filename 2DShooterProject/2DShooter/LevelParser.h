@@ -1,17 +1,14 @@
 #ifndef __LevelParser__
 #define __LevelParser__
 
+#include <iostream>
+#include <vector>
 #include "tinyxml.h"
-#include "base64.h"
 
-#include "Level.h"
-#include "Game.h"
-#include "TextureManager.h"
-#include "TileLayer.h"
-#include "ObjectLayer.h"
-#include "GameObjectFactory.h"
-#include "Player.h"
-
+class Level;
+struct Tileset;
+class Layer;
+class TileLayer;
 
 class LevelParser
 {

@@ -3,8 +3,6 @@
 
 #include "Enemy.h"
 #include "BaseCreator.h"
-#include "SoundManager.h"
-#include "Game.h"
 
 class Turret :	public Enemy
 {

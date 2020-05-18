@@ -1,5 +1,20 @@
 #include "Game.h"
 
+#include "SoundManager.h"
+#include "TextureManager.h"
+#include "InputHandler.h"
+#include "GameObjectFactory.h"
+#include "MainMenuState.h"
+#include "GameOverState.h"
+#include "AnimatedGraphic.h"
+#include "ScrollingBackground.h"
+#include "MenuButton.h"
+#include "Player.h"
+#include "RoofTurret.h"
+#include "ShotGlider.h"
+#include "Eskeletor.h"
+#include "Level1Boss.h"
+
 //Define static instance
 Game* Game::s_pInstance = nullptr;
 

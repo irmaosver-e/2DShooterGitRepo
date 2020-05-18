@@ -16,25 +16,26 @@ bool StateParser::parseState(const char* stateFile, std::string stateID, std::ve
 	TiXmlElement* pRoot = xmlDoc.RootElement();
 
 	//pre declare the states root node
-	TiXmlElement* pStateRoot = NULL;
+	TiXmlElement* pStateRoot = nullptr;
 
 	//get this states root node and assign it to pStateRoot
-	for (TiXmlElement* e = pRoot->FirstChildElement(); e != NULL; e = e->NextSiblingElement())
+	for (TiXmlElement* e = pRoot->FirstChildElement(); e != nullptr; e = e->NextSiblingElement())
 	{
 		if (e->Value() == stateID)
 		{
 			pStateRoot = e;
+			break;
 		}
 	}
 
 	//predeclare the texture root
-	TiXmlElement* pTextureRoot = NULL;
+	TiXmlElement* pTextureRoot = nullptr;
 
 	//pre declare the object root node
-	TiXmlElement* pObjectRoot = NULL;
+	TiXmlElement* pObjectRoot = nullptr;
 
 	//get the root node and assign it to pTextureRoot
-	for (TiXmlElement* e = pStateRoot->FirstChildElement(); e != NULL; e = e->NextSiblingElement())
+	for (TiXmlElement* e = pStateRoot->FirstChildElement(); e != nullptr; e = e->NextSiblingElement())
 	{
 		if (e->Value() == std::string("TEXTURES"))
 		{
@@ -47,6 +48,10 @@ bool StateParser::parseState(const char* stateFile, std::string stateID, std::ve
 		else
 		{
 			std::cout << "no TiXmlElement* for " << e ->Value() << " in StateParser::parseState \n" ;
+			if (pTextureRoot && pObjectRoot)
+			{
+				break;
+			}
 		}
 	}
 
@@ -92,7 +97,7 @@ void StateParser::parseObjects(TiXmlElement* pObjectRoot, std::vector<GameObject
 		textureID = e->Attribute("textureID");
 
 		GameObject* pGameObject = TheGameObjectFactory::Instance()->create(e->Attribute("type"));
-		pGameObject->load(new LoaderParams(x, y, width, height, textureID, numFrames, callbackID, animSpeed));
+		pGameObject->load(std::unique_ptr<LoaderParams>(new LoaderParams(x, y, width, height, textureID, numFrames, callbackID, animSpeed)));
 		pObjects->push_back(pGameObject);
 	}
 }

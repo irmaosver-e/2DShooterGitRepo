@@ -1,7 +1,14 @@
 #include "LevelParser.h"
 
-#include <zlib.h>
-#include <iostream>
+#include <string>
+#include "TextureManager.h"
+#include "Game.h"
+#include "ObjectLayer.h"
+#include "TileLayer.h"
+#include "GameObjectFactory.h"
+#include "base64.h"
+#include "zlib.h"
+#include "Level.h"
 
 Level* LevelParser::parseLevel(const char* levelFile)
 {

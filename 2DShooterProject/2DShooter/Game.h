@@ -7,23 +7,6 @@
 
 #include "GameStateMachine.h"
 
-// used in cpp
-#include "SoundManager.h"
-#include "TextureManager.h"
-#include "InputHandler.h"
-#include "GameObjectFactory.h"
-#include "MainMenuState.h"
-#include "GameOverState.h"
-#include "AnimatedGraphic.h"
-#include "ScrollingBackground.h"
-#include "MenuButton.h"
-#include "Player.h"
-#include "RoofTurret.h"
-#include "ShotGlider.h"
-#include "Eskeletor.h"
-#include "Level1Boss.h"
-
-
 class Game
 {
 public:
