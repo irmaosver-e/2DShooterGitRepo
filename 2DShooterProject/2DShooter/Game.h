@@ -21,7 +21,7 @@ public:
 
 	int getGameWidth() const { return m_gameWidth; }
 	int getGameHeight() const { return m_gameHeight; }
-	int getScrollSpeed() const { return m_scrollSpeed; }
+	float getScrollSpeed() const { return m_scrollSpeed; }
 	
 	int getPlayerLives() { return m_playerLives; }
 	void setPlayerLives(int lives) { m_playerLives = lives; }

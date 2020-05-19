@@ -3,7 +3,6 @@
 
 #include "Turret.h"
 #include "BaseCreator.h"
-#include "TextureManager.h" 
 
 class RoofTurret : 	public Turret
 {

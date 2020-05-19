@@ -2,6 +2,11 @@
 
 #include <SDL.h>
 
+#include "Game.h"
+#include "InputHandler.h"
+#include "BulletHandler.h"
+#include "SoundManager.h"
+
 void Player::load(std::unique_ptr<LoaderParams>& pParams)
 {
 	// inherited load function
@@ -98,20 +103,20 @@ void Player::handleInput()
 		// handle keys
 		if (TheInputHandler::Instance()->isKeyDown(SDL_SCANCODE_UP) && m_position.getY() > 0)
 		{
-			m_velocity.setY(-m_moveSpeed);
+			m_velocity.setY((float)-m_moveSpeed);
 		}
 		else if (TheInputHandler::Instance()->isKeyDown(SDL_SCANCODE_DOWN) && (m_position.getY() + m_height) < TheGame::Instance()->getGameHeight() - 10)
 		{
-			m_velocity.setY(m_moveSpeed);
+			m_velocity.setY((float)m_moveSpeed);
 		}
 
 		if (TheInputHandler::Instance()->isKeyDown(SDL_SCANCODE_LEFT) && m_position.getX() > 0)
 		{
-			m_velocity.setX(-m_moveSpeed);
+			m_velocity.setX((float)-m_moveSpeed);
 		}
 		else if (TheInputHandler::Instance()->isKeyDown(SDL_SCANCODE_RIGHT) && (m_position.getX() + m_width) < TheGame::Instance()->getGameWidth())
 		{
-			m_velocity.setX(m_moveSpeed);
+			m_velocity.setX((float)m_moveSpeed);
 		}
 
 		if (TheInputHandler::Instance()->isKeyDown(SDL_SCANCODE_SPACE))
@@ -119,7 +124,7 @@ void Player::handleInput()
 			if (m_bulletCounter == m_bulletFiringSpeed)
 			{
 				TheSoundManager::Instance()->playSound("shoot", 0);
-				TheBulletHandler::Instance()->addPlayerBullet(m_position.getX() + 90, m_position.getY() + 12, 11, 11, "bullet1", 1, Vector2D(10, 0));
+				TheBulletHandler::Instance()->addPlayerBullet((int)m_position.getX() + 90, (int)m_position.getY() + 12, 11, 11, "bullet1", 1, Vector2D(10, 0));
 				m_bulletCounter = 0;
 			}
 

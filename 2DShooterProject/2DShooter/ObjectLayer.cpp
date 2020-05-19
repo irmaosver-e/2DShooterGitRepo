@@ -1,5 +1,9 @@
 #include "ObjectLayer.h"
 
+#include "Game.h"
+#include "GameObject.h"
+#include "Level.h"
+
 ObjectLayer::~ObjectLayer()
 {
 	for (std::vector<GameObject*>::iterator it = m_gameObjects.begin(); it != m_gameObjects.end(); ++it)
@@ -32,7 +36,7 @@ void ObjectLayer::update(Level* pLevel)
             }
             else
             {
-                if ((*it)->objType != std::string("Player"))
+                if ((*it)->objType() != std::string("Player"))
                 {
                     (*it)->setUpdating(false);
                     (*it)->scroll(TheGame::Instance()->getScrollSpeed());

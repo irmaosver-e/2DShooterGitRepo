@@ -19,11 +19,11 @@ void CollisionManager::checkPlayerEnemyBulletCollision(Player* pPlayer)
         EnemyBullet* pEnemyBullet = TheBulletHandler::Instance()->getEnemyBullets()[i];
 
         SDL_Rect* pRect2 = new SDL_Rect();
-        pRect2->x = pEnemyBullet->getPosition().getX();
-        pRect2->y = pEnemyBullet->getPosition().getY();
+        pRect2->x = (int)pEnemyBullet->getPosition().getX();
+        pRect2->y = (int)pEnemyBullet->getPosition().getY();
 
-        pRect2->w = pEnemyBullet->getWidth();
-        pRect2->h = pEnemyBullet->getHeight();
+        pRect2->w = (int)pEnemyBullet->getWidth();
+        pRect2->h = (int)pEnemyBullet->getHeight();
 
         if (RectRect(pRect1, pRect2))
         {
@@ -45,8 +45,8 @@ void CollisionManager::checkPlayerEnemyCollision(Player* pPlayer, const std::vec
     SDL_Rect* pRect1 = new SDL_Rect();
     pRect1->x = (int)pPlayer->getPosition().getX();
     pRect1->y = (int)pPlayer->getPosition().getY();
-    pRect1->w = (int)pPlayer->getWidth();
-    pRect1->h = (int)pPlayer->getHeight();
+    pRect1->w = pPlayer->getWidth();
+    pRect1->h = pPlayer->getHeight();
 
     for (int i = 0; i < objects.size(); i++)
     {
@@ -56,8 +56,8 @@ void CollisionManager::checkPlayerEnemyCollision(Player* pPlayer, const std::vec
         }
 
         SDL_Rect* pRect2 = new SDL_Rect();
-        pRect2->x = objects[i]->getPosition().getX();
-        pRect2->y = objects[i]->getPosition().getY();
+        pRect2->x = (int)objects[i]->getPosition().getX();
+        pRect2->y = (int)objects[i]->getPosition().getY();
         pRect2->w = objects[i]->getWidth();
         pRect2->h = objects[i]->getHeight();
 

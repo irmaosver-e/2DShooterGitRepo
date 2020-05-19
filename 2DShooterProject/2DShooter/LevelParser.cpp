@@ -27,7 +27,7 @@ Level* LevelParser::parseLevel(const char* levelFile)
 	pRoot->Attribute("height", &m_height);
 
 	//we know that properties is the first child of the root
-	TiXmlElement* pProperties = pRoot->FirstChildElement();
+	//TiXmlElement* pProperties = pRoot->FirstChildElement();
 
 	TiXmlElement* pProperties = NULL;
 	std::vector<TiXmlElement*> pTilesetElements;
@@ -163,7 +163,7 @@ void LevelParser::parseTileLayer(TiXmlElement* pTileElement, std::vector<Layer*>
 	//decompress zlib compression
 	uLongf numGids = m_width * m_height * sizeof(int);
 	std::vector<unsigned> gids(numGids);
-	uncompress((Bytef*)&gids[0], &numGids, (const Bytef*)decodedIDs.c_str(), decodedIDs.size());
+	uncompress((Bytef*)&gids[0], &numGids, (const Bytef*)decodedIDs.c_str(), (uLong)decodedIDs.size());
 
 	std::vector<int> layerRow(m_width);
 

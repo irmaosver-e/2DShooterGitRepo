@@ -1,5 +1,9 @@
 #include "RoofTurret.h"
 
+#include "Game.h"
+#include "TextureManager.h"
+#include "BulletHandler.h"
+
 void RoofTurret::draw()
 {
 	TextureManager::Instance()->drawFrame(m_textureID, (Uint32)m_position.getX(), (Uint32)m_position.getY(),
@@ -15,9 +19,9 @@ void RoofTurret::update()
 
         if (m_bulletCounter == m_bulletFiringSpeed)
         {
-            // TheBulletHandler::Instance()->addEnemyBullet(m_position.getX(), m_position.getY() + 20, 16, 16, "bullet2", 1, Vector2D(-3, 3));
-            // TheBulletHandler::Instance()->addEnemyBullet(m_position.getX() + 20, m_position.getY() + 20, 16, 16, "bullet2", 1, Vector2D(0, 3));
-            // TheBulletHandler::Instance()->addEnemyBullet(m_position.getX() + 40, m_position.getY() + 20, 16, 16, "bullet2", 1, Vector2D(3, 3));
+            TheBulletHandler::Instance()->addEnemyBullet((int)m_position.getX(), (int)m_position.getY() + 20, 16, 16, "bullet2", 1, Vector2D(-3, 3));
+            TheBulletHandler::Instance()->addEnemyBullet((int)m_position.getX() + 20, (int)m_position.getY() + 20, 16, 16, "bullet2", 1, Vector2D(0, 3));
+            TheBulletHandler::Instance()->addEnemyBullet((int)m_position.getX() + 40, (int)m_position.getY() + 20, 16, 16, "bullet2", 1, Vector2D(3, 3));
             m_bulletCounter = 0;
         }
 

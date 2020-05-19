@@ -2,6 +2,7 @@
 
 #include "Game.h"
 #include "SoundManager.h"
+#include "BulletHandler.h"
 
 Turret::Turret()
 {
@@ -39,9 +40,9 @@ void Turret::update()
 
         if (m_bulletCounter == m_bulletFiringSpeed)
         {
-           TheBulletHandler::Instance()->addEnemyBullet(m_position.getX(), m_position.getY(), 16, 16, "bullet2", 1, Vector2D(-3, -3));
-           TheBulletHandler::Instance()->addEnemyBullet(m_position.getX() + 20, m_position.getY(), 16, 16, "bullet2", 1, Vector2D(0, -3));
-           TheBulletHandler::Instance()->addEnemyBullet(m_position.getX() + 40, m_position.getY(), 16, 16, "bullet2", 1, Vector2D(3, -3));
+           TheBulletHandler::Instance()->addEnemyBullet((int)m_position.getX(), (int)m_position.getY(), 16, 16, "bullet2", 1, Vector2D(-3, -3));
+           TheBulletHandler::Instance()->addEnemyBullet((int)m_position.getX() + 20, (int)m_position.getY(), 16, 16, "bullet2", 1, Vector2D(0, -3));
+           TheBulletHandler::Instance()->addEnemyBullet((int)m_position.getX() + 40, (int)m_position.getY(), 16, 16, "bullet2", 1, Vector2D(3, -3));
             m_bulletCounter = 0;
         }
 

@@ -3,8 +3,6 @@
 
 #include <vector>
 #include "Layer.h"
-#include "GameObject.h"
-#include "Level.h"
 #include "CollisionManager.h"
 
 class ObjectLayer : public Layer

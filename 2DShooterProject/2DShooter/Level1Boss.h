@@ -3,6 +3,7 @@
 
 #include "Enemy.h"
 #include "Game.h"
+#include "BaseCreator.h"
 
 class Level1Boss : public Enemy
 {

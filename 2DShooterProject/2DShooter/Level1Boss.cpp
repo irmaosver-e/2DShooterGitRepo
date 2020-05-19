@@ -1,4 +1,6 @@
 #include "Level1Boss.h"
+#include "SoundManager.h"
+#include "BulletHandler.h"
 
 Level1Boss::Level1Boss() : Enemy()
 {
@@ -14,7 +16,7 @@ Level1Boss::Level1Boss() : Enemy()
 void Level1Boss::load(std::unique_ptr<LoaderParams> const& pParams)
 {
     ShooterObject::load(std::move(pParams));
-    m_velocity.setY(-m_moveSpeed);
+    m_velocity.setY((float)-m_moveSpeed);
 }
 
 void Level1Boss::collision()
@@ -60,20 +62,20 @@ void Level1Boss::update()
         {
             if (m_position.getY() + m_height >= TheGame::Instance()->getGameHeight())
             {
-                m_velocity.setY(-m_moveSpeed);
+                m_velocity.setY((float)-m_moveSpeed);
             }
             else if (m_position.getY() <= 0)
             {
-                m_velocity.setY(m_moveSpeed);
+                m_velocity.setY((float)m_moveSpeed);
             }
 
             if (m_bulletCounter == m_bulletFiringSpeed)
             {
-                TheBulletHandler::Instance()->addEnemyBullet(m_position.getX(), m_position.getY() + 15, 16, 16, "bullet2", 1, Vector2D(-10, 0));
-                TheBulletHandler::Instance()->addEnemyBullet(m_position.getX(), m_position.getY() + 25, 16, 16, "bullet2", 1, Vector2D(-10, 0));
+                TheBulletHandler::Instance()->addEnemyBullet((int)m_position.getX(), (int)m_position.getY() + 15, 16, 16, "bullet2", 1, Vector2D(-10, 0));
+                TheBulletHandler::Instance()->addEnemyBullet((int)m_position.getX(), (int)m_position.getY() + 25, 16, 16, "bullet2", 1, Vector2D(-10, 0));
 
-                TheBulletHandler::Instance()->addEnemyBullet(m_position.getX(), m_position.getY() + 200, 16, 16, "bullet2", 1, Vector2D(-10, 0));
-                TheBulletHandler::Instance()->addEnemyBullet(m_position.getX(), m_position.getY() + 215, 16, 16, "bullet2", 1, Vector2D(-10, 0));
+                TheBulletHandler::Instance()->addEnemyBullet((int)m_position.getX(), (int)m_position.getY() + 200, 16, 16, "bullet2", 1, Vector2D(-10, 0));
+                TheBulletHandler::Instance()->addEnemyBullet((int)m_position.getX(), (int)m_position.getY() + 215, 16, 16, "bullet2", 1, Vector2D(-10, 0));
 
                 m_bulletCounter = 0;
             }
