@@ -12,7 +12,7 @@ void ShotGlider::load(std::unique_ptr<LoaderParams> const& pParams)
 {
 	ShooterObject::load(std::move(pParams));
 
-	m_velocity.setX(-m_moveSpeed);
+	m_velocity.setX((float)-m_moveSpeed);
 }
 
 void ShotGlider::update()
@@ -21,7 +21,7 @@ void ShotGlider::update()
     {
         if (m_bulletCounter == m_bulletFiringSpeed)
         {
-            TheBulletHandler::Instance()->addEnemyBullet(m_position.getX(), m_position.getY() + 15, 16, 16, "bullet2", 1, Vector2D(-10, 0));
+            TheBulletHandler::Instance()->addEnemyBullet((int)m_position.getX(), (int)m_position.getY() + 15, 16, 16, "bullet2", 1, Vector2D(-10, 0));
             m_bulletCounter = 0;
         }
 
