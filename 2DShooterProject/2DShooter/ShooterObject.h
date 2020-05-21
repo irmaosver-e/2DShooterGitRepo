@@ -18,14 +18,7 @@ public:
 	virtual std::string objType() { return "SDLGameObject"; }
 
 protected:
-	ShooterObject() : GameObject(),
-						m_bulletFiringSpeed(0),
-						m_bulletCounter(0),
-						m_moveSpeed(0),
-						m_dyingTime(0),
-						m_dyingCounter(0),
-						m_bPlayedDeathSound(false)
-	{}
+	ShooterObject();
 
 	void doDyingAnimation();
 

@@ -97,7 +97,7 @@ Level* LevelParser::parseLevel(const char* levelFile)
 void LevelParser::parseTilesets(TiXmlElement* pTilesetRoot, std::vector<Tileset>* pTilesets)
 {
 	//add tileset to textureManager
-	parseTextures((m_assetsLocation.append(pTilesetRoot->FirstChildElement()->Attribute("source"))), 
+	parseTextures((m_assetsLocation + pTilesetRoot->FirstChildElement()->Attribute("source")), 
 					pTilesetRoot->Attribute("name"));
 	
 	//create a tileset object
@@ -180,7 +180,7 @@ void LevelParser::parseTileLayer(TiXmlElement* pTileElement, std::vector<Layer*>
 		}
 	}
 	pTileLayer->setTileIDs(data);
-	pLayers->push_back(pTileLayer);
+	pTileLayer->setMapWidth(m_width);
 
 	if (collidable)
 	{

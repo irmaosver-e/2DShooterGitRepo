@@ -3,7 +3,6 @@
 
 #include <SDL.h>
 #include <vector>
-#include <iostream>
 
 #include "GameStateMachine.h"
 

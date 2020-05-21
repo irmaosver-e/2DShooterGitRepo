@@ -1,5 +1,7 @@
 #include "Game.h"
 
+#include <iostream>
+
 #include "SoundManager.h"
 #include "TextureManager.h"
 #include "InputHandler.h"

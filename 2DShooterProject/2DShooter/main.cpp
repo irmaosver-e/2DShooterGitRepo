@@ -1,4 +1,5 @@
 #include "Game.h"
+#include <iostream>
 
 const int FPS = 60;
 const int DELAY_TIME = (int)(1000.0f / FPS);

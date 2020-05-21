@@ -19,7 +19,7 @@ public:
 
 private:
 
-    int m_scrollSpeed;
+    float m_scrollSpeed;
 
     int m_count;
     int m_maxcount;

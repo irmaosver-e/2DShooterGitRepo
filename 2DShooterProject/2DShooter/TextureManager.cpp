@@ -17,7 +17,8 @@ bool TextureManager::load(std::string fileName, std::string id, SDL_Renderer* pR
 	SDL_Surface* pTempSurface = IMG_Load(fileName.c_str()); //loads image file to a SDL surface
 	if (!pTempSurface)
 	{
-		std::cout << "couldn't find image" << fileName << " - error: "<< IMG_GetError() << "\n";
+		std::cout << "in TextureManager::load \n";
+		std::cout << "couldn't find image " << fileName << " - error: "<< IMG_GetError() << "\n";
 		return false;
 	}
 	

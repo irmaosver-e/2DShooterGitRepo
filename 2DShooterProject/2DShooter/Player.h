@@ -7,19 +7,15 @@
 class Player : public ShooterObject
 {
 public:
-	Player() : ShooterObject(), 
-		m_invulnerable(false),	
-		m_invulnerableTime(200),
-		m_invulnerableCounter(0)
-	{}
+	Player();
 	virtual ~Player() {}
 
-	virtual void load(std::unique_ptr<LoaderParams> &pParams);
+	virtual void load(std::unique_ptr<LoaderParams> const &pParams);
 	virtual void draw();
 	virtual void update();
 	virtual void clean();
 	
-	virtual void collision() {} 
+	virtual void collision();
 
 	virtual std::string objType() { return "Player"; }
 private:
