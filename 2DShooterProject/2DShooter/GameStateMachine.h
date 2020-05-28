@@ -13,6 +13,7 @@ public:
 	void changeState(GameState* pState);
 	void pushState(GameState* pState);
 	void popState();
+	void reloadState();
 
 	void update();
 	void render();

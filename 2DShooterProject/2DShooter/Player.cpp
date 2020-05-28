@@ -48,8 +48,8 @@ void Player::update()
 		}
 		else
 		{
-			m_velocity.setX(0);
-			m_velocity.setY(3);
+			m_velocity.setX(3);
+			m_velocity.setY(0);
 			ShooterObject::update();
 			handleAnimation();
 		}

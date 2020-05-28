@@ -28,7 +28,7 @@ void PlayState::update()
 			TheGame::Instance()->getStateMachine()->changeState(new GameOverState());
 		}
 
-		if (pLevel != 0)
+		if (pLevel)
 		{
 			pLevel->update();
 		}
@@ -65,7 +65,7 @@ bool PlayState::onEnter()
 	TheTextureManager::Instance()->load("assets/bullet3.png", "bullet3", TheGame::Instance()->getRenderer());
 	TheTextureManager::Instance()->load("assets/lives.png", "lives", TheGame::Instance()->getRenderer());
 
-	if (pLevel != 0)
+	if (pLevel)
 	{
 		m_loadingComplete = true;
 	}

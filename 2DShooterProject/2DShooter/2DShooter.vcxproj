@@ -100,7 +100,6 @@
     <ClInclude Include="Vector2D.h" />
   </ItemGroup>
   <ItemGroup>
-    <Xml Include="..\assets\attack.xml" />
     <Xml Include="test.xml" />
   </ItemGroup>
   <ItemGroup>

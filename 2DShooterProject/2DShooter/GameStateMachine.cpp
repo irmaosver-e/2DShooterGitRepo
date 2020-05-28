@@ -1,11 +1,16 @@
 #include "GameStateMachine.h"
 
+#include <iostream>
+
 void GameStateMachine::changeState(GameState* pState)
 {
 	if (!m_gameStates.empty())
 	{
 		if (m_gameStates.back()->getStateID() == pState->getStateID())
 		{
+			std::cout << " in GameStateMachine::changeState - changing to same state as current \n";
+			std::cout << "current state: " << m_gameStates.back()->getStateID() << "\n";
+			std::cout << "change state: " << pState->getStateID() << "\n";
 			return; // do nothing
 		}
 
@@ -35,6 +40,11 @@ void GameStateMachine::popState()
 	}
 
 	m_gameStates.back()->resume();
+}
+
+void GameStateMachine::reloadState()
+{
+	m_gameStates.back()->onEnter();
 }
 
 void GameStateMachine::update()

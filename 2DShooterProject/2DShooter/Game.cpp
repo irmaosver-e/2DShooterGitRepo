@@ -8,6 +8,7 @@
 #include "GameObjectFactory.h"
 #include "MainMenuState.h"
 #include "GameOverState.h"
+#include "PlayState.h"
 #include "AnimatedGraphic.h"
 #include "ScrollingBackground.h"
 #include "MenuButton.h"
@@ -173,6 +174,6 @@ void Game::clean()
 void Game::setCurrentLevel(int currentLevel)
 {
 	m_currentLevel = currentLevel;
-	m_pGameStateMachine->changeState(new GameOverState());
+	m_pGameStateMachine->reloadState();
 	m_bLevelComplete = false;
 }

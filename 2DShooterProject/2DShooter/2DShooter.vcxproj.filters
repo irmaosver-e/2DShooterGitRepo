@@ -316,9 +316,6 @@
     <Xml Include="test.xml">
       <Filter>Resource Files</Filter>
     </Xml>
-    <Xml Include="..\assets\attack.xml">
-      <Filter>Resource Files</Filter>
-    </Xml>
   </ItemGroup>
   <ItemGroup>
     <None Include="assets\map1.tmx">
