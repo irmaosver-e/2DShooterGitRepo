@@ -29,9 +29,4 @@ private:
 	int m_callbackID;
 };
 
-class MenuButtonCreator : public BaseCreator
-{
-	GameObject* createGameObject() const { return new MenuButton(); }
-};
-
 #endif /* defined ( __MenuButton__ ) */

@@ -3,23 +3,20 @@
 
 #include <string>
 #include <map>
+#include "Singleton.h"
 #include "BaseCreator.h"
 #include "GameObject.h"
 
-class GameObjectFactory
+class GameObjectFactory : public Singleton<GameObjectFactory>
 {
 public:
-	static GameObjectFactory* Instance();
+	GameObjectFactory(token) {}
+	~GameObjectFactory() {}
 
 	bool registerType(std::string typeID, BaseCreator* pCreator);
 	GameObject* create(std::string typeID);
 
 private:
-	GameObjectFactory() {}
-	~GameObjectFactory() {}
-
-	static GameObjectFactory* s_pInstance; //the singleton instance
-
 	std::map<std::string, BaseCreator*> m_creators;
 };
 

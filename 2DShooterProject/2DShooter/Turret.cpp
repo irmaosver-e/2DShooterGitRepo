@@ -19,7 +19,7 @@ void Turret::collision()
     {
         if (!m_bPlayedDeathSound)
         {
-            TheSoundManager::Instance()->playSound("explode", 0);
+            TheSoundManager::Instance().playSound("explode", 0);
 
             m_textureID = "largeexplosion";
             m_currentFrame = 0;
@@ -36,13 +36,13 @@ void Turret::update()
     if (!m_bDying)
     {
         // we want to scroll this object with the rest
-        scroll(TheGame::Instance()->getScrollSpeed());
+        scroll(TheGame::Instance().getScrollSpeed());
 
         if (m_bulletCounter == m_bulletFiringSpeed)
         {
-           TheBulletHandler::Instance()->addEnemyBullet((int)m_position.getX(), (int)m_position.getY(), 16, 16, "bullet2", 1, Vector2D(-3, -3));
-           TheBulletHandler::Instance()->addEnemyBullet((int)m_position.getX() + 20, (int)m_position.getY(), 16, 16, "bullet2", 1, Vector2D(0, -3));
-           TheBulletHandler::Instance()->addEnemyBullet((int)m_position.getX() + 40, (int)m_position.getY(), 16, 16, "bullet2", 1, Vector2D(3, -3));
+           TheBulletHandler::Instance().addEnemyBullet((int)m_position.getX(), (int)m_position.getY(), 16, 16, "bullet2", 1, Vector2D(-3, -3));
+           TheBulletHandler::Instance().addEnemyBullet((int)m_position.getX() + 20, (int)m_position.getY(), 16, 16, "bullet2", 1, Vector2D(0, -3));
+           TheBulletHandler::Instance().addEnemyBullet((int)m_position.getX() + 40, (int)m_position.getY(), 16, 16, "bullet2", 1, Vector2D(3, -3));
             m_bulletCounter = 0;
         }
 
@@ -50,7 +50,7 @@ void Turret::update()
     }
     else
     {
-        scroll(TheGame::Instance()->getScrollSpeed());
+        scroll(TheGame::Instance().getScrollSpeed());
         doDyingAnimation();
     }
 }

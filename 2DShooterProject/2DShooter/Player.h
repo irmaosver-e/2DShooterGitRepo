@@ -28,9 +28,4 @@ private:
 	int m_invulnerableCounter;
 };
 
-class PlayerCreator : public BaseCreator
-{
-	GameObject* createGameObject() const {	return new Player();	}
-};
-
 #endif /*defined(__Player__)*/

@@ -40,11 +40,11 @@ void Player::draw()
 void Player::update()
 {
 	//if the level is finished, fly off the screen
-	if (TheGame::Instance()->getLevelComplete())
+	if (TheGame::Instance().getLevelComplete())
 	{
-		if (m_position.getX() >= TheGame::Instance()->getGameWidth())
+		if (m_position.getX() >= TheGame::Instance().getGameWidth())
 		{
-			TheGame::Instance()->setCurrentLevel(TheGame::Instance()->getCurrentLevel() + 1);
+			TheGame::Instance().setCurrentLevel(TheGame::Instance().getCurrentLevel() + 1);
 		}
 		else
 		{
@@ -92,7 +92,7 @@ void Player::collision()
 	//-----------------------
 
 	// if the player is not invulnerable then set to dying and change values for death animation tile sheet
-	if (!m_invulnerable && !TheGame::Instance()->getLevelComplete())
+	if (!m_invulnerable && !TheGame::Instance().getLevelComplete())
 	{
 		m_textureID = "largeexplosion";
 		m_currentFrame = 0;
@@ -106,7 +106,7 @@ void Player::collision()
 
 void Player::ressurect()
 {
-	TheGame::Instance()->setPlayerLives(TheGame::Instance()->getPlayerLives() - 1);
+	TheGame::Instance().setPlayerLives(TheGame::Instance().getPlayerLives() - 1);
 	
 	m_position.setX(10);
 	m_position.setY(200);
@@ -128,30 +128,30 @@ void Player::handleInput()
 	if (!m_bDead)
 	{
 		// handle keys
-		if (TheInputHandler::Instance()->isKeyDown(SDL_SCANCODE_UP) && m_position.getY() > 0)
+		if (TheInputHandler::Instance().isKeyDown(SDL_SCANCODE_UP) && m_position.getY() > 0)
 		{
 			m_velocity.setY((float)-m_moveSpeed);
 		}
-		else if (TheInputHandler::Instance()->isKeyDown(SDL_SCANCODE_DOWN) && (m_position.getY() + m_height) < TheGame::Instance()->getGameHeight() - 10)
+		else if (TheInputHandler::Instance().isKeyDown(SDL_SCANCODE_DOWN) && (m_position.getY() + m_height) < TheGame::Instance().getGameHeight() - 10)
 		{
 			m_velocity.setY((float)m_moveSpeed);
 		}
 
-		if (TheInputHandler::Instance()->isKeyDown(SDL_SCANCODE_LEFT) && m_position.getX() > 0)
+		if (TheInputHandler::Instance().isKeyDown(SDL_SCANCODE_LEFT) && m_position.getX() > 0)
 		{
 			m_velocity.setX((float)-m_moveSpeed);
 		}
-		else if (TheInputHandler::Instance()->isKeyDown(SDL_SCANCODE_RIGHT) && (m_position.getX() + m_width) < TheGame::Instance()->getGameWidth())
+		else if (TheInputHandler::Instance().isKeyDown(SDL_SCANCODE_RIGHT) && (m_position.getX() + m_width) < TheGame::Instance().getGameWidth())
 		{
 			m_velocity.setX((float)m_moveSpeed);
 		}
 
-		if (TheInputHandler::Instance()->isKeyDown(SDL_SCANCODE_SPACE))
+		if (TheInputHandler::Instance().isKeyDown(SDL_SCANCODE_SPACE))
 		{
 			if (m_bulletCounter == m_bulletFiringSpeed)
 			{
-				TheSoundManager::Instance()->playSound("shoot", 0);
-				TheBulletHandler::Instance()->addPlayerBullet((int)m_position.getX() + 90, (int)m_position.getY() + 12, 11, 11, "bullet1", 1, Vector2D(10, 0));
+				TheSoundManager::Instance().playSound("shoot", 0);
+				TheBulletHandler::Instance().addPlayerBullet((int)m_position.getX() + 90, (int)m_position.getY() + 12, 11, 11, "bullet1", 1, Vector2D(10, 0));
 				m_bulletCounter = 0;
 			}
 
@@ -164,14 +164,14 @@ void Player::handleInput()
 		// */
 
 		/* handle joysticks /
-		if(TheInputHandler::Instance()->joysticksInitialised())
+		if(TheInputHandler::Instance().joysticksInitialised())
 		{
-			if(TheInputHandler::Instance()->getButtonState(0, 2))
+			if(TheInputHandler::Instance().getButtonState(0, 2))
 			{
 				if(m_bulletCounter == m_bulletFiringSpeed)
 				{
-					TheSoundManager::Instance()->playSound("shoot", 0);
-					TheBulletHandler::Instance()->addPlayerBullet(m_position.getX() + 90, m_position.getY() + 12, 11, 11, "bullet1", 1, Vector2D(10,0));
+					TheSoundManager::Instance().playSound("shoot", 0);
+					TheBulletHandler::Instance().addPlayerBullet(m_position.getX() + 90, m_position.getY() + 12, 11, 11, "bullet1", 1, Vector2D(10,0));
 					m_bulletCounter = 0;
 				}
 
@@ -182,14 +182,14 @@ void Player::handleInput()
 				m_bulletCounter = m_bulletFiringSpeed;
 			}
 
-			if((TheInputHandler::Instance()->getAxisX(0, 1) > 0 && (m_position.getX() + m_width) < TheGame::Instance()->getGameWidth()) || (TheInputHandler::Instance()->getAxisX(0, 1) < 0 && m_position.getX() > 0))
+			if((TheInputHandler::Instance().getAxisX(0, 1) > 0 && (m_position.getX() + m_width) < TheGame::Instance().getGameWidth()) || (TheInputHandler::Instance().getAxisX(0, 1) < 0 && m_position.getX() > 0))
 			{
-				m_velocity.setX(m_moveSpeed * TheInputHandler::Instance()->getAxisX(0, 1));
+				m_velocity.setX(m_moveSpeed * TheInputHandler::Instance().getAxisX(0, 1));
 			}
 
-			if((TheInputHandler::Instance()->getAxisY(0, 1) > 0 && (m_position.getY() + m_height) < TheGame::Instance()->getGameHeight() - 10 ) || (TheInputHandler::Instance()->getAxisY(0, 1) < 0 && m_position.getY() > 0))
+			if((TheInputHandler::Instance().getAxisY(0, 1) > 0 && (m_position.getY() + m_height) < TheGame::Instance().getGameHeight() - 10 ) || (TheInputHandler::Instance().getAxisY(0, 1) < 0 && m_position.getY() > 0))
 			{
-				m_velocity.setY(m_moveSpeed * TheInputHandler::Instance()->getAxisY(0, 1));
+				m_velocity.setY(m_moveSpeed * TheInputHandler::Instance().getAxisY(0, 1));
 			}
 		}
 		//*/

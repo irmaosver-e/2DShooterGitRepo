@@ -24,11 +24,5 @@ private:
 	int m_gap;
 };
 
-class GliderCreator : public BaseCreator
-{
-	GameObject* createGameObject() const { return new Glider(); }
-};
-
-
 #endif /*defined(__Enemy__)*/
 

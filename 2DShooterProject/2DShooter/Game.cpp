@@ -17,17 +17,15 @@
 #include "ShotGlider.h"
 #include "Eskeletor.h"
 #include "Level1Boss.h"
+#include "BaseCreator.h"
 
-//Define static instance
-Game* Game::s_pInstance = nullptr;
-
-Game::Game() :
+Game::Game(token) :
 	m_pWindow(0),
 	m_pRenderer(0),
 	m_bRunning(false),
 	m_pGameStateMachine(0),
 	m_playerLives(3),
-	m_scrollSpeed((float)0.8),
+	m_scrollSpeed((float)1.8),
 	m_bLevelComplete(false),
 	m_bChangingState(false)
 {
@@ -46,15 +44,6 @@ Game::~Game()
 	m_pWindow = nullptr;
 }
 
-Game* Game::Instance()
-{
-	if (!s_pInstance)
-	{
-		s_pInstance = new Game();
-	}
-	return s_pInstance;
-}
-
 bool Game::init(const char* title, int xpos, int ypos, int width, int height, bool fullScreen)
 {
 	//sets flag to fullscreen
@@ -69,7 +58,7 @@ bool Game::init(const char* title, int xpos, int ypos, int width, int height, bo
 		flags = SDL_WINDOW_FULLSCREEN;
 	}
 
-	//attempt to initialize SDL
+	//attempt to initialize SDL if not present
 	if (!SDL_Init(SDL_INIT_EVERYTHING))
 	{
 		//init the window
@@ -102,25 +91,25 @@ bool Game::init(const char* title, int xpos, int ypos, int width, int height, bo
 	}
 
 	// add some sound effects - TODO move to better place
-	TheSoundManager::Instance()->load("assets/DST_ElectroRock.ogg", "music1", SOUND_MUSIC);
-	TheSoundManager::Instance()->load("assets/boom.wav", "explode", SOUND_SFX);
-	TheSoundManager::Instance()->load("assets/phaser.wav", "shoot", SOUND_SFX);
+	TheSoundManager::Instance().load("assets/DST_ElectroRock.ogg", "music1", SOUND_MUSIC);
+	TheSoundManager::Instance().load("assets/boom.wav", "explode", SOUND_SFX);
+	TheSoundManager::Instance().load("assets/phaser.wav", "shoot", SOUND_SFX);
 	
-	TheSoundManager::Instance()->playMusic("music1", -1);
+	TheSoundManager::Instance().playMusic("music1", -1);
 
 	//TheInputHandler::Instance()->initialiseJoysticks();
 
 	// register the types for the game
-	TheGameObjectFactory::Instance()->registerType("MenuButton", new MenuButtonCreator());
-	TheGameObjectFactory::Instance()->registerType("Player", new PlayerCreator());
-	TheGameObjectFactory::Instance()->registerType("AnimatedGraphic", new AnimatedGraphicCreator());
-	TheGameObjectFactory::Instance()->registerType("ScrollingBackground", new ScrollingBackgroundCreator());
-	TheGameObjectFactory::Instance()->registerType("Turret", new TurretCreator());
-	TheGameObjectFactory::Instance()->registerType("Glider", new GliderCreator());
-	TheGameObjectFactory::Instance()->registerType("ShotGlider", new ShotGliderCreator());
-	TheGameObjectFactory::Instance()->registerType("RoofTurret", new RoofTurretCreator());
-	TheGameObjectFactory::Instance()->registerType("Eskeletor", new EskeletorCreator());
-	TheGameObjectFactory::Instance()->registerType("Level1Boss", new Level1BossCreator());
+	TheGameObjectFactory::Instance().registerType("MenuButton", new ObjCreator<MenuButton>);
+	TheGameObjectFactory::Instance().registerType("Player", new ObjCreator<Player>);
+	TheGameObjectFactory::Instance().registerType("AnimatedGraphic", new ObjCreator<AnimatedGraphic>);
+	TheGameObjectFactory::Instance().registerType("ScrollingBackground", new ObjCreator<ScrollingBackground>);
+	TheGameObjectFactory::Instance().registerType("Turret", new ObjCreator<Turret>);
+	TheGameObjectFactory::Instance().registerType("RoofTurret", new ObjCreator<RoofTurret>);
+	TheGameObjectFactory::Instance().registerType("Glider", new ObjCreator<Glider>);
+	TheGameObjectFactory::Instance().registerType("ShotGlider", new ObjCreator<ShotGlider>);
+	TheGameObjectFactory::Instance().registerType("Eskeletor", new ObjCreator<Eskeletor>);
+	TheGameObjectFactory::Instance().registerType("Level1Boss", new ObjCreator<Level1Boss>);
 
 
 	// start the menu state
@@ -150,21 +139,21 @@ void Game::update()
 
 void Game::handleEvents()
 {
-	TheInputHandler::Instance()->update();
+	TheInputHandler::Instance().update();
 }
 
 void Game::clean()
 {
 	std::cout << "cleaning game\n";
 
-	TheInputHandler::Instance()->clean();
+	TheInputHandler::Instance().clean();
 
 	m_pGameStateMachine->clean();
 
 	m_pGameStateMachine = nullptr;
 	delete m_pGameStateMachine;
 
-	TheTextureManager::Instance()->clearTextureMap();
+	TheTextureManager::Instance().clearTextureMap();
 
 	SDL_DestroyWindow(m_pWindow);
 	SDL_DestroyRenderer(m_pRenderer);

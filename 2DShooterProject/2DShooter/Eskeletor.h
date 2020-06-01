@@ -19,13 +19,5 @@ public:
     virtual void update();
 };
 
-class EskeletorCreator : public BaseCreator
-{
-    GameObject* createGameObject() const
-    {
-        return new Eskeletor();
-    }
-};
-
 #endif /* defined ( __Eskeletor__ ) */
 

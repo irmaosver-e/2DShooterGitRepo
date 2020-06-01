@@ -1,18 +1,6 @@
 #include "BulletHandler.h"
 #include "Game.h"
 
-//Define static instance
-BulletHandler* BulletHandler::s_pInstance = nullptr;
-
-BulletHandler* BulletHandler::Instance()
-{    
-    if (!s_pInstance)
-    {
-        s_pInstance = new BulletHandler();
-    }
-    return s_pInstance;
-}
-
 void BulletHandler::addPlayerBullet(int x, int y, int width, int height, std::string textureID, int numFrames, Vector2D heading)
 {
     PlayerBullet* pPlayerBullet = new PlayerBullet();
@@ -34,8 +22,8 @@ void BulletHandler::updateBullets()
     for (std::vector<PlayerBullet*>::iterator p_it = m_playerBullets.begin(); p_it != m_playerBullets.end();)
     {
         //checks if bullet is out of screen
-        if ((*p_it)->getPosition().getX() < 0 || (*p_it)->getPosition().getX() > TheGame::Instance()->getGameWidth()
-            || (*p_it)->getPosition().getY() < 0 || (*p_it)->getPosition().getY() > TheGame::Instance()->getGameHeight() || (*p_it)->dead())
+        if ((*p_it)->getPosition().getX() < 0 || (*p_it)->getPosition().getX() > TheGame::Instance().getGameWidth()
+            || (*p_it)->getPosition().getY() < 0 || (*p_it)->getPosition().getY() > TheGame::Instance().getGameHeight() || (*p_it)->dead())
         {
             //out of screen
             delete* p_it;
@@ -50,8 +38,8 @@ void BulletHandler::updateBullets()
 
     for (std::vector<EnemyBullet*>::iterator e_it = m_enemyBullets.begin(); e_it != m_enemyBullets.end();)
     {
-        if ((*e_it)->getPosition().getX() < 0 || (*e_it)->getPosition().getX() > TheGame::Instance()->getGameWidth()
-            || (*e_it)->getPosition().getY() < 0 || (*e_it)->getPosition().getY() > TheGame::Instance()->getGameHeight() || (*e_it)->dead())
+        if ((*e_it)->getPosition().getX() < 0 || (*e_it)->getPosition().getX() > TheGame::Instance().getGameWidth()
+            || (*e_it)->getPosition().getY() < 0 || (*e_it)->getPosition().getY() > TheGame::Instance().getGameHeight() || (*e_it)->dead())
         {
             delete* e_it;
             e_it = m_enemyBullets.erase(e_it);

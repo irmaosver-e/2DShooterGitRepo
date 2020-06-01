@@ -15,4 +15,11 @@ protected:
 	Singleton() {};
 };
 
+template<typename T>
+T& Singleton<T>::Instance()
+{
+	static T s_instance{ token{} };
+	return s_instance;
+}
+
 #endif /* defined(__Singleton__) */

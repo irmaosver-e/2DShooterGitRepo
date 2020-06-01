@@ -1,19 +1,7 @@
 #include "InputHandler.h"
 #include "Game.h"
 
-//Define static instance
-InputHandler* InputHandler::s_pInstance = nullptr;
-
-InputHandler* InputHandler::Instance()
-{
-	if (!s_pInstance)
-	{
-		s_pInstance = new InputHandler();
-	}
-	return s_pInstance;
-}
-
-InputHandler::InputHandler() : m_keyboardState(0),
+InputHandler::InputHandler(token) : m_keyboardState(0),
 m_bJoystickInitialised(false),
 m_mousePosition(new Vector2D(0, 0))
 {
@@ -206,7 +194,7 @@ void InputHandler::update()
 		switch (event.type)
 		{
 		case SDL_QUIT:
-			TheGame::Instance()->quit();
+			TheGame::Instance().quit();
 			break;
 
 		case SDL_JOYAXISMOTION:

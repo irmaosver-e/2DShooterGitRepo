@@ -1,16 +1,5 @@
 #include "TextureManager.h"
-
-//Define static instance
-TextureManager* TextureManager::s_pInstance = nullptr;
-
-TextureManager* TextureManager::Instance()
-{
-	if (!s_pInstance)
-	{
-		s_pInstance = new TextureManager();
-	}
-	return s_pInstance;
-}
+#include <SDL_image.h>
 
 bool TextureManager::load(std::string fileName, std::string id, SDL_Renderer* pRenderer)
 {

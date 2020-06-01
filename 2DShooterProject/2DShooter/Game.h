@@ -4,12 +4,14 @@
 #include <SDL.h>
 #include <vector>
 
+#include "Singleton.h"
 #include "GameStateMachine.h"
 
-class Game
+class Game : public Singleton<Game>
 {
 public:
-	static Game* Instance();
+	Game(token);
+	~Game();
 
 	//set the running variable to true
 	bool init(const char* title, int xpos, int ypos, int width, int height, bool fullScreen);
@@ -45,12 +47,7 @@ public:
 	GameStateMachine* getStateMachine() { return m_pGameStateMachine; }
 
 private:
-	Game();
-	~Game();
-	Game(const Game&);
-	Game& operator=(const Game&);
 
-	static Game* s_pInstance; //the singleton instance
 	bool m_bRunning;
 
 	SDL_Window* m_pWindow = 0;

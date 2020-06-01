@@ -192,7 +192,7 @@ void LevelParser::parseTileLayer(TiXmlElement* pTileElement, std::vector<Layer*>
 
 bool LevelParser::parseTextures(std::string fileName, std::string id)
 {
-	if (!TheTextureManager::Instance()->load(fileName, id, TheGame::Instance()->getRenderer()))
+	if (!TheTextureManager::Instance().load(fileName, id, TheGame::Instance().getRenderer()))
 	{
 		std::cout << "failed to load texture in LevelParser::parseTextures \n";
 		return false;
@@ -217,7 +217,7 @@ void LevelParser::parseObjectLayer(TiXmlElement* pObjectElement, std::vector<Lay
 			e->Attribute("y", &y);
 
 			type = e->Attribute("type");
-			GameObject* pGameObject = TheGameObjectFactory::Instance()->create(type);
+			GameObject* pGameObject = TheGameObjectFactory::Instance().create(type);
 
 			//get theProperty values
 			for (TiXmlElement* properties = e->FirstChildElement(); properties != NULL; properties = properties->NextSiblingElement())

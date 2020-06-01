@@ -21,10 +21,4 @@ private:
 	int m_frameCount;
 };
 
-class AnimatedGraphicCreator : public BaseCreator
-{
-public:
-	virtual GameObject* createGameObject() const { return new AnimatedGraphic(); }
-};
-
 #endif /* defined ( __AnimatedGraphic__ ) */

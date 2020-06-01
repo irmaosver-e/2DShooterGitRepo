@@ -37,14 +37,4 @@ private:
     int m_destRect2Width;
 };
 
-class ScrollingBackgroundCreator : public BaseCreator
-{
-public:
-
-    virtual GameObject* createGameObject() const
-    {
-        return new ScrollingBackground();
-    }
-};
-
 #endif /* defined ( __ScrollingBackground__ ) */

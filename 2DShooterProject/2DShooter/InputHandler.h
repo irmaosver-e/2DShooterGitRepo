@@ -4,16 +4,17 @@
 #include <SDL.h>
 #include <vector>
 #include <iostream>
+#include "Singleton.h"
 
 #include "Vector2D.h"
 
 enum mouse_buttons { LEFT, MIDDLE, RIGHT };
 
-class InputHandler
+class InputHandler : public Singleton<InputHandler>
 {
 public:
-
-	static InputHandler* Instance();
+	InputHandler(token);
+	~InputHandler();
 
 	void update();
 	void clean();
@@ -31,12 +32,7 @@ public:
 	bool isKeyDown(SDL_Scancode key) const;
 	void reset();
 
-private:
-	InputHandler();
-	~InputHandler();
-	InputHandler(const InputHandler&);
-	InputHandler& operator=(const InputHandler&);
-	
+private:	
 	//functions to handle events
 	//keyboard events
 	void onKeyDown();
@@ -51,8 +47,6 @@ private:
 	void onJoystickAxisMove(SDL_Event& event);
 	void onJoystickButtonDown(SDL_Event& event);
 	void onJoystickButtonUp(SDL_Event& event);
-
-	static InputHandler* s_pInstance; // singleton
 	
 	// member variables
 

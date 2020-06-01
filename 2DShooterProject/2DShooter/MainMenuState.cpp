@@ -11,7 +11,7 @@ const std::string MainMenuState::s_menuID = "MENU";
 
 void MainMenuState::update()
 {
-	if (TheInputHandler::Instance()->isKeyDown(SDL_SCANCODE_SPACE))
+	if (TheInputHandler::Instance().isKeyDown(SDL_SCANCODE_SPACE))
 	{
 		s_menuToPlay();
 	}
@@ -71,7 +71,7 @@ bool MainMenuState::onExit()
 	m_gameObjects.clear();
 
 	// reset the input handler
-	TheInputHandler::Instance()->reset();
+	TheInputHandler::Instance().reset();
 
 	std::cout << "Exiting menu state \n";
 	return true;
@@ -96,10 +96,10 @@ void MainMenuState::setCallbacks(const std::vector<Callback>& callbacks)
 
 void MainMenuState::s_menuToPlay()
 {
-	TheGame::Instance()->getStateMachine()->changeState(new PlayState());
+	TheGame::Instance().getStateMachine()->changeState(new PlayState());
 }
 
 void MainMenuState::s_exitFromMenu()
 {
-	TheGame::Instance()->quit();
+	TheGame::Instance().quit();
 }

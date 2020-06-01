@@ -16,16 +16,16 @@ void PlayState::update()
 {
 	if (m_loadingComplete && !m_exiting)
 	{
-		if (TheInputHandler::Instance()->isKeyDown(SDL_SCANCODE_ESCAPE))
+		if (TheInputHandler::Instance().isKeyDown(SDL_SCANCODE_ESCAPE))
 		{
-			TheGame::Instance()->getStateMachine()->pushState(new PauseState());
+			TheGame::Instance().getStateMachine()->pushState(new PauseState());
 		}
 
-		TheBulletHandler::Instance()->updateBullets();
+		TheBulletHandler::Instance().updateBullets();
 
-		if (TheGame::Instance()->getPlayerLives() == 0)
+		if (TheGame::Instance().getPlayerLives() == 0)
 		{
-			TheGame::Instance()->getStateMachine()->changeState(new GameOverState());
+			TheGame::Instance().getStateMachine()->changeState(new GameOverState());
 		}
 
 		if (pLevel)
@@ -44,26 +44,26 @@ void PlayState::render()
 			pLevel->render();
 		}
 
-		for (int i = 0; i < TheGame::Instance()->getPlayerLives(); i++)
+		for (int i = 0; i < TheGame::Instance().getPlayerLives(); i++)
 		{
-			TheTextureManager::Instance()->drawFrame("lives", i * 30, 0, 32, 30, 0, 0, TheGame::Instance()->getRenderer(), 0.0, 255);
+			TheTextureManager::Instance().drawFrame("lives", i * 30, 0, 32, 30, 0, 0, TheGame::Instance().getRenderer(), 0.0, 255);
 		}
 
-		TheBulletHandler::Instance()->drawBullets();
+		TheBulletHandler::Instance().drawBullets();
 	}
 }
 
 bool PlayState::onEnter()
 {
-	TheGame::Instance()->setPlayerLives(3);
+	TheGame::Instance().setPlayerLives(3);
 
 	LevelParser levelParser;
-	pLevel = levelParser.parseLevel(TheGame::Instance()->getLevelFiles()[TheGame::Instance()->getCurrentLevel() - 1].c_str());
+	pLevel = levelParser.parseLevel(TheGame::Instance().getLevelFiles()[TheGame::Instance().getCurrentLevel() - 1].c_str());
 
-	TheTextureManager::Instance()->load("assets/bullet1.png", "bullet1", TheGame::Instance()->getRenderer());
-	TheTextureManager::Instance()->load("assets/bullet2.png", "bullet2", TheGame::Instance()->getRenderer());
-	TheTextureManager::Instance()->load("assets/bullet3.png", "bullet3", TheGame::Instance()->getRenderer());
-	TheTextureManager::Instance()->load("assets/lives.png", "lives", TheGame::Instance()->getRenderer());
+	TheTextureManager::Instance().load("assets/bullet1.png", "bullet1", TheGame::Instance().getRenderer());
+	TheTextureManager::Instance().load("assets/bullet2.png", "bullet2", TheGame::Instance().getRenderer());
+	TheTextureManager::Instance().load("assets/bullet3.png", "bullet3", TheGame::Instance().getRenderer());
+	TheTextureManager::Instance().load("assets/lives.png", "lives", TheGame::Instance().getRenderer());
 
 	if (pLevel)
 	{
@@ -78,8 +78,8 @@ bool PlayState::onExit()
 {
 	m_exiting = true;
 
-	TheInputHandler::Instance()->reset();
-	TheBulletHandler::Instance()->clearBullets();
+	TheInputHandler::Instance().reset();
+	TheBulletHandler::Instance().clearBullets();
 
 	std::cout << "exiting PlayState\n";
 	return true;

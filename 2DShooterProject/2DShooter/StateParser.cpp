@@ -72,7 +72,7 @@ void StateParser::parseTextures(TiXmlElement* pTextureRoot, std::vector<std::str
 		std::string idAttribute = e->Attribute("ID");
 
 		pTextureIDs->push_back(idAttribute);
-		if (!TheTextureManager::Instance()->load(filenameAttribute, idAttribute, TheGame::Instance()->getRenderer()))
+		if (!TheTextureManager::Instance().load(filenameAttribute, idAttribute, TheGame::Instance().getRenderer()))
 		{
 			std::cout << "StateParser::parseTextures -- failed to load texture " << filenameAttribute << "\n";
 		}
@@ -96,7 +96,7 @@ void StateParser::parseObjects(TiXmlElement* pObjectRoot, std::vector<GameObject
 
 		textureID = e->Attribute("textureID");
 
-		GameObject* pGameObject = TheGameObjectFactory::Instance()->create(e->Attribute("type"));
+		GameObject* pGameObject = TheGameObjectFactory::Instance().create(e->Attribute("type"));
 		pGameObject->load(std::unique_ptr<LoaderParams>(new LoaderParams(x, y, width, height, textureID, numFrames, callbackID, animSpeed)));
 		pObjects->push_back(pGameObject);
 	}

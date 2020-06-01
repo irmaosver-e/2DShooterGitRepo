@@ -14,13 +14,5 @@ public:
 
 };
 
-class RoofTurretCreator : public BaseCreator
-{
-    GameObject* createGameObject() const
-    {
-        return new RoofTurret();
-    }
-};
-
 #endif /* defined ( __RoofTurret__ ) */
 

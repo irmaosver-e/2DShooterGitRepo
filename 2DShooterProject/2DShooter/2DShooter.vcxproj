@@ -90,6 +90,7 @@
     <ClInclude Include="ScrollingBackground.h" />
     <ClInclude Include="ShooterObject.h" />
     <ClInclude Include="ShotGlider.h" />
+    <ClInclude Include="Singleton.h" />
     <ClInclude Include="SoundManager.h" />
     <ClInclude Include="StateParser.h" />
     <ClInclude Include="TextureManager.h" />

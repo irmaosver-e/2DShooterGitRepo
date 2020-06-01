@@ -70,10 +70,10 @@ bool GameOverState::onExit()
 	// clear the texture manager
 	for (unsigned int i = 0; i < m_textureIDList.size(); i++)
 	{
-		TheTextureManager::Instance()->clearFromTextureMap(m_textureIDList[i]);
+		TheTextureManager::Instance().clearFromTextureMap(m_textureIDList[i]);
 	}
 
-	TheInputHandler::Instance()->reset();
+	TheInputHandler::Instance().reset();
 
 	std::cout << "exiting GameOverState\n";
 	return true;
@@ -95,12 +95,12 @@ void GameOverState::setCallbacks(const std::vector<Callback>& callbacks)
 
 void GameOverState::s_gameOverToMain()
 {
-	TheGame::Instance()->getStateMachine()->changeState(new MainMenuState());
+	TheGame::Instance().getStateMachine()->changeState(new MainMenuState());
 }
 
 void GameOverState::s_restartPlay()
 {
-	TheGame::Instance()->getStateMachine()->changeState(new PlayState());
+	TheGame::Instance().getStateMachine()->changeState(new PlayState());
 }
 
 

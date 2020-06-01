@@ -15,13 +15,5 @@ public:
 
 };
 
-class TurretCreator : public BaseCreator
-{
-    GameObject* createGameObject() const
-    {
-        return new Turret();
-    }
-};
-
 #endif /* defined ( __Turret__ ) */
 

@@ -21,12 +21,5 @@ private:
     bool m_entered;
 };
 
-class Level1BossCreator : public BaseCreator
-{
-    GameObject* createGameObject() const
-    {
-        return new Level1Boss();
-    }
-};
 #endif /* defined ( __Level1Boss__ ) */
 

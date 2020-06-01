@@ -12,7 +12,6 @@ public:
 
 };
 
-/* possible template implementation
 template <class T> class ObjCreator : public BaseCreator
 {
 	GameObject* createGameObject() const
@@ -20,7 +19,5 @@ template <class T> class ObjCreator : public BaseCreator
 		return new T();
 	}
 };
-
-*/
 
 #endif /* defined ( __BaseCreator__ ) */

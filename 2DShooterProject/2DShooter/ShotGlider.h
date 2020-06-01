@@ -16,12 +16,5 @@ public:
     virtual void update();
 };
 
-class ShotGliderCreator : public BaseCreator
-{
-    GameObject* createGameObject() const
-    {
-        return new ShotGlider();
-    }
-};
 #endif /* defined ( __ShotGlider__ )*/
 

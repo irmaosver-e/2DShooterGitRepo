@@ -14,9 +14,9 @@ void CollisionManager::checkPlayerEnemyBulletCollision(Player* pPlayer)
     pRect1->w = (int)pPlayer->getWidth();
     pRect1->h = (int)pPlayer->getHeight();
 
-    for (unsigned int i = 0; i < TheBulletHandler::Instance()->getEnemyBullets().size(); i++)
+    for (unsigned int i = 0; i < TheBulletHandler::Instance().getEnemyBullets().size(); i++)
     {
-        EnemyBullet* pEnemyBullet = TheBulletHandler::Instance()->getEnemyBullets()[i];
+        EnemyBullet* pEnemyBullet = TheBulletHandler::Instance().getEnemyBullets()[i];
 
         SDL_Rect* pRect2 = new SDL_Rect();
         pRect2->x = (int)pEnemyBullet->getPosition().getX();
@@ -82,7 +82,7 @@ void CollisionManager::checkEnemyPlayerBulletCollision(const std::vector<GameObj
     {
         GameObject* pObject = objects[i];
 
-        for (unsigned int j = 0; j < TheBulletHandler::Instance()->getPlayerBullets().size(); j++)
+        for (unsigned int j = 0; j < TheBulletHandler::Instance().getPlayerBullets().size(); j++)
         {
             if (pObject->objType() != std::string("Enemy") || !pObject->updating())
             {
@@ -95,7 +95,7 @@ void CollisionManager::checkEnemyPlayerBulletCollision(const std::vector<GameObj
             pRect1->w = (int)pObject->getWidth();
             pRect1->h = (int)pObject->getHeight();
 
-            PlayerBullet* pPlayerBullet = TheBulletHandler::Instance()->getPlayerBullets()[j];
+            PlayerBullet* pPlayerBullet = TheBulletHandler::Instance().getPlayerBullets()[j];
 
             SDL_Rect* pRect2 = new SDL_Rect();
             pRect2->x = (int)pPlayerBullet->getPosition().getX();

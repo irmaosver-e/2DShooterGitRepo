@@ -8,15 +8,15 @@ int main(int argc, char* args[])
 {
 	Uint32 frameStart, frameTime;
 
-	if (TheGame::Instance()->init("Chapter 1", 100, 100, 640, 480, false)) //init the Game
+	if (TheGame::Instance().init("Chapter 1", 100, 100, 640, 480, false)) //init the Game
 	{
-		while (TheGame::Instance()->running())
+		while (TheGame::Instance().running())
 		{
 			frameStart = SDL_GetTicks();
 
-			TheGame::Instance()->handleEvents();
-			TheGame::Instance()->update();
-			TheGame::Instance()->render();
+			TheGame::Instance().handleEvents();
+			TheGame::Instance().update();
+			TheGame::Instance().render();
 
 			frameTime = SDL_GetTicks() - frameStart;
 			
@@ -32,7 +32,7 @@ int main(int argc, char* args[])
 		return -1;
 	}
 
-	TheGame::Instance()->clean();
+	TheGame::Instance().clean();
 
 	return 0;
 }

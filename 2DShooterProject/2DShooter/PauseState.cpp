@@ -55,9 +55,9 @@ bool PauseState::onExit()
 	// clear the texture manager
 	for (unsigned int i = 0; i < m_textureIDList.size(); i++)
 	{
-		TheTextureManager::Instance()->clearFromTextureMap(m_textureIDList[i]);
+		TheTextureManager::Instance().clearFromTextureMap(m_textureIDList[i]);
 	}
-	TheInputHandler::Instance()->reset();
+	TheInputHandler::Instance().reset();
 
 	std::cout << "exiting PauseState\n";
 	return true;
@@ -82,10 +82,10 @@ void PauseState::setCallbacks(const std::vector<Callback>& callbacks)
 
 void PauseState::s_pauseToMain()
 {
-	TheGame::Instance()->getStateMachine()->changeState(new MainMenuState());
+	TheGame::Instance().getStateMachine()->changeState(new MainMenuState());
 }
 
 void PauseState::s_resumePlay()
 {
-	TheGame::Instance()->getStateMachine()->popState();
+	TheGame::Instance().getStateMachine()->popState();
 }

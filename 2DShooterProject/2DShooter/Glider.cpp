@@ -50,7 +50,7 @@ void Glider::collision()
     {
         if (!m_bPlayedDeathSound)
         {
-            TheSoundManager::Instance()->playSound("explode", 0);
+            TheSoundManager::Instance().playSound("explode", 0);
 
             m_textureID = "explosion";
             m_currentFrame = 0;

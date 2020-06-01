@@ -1,17 +1,6 @@
 #include "SoundManager.h"
 
-SoundManager* SoundManager::s_pInstance = nullptr;
-
-SoundManager* SoundManager::Instance()
-{
-	if (!s_pInstance)
-	{
-		s_pInstance = new SoundManager();
-	}
-	return s_pInstance;
-}
-
-SoundManager::SoundManager()
+SoundManager::SoundManager(token)
 {
 	Mix_OpenAudio(22050, AUDIO_S16, 2, 4096);
 	std::cout << " HARDCODED values for SoundManager::SoundManager() \n"
