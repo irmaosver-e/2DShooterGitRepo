@@ -1,4 +1,5 @@
 #include "Glider.h"
+#include "SoundManager.h"
 
 Glider::Glider() : Enemy()
 {

@@ -1,9 +1,7 @@
 #ifndef __MenuButton__
 #define __MenuButton__
 
-#include "BaseCreator.h"
 #include "ShooterObject.h"
-#include "InputHandler.h"
 
 class MenuButton :	public ShooterObject
 {

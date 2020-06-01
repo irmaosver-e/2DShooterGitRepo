@@ -1,9 +1,7 @@
 #ifndef __AnimatedGraphic__
 #define __AnimatedGraphic__
 
-#include <SDL.h>
 #include "ShooterObject.h"
-#include "BaseCreator.h"
 
 class AnimatedGraphic : public ShooterObject
 {

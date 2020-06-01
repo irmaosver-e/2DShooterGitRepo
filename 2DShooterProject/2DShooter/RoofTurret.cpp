@@ -1,5 +1,6 @@
 #include "RoofTurret.h"
 
+#include "SDLSystem.h"
 #include "Game.h"
 #include "TextureManager.h"
 #include "BulletHandler.h"
@@ -7,7 +8,7 @@
 void RoofTurret::draw()
 {
 	TextureManager::Instance().drawFrame(m_textureID, (Uint32)m_position.getX(), (Uint32)m_position.getY(),
-		                                    m_width, m_height, m_currentRow, m_currentFrame, TheGame::Instance().getRenderer(), m_angle, m_alpha, SDL_FLIP_VERTICAL);
+		                                    m_width, m_height, m_currentRow, m_currentFrame, TheSDLSystem::Instance().getRenderer(), m_angle, m_alpha, SDL_FLIP_VERTICAL);
 }
 
 void RoofTurret::update()

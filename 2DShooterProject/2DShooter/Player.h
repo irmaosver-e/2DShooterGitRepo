@@ -2,7 +2,6 @@
 #define __Player__
 
 #include "ShooterObject.h"
-#include "BaseCreator.h"
 
 class Player : public ShooterObject
 {

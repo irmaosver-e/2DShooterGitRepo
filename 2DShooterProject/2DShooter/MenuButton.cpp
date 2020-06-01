@@ -1,4 +1,5 @@
 #include "MenuButton.h"
+#include "InputHandler.h"
 
 void MenuButton::load(std::unique_ptr<LoaderParams> const& pParams)
 {

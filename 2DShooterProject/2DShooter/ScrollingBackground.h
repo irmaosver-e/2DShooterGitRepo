@@ -2,9 +2,7 @@
 #define __ScrollingBackground__
 
 #include "ShooterObject.h"
-#include "BaseCreator.h"
-#include "Game.h"
-#include "TextureManager.h"
+#include "SDL_rect.h"
 
 class ScrollingBackground : public ShooterObject
 {

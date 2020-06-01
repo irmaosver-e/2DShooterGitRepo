@@ -3,10 +3,6 @@
 
 
 #include "Enemy.h"
-#include "BaseCreator.h"
-#include "SoundManager.h"
-#include "BulletHandler.h"
-#include "Game.h"
 
 class Eskeletor : public Enemy
 {

@@ -1,6 +1,7 @@
 #include "PlayState.h"
 
 #include <iostream>
+#include "SDLSystem.h"
 #include "Game.h"
 #include "BulletHandler.h"
 #include "InputHandler.h"
@@ -46,7 +47,7 @@ void PlayState::render()
 
 		for (int i = 0; i < TheGame::Instance().getPlayerLives(); i++)
 		{
-			TheTextureManager::Instance().drawFrame("lives", i * 30, 0, 32, 30, 0, 0, TheGame::Instance().getRenderer(), 0.0, 255);
+			TheTextureManager::Instance().drawFrame("lives", i * 30, 0, 32, 30, 0, 0, TheSDLSystem::Instance().getRenderer(), 0.0, 255);
 		}
 
 		TheBulletHandler::Instance().drawBullets();
@@ -60,10 +61,10 @@ bool PlayState::onEnter()
 	LevelParser levelParser;
 	pLevel = levelParser.parseLevel(TheGame::Instance().getLevelFiles()[TheGame::Instance().getCurrentLevel() - 1].c_str());
 
-	TheTextureManager::Instance().load("assets/bullet1.png", "bullet1", TheGame::Instance().getRenderer());
-	TheTextureManager::Instance().load("assets/bullet2.png", "bullet2", TheGame::Instance().getRenderer());
-	TheTextureManager::Instance().load("assets/bullet3.png", "bullet3", TheGame::Instance().getRenderer());
-	TheTextureManager::Instance().load("assets/lives.png", "lives", TheGame::Instance().getRenderer());
+	TheTextureManager::Instance().load("assets/bullet1.png", "bullet1", TheSDLSystem::Instance().getRenderer());
+	TheTextureManager::Instance().load("assets/bullet2.png", "bullet2", TheSDLSystem::Instance().getRenderer());
+	TheTextureManager::Instance().load("assets/bullet3.png", "bullet3", TheSDLSystem::Instance().getRenderer());
+	TheTextureManager::Instance().load("assets/lives.png", "lives", TheSDLSystem::Instance().getRenderer());
 
 	if (pLevel)
 	{

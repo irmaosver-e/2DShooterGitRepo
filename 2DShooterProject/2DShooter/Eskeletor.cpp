@@ -1,4 +1,7 @@
 #include "Eskeletor.h"
+#include "SoundManager.h"
+#include "BulletHandler.h"
+#include "Game.h"
 
 Eskeletor::Eskeletor() : Enemy()
 {

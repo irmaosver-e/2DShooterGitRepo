@@ -1,5 +1,7 @@
 #include "ScrollingBackground.h"
 
+#include "SDLSystem.h"
+#include "TextureManager.h"
 
 void ScrollingBackground::load(std::unique_ptr<LoaderParams> const& pParams)
 {
@@ -26,10 +28,10 @@ void ScrollingBackground::load(std::unique_ptr<LoaderParams> const& pParams)
 void ScrollingBackground::draw()
 {
     // draw first rect
-    SDL_RenderCopyEx(TheGame::Instance().getRenderer(), TheTextureManager::Instance().getTextureMap()[m_textureID], &m_srcRect1, &m_destRect1, 0, 0, SDL_FLIP_NONE);
+    SDL_RenderCopyEx(TheSDLSystem::Instance().getRenderer(), TheTextureManager::Instance().getTextureMap()[m_textureID], &m_srcRect1, &m_destRect1, 0, 0, SDL_FLIP_NONE);
 
     // draw second rect
-    SDL_RenderCopyEx(TheGame::Instance().getRenderer(), TheTextureManager::Instance().getTextureMap()[m_textureID], &m_srcRect2, &m_destRect2, 0, 0, SDL_FLIP_NONE);
+    SDL_RenderCopyEx(TheSDLSystem::Instance().getRenderer(), TheTextureManager::Instance().getTextureMap()[m_textureID], &m_srcRect2, &m_destRect2, 0, 0, SDL_FLIP_NONE);
 
 }
 

@@ -1,6 +1,6 @@
 #include "ShooterObject.h"
 
-#include "Game.h"
+#include "SDLSystem.h"
 #include "TextureManager.h"
 
 ShooterObject::ShooterObject() : GameObject(),
@@ -27,9 +27,8 @@ void ShooterObject::load(std::unique_ptr<LoaderParams> const& pParams)
 
 void ShooterObject::draw()
 {	
-	TextureManager::Instance().drawFrame(m_textureID, (Uint32)m_position.getX(), (Uint32)m_position.getY(),
-											m_width, m_height, m_currentRow, m_currentFrame, TheGame::Instance().getRenderer(), m_angle, m_alpha);
-
+	TheTextureManager::Instance().drawFrame(m_textureID, (Uint32)m_position.getX(), (Uint32)m_position.getY(),
+											m_width, m_height, m_currentRow, m_currentFrame, TheSDLSystem::Instance().getRenderer(), m_angle, m_alpha);
 }
 
 void ShooterObject::update()
@@ -41,7 +40,6 @@ void ShooterObject::update()
 void ShooterObject::doDyingAnimation()
 {
 	//keeps scrolling w the map
-	//scroll(TheGame::Instance().getScrollSpeed());
 
 	m_currentFrame = int((SDL_GetTicks() / (1000 / 3)) % m_numFrames);
 

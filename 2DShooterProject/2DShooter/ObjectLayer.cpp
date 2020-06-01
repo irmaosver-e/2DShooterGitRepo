@@ -1,6 +1,7 @@
 #include "ObjectLayer.h"
 
 #include "Game.h"
+#include "SDLSystem.h"
 #include "GameObject.h"
 #include "Level.h"
 
@@ -19,7 +20,7 @@ void ObjectLayer::update(Level* pLevel)
 	m_collisionManager.checkEnemyPlayerBulletCollision((const std::vector<GameObject*>&)m_gameObjects);
 	m_collisionManager.checkPlayerEnemyCollision(pLevel->getPlayer(), (const std::vector<GameObject*>&)m_gameObjects);
 	
-	if (pLevel->getPlayer()->getPosition().getX() + pLevel->getPlayer()->getWidth() < TheGame::Instance().getGameWidth())
+	if (pLevel->getPlayer()->getPosition().getX() + pLevel->getPlayer()->getWidth() < TheSDLSystem::Instance().getScreenWidth())
 	{
 		m_collisionManager.checkPlayerTileCollision(pLevel->getPlayer(), pLevel->getCollidableLayers());
 	}
@@ -29,7 +30,7 @@ void ObjectLayer::update(Level* pLevel)
     {
         for (std::vector<GameObject*>::iterator it = m_gameObjects.begin(); it != m_gameObjects.end();)
         {
-            if ((*it)->getPosition().getX() <= TheGame::Instance().getGameWidth())
+            if ((*it)->getPosition().getX() <= TheSDLSystem::Instance().getScreenWidth())
             {
                 (*it)->setUpdating(true);
                 (*it)->update();
@@ -48,7 +49,7 @@ void ObjectLayer::update(Level* pLevel)
             }
 
             // check if dead or off screen
-            if ((*it)->getPosition().getX() < (0 - (*it)->getWidth()) || (*it)->getPosition().getY() > (TheGame::Instance().getGameHeight()) || ((*it)->dead()))
+            if ((*it)->getPosition().getX() < (0 - (*it)->getWidth()) || (*it)->getPosition().getY() > (TheSDLSystem::Instance().getScreenHeight()) || ((*it)->dead()))
             {
                 delete* it;
                 it = m_gameObjects.erase(it); // erase from vector and get new iterator
@@ -66,7 +67,7 @@ void ObjectLayer::render()
 {
     for (unsigned int i = 0; i < m_gameObjects.size(); i++)
     {
-        if (m_gameObjects[i]->getPosition().getX() <= TheGame::Instance().getGameWidth())
+        if (m_gameObjects[i]->getPosition().getX() <= TheSDLSystem::Instance().getScreenWidth())
         {
             m_gameObjects[i]->draw();
         }

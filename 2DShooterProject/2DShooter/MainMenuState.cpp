@@ -2,6 +2,7 @@
 
 #include "TextureManager.h"
 #include "Game.h"
+#include "InputHandler.h"
 #include "StateParser.h"
 
 #include "MenuButton.h"

@@ -1,5 +1,9 @@
 #include "StateParser.h"
 
+#include "SDLSystem.h"
+#include "TextureManager.h"
+#include "GameObjectFactory.h"
+
 bool StateParser::parseState(const char* stateFile, std::string stateID, std::vector<GameObject*> *pObjects, std::vector<std::string> *pTextureIDs)
 {
 	//create XML doc
@@ -72,7 +76,7 @@ void StateParser::parseTextures(TiXmlElement* pTextureRoot, std::vector<std::str
 		std::string idAttribute = e->Attribute("ID");
 
 		pTextureIDs->push_back(idAttribute);
-		if (!TheTextureManager::Instance().load(filenameAttribute, idAttribute, TheGame::Instance().getRenderer()))
+		if (!TheTextureManager::Instance().load(filenameAttribute, idAttribute, TheSDLSystem::Instance().getRenderer()))
 		{
 			std::cout << "StateParser::parseTextures -- failed to load texture " << filenameAttribute << "\n";
 		}

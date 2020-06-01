@@ -1,4 +1,5 @@
 #include "Game.h"
+#include <SDL.h>
 #include <iostream>
 
 const int FPS = 60;
@@ -8,7 +9,7 @@ int main(int argc, char* args[])
 {
 	Uint32 frameStart, frameTime;
 
-	if (TheGame::Instance().init("Chapter 1", 100, 100, 640, 480, false)) //init the Game
+	if (TheGame::Instance().init()) //init the Game
 	{
 		while (TheGame::Instance().running())
 		{

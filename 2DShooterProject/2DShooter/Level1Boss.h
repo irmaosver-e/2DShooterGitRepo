@@ -2,8 +2,6 @@
 #define __Level1Boss__
 
 #include "Enemy.h"
-#include "Game.h"
-#include "BaseCreator.h"
 
 class Level1Boss : public Enemy
 {
@@ -17,7 +15,6 @@ public:
 
 
 private:
-
     bool m_entered;
 };
 

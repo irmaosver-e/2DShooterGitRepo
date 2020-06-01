@@ -3,6 +3,7 @@
 #include <SDL.h>
 
 #include "Game.h"
+#include "SDLSystem.h"
 #include "InputHandler.h"
 #include "BulletHandler.h"
 #include "SoundManager.h"
@@ -42,7 +43,7 @@ void Player::update()
 	//if the level is finished, fly off the screen
 	if (TheGame::Instance().getLevelComplete())
 	{
-		if (m_position.getX() >= TheGame::Instance().getGameWidth())
+		if (m_position.getX() >= TheSDLSystem::Instance().getScreenWidth())
 		{
 			TheGame::Instance().setCurrentLevel(TheGame::Instance().getCurrentLevel() + 1);
 		}
@@ -87,8 +88,8 @@ void Player::clean()
 void Player::collision()
 {
 	//godmode for debuging
-	std::cout << "GOD MODE ON in Player::collision() \n";
-	m_invulnerable = true;
+	//std::cout << "GOD MODE ON in Player::collision() \n";
+	//m_invulnerable = true;
 	//-----------------------
 
 	// if the player is not invulnerable then set to dying and change values for death animation tile sheet
@@ -132,7 +133,7 @@ void Player::handleInput()
 		{
 			m_velocity.setY((float)-m_moveSpeed);
 		}
-		else if (TheInputHandler::Instance().isKeyDown(SDL_SCANCODE_DOWN) && (m_position.getY() + m_height) < TheGame::Instance().getGameHeight() - 10)
+		else if (TheInputHandler::Instance().isKeyDown(SDL_SCANCODE_DOWN) && (m_position.getY() + m_height) < TheSDLSystem::Instance().getScreenHeight() - 10)
 		{
 			m_velocity.setY((float)m_moveSpeed);
 		}
@@ -141,7 +142,7 @@ void Player::handleInput()
 		{
 			m_velocity.setX((float)-m_moveSpeed);
 		}
-		else if (TheInputHandler::Instance().isKeyDown(SDL_SCANCODE_RIGHT) && (m_position.getX() + m_width) < TheGame::Instance().getGameWidth())
+		else if (TheInputHandler::Instance().isKeyDown(SDL_SCANCODE_RIGHT) && (m_position.getX() + m_width) < TheSDLSystem::Instance().getScreenWidth())
 		{
 			m_velocity.setX((float)m_moveSpeed);
 		}
@@ -182,12 +183,12 @@ void Player::handleInput()
 				m_bulletCounter = m_bulletFiringSpeed;
 			}
 
-			if((TheInputHandler::Instance().getAxisX(0, 1) > 0 && (m_position.getX() + m_width) < TheGame::Instance().getGameWidth()) || (TheInputHandler::Instance().getAxisX(0, 1) < 0 && m_position.getX() > 0))
+			if((TheInputHandler::Instance().getAxisX(0, 1) > 0 && (m_position.getX() + m_width) < TheSDLSystem::Instance().getScreenWidth()) || (TheInputHandler::Instance().getAxisX(0, 1) < 0 && m_position.getX() > 0))
 			{
 				m_velocity.setX(m_moveSpeed * TheInputHandler::Instance().getAxisX(0, 1));
 			}
 
-			if((TheInputHandler::Instance().getAxisY(0, 1) > 0 && (m_position.getY() + m_height) < TheGame::Instance().getGameHeight() - 10 ) || (TheInputHandler::Instance().getAxisY(0, 1) < 0 && m_position.getY() > 0))
+			if((TheInputHandler::Instance().getAxisY(0, 1) > 0 && (m_position.getY() + m_height) < TheSDLSystem::Instance().getScreenHeight() - 10 ) || (TheInputHandler::Instance().getAxisY(0, 1) < 0 && m_position.getY() > 0))
 			{
 				m_velocity.setY(m_moveSpeed * TheInputHandler::Instance().getAxisY(0, 1));
 			}

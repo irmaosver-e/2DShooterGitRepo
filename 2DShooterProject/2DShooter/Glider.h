@@ -2,8 +2,6 @@
 #define __Glider__
 
 #include "Enemy.h"
-#include "BaseCreator.h"
-#include "SoundManager.h"
 
 class Glider :	public Enemy
 {

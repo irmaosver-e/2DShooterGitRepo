@@ -26,5 +26,6 @@ private:
 };
 
 typedef SoundManager TheSoundManager;
+
 #endif /* defined ( __SoundManager__ ) */
 

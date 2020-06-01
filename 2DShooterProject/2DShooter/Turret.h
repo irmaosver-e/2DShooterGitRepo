@@ -2,7 +2,6 @@
 #define __Turret__
 
 #include "Enemy.h"
-#include "BaseCreator.h"
 
 class Turret :	public Enemy
 {

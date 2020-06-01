@@ -4,10 +4,7 @@
 #include <iostream>
 #include <vector>
 #include "tinyxml.h"
-
-#include "Game.h"
-#include "TextureManager.h"
-#include "GameObjectFactory.h"
+#include "GameObject.h"
 
 class StateParser
 {

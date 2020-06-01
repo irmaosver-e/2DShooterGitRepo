@@ -1,7 +1,6 @@
 #ifndef __Game__
 #define __Game__
 
-#include <SDL.h>
 #include <vector>
 
 #include "Singleton.h"
@@ -11,17 +10,15 @@ class Game : public Singleton<Game>
 {
 public:
 	Game(token);
-	~Game();
+	~Game() {}
 
 	//set the running variable to true
-	bool init(const char* title, int xpos, int ypos, int width, int height, bool fullScreen);
+	bool init();
 	void render();
 	void update();
 	void handleEvents();
 	void clean();
 
-	int getGameWidth() const { return m_gameWidth; }
-	int getGameHeight() const { return m_gameHeight; }
 	float getScrollSpeed() const { return m_scrollSpeed; }
 	
 	int getPlayerLives() { return m_playerLives; }
@@ -42,22 +39,15 @@ public:
 	bool running() { return m_bRunning; }
 	void quit() { m_bRunning = false; }
 
-	SDL_Renderer* getRenderer() const{ return m_pRenderer; }
-	SDL_Window* getWindow() const { return m_pWindow; }
 	GameStateMachine* getStateMachine() { return m_pGameStateMachine; }
 
 private:
 
 	bool m_bRunning;
 
-	SDL_Window* m_pWindow = 0;
-	SDL_Renderer* m_pRenderer = 0;
-
 	GameStateMachine* m_pGameStateMachine;
 	bool m_bChangingState;
 
-	int m_gameWidth;
-	int m_gameHeight;
 	float m_scrollSpeed;
 	
 	int m_playerLives;

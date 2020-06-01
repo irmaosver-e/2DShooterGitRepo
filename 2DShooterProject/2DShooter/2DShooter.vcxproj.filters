@@ -183,6 +183,9 @@
     <ClCompile Include="Level1Boss.cpp">
       <Filter>Source Files\GameCPPs\GameObjs</Filter>
     </ClCompile>
+    <ClCompile Include="SDLSystem.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Game.h">
@@ -312,6 +315,9 @@
       <Filter>Header Files\Handlers</Filter>
     </ClInclude>
     <ClInclude Include="Singleton.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="SDLSystem.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

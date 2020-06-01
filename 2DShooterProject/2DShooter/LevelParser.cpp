@@ -1,8 +1,8 @@
 #include "LevelParser.h"
 
 #include <string>
+#include "SDLSystem.h"
 #include "TextureManager.h"
-#include "Game.h"
 #include "ObjectLayer.h"
 #include "TileLayer.h"
 #include "GameObjectFactory.h"
@@ -192,7 +192,7 @@ void LevelParser::parseTileLayer(TiXmlElement* pTileElement, std::vector<Layer*>
 
 bool LevelParser::parseTextures(std::string fileName, std::string id)
 {
-	if (!TheTextureManager::Instance().load(fileName, id, TheGame::Instance().getRenderer()))
+	if (!TheTextureManager::Instance().load(fileName, id, TheSDLSystem::Instance().getRenderer()))
 	{
 		std::cout << "failed to load texture in LevelParser::parseTextures \n";
 		return false;

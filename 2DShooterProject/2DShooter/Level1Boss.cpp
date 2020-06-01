@@ -1,6 +1,9 @@
 #include "Level1Boss.h"
+#include "Game.h"
+#include "SDLSystem.h"
 #include "SoundManager.h"
 #include "BulletHandler.h"
+
 
 Level1Boss::Level1Boss() : Enemy()
 {
@@ -51,7 +54,7 @@ void Level1Boss::update()
     {
         scroll(TheGame::Instance().getScrollSpeed());
 
-        if (m_position.getX() < (TheGame::Instance().getGameWidth() - (m_width + 20)))
+        if (m_position.getX() < (TheSDLSystem::Instance().getScreenWidth() - (m_width + 20)))
         {
             m_entered = true;
         }
@@ -60,7 +63,7 @@ void Level1Boss::update()
     {
         if (!m_bDying)
         {
-            if (m_position.getY() + m_height >= TheGame::Instance().getGameHeight())
+            if (m_position.getY() + m_height >= TheSDLSystem::Instance().getScreenHeight())
             {
                 m_velocity.setY((float)-m_moveSpeed);
             }

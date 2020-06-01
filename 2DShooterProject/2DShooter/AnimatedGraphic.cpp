@@ -1,4 +1,5 @@
 #include "AnimatedGraphic.h"
+#include <SDL.h>
 
 void AnimatedGraphic::load(std::unique_ptr<LoaderParams> const& pParams)
 {
