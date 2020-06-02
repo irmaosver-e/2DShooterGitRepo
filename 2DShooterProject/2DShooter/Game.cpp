@@ -38,7 +38,7 @@ Game::Game(token) :
 
 bool Game::init()
 {
-	TheSDLSystem::Instance().init("Chapter 1", 100, 100, 640, 480, false);
+	TheSDLSystem::Instance().init("config.xml");
 
 	// add some sound effects - TODO move to better place
 	TheSoundManager::Instance().load("assets/DST_ElectroRock.ogg", "music1", SOUND_MUSIC);

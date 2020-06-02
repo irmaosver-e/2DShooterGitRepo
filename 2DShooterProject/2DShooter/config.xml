@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<SYSTEM>
+	<WINDOW>
+		<properties title="Chapter 1" window_X_Pos="100" window_Y_Pos="100" screen_Width="640" screen_Height="480" frame_Rate="50" fullscreen="false"/>
+		<drawColour R="0" G="0" B="0" Alpha="255"/>
+	</WINDOW>
+</SYSTEM>
+	

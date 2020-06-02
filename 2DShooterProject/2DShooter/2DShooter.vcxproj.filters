@@ -43,9 +43,6 @@
     <Filter Include="Header Files\GameObjects\GraphicObjs">
       <UniqueIdentifier>{235e198f-4000-4dc8-9e5b-b6b466cad31c}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Header Files\GameObjects\_Factory">
-      <UniqueIdentifier>{05be20ed-4550-4906-a218-5c50d4ae269a}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Header Files\GameObjects\EnemyObjs\Gliders">
       <UniqueIdentifier>{6d876d5e-a4ff-4b32-8119-d3a5f1421143}</UniqueIdentifier>
     </Filter>
@@ -75,6 +72,9 @@
     </Filter>
     <Filter Include="Header Files\Managers">
       <UniqueIdentifier>{ac4a9287-fa91-4344-81cd-33251784cc83}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\Factory">
+      <UniqueIdentifier>{05be20ed-4550-4906-a218-5c50d4ae269a}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -186,6 +186,9 @@
     <ClCompile Include="SDLSystem.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="SystemParser.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Game.h">
@@ -216,10 +219,10 @@
       <Filter>Header Files\GameObjects</Filter>
     </ClInclude>
     <ClInclude Include="GameObjectFactory.h">
-      <Filter>Header Files\GameObjects\_Factory</Filter>
+      <Filter>Header Files\Factory</Filter>
     </ClInclude>
     <ClInclude Include="BaseCreator.h">
-      <Filter>Header Files\GameObjects\_Factory</Filter>
+      <Filter>Header Files\Factory</Filter>
     </ClInclude>
     <ClInclude Include="GameObject.h">
       <Filter>Header Files\GameObjects\BaseObjects</Filter>
@@ -320,9 +323,15 @@
     <ClInclude Include="SDLSystem.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="SystemParser.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
-    <Xml Include="test.xml">
+    <Xml Include="assets\attack.xml">
+      <Filter>Resource Files</Filter>
+    </Xml>
+    <Xml Include="config.xml">
       <Filter>Resource Files</Filter>
     </Xml>
   </ItemGroup>

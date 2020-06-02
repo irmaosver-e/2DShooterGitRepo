@@ -70,7 +70,7 @@ bool StateParser::parseState(const char* stateFile, std::string stateID, std::ve
 
 void StateParser::parseTextures(TiXmlElement* pTextureRoot, std::vector<std::string> *pTextureIDs)
 {
-	for (TiXmlElement* e = pTextureRoot->FirstChildElement(); e != NULL; e = e->NextSiblingElement())
+	for (TiXmlElement* e = pTextureRoot->FirstChildElement(); e != nullptr; e = e->NextSiblingElement())
 	{
 		std::string filenameAttribute = e->Attribute("filename");
 		std::string idAttribute = e->Attribute("ID");

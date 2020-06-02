@@ -1,7 +1,8 @@
 #include "SDLSystem.h"
+#include "SystemParser.h"
 #include <iostream>
 
-SDLSystem::SDLSystem(token) : m_pWindow(nullptr), m_pRenderer(nullptr) 
+SDLSystem::SDLSystem(token) : m_pWindow(nullptr), m_pRenderer(nullptr), m_frameTime(0.0f), m_fps(60)
 {
 }
 
@@ -12,16 +13,20 @@ SDLSystem::~SDLSystem()
 	m_pWindow = nullptr;
 }
 
-bool SDLSystem::init(const char* title, int xpos, int ypos, int width, int height, bool fullScreen)
+bool SDLSystem::init(const char* configFilePath)
 {
+	const char* title = nullptr;
+	int windowXpos, windowYpos;
+	int drawColour_R, drawColour_G, drawColour_B, drawColour_A;
+
+	SystemParser sysParser;
+	sysParser.parseSystem(configFilePath, title, windowXpos, windowYpos, m_screenWidth, m_screenHeight, m_fps, m_bFullScreen,
+							drawColour_R, drawColour_G, drawColour_B, drawColour_A);
+
 	//sets flag to fullscreen
 	int flags = 0;
 
-	// store the game width and height
-	m_screenWidth = width;
-	m_screenHeight = height;
-
-	if (fullScreen)
+	if (m_bFullScreen)
 	{
 		flags = SDL_WINDOW_FULLSCREEN;
 	}
@@ -30,7 +35,7 @@ bool SDLSystem::init(const char* title, int xpos, int ypos, int width, int heigh
 	if (!SDL_Init(SDL_INIT_EVERYTHING))
 	{
 		//init the window
-		m_pWindow = SDL_CreateWindow(title, xpos, ypos, width, height, flags);
+		m_pWindow = SDL_CreateWindow(title, windowXpos, windowYpos, m_screenWidth, m_screenHeight, flags);
 
 		if (m_pWindow) //window init success
 		{
@@ -38,7 +43,7 @@ bool SDLSystem::init(const char* title, int xpos, int ypos, int width, int heigh
 
 			if (m_pRenderer) //renderer init success
 			{
-				SDL_SetRenderDrawColor(m_pRenderer, 0, 0, 0, 255);
+				SDL_SetRenderDrawColor(m_pRenderer, drawColour_R, drawColour_G, drawColour_B, drawColour_A);
 			}
 			else
 			{
@@ -59,6 +64,29 @@ bool SDLSystem::init(const char* title, int xpos, int ypos, int width, int heigh
 	}
 
 	return true;
+}
+
+float SDLSystem::getDTSecs()
+{
+	return m_frameTime;
+}
+
+bool SDLSystem::capFrameRate()
+{	
+	static int lastTime = SDL_GetTicks();
+	int thisTime = SDL_GetTicks();
+	m_frameTime += (float)(thisTime - lastTime);
+
+	if (m_frameTime >= (1000.f / m_fps))
+	{
+		//std::cout << "ALLOWED frame - FPS: " << (1000 / m_frameTime) << "\n";
+		m_frameTime = 0.0f;
+		lastTime = thisTime;
+		return true;
+	}
+
+	lastTime = thisTime;
+	return false;
 }
 
 void SDLSystem::quit()
