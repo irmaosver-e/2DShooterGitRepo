@@ -3,6 +3,7 @@
 #include <iostream>
 #include "SDLSystem.h"
 #include "Game.h"
+#include "SoundManager.h"
 #include "BulletHandler.h"
 #include "InputHandler.h"
 #include "PauseState.h"
@@ -60,6 +61,9 @@ bool PlayState::onEnter()
 
 	LevelParser levelParser;
 	pLevel = levelParser.parseLevel(TheGame::Instance().getLevelFiles()[TheGame::Instance().getCurrentLevel() - 1].c_str());
+
+	TheSoundManager::Instance().load("assets/boom.wav", "explode", SOUND_SFX);
+	TheSoundManager::Instance().load("assets/phaser.wav", "shoot", SOUND_SFX);
 
 	TheTextureManager::Instance().load("assets/bullet1.png", "bullet1", TheSDLSystem::Instance().getRenderer());
 	TheTextureManager::Instance().load("assets/bullet2.png", "bullet2", TheSDLSystem::Instance().getRenderer());

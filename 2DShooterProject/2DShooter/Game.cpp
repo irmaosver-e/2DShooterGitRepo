@@ -3,6 +3,7 @@
 #include <iostream>
 
 #include "SDLSystem.h"
+#include "SystemParser.h"
 #include "SoundManager.h"
 #include "TextureManager.h"
 #include "InputHandler.h"
@@ -36,18 +37,16 @@ Game::Game(token) :
 	m_currentLevel = 1;
 }
 
-bool Game::init()
+bool Game::init(const char* configFile)
 {
-	TheSDLSystem::Instance().init("config.xml");
+	//TheSDLSystem::Instance().init(configFile);
 
-	// add some sound effects - TODO move to better place
-	TheSoundManager::Instance().load("assets/DST_ElectroRock.ogg", "music1", SOUND_MUSIC);
-	TheSoundManager::Instance().load("assets/boom.wav", "explode", SOUND_SFX);
-	TheSoundManager::Instance().load("assets/phaser.wav", "shoot", SOUND_SFX);
 	
-	TheSoundManager::Instance().playMusic("music1", -1);
+	SystemParser sysParser;
+	sysParser.parseSystem(configFile);
+	
 
-	//TheInputHandler::Instance().initialiseJoysticks();
+	TheInputHandler::Instance().initialiseJoystick();
 
 	// register the types for the game
 	TheGameObjectFactory::Instance().registerType("MenuButton", new ObjCreator<MenuButton>);
@@ -69,6 +68,16 @@ bool Game::init()
 	m_bRunning = true; //everything inited successfully, start the main loop
 
 	return true;
+}
+
+void Game::run()
+{
+	if (TheSDLSystem::Instance().capFrameRate())
+	{
+		handleEvents();
+		update();
+		render();
+	}
 }
 
 void Game::render()

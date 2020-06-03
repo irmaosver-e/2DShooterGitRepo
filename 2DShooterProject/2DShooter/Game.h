@@ -13,10 +13,8 @@ public:
 	~Game() {}
 
 	//set the running variable to true
-	bool init();
-	void render();
-	void update();
-	void handleEvents();
+	bool init(const char* configFile);
+	void run();
 	void clean();
 
 	float getScrollSpeed() const { return m_scrollSpeed; }
@@ -36,12 +34,15 @@ public:
 	bool getchangingStateFlag() { return m_bChangingState; }
 	void setChangingStateFlag(bool changingState) { m_bChangingState = changingState; }
 
-	bool running() { return m_bRunning; }
+	bool isRunning() { return m_bRunning; }
 	void quit() { m_bRunning = false; }
 
 	GameStateMachine* getStateMachine() { return m_pGameStateMachine; }
 
 private:
+	void render();
+	void update();
+	void handleEvents();
 
 	bool m_bRunning;
 

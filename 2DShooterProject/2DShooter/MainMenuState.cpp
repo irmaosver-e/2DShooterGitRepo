@@ -1,6 +1,7 @@
 #include "MainMenuState.h"
 
 #include "TextureManager.h"
+#include "SoundManager.h"
 #include "Game.h"
 #include "InputHandler.h"
 #include "StateParser.h"
@@ -45,12 +46,16 @@ bool MainMenuState::onEnter()
 	//parse the state
 	StateParser stateParser;
 	stateParser.parseState("assets/attack.xml", s_menuID, &m_gameObjects, &m_textureIDList);
+	
 	m_callbacks.push_back(0); //pushback 0 callbackID start from 1
 	m_callbacks.push_back(s_menuToPlay);
 	m_callbacks.push_back(s_exitFromMenu);
 
 	//set the callbacks for menu items
 	setCallbacks(m_callbacks);
+
+	TheSoundManager::Instance().load("assets/DST_ElectroRock.ogg", "music1", SOUND_MUSIC);
+	TheSoundManager::Instance().playMusic("music1", -1);
 
 	m_loadingComplete = true;
 	std::cout << "Entering MainMenuState \n";

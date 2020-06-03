@@ -1,19 +1,15 @@
 #include "Game.h"
-#include "SDLSystem.h"
 #include <iostream>
+
+const char* CONFIG_FILE = "config.xml";
 
 int main(int argc, char* args[])
 {
-	if (TheGame::Instance().init()) //init the Game
+	if (TheGame::Instance().init(CONFIG_FILE)) //init the Game
 	{
-		while (TheGame::Instance().running())
+		while (TheGame::Instance().isRunning())
 		{
-			if (TheSDLSystem::Instance().capFrameRate())
-			{
-				TheGame::Instance().handleEvents();
-				TheGame::Instance().update();
-				TheGame::Instance().render();
-			}
+			TheGame::Instance().run();
 		}
 	}
 	else

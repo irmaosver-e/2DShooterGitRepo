@@ -11,6 +11,9 @@ public:
 	~SDLSystem();
 
 	bool init(const char* configFilePath);
+	bool init(const char* title, int windowXpos, int windowYpos, int screenWidth, int screenHeight, int fps, bool fullScreen,
+				int drawColour_R, int drawColour_G, int drawColour_B, int drawColour_A);
+
 	void quit();
 
 	void clearScreen() { SDL_RenderClear(m_pRenderer); }
