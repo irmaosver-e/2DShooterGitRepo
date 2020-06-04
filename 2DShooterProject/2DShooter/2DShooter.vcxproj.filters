@@ -55,15 +55,6 @@
     <Filter Include="Source Files\GameCPPs\Objects">
       <UniqueIdentifier>{f0b058b6-7f76-4339-a9ef-da9a4179ca44}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Source Files\GameCPPs\States">
-      <UniqueIdentifier>{2d924f17-bf8f-4b94-ba5f-a84f1262b824}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Source Files\GameCPPs\Handlers &amp; Managers">
-      <UniqueIdentifier>{ec759d74-2656-4577-bdea-409638f434e0}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Source Files\GameCPPs\GameObjs">
-      <UniqueIdentifier>{fc4c82e8-dcef-4356-8bb7-59f1eceb36e9}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Header Files\Parsers">
       <UniqueIdentifier>{af6a4c20-15b4-405f-ac6a-8f4248c715e8}</UniqueIdentifier>
     </Filter>
@@ -75,6 +66,18 @@
     </Filter>
     <Filter Include="Header Files\Factory">
       <UniqueIdentifier>{05be20ed-4550-4906-a218-5c50d4ae269a}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\GameObjs">
+      <UniqueIdentifier>{fc4c82e8-dcef-4356-8bb7-59f1eceb36e9}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Handlers &amp; Managers">
+      <UniqueIdentifier>{ec759d74-2656-4577-bdea-409638f434e0}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\States">
+      <UniqueIdentifier>{2d924f17-bf8f-4b94-ba5f-a84f1262b824}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Parsers">
+      <UniqueIdentifier>{84bc41c2-b904-49ba-bd9b-df8ffa2ccf31}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -105,9 +108,6 @@
     <ClCompile Include="Level.cpp">
       <Filter>Source Files\GameCPPs\Objects</Filter>
     </ClCompile>
-    <ClCompile Include="LevelParser.cpp">
-      <Filter>Source Files\GameCPPs\Objects</Filter>
-    </ClCompile>
     <ClCompile Include="MenuButton.cpp">
       <Filter>Source Files\GameCPPs\Objects</Filter>
     </ClCompile>
@@ -123,70 +123,73 @@
     <ClCompile Include="ShooterObject.cpp">
       <Filter>Source Files\GameCPPs\Objects</Filter>
     </ClCompile>
-    <ClCompile Include="StateParser.cpp">
-      <Filter>Source Files\GameCPPs\Objects</Filter>
-    </ClCompile>
     <ClCompile Include="TileLayer.cpp">
       <Filter>Source Files\GameCPPs\Objects</Filter>
     </ClCompile>
-    <ClCompile Include="Game.cpp">
-      <Filter>Source Files\GameCPPs</Filter>
-    </ClCompile>
     <ClCompile Include="GameOverState.cpp">
-      <Filter>Source Files\GameCPPs\States</Filter>
+      <Filter>Source Files\States</Filter>
     </ClCompile>
     <ClCompile Include="GameStateMachine.cpp">
-      <Filter>Source Files\GameCPPs\States</Filter>
+      <Filter>Source Files\States</Filter>
     </ClCompile>
     <ClCompile Include="PlayState.cpp">
-      <Filter>Source Files\GameCPPs\States</Filter>
+      <Filter>Source Files\States</Filter>
     </ClCompile>
     <ClCompile Include="MainMenuState.cpp">
-      <Filter>Source Files\GameCPPs\States</Filter>
+      <Filter>Source Files\States</Filter>
     </ClCompile>
     <ClCompile Include="PauseState.cpp">
-      <Filter>Source Files\GameCPPs\States</Filter>
+      <Filter>Source Files\States</Filter>
     </ClCompile>
     <ClCompile Include="BulletHandler.cpp">
-      <Filter>Source Files\GameCPPs\Handlers &amp; Managers</Filter>
+      <Filter>Source Files\Handlers &amp; Managers</Filter>
     </ClCompile>
     <ClCompile Include="CollisionManager.cpp">
-      <Filter>Source Files\GameCPPs\Handlers &amp; Managers</Filter>
+      <Filter>Source Files\Handlers &amp; Managers</Filter>
     </ClCompile>
     <ClCompile Include="InputHandler.cpp">
-      <Filter>Source Files\GameCPPs\Handlers &amp; Managers</Filter>
+      <Filter>Source Files\Handlers &amp; Managers</Filter>
     </ClCompile>
     <ClCompile Include="SoundManager.cpp">
-      <Filter>Source Files\GameCPPs\Handlers &amp; Managers</Filter>
+      <Filter>Source Files\Handlers &amp; Managers</Filter>
     </ClCompile>
     <ClCompile Include="TextureManager.cpp">
-      <Filter>Source Files\GameCPPs\Handlers &amp; Managers</Filter>
+      <Filter>Source Files\Handlers &amp; Managers</Filter>
     </ClCompile>
     <ClCompile Include="Bullet.cpp">
-      <Filter>Source Files\GameCPPs\GameObjs</Filter>
+      <Filter>Source Files\GameObjs</Filter>
     </ClCompile>
     <ClCompile Include="Eskeletor.cpp">
-      <Filter>Source Files\GameCPPs\GameObjs</Filter>
+      <Filter>Source Files\GameObjs</Filter>
     </ClCompile>
     <ClCompile Include="Glider.cpp">
-      <Filter>Source Files\GameCPPs\GameObjs</Filter>
+      <Filter>Source Files\GameObjs</Filter>
     </ClCompile>
     <ClCompile Include="Player.cpp">
-      <Filter>Source Files\GameCPPs\GameObjs</Filter>
+      <Filter>Source Files\GameObjs</Filter>
     </ClCompile>
     <ClCompile Include="ShotGlider.cpp">
-      <Filter>Source Files\GameCPPs\GameObjs</Filter>
+      <Filter>Source Files\GameObjs</Filter>
     </ClCompile>
     <ClCompile Include="Turret.cpp">
-      <Filter>Source Files\GameCPPs\GameObjs</Filter>
+      <Filter>Source Files\GameObjs</Filter>
     </ClCompile>
     <ClCompile Include="Level1Boss.cpp">
-      <Filter>Source Files\GameCPPs\GameObjs</Filter>
+      <Filter>Source Files\GameObjs</Filter>
     </ClCompile>
     <ClCompile Include="SDLSystem.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="StateParser.cpp">
+      <Filter>Source Files\Parsers</Filter>
+    </ClCompile>
+    <ClCompile Include="LevelParser.cpp">
+      <Filter>Source Files\Parsers</Filter>
+    </ClCompile>
     <ClCompile Include="SystemParser.cpp">
+      <Filter>Source Files\Parsers</Filter>
+    </ClCompile>
+    <ClCompile Include="Game.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
@@ -324,7 +327,7 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="SystemParser.h">
-      <Filter>Header Files</Filter>
+      <Filter>Header Files\Parsers</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

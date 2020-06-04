@@ -4,7 +4,6 @@
 
 #include "SDLSystem.h"
 #include "SystemParser.h"
-#include "SoundManager.h"
 #include "TextureManager.h"
 #include "InputHandler.h"
 #include "GameObjectFactory.h"
@@ -19,7 +18,6 @@
 #include "ShotGlider.h"
 #include "Eskeletor.h"
 #include "Level1Boss.h"
-#include "BaseCreator.h"
 
 Game::Game(token) :
 	m_bRunning(false),
@@ -38,15 +36,9 @@ Game::Game(token) :
 }
 
 bool Game::init(const char* configFile)
-{
-	//TheSDLSystem::Instance().init(configFile);
-
-	
+{	
 	SystemParser sysParser;
 	sysParser.parseSystem(configFile);
-	
-
-	TheInputHandler::Instance().initialiseJoystick();
 
 	// register the types for the game
 	TheGameObjectFactory::Instance().registerType("MenuButton", new ObjCreator<MenuButton>);

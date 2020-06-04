@@ -1,15 +1,28 @@
 #include "SoundManager.h"
 
-SoundManager::SoundManager(token)
-{
-	Mix_OpenAudio(22050, AUDIO_S16, 2, 4096);
-	std::cout << " HARDCODED values for SoundManager::SoundManager() \n"
-				"Mix_OpenAudio(frequency, Uint16 format, int channnels, int chunksize) \n";
-}
-
 SoundManager::~SoundManager()
 {
 	Mix_CloseAudio();
+}
+
+bool SoundManager::init(int frequency, int format, int channnels, int chunksize)
+{
+	Uint16 sdlAudioFormat = AUDIO_S16;
+	
+	if (format <= 8)
+	{
+		sdlAudioFormat = AUDIO_S8;
+	}
+
+	std::cout << sdlAudioFormat;
+
+	if (Mix_OpenAudio(frequency, sdlAudioFormat, channnels, chunksize) == -1)
+	{
+		std::cout << "Mix_OpenAudio: " << Mix_GetError() << "\n";
+		return false;
+	}
+
+	return true;
 }
 
 bool SoundManager::load(std::string fileName, std::string id, sound_type soundType)

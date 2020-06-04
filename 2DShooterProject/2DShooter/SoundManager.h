@@ -12,9 +12,10 @@ enum sound_type {SOUND_MUSIC, SOUND_SFX};
 class SoundManager : public Singleton<SoundManager>
 {
 public:
-	SoundManager(token);
+	SoundManager(token) {}
 	~SoundManager();
 
+	bool init(int frequency, int format, int channnels, int chunksize);
 	bool load(std::string fileName, std::string id, sound_type soundType);
 
 	void playSound(std::string id, int loop);

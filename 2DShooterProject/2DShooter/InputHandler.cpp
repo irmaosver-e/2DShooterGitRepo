@@ -3,6 +3,7 @@
 
 InputHandler::InputHandler(token) : m_keyboardState(0),
 m_bJoystickInitialised(false),
+m_joystickDeadZone(0),
 m_mousePosition(new Vector2D(0, 0))
 {
 	// create button states for the mouse
@@ -25,12 +26,19 @@ InputHandler::~InputHandler()
 	m_mouseButtonStates.clear();
 }
 
+void InputHandler::init(int joystickDeadZone)
+{
+	m_joystickDeadZone = joystickDeadZone;
+	initialiseJoystick();
+}
+
 
 bool InputHandler::isKeyDown(SDL_Scancode key) const
 {
-	if (m_keyboardState != 0)
+	
+	if (m_keyboardState != 0) //key up
 	{
-		if (m_keyboardState[key] == 1)
+		if (m_keyboardState[key] == 1) // key down
 		{
 			return true;
 		}

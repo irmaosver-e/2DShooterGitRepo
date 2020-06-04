@@ -16,11 +16,12 @@ public:
 	InputHandler(token);
 	~InputHandler();
 
+	void init(int joystickDeadZone);
+	
 	void update();
 	void clean();
 
-	void initialiseJoystick();
-	bool joystickInitialised() { return m_bJoystickInitialised; }
+	bool getJoystickInitialised() { return m_bJoystickInitialised; }
 
 	int getJoy_X_Value(int joyID, int stickSide);
 	int getJoy_Y_Value(int joyID, int stickSide);
@@ -51,12 +52,14 @@ private:
 	// member variables
 
 	// joystick specific
+	void initialiseJoystick();
+
 	std::vector<SDL_Joystick*> m_joysticks;
 	std::vector<std::pair<Vector2D*, Vector2D*>> m_jostickAxisValues;
 	std::vector<std::vector<bool>> m_buttonStates;
 
 	bool m_bJoystickInitialised;
-	const int m_joystickDeadZone = 10000;
+	int m_joystickDeadZone;
 
 	// mouse specific
 	std::vector<bool> m_mouseButtonStates;
