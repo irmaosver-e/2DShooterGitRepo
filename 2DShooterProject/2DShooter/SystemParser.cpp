@@ -1,6 +1,7 @@
 #include "SystemParser.h"
 #include "tinyxml.h"
 
+#include "Game.h"
 #include "SDLSystem.h"
 #include "InputHandler.h"
 #include "SoundManager.h"
@@ -32,6 +33,9 @@ bool SystemParser::parseSystem(const char* configFile)
 	//pre declare the Sound root node
 	TiXmlElement* pSoundRoot = nullptr;
 
+	//pre declare the Sound root node
+	TiXmlElement* pFilesRoot = nullptr;
+
 
 	//get this states root node and assign it to pStateRoot
 	for (TiXmlElement* e = pRoot->FirstChildElement(); e != nullptr; e = e->NextSiblingElement())
@@ -48,10 +52,14 @@ bool SystemParser::parseSystem(const char* configFile)
 		{
 			pSoundRoot = e;
 		}
+		else if (e->Value() == std::string("FILES"))
+		{
+			pFilesRoot = e;
+		}
 		else
 		{
 			std::cout << "no TiXmlElement* for " << e->Value() << " in StateParser::parseState \n";
-			if (pWindowRoot && pInputRoot && pSoundRoot)
+			if (pWindowRoot && pInputRoot && pSoundRoot && pFilesRoot)
 			{
 				break;
 			}
@@ -61,7 +69,8 @@ bool SystemParser::parseSystem(const char* configFile)
 	//parse systems
 	if (!parseWindow(pWindowRoot)||
 		!parseInput(pInputRoot) ||
-		!parseSound(pSoundRoot))
+		!parseSound(pSoundRoot) ||
+		!parseFiles(pFilesRoot))
 	{
 		return false;
 	};
@@ -169,3 +178,35 @@ bool SystemParser::parseSound(TiXmlElement* pSoundRoot)
 	return TheSoundManager::Instance().init(frequency, format, channnels, chunksize);
 }
 
+bool SystemParser::parseFiles(TiXmlElement* pFilesRoot)
+{
+	if (!pFilesRoot)
+	{
+		return false;
+	}
+
+	for (TiXmlElement* e = pFilesRoot->FirstChildElement(); e != nullptr; e = e->NextSiblingElement())
+	{
+		if (e->Value() == std::string("location"))
+		{
+			TheGame::Instance().setAssetsPath(e->Attribute("path"));
+		}
+		if (e->Value() == std::string("state"))
+		{
+			TheGame::Instance().setStatesFile(e->Attribute("filename"));
+		}
+		if (e->Value() == std::string("level"))
+		{
+			int levelNumber;
+			e->Attribute("stage", &levelNumber);
+
+			TheGame::Instance().addLevelFile(levelNumber, e->Attribute("filename"));
+		}
+		else
+		{
+			std::cout << "could not find " << e->Value() << " in " << pFilesRoot->Value() << " \n";
+		}
+	}
+
+	return true;
+}

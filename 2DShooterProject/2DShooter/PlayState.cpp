@@ -60,7 +60,7 @@ bool PlayState::onEnter()
 	TheGame::Instance().setPlayerLives(3);
 
 	LevelParser levelParser;
-	pLevel = levelParser.parseLevel(TheGame::Instance().getLevelFiles()[TheGame::Instance().getCurrentLevel() - 1].c_str());
+	pLevel = levelParser.parseLevel((TheGame::Instance().getAssetsPath() + TheGame::Instance().getLevelFiles()[TheGame::Instance().getCurrentLevel()]).c_str());
 
 	TheSoundManager::Instance().load("assets/boom.wav", "explode", SOUND_SFX);
 	TheSoundManager::Instance().load("assets/phaser.wav", "shoot", SOUND_SFX);

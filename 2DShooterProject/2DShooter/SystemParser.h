@@ -15,6 +15,7 @@ private:
 	bool parseWindow(TiXmlElement* pWindowRoot);
 	bool parseInput(TiXmlElement* pInputRoot);
 	bool parseSound(TiXmlElement* pSoundRoot);
+	bool parseFiles(TiXmlElement* pFilesRoot);
 };
 
 #endif /* defined ( __SystemParser__ ) */

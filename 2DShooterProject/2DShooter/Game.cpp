@@ -25,14 +25,10 @@ Game::Game(token) :
 	m_playerLives(3),
 	m_scrollSpeed((float)1.8),
 	m_bLevelComplete(false),
-	m_bChangingState(false)
+	m_bChangingState(false),
+	m_currentLevel(1)
 {
-	// add some level files to an array
-	m_levelFiles.push_back("assets/map1.tmx");
-	m_levelFiles.push_back("assets/map2.tmx");
-
-	// start at this level
-	m_currentLevel = 1;
+	std::cout << "m_playerLives(3) HORDCODED in Game::Game \n";
 }
 
 bool Game::init(const char* configFile)
@@ -114,4 +110,16 @@ void Game::setCurrentLevel(int currentLevel)
 	m_currentLevel = currentLevel;
 	m_pGameStateMachine->reloadState();
 	m_bLevelComplete = false;
+}
+
+void Game::addLevelFile(int levelNumber, std::string filename)
+{
+	std::map<int, std::string>::iterator it = m_levelFiles.find(levelNumber);
+	
+	//does nothing if the level file is repeated
+	if (it == m_levelFiles.end())
+	{
+		//file not in map 
+		m_levelFiles[levelNumber] = filename;
+	}
 }

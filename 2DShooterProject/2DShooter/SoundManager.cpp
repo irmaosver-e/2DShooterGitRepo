@@ -14,8 +14,6 @@ bool SoundManager::init(int frequency, int format, int channnels, int chunksize)
 		sdlAudioFormat = AUDIO_S8;
 	}
 
-	std::cout << sdlAudioFormat;
-
 	if (Mix_OpenAudio(frequency, sdlAudioFormat, channnels, chunksize) == -1)
 	{
 		std::cout << "Mix_OpenAudio: " << Mix_GetError() << "\n";
