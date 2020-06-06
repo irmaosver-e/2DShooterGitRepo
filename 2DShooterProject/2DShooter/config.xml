@@ -12,7 +12,7 @@
 	</AUDIO>
 	<FILES>
 		<location path="assets/"/>
-		<state filename="attack.xml"/>
+		<state filename="states.xml"/>
 		<level stage="1" filename="map1.tmx"/>
 		<level stage="2" filename="map2.tmx"/>
 	</FILES>

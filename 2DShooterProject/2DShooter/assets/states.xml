@@ -7,8 +7,8 @@ Callback List
 <STATES>
     <MENU>
         <TEXTURES>
-            <texture filename="assets/button.png" ID="playbutton"/>
-            <texture filename="assets/exit.png" ID="exitbutton"/>
+            <texture filename="button.png" ID="playbutton"/>
+            <texture filename="exit.png" ID="exitbutton"/>
         </TEXTURES>
         
         <OBJECTS>
@@ -19,8 +19,8 @@ Callback List
     
     <PLAY>
         <TEXTURES>
-            <texture filename="assets/helicopter.png" ID="helicopter"/>
-            <texture filename="assets/helicopter2.png" ID="helicopter2"/>
+            <texture filename="helicopter.png" ID="helicopter"/>
+            <texture filename="helicopter2.png" ID="helicopter2"/>
         </TEXTURES>
         
         <OBJECTS>
@@ -31,8 +31,8 @@ Callback List
     
     <PAUSE>
         <TEXTURES>
-            <texture filename="assets/resume.png" ID="resumebutton"/>
-            <texture filename="assets/main.png" ID="mainbutton"/>
+            <texture filename="resume.png" ID="resumebutton"/>
+            <texture filename="main.png" ID="mainbutton"/>
         </TEXTURES>
         
         <OBJECTS>
@@ -44,9 +44,9 @@ Callback List
     
     <GAMEOVER>
         <TEXTURES>
-            <texture filename="assets/gameover.png" ID="gameovertext"/>
-            <texture filename="assets/main.png" ID="mainbutton"/>
-            <texture filename="assets/restart.png" ID="restartbutton"/>
+            <texture filename="gameover.png" ID="gameovertext"/>
+            <texture filename="main.png" ID="mainbutton"/>
+            <texture filename="restart.png" ID="restartbutton"/>
         </TEXTURES>
         
         <OBJECTS>

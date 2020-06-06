@@ -4,13 +4,14 @@
 #include "TextureManager.h"
 #include "GameObjectFactory.h"
 
-bool StateParser::parseState(const char* stateFile, std::string stateID, std::vector<GameObject*> *pObjects, std::vector<std::string> *pTextureIDs)
+bool StateParser::parseState(std::string assetsLocation, std::string stateFile, std::string stateID, 
+								std::vector<GameObject*> *pObjects, std::vector<std::string> *pTextureIDs)
 {
 	//create XML doc
 	TiXmlDocument xmlDoc;
 
 	//load the file state
-	if (!xmlDoc.LoadFile(stateFile))
+	if (!xmlDoc.LoadFile(assetsLocation + stateFile))
 	{
 		std::cerr << xmlDoc.ErrorDesc() << "\n";
 		return false;
@@ -60,7 +61,7 @@ bool StateParser::parseState(const char* stateFile, std::string stateID, std::ve
 	}
 
 	//parse textures
-	parseTextures(pTextureRoot, pTextureIDs);
+	parseTextures(assetsLocation, pTextureRoot, pTextureIDs);
 
 	//parse the objects
 	parseObjects(pObjectRoot, pObjects);
@@ -68,17 +69,17 @@ bool StateParser::parseState(const char* stateFile, std::string stateID, std::ve
 	return true;
 }
 
-void StateParser::parseTextures(TiXmlElement* pTextureRoot, std::vector<std::string> *pTextureIDs)
+void StateParser::parseTextures(std::string assetsLocation, TiXmlElement* pTextureRoot, std::vector<std::string> *pTextureIDs)
 {
 	for (TiXmlElement* e = pTextureRoot->FirstChildElement(); e != nullptr; e = e->NextSiblingElement())
 	{
-		std::string filenameAttribute = e->Attribute("filename");
-		std::string idAttribute = e->Attribute("ID");
+		std::string filename = e->Attribute("filename");
+		std::string id = e->Attribute("ID");
 
-		pTextureIDs->push_back(idAttribute);
-		if (!TheTextureManager::Instance().load(filenameAttribute, idAttribute, TheSDLSystem::Instance().getRenderer()))
+		pTextureIDs->push_back(id);
+		if (!TheTextureManager::Instance().load(assetsLocation + filename, id, TheSDLSystem::Instance().getRenderer()))
 		{
-			std::cout << "StateParser::parseTextures -- failed to load texture " << filenameAttribute << "\n";
+			std::cout << "StateParser::parseTextures -- failed to load texture " << filename << "\n";
 		}
 	}
 }

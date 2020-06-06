@@ -191,11 +191,11 @@ bool SystemParser::parseFiles(TiXmlElement* pFilesRoot)
 		{
 			TheGame::Instance().setAssetsPath(e->Attribute("path"));
 		}
-		if (e->Value() == std::string("state"))
+		else if (e->Value() == std::string("state"))
 		{
 			TheGame::Instance().setStatesFile(e->Attribute("filename"));
 		}
-		if (e->Value() == std::string("level"))
+		else if (e->Value() == std::string("level"))
 		{
 			int levelNumber;
 			e->Attribute("stage", &levelNumber);

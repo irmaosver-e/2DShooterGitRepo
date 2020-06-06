@@ -105,7 +105,7 @@
     <ClInclude Include="Vector2D.h" />
   </ItemGroup>
   <ItemGroup>
-    <Xml Include="assets\attack.xml" />
+    <Xml Include="assets\states.xml" />
     <Xml Include="config.xml" />
   </ItemGroup>
   <ItemGroup>

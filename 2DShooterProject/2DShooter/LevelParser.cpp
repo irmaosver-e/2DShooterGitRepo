@@ -10,11 +10,11 @@
 #include "zlib.h"
 #include "Level.h"
 
-Level* LevelParser::parseLevel(const char* levelFile)
+Level* LevelParser::parseLevel(std::string assetsLocation, std::string levelFile)
 {
 	//create a TinyXML document and load the map XML
 	TiXmlDocument levelDocument;
-	levelDocument.LoadFile(levelFile);
+	levelDocument.LoadFile(assetsLocation + levelFile);
 
 	// create the level object
 	Level* pLevel = new Level();
@@ -52,26 +52,19 @@ Level* LevelParser::parseLevel(const char* levelFile)
 		}
 	}
 
-	//parse textures added to properties
+	//parse the object textures
 	for (TiXmlElement* e = pProperties->FirstChildElement(); e != NULL; e = e->NextSiblingElement())
 	{
 		if (e->Value() == std::string("property"))
 		{
-			if (e->Attribute("name") == std::string("assetsPath"))
-			{
-				m_assetsLocation = e->Attribute("value");
-			}
-			else
-			{
-				parseTextures((m_assetsLocation + e->Attribute("value")), e->Attribute("name"));
-			}
+			parseTextures((assetsLocation + e->Attribute("value")), e->Attribute("name"));
 		}
 	}
 
 	//parse the tileset
 	for (unsigned int i = 0; i < pTilesetElements.size(); i++ )
 	{
-		parseTilesets(pTilesetElements[i], pLevel->getTilesets());
+		parseTilesets(pTilesetElements[i], pLevel->getTilesets(), assetsLocation);
 	}
 
 	//parse any Layer
@@ -94,10 +87,10 @@ Level* LevelParser::parseLevel(const char* levelFile)
 	return pLevel;
 }
 
-void LevelParser::parseTilesets(TiXmlElement* pTilesetRoot, std::vector<Tileset>* pTilesets)
+void LevelParser::parseTilesets(TiXmlElement* pTilesetRoot, std::vector<Tileset>* pTilesets, std::string assetsLocation)
 {
 	//add tileset to textureManager
-	parseTextures((m_assetsLocation + pTilesetRoot->FirstChildElement()->Attribute("source")), 
+	parseTextures((assetsLocation + pTilesetRoot->FirstChildElement()->Attribute("source")), 
 					pTilesetRoot->Attribute("name"));
 	
 	//create a tileset object

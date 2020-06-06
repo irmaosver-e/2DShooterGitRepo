@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <map version="1.2" tiledversion="1.3.4" orientation="orthogonal" renderorder="right-down" width="150" height="15" tilewidth="32" tileheight="32" infinite="0" nextlayerid="5" nextobjectid="3">
  <properties>
-  <property name="assetsPath" value="assets/"/>
   <property name="boss" value="boss1.png"/>
   <property name="clouds2" value="clouds2.png"/>
   <property name="enemy1" value="enemy1.png"/>

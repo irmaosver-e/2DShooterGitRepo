@@ -13,10 +13,10 @@ class TileLayer;
 class LevelParser
 {
 public:
-	Level* parseLevel(const char* levelFile);
+	Level* parseLevel(std::string assetsLocation, std::string levelFile);
 
 private:
-	void parseTilesets(TiXmlElement* pTilesetRoot, std::vector<Tileset>* pTilesets);
+	void parseTilesets(TiXmlElement* pTilesetRoot, std::vector<Tileset>* pTilesets, std::string assetsLocation);
 	void parseTileLayer(TiXmlElement* pTileElement, std::vector<Layer*> *pLayers,
 						const std::vector<Tileset>* pTilesets, std::vector<TileLayer*> *pCollisionLayers);
 
@@ -26,8 +26,6 @@ private:
 	int m_tileSize;
 	int m_width;
 	int m_height;
-
-	std::string m_assetsLocation;
 };
 
 #endif /* defined ( __LevelParser__ ) */

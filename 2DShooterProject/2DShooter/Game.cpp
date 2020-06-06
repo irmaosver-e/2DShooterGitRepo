@@ -28,7 +28,7 @@ Game::Game(token) :
 	m_bChangingState(false),
 	m_currentLevel(1)
 {
-	std::cout << "m_playerLives(3) HORDCODED in Game::Game \n";
+	std::cout << "m_playerLives(3) and m_scrollSpeed((float)1.8) HORDCODED in Game::Game \n";
 }
 
 bool Game::init(const char* configFile)
