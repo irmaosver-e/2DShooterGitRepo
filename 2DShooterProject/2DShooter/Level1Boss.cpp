@@ -18,7 +18,7 @@ Level1Boss::Level1Boss() : Enemy()
 
 void Level1Boss::load(std::unique_ptr<LoaderParams> const& pParams)
 {
-    ShooterObject::load(std::move(pParams));
+    SDLGameObject::load(std::move(pParams));
     m_velocity.setY((float)-m_moveSpeed);
 }
 
@@ -85,7 +85,7 @@ void Level1Boss::update()
 
             m_bulletCounter++;
 
-            ShooterObject::update();
+            SDLGameObject::update();
         }
         else
         {

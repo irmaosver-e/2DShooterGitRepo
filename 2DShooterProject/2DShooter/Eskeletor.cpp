@@ -54,5 +54,5 @@ void Eskeletor::update()
         doDyingAnimation();
     }
 
-    ShooterObject::update();
+    SDLGameObject::update();
 }

@@ -1,18 +1,18 @@
 #ifndef __Bullet__
 #define __Bullet__
 
-#include "ShooterObject.h"
+#include "SDLGameObject.h"
 
-class PlayerBullet : public ShooterObject
+class PlayerBullet : public SDLGameObject
 {
 public:
 	PlayerBullet();
 	virtual ~PlayerBullet() {}
 
     virtual void load(std::unique_ptr<LoaderParams> pParams, Vector2D heading);
-    virtual void draw() { ShooterObject::draw(); }
+    virtual void draw() { SDLGameObject::draw(); }
     virtual void update();
-    virtual void clean() { ShooterObject::clean(); }
+    virtual void clean() { SDLGameObject::clean(); }
 
     virtual void collision();
 

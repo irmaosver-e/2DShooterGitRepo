@@ -1,9 +1,9 @@
-#include "ShooterObject.h"
+#include "SDLGameObject.h"
 
 #include "SDLSystem.h"
 #include "TextureManager.h"
 
-ShooterObject::ShooterObject() : GameObject(),
+SDLGameObject::SDLGameObject() : GameObject(),
 m_bulletFiringSpeed(0),
 m_bulletCounter(0),
 m_moveSpeed(0),
@@ -13,7 +13,7 @@ m_bPlayedDeathSound(false)
 {
 }
 
-void ShooterObject::load(std::unique_ptr<LoaderParams> const& pParams)
+void SDLGameObject::load(std::unique_ptr<LoaderParams> const& pParams)
 {
 	m_position = Vector2D((float)pParams->getX(), (float)pParams->getY());
 
@@ -25,19 +25,19 @@ void ShooterObject::load(std::unique_ptr<LoaderParams> const& pParams)
 	//m_animSpeed = pParams->getAnimSpeed();
 }
 
-void ShooterObject::draw()
+void SDLGameObject::draw()
 {	
 	TheTextureManager::Instance().drawFrame(m_textureID, (Uint32)m_position.getX(), (Uint32)m_position.getY(),
 											m_width, m_height, m_currentRow, m_currentFrame, TheSDLSystem::Instance().getRenderer(), m_angle, m_alpha);
 }
 
-void ShooterObject::update()
+void SDLGameObject::update()
 {
 	m_position += m_velocity;
 	m_currentFrame = int(((SDL_GetTicks() / (1000 / 3)) % m_numFrames));
 }
 
-void ShooterObject::doDyingAnimation()
+void SDLGameObject::doDyingAnimation()
 {
 	//keeps scrolling w the map
 

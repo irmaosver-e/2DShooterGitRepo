@@ -1,12 +1,12 @@
 #ifndef __AnimatedGraphic__
 #define __AnimatedGraphic__
 
-#include "ShooterObject.h"
+#include "SDLGameObject.h"
 
-class AnimatedGraphic : public ShooterObject
+class AnimatedGraphic : public SDLGameObject
 {
 public:
-	AnimatedGraphic() : ShooterObject() {}
+	AnimatedGraphic() : SDLGameObject() {}
 	virtual ~AnimatedGraphic() {}
 
 	virtual void load(std::unique_ptr<LoaderParams> const &pParams);

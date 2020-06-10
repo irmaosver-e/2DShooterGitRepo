@@ -67,6 +67,7 @@ private:
 	std::string m_assetsPath;
 	std::string m_statesFile;
 	std::map<int, std::string> m_levelFiles;
+	std::map<int, std::string> m_tileSetFiles;
 
 };
 

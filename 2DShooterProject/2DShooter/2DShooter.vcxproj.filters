@@ -22,9 +22,6 @@
     <Filter Include="Header Files\GameObjects\BaseObjects">
       <UniqueIdentifier>{51f6e825-ddb9-4ab5-94ce-7a17644cdeb4}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Header Files\States\StateMachine">
-      <UniqueIdentifier>{f571b1e3-afcc-48ea-93bb-974210e2b186}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Resource Files\TinyXML">
       <UniqueIdentifier>{0bc297b9-9cb6-4cd2-8272-e0c055f87c87}</UniqueIdentifier>
     </Filter>
@@ -48,12 +45,6 @@
     </Filter>
     <Filter Include="Header Files\GameObjects\EnemyObjs\Turrets">
       <UniqueIdentifier>{cdaf28b4-bfd6-4dc8-a2e0-afe23b542a64}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Source Files\GameCPPs">
-      <UniqueIdentifier>{cf278ad9-6b49-4ce3-b7d3-670a1f7c7c9c}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Source Files\GameCPPs\Objects">
-      <UniqueIdentifier>{f0b058b6-7f76-4339-a9ef-da9a4179ca44}</UniqueIdentifier>
     </Filter>
     <Filter Include="Header Files\Parsers">
       <UniqueIdentifier>{af6a4c20-15b4-405f-ac6a-8f4248c715e8}</UniqueIdentifier>
@@ -79,6 +70,15 @@
     <Filter Include="Source Files\Parsers">
       <UniqueIdentifier>{84bc41c2-b904-49ba-bd9b-df8ffa2ccf31}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Header Files\StateMachine">
+      <UniqueIdentifier>{f571b1e3-afcc-48ea-93bb-974210e2b186}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Objects">
+      <UniqueIdentifier>{f0b058b6-7f76-4339-a9ef-da9a4179ca44}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Layers">
+      <UniqueIdentifier>{cf278ad9-6b49-4ce3-b7d3-670a1f7c7c9c}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="tinyxmlparser.cpp">
@@ -100,31 +100,22 @@
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="AnimatedGraphic.cpp">
-      <Filter>Source Files\GameCPPs\Objects</Filter>
+      <Filter>Source Files\Objects</Filter>
     </ClCompile>
     <ClCompile Include="GameObjectFactory.cpp">
-      <Filter>Source Files\GameCPPs\Objects</Filter>
+      <Filter>Source Files\Objects</Filter>
     </ClCompile>
     <ClCompile Include="Level.cpp">
-      <Filter>Source Files\GameCPPs\Objects</Filter>
+      <Filter>Source Files\Objects</Filter>
     </ClCompile>
     <ClCompile Include="MenuButton.cpp">
-      <Filter>Source Files\GameCPPs\Objects</Filter>
-    </ClCompile>
-    <ClCompile Include="ObjectLayer.cpp">
-      <Filter>Source Files\GameCPPs\Objects</Filter>
+      <Filter>Source Files\Objects</Filter>
     </ClCompile>
     <ClCompile Include="RoofTurret.cpp">
-      <Filter>Source Files\GameCPPs\Objects</Filter>
+      <Filter>Source Files\Objects</Filter>
     </ClCompile>
     <ClCompile Include="ScrollingBackground.cpp">
-      <Filter>Source Files\GameCPPs\Objects</Filter>
-    </ClCompile>
-    <ClCompile Include="ShooterObject.cpp">
-      <Filter>Source Files\GameCPPs\Objects</Filter>
-    </ClCompile>
-    <ClCompile Include="TileLayer.cpp">
-      <Filter>Source Files\GameCPPs\Objects</Filter>
+      <Filter>Source Files\Objects</Filter>
     </ClCompile>
     <ClCompile Include="GameOverState.cpp">
       <Filter>Source Files\States</Filter>
@@ -192,6 +183,15 @@
     <ClCompile Include="Game.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="TileLayer.cpp">
+      <Filter>Source Files\Layers</Filter>
+    </ClCompile>
+    <ClCompile Include="ObjectLayer.cpp">
+      <Filter>Source Files\Layers</Filter>
+    </ClCompile>
+    <ClCompile Include="SDLGameObject.cpp">
+      <Filter>Source Files\Objects</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Game.h">
@@ -234,7 +234,7 @@
       <Filter>Header Files\States</Filter>
     </ClInclude>
     <ClInclude Include="GameStateMachine.h">
-      <Filter>Header Files\States\StateMachine</Filter>
+      <Filter>Header Files\StateMachine</Filter>
     </ClInclude>
     <ClInclude Include="MainMenuState.h">
       <Filter>Header Files\States</Filter>
@@ -259,9 +259,6 @@
     </ClInclude>
     <ClInclude Include="TileLayer.h">
       <Filter>Header Files\Layers</Filter>
-    </ClInclude>
-    <ClInclude Include="ShooterObject.h">
-      <Filter>Header Files\GameObjects\BaseObjects</Filter>
     </ClInclude>
     <ClInclude Include="SoundManager.h">
       <Filter>Header Files\Managers</Filter>
@@ -328,6 +325,9 @@
     </ClInclude>
     <ClInclude Include="SystemParser.h">
       <Filter>Header Files\Parsers</Filter>
+    </ClInclude>
+    <ClInclude Include="SDLGameObject.h">
+      <Filter>Header Files\GameObjects\BaseObjects</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

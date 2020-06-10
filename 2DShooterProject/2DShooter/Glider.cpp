@@ -11,7 +11,7 @@ Glider::Glider() : Enemy()
 
 void Glider::load(std::unique_ptr<LoaderParams>& pParams)
 {
-    ShooterObject::load(std::move(pParams));
+    SDLGameObject::load(std::move(pParams));
 
     m_velocity.setX((float)-m_moveSpeed);
     m_velocity.setY((float)m_moveSpeed / 2);
@@ -40,7 +40,7 @@ void Glider::update()
         doDyingAnimation();
     }
 
-    ShooterObject::update();
+    SDLGameObject::update();
 }
 
 void Glider::collision()

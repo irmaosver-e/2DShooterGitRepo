@@ -1,13 +1,13 @@
-#ifndef __ShooterObject__
-#define __ShooterObject__
+#ifndef __SDLGameObject__
+#define __SDLGameObject__
 
 #include "GameObject.h"
 #include <iostream>
 
-class ShooterObject : public GameObject
+class SDLGameObject : public GameObject
 {
 public:
-	virtual ~ShooterObject() {}
+	virtual ~SDLGameObject() {}
 
 	virtual void load(std::unique_ptr<LoaderParams> const &pParams);
 	virtual void draw();
@@ -18,7 +18,7 @@ public:
 	virtual std::string objType() { return "SDLGameObject"; }
 
 protected:
-	ShooterObject();
+	SDLGameObject();
 
 	void doDyingAnimation();
 
@@ -33,4 +33,4 @@ protected:
 	bool m_bPlayedDeathSound;
 };
 
-#endif /* defined( __ShooterObject__ ) */
+#endif /* defined( __SDLGameObject__ ) */

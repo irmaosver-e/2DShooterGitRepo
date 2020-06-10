@@ -1,13 +1,13 @@
 #include "Bullet.h"
 
-PlayerBullet::PlayerBullet() : ShooterObject()
+PlayerBullet::PlayerBullet() : SDLGameObject()
 {
     m_dyingTime = 5;
 }
 
 void PlayerBullet::load(std::unique_ptr<LoaderParams> pParams, Vector2D heading)
 {
-    ShooterObject::load(std::move(pParams));
+    SDLGameObject::load(std::move(pParams));
     m_heading = heading;
 }
 
@@ -18,7 +18,7 @@ void PlayerBullet::update()
         m_velocity.setX(m_heading.getX());
         m_velocity.setY(m_heading.getY());
 
-        ShooterObject::update();
+        SDLGameObject::update();
     }
     else
     {

@@ -10,7 +10,7 @@ ShotGlider::ShotGlider() : Glider()
 
 void ShotGlider::load(std::unique_ptr<LoaderParams> const& pParams)
 {
-	ShooterObject::load(std::move(pParams));
+    SDLGameObject::load(std::move(pParams));
 
 	m_velocity.setX((float)-m_moveSpeed);
 }
@@ -33,5 +33,5 @@ void ShotGlider::update()
         doDyingAnimation();
     }
 
-    ShooterObject::update();
+    SDLGameObject::update();
 }

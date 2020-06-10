@@ -1,9 +1,9 @@
 #ifndef __Player__
 #define __Player__
 
-#include "ShooterObject.h"
+#include "SDLGameObject.h"
 
-class Player : public ShooterObject
+class Player : public SDLGameObject
 {
 public:
 	Player();

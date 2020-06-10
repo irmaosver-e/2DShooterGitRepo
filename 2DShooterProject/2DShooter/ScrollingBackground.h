@@ -1,13 +1,13 @@
 #ifndef __ScrollingBackground__
 #define __ScrollingBackground__
 
-#include "ShooterObject.h"
+#include "SDLGameObject.h"
 #include "SDL_rect.h"
 
-class ScrollingBackground : public ShooterObject
+class ScrollingBackground : public SDLGameObject
 {
 public:
-	ScrollingBackground() : ShooterObject(), m_count(0), m_maxcount(10) {}
+	ScrollingBackground() : SDLGameObject(), m_count(0), m_maxcount(10) {}
 	virtual ~ScrollingBackground() {}
 
     virtual void load(std::unique_ptr<LoaderParams> const& pParams);

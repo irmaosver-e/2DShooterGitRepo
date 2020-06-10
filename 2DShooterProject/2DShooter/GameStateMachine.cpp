@@ -8,10 +8,10 @@ void GameStateMachine::changeState(GameState* pState)
 	{
 		if (m_gameStates.back()->getStateID() == pState->getStateID())
 		{
+			// trying to change to same state - do nothing
 			std::cout << " in GameStateMachine::changeState - changing to same state as current \n";
-			std::cout << "current state: " << m_gameStates.back()->getStateID() << "\n";
 			std::cout << "change state: " << pState->getStateID() << "\n";
-			return; // do nothing
+			return; 
 		}
 
 		m_gameStates.back()->onExit();

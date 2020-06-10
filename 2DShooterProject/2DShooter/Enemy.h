@@ -1,9 +1,9 @@
 #ifndef __Enemy__
 #define __Enemy__
 
-#include "ShooterObject.h"
+#include "SDLGameObject.h"
 
-class Enemy : public ShooterObject
+class Enemy : public SDLGameObject
 {
 public:
 	virtual std::string objType() { return "Enemy"; }
@@ -11,7 +11,7 @@ public:
 protected:
 	int m_health;
 
-	Enemy() : ShooterObject() {}
+	Enemy() : SDLGameObject() {}
 	virtual ~Enemy() {}
 };
 

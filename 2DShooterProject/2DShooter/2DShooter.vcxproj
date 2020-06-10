@@ -44,7 +44,7 @@
     <ClCompile Include="RoofTurret.cpp" />
     <ClCompile Include="ScrollingBackground.cpp" />
     <ClCompile Include="SDLSystem.cpp" />
-    <ClCompile Include="ShooterObject.cpp" />
+    <ClCompile Include="SDLGameObject.cpp" />
     <ClCompile Include="ShotGlider.cpp" />
     <ClCompile Include="SoundManager.cpp" />
     <ClCompile Include="StateParser.cpp" />
@@ -91,7 +91,7 @@
     <ClInclude Include="RoofTurret.h" />
     <ClInclude Include="ScrollingBackground.h" />
     <ClInclude Include="SDLSystem.h" />
-    <ClInclude Include="ShooterObject.h" />
+    <ClInclude Include="SDLGameObject.h" />
     <ClInclude Include="ShotGlider.h" />
     <ClInclude Include="Singleton.h" />
     <ClInclude Include="SoundManager.h" />

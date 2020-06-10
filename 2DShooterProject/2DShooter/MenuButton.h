@@ -1,12 +1,12 @@
 #ifndef __MenuButton__
 #define __MenuButton__
 
-#include "ShooterObject.h"
+#include "SDLGameObject.h"
 
-class MenuButton :	public ShooterObject
+class MenuButton :	public SDLGameObject
 {
 public:
-	MenuButton() : ShooterObject(), m_callback(0), m_bReleased(true) {}
+	MenuButton() : SDLGameObject(), m_callback(0), m_bReleased(true) {}
 	virtual ~MenuButton() {}
 
 	virtual void load(std::unique_ptr<LoaderParams> const& pParams);

@@ -8,7 +8,7 @@
 #include "BulletHandler.h"
 #include "SoundManager.h"
 
-Player::Player() : ShooterObject()
+Player::Player() : SDLGameObject()
 {
 	m_invulnerable = false;
 	m_invulnerableTime = 200;
@@ -18,7 +18,7 @@ Player::Player() : ShooterObject()
 void Player::load(std::unique_ptr<LoaderParams> const &pParams)
 {
 	// inherited load function
-	ShooterObject::load(std::move(pParams));
+	SDLGameObject::load(std::move(pParams));
 
 	// can set up the players inherited values here
 
@@ -35,7 +35,7 @@ void Player::load(std::unique_ptr<LoaderParams> const &pParams)
 
 void Player::draw()
 {
-	ShooterObject::draw();
+	SDLGameObject::draw();
 }
 
 void Player::update()
@@ -51,7 +51,7 @@ void Player::update()
 		{
 			m_velocity.setX(3);
 			m_velocity.setY(0);
-			ShooterObject::update();
+			SDLGameObject::update();
 			handleAnimation();
 		}
 	}
@@ -63,7 +63,7 @@ void Player::update()
 			m_velocity.setX(0);
 			m_velocity.setY(0);
 			handleInput();
-			ShooterObject::update();
+			SDLGameObject::update();
 			handleAnimation();
 		}
 		else //in death animation
@@ -82,7 +82,7 @@ void Player::update()
 
 void Player::clean()
 {
-	ShooterObject::clean();
+	SDLGameObject::clean();
 }
 
 void Player::collision()

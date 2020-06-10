@@ -3,13 +3,13 @@
 
 void AnimatedGraphic::load(std::unique_ptr<LoaderParams> const& pParams)
 {
-	ShooterObject::load(pParams);
+	SDLGameObject::load(pParams);
 	m_animSpeed = pParams->getAnimSpeed();
 }
 
 void AnimatedGraphic::draw()
 {
-	ShooterObject::draw(); // use base class drawing
+	SDLGameObject::draw(); // use base class drawing
 }
 
 void AnimatedGraphic::update()
@@ -19,5 +19,5 @@ void AnimatedGraphic::update()
 
 void AnimatedGraphic::clean()
 {
-	ShooterObject::clean();
+	SDLGameObject::clean();
 }

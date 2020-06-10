@@ -5,7 +5,7 @@
 
 void ScrollingBackground::load(std::unique_ptr<LoaderParams> const& pParams)
 {
-    ShooterObject::load(std::move(pParams));
+    SDLGameObject::load(std::move(pParams));
     m_scrollSpeed = pParams->getAnimSpeed();
 
     m_srcRect1.x = 0;
@@ -76,5 +76,5 @@ void ScrollingBackground::update()
 
 void ScrollingBackground::clean()
 {
-    ShooterObject::clean();
+    SDLGameObject::clean();
 }

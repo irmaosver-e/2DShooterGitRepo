@@ -88,7 +88,7 @@ bool SystemParser::parseWindow(TiXmlElement* pWindowRoot)
 	const char* title = nullptr;
 	int xpos, ypos, width, height, fps;
 	int red, green, blue, alpha;
-	bool fullScreen;
+	bool fullScreen = false;
 
 	for (TiXmlElement* e = pWindowRoot->FirstChildElement(); e != nullptr; e = e->NextSiblingElement())
 	{
@@ -100,11 +100,7 @@ bool SystemParser::parseWindow(TiXmlElement* pWindowRoot)
 			e->Attribute("screen_Width", &width);
 			e->Attribute("screen_Height", &height);
 			e->Attribute("frame_Rate", &fps);
-			if (e->Attribute("fullscreen") == std::string("false"))
-			{
-				fullScreen = false;
-			}
-			else
+			if (e->Attribute("fullscreen") == std::string("true"))
 			{
 				fullScreen = true;
 			}
