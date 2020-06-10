@@ -110,6 +110,7 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="assets\map1.tmx" />
+    <None Include="ClassDiagram.cd" />
   </ItemGroup>
   <ItemGroup>
     <Text Include="assets\TODO_.txt" />

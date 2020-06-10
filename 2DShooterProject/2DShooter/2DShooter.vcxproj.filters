@@ -79,6 +79,9 @@
     <Filter Include="Source Files\Layers">
       <UniqueIdentifier>{cf278ad9-6b49-4ce3-b7d3-670a1f7c7c9c}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Diagrams">
+      <UniqueIdentifier>{d859da50-94d6-4ab5-b144-d193c4b076e3}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="tinyxmlparser.cpp">
@@ -341,6 +344,9 @@
   <ItemGroup>
     <None Include="assets\map1.tmx">
       <Filter>Resource Files</Filter>
+    </None>
+    <None Include="ClassDiagram.cd">
+      <Filter>Diagrams</Filter>
     </None>
   </ItemGroup>
   <ItemGroup>
