@@ -79,45 +79,30 @@
     <Filter Include="Source Files\Layers">
       <UniqueIdentifier>{cf278ad9-6b49-4ce3-b7d3-670a1f7c7c9c}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Diagrams">
-      <UniqueIdentifier>{d859da50-94d6-4ab5-b144-d193c4b076e3}</UniqueIdentifier>
-    </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="tinyxmlparser.cpp">
-      <Filter>Resource Files\TinyXML</Filter>
-    </ClCompile>
-    <ClCompile Include="tinyxml.cpp">
-      <Filter>Resource Files\TinyXML</Filter>
-    </ClCompile>
-    <ClCompile Include="tinyxmlerror.cpp">
-      <Filter>Resource Files\TinyXML</Filter>
-    </ClCompile>
-    <ClCompile Include="tinystr.cpp">
-      <Filter>Resource Files\TinyXML</Filter>
+    <ClCompile Include="AnimatedGraphic.cpp">
+      <Filter>Source Files\Objects</Filter>
     </ClCompile>
     <ClCompile Include="base64.cpp">
       <Filter>Resource Files\Base64</Filter>
     </ClCompile>
-    <ClCompile Include="main.cpp">
+    <ClCompile Include="Bullet.cpp">
+      <Filter>Source Files\GameObjs</Filter>
+    </ClCompile>
+    <ClCompile Include="BulletHandler.cpp">
+      <Filter>Source Files\Handlers &amp; Managers</Filter>
+    </ClCompile>
+    <ClCompile Include="CollisionManager.cpp">
+      <Filter>Source Files\Handlers &amp; Managers</Filter>
+    </ClCompile>
+    <ClCompile Include="Eskeletor.cpp">
+      <Filter>Source Files\GameObjs</Filter>
+    </ClCompile>
+    <ClCompile Include="Game.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="AnimatedGraphic.cpp">
-      <Filter>Source Files\Objects</Filter>
-    </ClCompile>
     <ClCompile Include="GameObjectFactory.cpp">
-      <Filter>Source Files\Objects</Filter>
-    </ClCompile>
-    <ClCompile Include="Level.cpp">
-      <Filter>Source Files\Objects</Filter>
-    </ClCompile>
-    <ClCompile Include="MenuButton.cpp">
-      <Filter>Source Files\Objects</Filter>
-    </ClCompile>
-    <ClCompile Include="RoofTurret.cpp">
-      <Filter>Source Files\Objects</Filter>
-    </ClCompile>
-    <ClCompile Include="ScrollingBackground.cpp">
       <Filter>Source Files\Objects</Filter>
     </ClCompile>
     <ClCompile Include="GameOverState.cpp">
@@ -126,178 +111,109 @@
     <ClCompile Include="GameStateMachine.cpp">
       <Filter>Source Files\States</Filter>
     </ClCompile>
-    <ClCompile Include="PlayState.cpp">
-      <Filter>Source Files\States</Filter>
-    </ClCompile>
-    <ClCompile Include="MainMenuState.cpp">
-      <Filter>Source Files\States</Filter>
-    </ClCompile>
-    <ClCompile Include="PauseState.cpp">
-      <Filter>Source Files\States</Filter>
-    </ClCompile>
-    <ClCompile Include="BulletHandler.cpp">
-      <Filter>Source Files\Handlers &amp; Managers</Filter>
-    </ClCompile>
-    <ClCompile Include="CollisionManager.cpp">
-      <Filter>Source Files\Handlers &amp; Managers</Filter>
+    <ClCompile Include="Glider.cpp">
+      <Filter>Source Files\GameObjs</Filter>
     </ClCompile>
     <ClCompile Include="InputHandler.cpp">
       <Filter>Source Files\Handlers &amp; Managers</Filter>
     </ClCompile>
-    <ClCompile Include="SoundManager.cpp">
-      <Filter>Source Files\Handlers &amp; Managers</Filter>
-    </ClCompile>
-    <ClCompile Include="TextureManager.cpp">
-      <Filter>Source Files\Handlers &amp; Managers</Filter>
-    </ClCompile>
-    <ClCompile Include="Bullet.cpp">
-      <Filter>Source Files\GameObjs</Filter>
-    </ClCompile>
-    <ClCompile Include="Eskeletor.cpp">
-      <Filter>Source Files\GameObjs</Filter>
-    </ClCompile>
-    <ClCompile Include="Glider.cpp">
-      <Filter>Source Files\GameObjs</Filter>
-    </ClCompile>
-    <ClCompile Include="Player.cpp">
-      <Filter>Source Files\GameObjs</Filter>
-    </ClCompile>
-    <ClCompile Include="ShotGlider.cpp">
-      <Filter>Source Files\GameObjs</Filter>
-    </ClCompile>
-    <ClCompile Include="Turret.cpp">
-      <Filter>Source Files\GameObjs</Filter>
+    <ClCompile Include="Level.cpp">
+      <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="Level1Boss.cpp">
       <Filter>Source Files\GameObjs</Filter>
     </ClCompile>
+    <ClCompile Include="LevelParser.cpp">
+      <Filter>Source Files\Parsers</Filter>
+    </ClCompile>
+    <ClCompile Include="main.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="MainMenuState.cpp">
+      <Filter>Source Files\States</Filter>
+    </ClCompile>
+    <ClCompile Include="MenuButton.cpp">
+      <Filter>Source Files\Objects</Filter>
+    </ClCompile>
+    <ClCompile Include="ObjectLayer.cpp">
+      <Filter>Source Files\Layers</Filter>
+    </ClCompile>
+    <ClCompile Include="PauseState.cpp">
+      <Filter>Source Files\States</Filter>
+    </ClCompile>
+    <ClCompile Include="Player.cpp">
+      <Filter>Source Files\GameObjs</Filter>
+    </ClCompile>
+    <ClCompile Include="PlayState.cpp">
+      <Filter>Source Files\States</Filter>
+    </ClCompile>
+    <ClCompile Include="RoofTurret.cpp">
+      <Filter>Source Files\Objects</Filter>
+    </ClCompile>
+    <ClCompile Include="ScrollingBackground.cpp">
+      <Filter>Source Files\Objects</Filter>
+    </ClCompile>
+    <ClCompile Include="SDLGameObject.cpp">
+      <Filter>Source Files\Objects</Filter>
+    </ClCompile>
     <ClCompile Include="SDLSystem.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="StateParser.cpp">
-      <Filter>Source Files\Parsers</Filter>
+    <ClCompile Include="ShotGlider.cpp">
+      <Filter>Source Files\GameObjs</Filter>
     </ClCompile>
-    <ClCompile Include="LevelParser.cpp">
+    <ClCompile Include="SoundManager.cpp">
+      <Filter>Source Files\Handlers &amp; Managers</Filter>
+    </ClCompile>
+    <ClCompile Include="StateParser.cpp">
       <Filter>Source Files\Parsers</Filter>
     </ClCompile>
     <ClCompile Include="SystemParser.cpp">
       <Filter>Source Files\Parsers</Filter>
     </ClCompile>
-    <ClCompile Include="Game.cpp">
-      <Filter>Source Files</Filter>
+    <ClCompile Include="TextureManager.cpp">
+      <Filter>Source Files\Handlers &amp; Managers</Filter>
     </ClCompile>
     <ClCompile Include="TileLayer.cpp">
       <Filter>Source Files\Layers</Filter>
     </ClCompile>
-    <ClCompile Include="ObjectLayer.cpp">
-      <Filter>Source Files\Layers</Filter>
+    <ClCompile Include="tinystr.cpp">
+      <Filter>Resource Files\TinyXML</Filter>
     </ClCompile>
-    <ClCompile Include="SDLGameObject.cpp">
-      <Filter>Source Files\Objects</Filter>
+    <ClCompile Include="tinyxml.cpp">
+      <Filter>Resource Files\TinyXML</Filter>
+    </ClCompile>
+    <ClCompile Include="tinyxmlerror.cpp">
+      <Filter>Resource Files\TinyXML</Filter>
+    </ClCompile>
+    <ClCompile Include="tinyxmlparser.cpp">
+      <Filter>Resource Files\TinyXML</Filter>
+    </ClCompile>
+    <ClCompile Include="Turret.cpp">
+      <Filter>Source Files\GameObjs</Filter>
+    </ClCompile>
+    <ClCompile Include="Tileset.cpp">
+      <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="Game.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="Vector2D.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="Level.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="MenuState.h">
-      <Filter>Header Files\States</Filter>
-    </ClInclude>
-    <ClInclude Include="PlayState.h">
-      <Filter>Header Files\States</Filter>
-    </ClInclude>
-    <ClInclude Include="GameState.h">
-      <Filter>Header Files\States</Filter>
-    </ClInclude>
-    <ClInclude Include="PauseState.h">
-      <Filter>Header Files\States</Filter>
-    </ClInclude>
-    <ClInclude Include="MenuButton.h">
-      <Filter>Header Files\GameObjects</Filter>
-    </ClInclude>
-    <ClInclude Include="Player.h">
-      <Filter>Header Files\GameObjects</Filter>
-    </ClInclude>
-    <ClInclude Include="GameObjectFactory.h">
-      <Filter>Header Files\Factory</Filter>
-    </ClInclude>
-    <ClInclude Include="BaseCreator.h">
-      <Filter>Header Files\Factory</Filter>
-    </ClInclude>
-    <ClInclude Include="GameObject.h">
-      <Filter>Header Files\GameObjects\BaseObjects</Filter>
-    </ClInclude>
-    <ClInclude Include="GameOverState.h">
-      <Filter>Header Files\States</Filter>
-    </ClInclude>
-    <ClInclude Include="GameStateMachine.h">
-      <Filter>Header Files\StateMachine</Filter>
-    </ClInclude>
-    <ClInclude Include="MainMenuState.h">
-      <Filter>Header Files\States</Filter>
-    </ClInclude>
-    <ClInclude Include="LevelParser.h">
-      <Filter>Header Files\Parsers</Filter>
-    </ClInclude>
-    <ClInclude Include="StateParser.h">
-      <Filter>Header Files\Parsers</Filter>
-    </ClInclude>
-    <ClInclude Include="tinystr.h">
-      <Filter>Resource Files\TinyXML</Filter>
-    </ClInclude>
-    <ClInclude Include="tinyxml.h">
-      <Filter>Resource Files\TinyXML</Filter>
+    <ClInclude Include="AnimatedGraphic.h">
+      <Filter>Header Files\GameObjects\GraphicObjs</Filter>
     </ClInclude>
     <ClInclude Include="base64.h">
       <Filter>Resource Files\Base64</Filter>
     </ClInclude>
-    <ClInclude Include="Layer.h">
-      <Filter>Header Files\Layers</Filter>
-    </ClInclude>
-    <ClInclude Include="TileLayer.h">
-      <Filter>Header Files\Layers</Filter>
-    </ClInclude>
-    <ClInclude Include="SoundManager.h">
-      <Filter>Header Files\Managers</Filter>
-    </ClInclude>
-    <ClInclude Include="TextureManager.h">
-      <Filter>Header Files\Managers</Filter>
-    </ClInclude>
-    <ClInclude Include="ObjectLayer.h">
-      <Filter>Header Files\Layers</Filter>
-    </ClInclude>
-    <ClInclude Include="Enemy.h">
-      <Filter>Header Files\GameObjects\EnemyObjs\EnemyBaseObj</Filter>
-    </ClInclude>
-    <ClInclude Include="Eskeletor.h">
-      <Filter>Header Files\GameObjects\EnemyObjs</Filter>
-    </ClInclude>
-    <ClInclude Include="Glider.h">
-      <Filter>Header Files\GameObjects\EnemyObjs\Gliders</Filter>
-    </ClInclude>
-    <ClInclude Include="ShotGlider.h">
-      <Filter>Header Files\GameObjects\EnemyObjs\Gliders</Filter>
-    </ClInclude>
-    <ClInclude Include="AnimatedGraphic.h">
-      <Filter>Header Files\GameObjects\GraphicObjs</Filter>
-    </ClInclude>
-    <ClInclude Include="ScrollingBackground.h">
-      <Filter>Header Files\GameObjects\GraphicObjs</Filter>
-    </ClInclude>
-    <ClInclude Include="RoofTurret.h">
-      <Filter>Header Files\GameObjects\EnemyObjs\Turrets</Filter>
-    </ClInclude>
-    <ClInclude Include="Turret.h">
-      <Filter>Header Files\GameObjects\EnemyObjs\Turrets</Filter>
+    <ClInclude Include="BaseCreator.h">
+      <Filter>Header Files\Factory</Filter>
     </ClInclude>
     <ClInclude Include="Bullet.h">
       <Filter>Header Files\GameObjects</Filter>
+    </ClInclude>
+    <ClInclude Include="BulletHandler.h">
+      <Filter>Header Files\Handlers</Filter>
+    </ClInclude>
+    <ClInclude Include="Callback.h">
+      <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="Collision.h">
       <Filter>Header Files</Filter>
@@ -305,32 +221,119 @@
     <ClInclude Include="CollisionManager.h">
       <Filter>Header Files\Managers</Filter>
     </ClInclude>
-    <ClInclude Include="Callback.h">
+    <ClInclude Include="Enemy.h">
+      <Filter>Header Files\GameObjects\EnemyObjs\EnemyBaseObj</Filter>
+    </ClInclude>
+    <ClInclude Include="Eskeletor.h">
+      <Filter>Header Files\GameObjects\EnemyObjs</Filter>
+    </ClInclude>
+    <ClInclude Include="Game.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="GameObject.h">
+      <Filter>Header Files\GameObjects\BaseObjects</Filter>
+    </ClInclude>
+    <ClInclude Include="GameObjectFactory.h">
+      <Filter>Header Files\Factory</Filter>
+    </ClInclude>
+    <ClInclude Include="GameOverState.h">
+      <Filter>Header Files\States</Filter>
+    </ClInclude>
+    <ClInclude Include="GameState.h">
+      <Filter>Header Files\States</Filter>
+    </ClInclude>
+    <ClInclude Include="GameStateMachine.h">
+      <Filter>Header Files\StateMachine</Filter>
+    </ClInclude>
+    <ClInclude Include="Glider.h">
+      <Filter>Header Files\GameObjects\EnemyObjs\Gliders</Filter>
+    </ClInclude>
+    <ClInclude Include="InputHandler.h">
+      <Filter>Header Files\Handlers</Filter>
+    </ClInclude>
+    <ClInclude Include="Layer.h">
+      <Filter>Header Files\Layers</Filter>
+    </ClInclude>
+    <ClInclude Include="Level.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="Level1Boss.h">
       <Filter>Header Files\GameObjects\EnemyObjs</Filter>
     </ClInclude>
+    <ClInclude Include="LevelParser.h">
+      <Filter>Header Files\Parsers</Filter>
+    </ClInclude>
     <ClInclude Include="LoaderParams.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="BulletHandler.h">
-      <Filter>Header Files\Handlers</Filter>
+    <ClInclude Include="MainMenuState.h">
+      <Filter>Header Files\States</Filter>
     </ClInclude>
-    <ClInclude Include="InputHandler.h">
-      <Filter>Header Files\Handlers</Filter>
+    <ClInclude Include="MenuButton.h">
+      <Filter>Header Files\GameObjects</Filter>
     </ClInclude>
-    <ClInclude Include="Singleton.h">
-      <Filter>Header Files</Filter>
+    <ClInclude Include="MenuState.h">
+      <Filter>Header Files\States</Filter>
+    </ClInclude>
+    <ClInclude Include="ObjectLayer.h">
+      <Filter>Header Files\Layers</Filter>
+    </ClInclude>
+    <ClInclude Include="PauseState.h">
+      <Filter>Header Files\States</Filter>
+    </ClInclude>
+    <ClInclude Include="Player.h">
+      <Filter>Header Files\GameObjects</Filter>
+    </ClInclude>
+    <ClInclude Include="PlayState.h">
+      <Filter>Header Files\States</Filter>
+    </ClInclude>
+    <ClInclude Include="RoofTurret.h">
+      <Filter>Header Files\GameObjects\EnemyObjs\Turrets</Filter>
+    </ClInclude>
+    <ClInclude Include="ScrollingBackground.h">
+      <Filter>Header Files\GameObjects\GraphicObjs</Filter>
+    </ClInclude>
+    <ClInclude Include="SDLGameObject.h">
+      <Filter>Header Files\GameObjects\BaseObjects</Filter>
     </ClInclude>
     <ClInclude Include="SDLSystem.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="ShotGlider.h">
+      <Filter>Header Files\GameObjects\EnemyObjs\Gliders</Filter>
+    </ClInclude>
+    <ClInclude Include="Singleton.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="SoundManager.h">
+      <Filter>Header Files\Managers</Filter>
+    </ClInclude>
+    <ClInclude Include="StateParser.h">
+      <Filter>Header Files\Parsers</Filter>
+    </ClInclude>
     <ClInclude Include="SystemParser.h">
       <Filter>Header Files\Parsers</Filter>
     </ClInclude>
-    <ClInclude Include="SDLGameObject.h">
-      <Filter>Header Files\GameObjects\BaseObjects</Filter>
+    <ClInclude Include="TextureManager.h">
+      <Filter>Header Files\Managers</Filter>
+    </ClInclude>
+    <ClInclude Include="TileLayer.h">
+      <Filter>Header Files\Layers</Filter>
+    </ClInclude>
+    <ClInclude Include="tinystr.h">
+      <Filter>Resource Files\TinyXML</Filter>
+    </ClInclude>
+    <ClInclude Include="tinyxml.h">
+      <Filter>Resource Files\TinyXML</Filter>
+    </ClInclude>
+    <ClInclude Include="Turret.h">
+      <Filter>Header Files\GameObjects\EnemyObjs\Turrets</Filter>
+    </ClInclude>
+    <ClInclude Include="Vector2D.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Tileset.h">
+      <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -344,9 +347,6 @@
   <ItemGroup>
     <None Include="assets\map1.tmx">
       <Filter>Resource Files</Filter>
-    </None>
-    <None Include="ClassDiagram.cd">
-      <Filter>Diagrams</Filter>
     </None>
   </ItemGroup>
   <ItemGroup>

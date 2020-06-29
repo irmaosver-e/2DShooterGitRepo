@@ -27,51 +27,56 @@ bool TextureManager::load(std::string fileName, std::string id, SDL_Renderer* pR
 
 void TextureManager::draw(std::string id, int x, int y, int width, int height, SDL_Renderer* pRenderer, SDL_RendererFlip flip)
 {
-	SDL_Rect srcRect;
-	SDL_Rect destRect;
-
-	srcRect.x = 0;
-	srcRect.y = 0;
-	srcRect.w = destRect.w = width;
-	srcRect.h = destRect.h = height;
-	destRect.x = x;
-	destRect.y = y;
+	m_srcRect.x = 0;
+	m_srcRect.y = 0;
+	m_srcRect.w = m_destRect.w = width;
+	m_srcRect.h = m_destRect.h = height;
+	m_destRect.x = x;
+	m_destRect.y = y;
 	
 	//Draw the texture
-	SDL_RenderCopyEx(pRenderer, m_textureMap[id], &srcRect, &destRect, 0, 0, flip);
+	SDL_RenderCopyEx(pRenderer, m_textureMap[id], &m_srcRect, &m_destRect, 0, 0, flip);
 }
 
 void TextureManager::drawFrame(std::string id, int x, int y, int width, int height, int currentRow, int currentFrame, SDL_Renderer* pRenderer, double angle, int alpha, SDL_RendererFlip flip)
 {
-	SDL_Rect srcRect;
-	SDL_Rect destRect;
-	srcRect.x = width * currentFrame;
-	srcRect.y = height * currentRow;
-	srcRect.w = destRect.w = width;
-	srcRect.h = destRect.h = height;
-	destRect.x = x;
-	destRect.y = y;
+	m_srcRect.x = width * currentFrame;
+	m_srcRect.y = height * currentRow;
+	m_srcRect.w = m_destRect.w = width;
+	m_srcRect.h = m_destRect.h = height;
+	m_destRect.x = x;
+	m_destRect.y = y;
 
 
 	//set alpha
 	SDL_SetTextureAlphaMod(m_textureMap[id], alpha);
 	//Draw the texture
-	SDL_RenderCopyEx(pRenderer, m_textureMap[id], &srcRect, &destRect, angle, 0, flip);
+	SDL_RenderCopyEx(pRenderer, m_textureMap[id], &m_srcRect, &m_destRect, angle, 0, flip);
 }
 
 void TextureManager::drawTile(std::string id, int margin, int spacing, int x, int y, int width, int height, int currentRow, int currentFrame, SDL_Renderer* pRenderer)
 {
-	SDL_Rect srcRect;
-	SDL_Rect destRect;
+	std::string textureID = id;
+	int textureColumn = currentFrame;
+	int textureRow = currentRow;
 
-	srcRect.x = margin + (spacing + width) * currentFrame;
-	srcRect.y = margin + (spacing + height) * currentRow;
-	srcRect.w = destRect.w = width;
-	srcRect.h = destRect.h = height;
-	destRect.x = x;
-	destRect.y = y;
+	if (m_animationMap.find(id) != m_animationMap.end())
+	{
+		textureID = m_animationMap[id].sourceTileSet;
+		
+		textureColumn = m_animationMap[id].tileIDs[currentFrame] % m_animationMap[id].sourceColumns;
+		textureRow = m_animationMap[id].tileIDs[currentFrame] / m_animationMap[id].sourceColumns;
 
-	SDL_RenderCopyEx(pRenderer, m_textureMap[id], &srcRect, &destRect, 0, 0, SDL_FLIP_NONE);
+	}
+
+	m_srcRect.x = margin + (spacing + width) * textureColumn;
+	m_srcRect.y = margin + (spacing + height) * textureRow;
+	m_srcRect.w = m_destRect.w = width;
+	m_srcRect.h = m_destRect.h = height;
+	m_destRect.x = x;
+	m_destRect.y = y;
+
+	SDL_RenderCopyEx(pRenderer, m_textureMap[textureID], &m_srcRect, &m_destRect, 0, 0, SDL_FLIP_NONE);
 }
 
 void TextureManager::clearTextureMap()

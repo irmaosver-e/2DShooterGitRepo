@@ -7,25 +7,36 @@
 
 class Level;
 struct Tileset;
+struct ObjectTile;
 class Layer;
 class TileLayer;
 
 class LevelParser
 {
 public:
+	LevelParser() : m_pLevel(nullptr) {}
+
 	Level* parseLevel(std::string assetsLocation, std::string levelFile);
 
 private:
-	void parseTilesets(TiXmlElement* pTilesetRoot, std::vector<Tileset>* pTilesets, std::string assetsLocation);
-	void parseTileLayer(TiXmlElement* pTileElement, std::vector<Layer*> *pLayers,
-						const std::vector<Tileset>* pTilesets, std::vector<TileLayer*> *pCollisionLayers);
+	void parseTileset(TiXmlElement* pTilesetElement);
+	void parseObjTile(TiXmlElement* pTileElement, ObjectTile& objectTile);
+
+	void parseLayer(TiXmlElement* pLayerElement);
+	
+	void parseTileLayer(TiXmlElement* pTileElement);
+	void parseObjectLayer(TiXmlElement* pObjectElement);
+	void parseImageLayer(TiXmlElement* pImageElement);
 
 	bool parseTextures(std::string fileName, std::string id);
-	void parseObjectLayer(TiXmlElement* pObjectElement, std::vector<Layer*>* pLayers, Level* pLevel);
+	TiXmlElement* loadDocument(TiXmlDocument& xmlDoc, std::string assetsLocation, std::string levelFile);
 
-	int m_tileSize;
-	int m_width;
-	int m_height;
+	int m_mapTileWidth;
+	int m_mapTileHeight;
+	int m_mapNumColumns;
+	int m_mapNumRows;
+
+	Level* m_pLevel;
 };
 
 #endif /* defined ( __LevelParser__ ) */

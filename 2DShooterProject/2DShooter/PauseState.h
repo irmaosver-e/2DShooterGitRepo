@@ -31,7 +31,7 @@ public:
 private:
 	static const std::string s_pauseID;
 
-	std::vector<GameObject*> m_gameObjects;
+	//std::vector<GameObject*> m_gameObjects;
 
 	//call back functions for menu items
 	static void s_pauseToMain();

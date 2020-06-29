@@ -1,7 +1,6 @@
 #include "MainMenuState.h"
 
 #include "TextureManager.h"
-#include "SoundManager.h"
 #include "Game.h"
 #include "InputHandler.h"
 #include "StateParser.h"
@@ -18,6 +17,16 @@ void MainMenuState::update()
 		s_menuToPlay();
 	}
 
+	/* to de implemented
+	if (m_loadingComplete && !m_exiting)
+	{
+		if (m_pLevel)
+		{
+			m_pLevel->update();
+		}
+	}
+	*/
+
 	if (!m_gameObjects.empty())
 	{
 		for (unsigned int i = 0; i < m_gameObjects.size(); i++)
@@ -32,21 +41,20 @@ void MainMenuState::update()
 
 void MainMenuState::render()
 {
-	if (m_loadingComplete && !m_gameObjects.empty())
+	if (m_loadingComplete)
 	{
-		for (unsigned int i = 0; i < m_gameObjects.size(); i++)
+		if (m_pLevel != 0)
 		{
-			m_gameObjects[i]->draw();
+			m_pLevel->render();
 		}
 	}
 }
 
 bool MainMenuState::onEnter()
 {
-	//parse the state
-	StateParser stateParser;
-	stateParser.parseState(TheGame::Instance().getAssetsPath(), TheGame::Instance().getStatesFile(), s_menuID, &m_gameObjects, &m_textureIDList);
-	
+	LevelParser levelParser;
+	m_pLevel = levelParser.parseLevel(m_stageAssetsPath, m_stageMapFile);
+
 	m_callbacks.push_back(0); //pushback 0 callbackID start from 1
 	m_callbacks.push_back(s_menuToPlay);
 	m_callbacks.push_back(s_exitFromMenu);
@@ -54,11 +62,8 @@ bool MainMenuState::onEnter()
 	//set the callbacks for menu items
 	setCallbacks(m_callbacks);
 
-	TheSoundManager::Instance().load("assets/DST_ElectroRock.ogg", "music1", SOUND_MUSIC);
-	TheSoundManager::Instance().playMusic("music1", -1);
-
 	m_loadingComplete = true;
-	std::cout << "Entering MainMenuState \n";
+	std::cout << "MainMenuState::onEnter() - Entering MainMenuState \n";
 
 	return true;
 }
@@ -79,7 +84,7 @@ bool MainMenuState::onExit()
 	// reset the input handler
 	TheInputHandler::Instance().reset();
 
-	std::cout << "Exiting menu state \n";
+	std::cout << "MainMenuState::onExit() - Exiting menu state \n";
 	return true;
 }
 

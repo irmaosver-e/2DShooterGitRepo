@@ -21,7 +21,7 @@ public:
 private:
 	static const std::string s_menuID;
 
-	std::vector<GameObject*> m_gameObjects;
+	//std::vector<GameObject*> m_gameObjects;
 
 	virtual void setCallbacks(const std::vector<Callback>& callbacks);
 

@@ -87,10 +87,14 @@ void Player::clean()
 
 void Player::collision()
 {
-	//godmode for debuging
-	//std::cout << "GOD MODE ON in Player::collision() \n";
-	//m_invulnerable = true;
-	//-----------------------
+	
+	/*  //godmode for debuging
+	
+	std::cout << "GOD MODE ON in Player::collision() \n";
+	m_invulnerable = true;
+	
+	*/  //-----------------------
+	
 
 	// if the player is not invulnerable then set to dying and change values for death animation tile sheet
 	if (!m_invulnerable && !TheGame::Instance().getLevelComplete())

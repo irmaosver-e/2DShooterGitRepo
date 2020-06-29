@@ -8,7 +8,6 @@ class SystemParser
 public:
 	SystemParser() {}
 	~SystemParser() {}
-	
 	bool parseSystem(const char* configFile);
 
 private:

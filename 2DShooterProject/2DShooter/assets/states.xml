@@ -2,10 +2,29 @@
 
 <!--
 Callback List
+menuToPlay = 1
+exitFromMenu = 2
 -->
 
 <STATES>
     <MENU>
+		
+		<STAGE>
+		<!--
+		    <map subpath="assets/" filename="map1.tmx" stageID="1"/>
+			-->
+			<map filename="menuTest.tmx" stageID="1"/>
+		</STAGE>
+		<SOUND>
+		    <music filename="DST_ElectroRock.ogg" musicID= "music1"/>
+			
+			<!--
+			<sfx subpath="assets/" filename="fx.wav" sfxID= "sfx1"/>
+			-->
+		
+		</SOUND>
+
+		<!--
         <TEXTURES>
             <texture filename="button.png" ID="playbutton"/>
             <texture filename="exit.png" ID="exitbutton"/>
@@ -15,6 +34,9 @@ Callback List
             <object type="MenuButton" x="100" y="100" width="400" height="100" textureID="playbutton" numFrames="0" callbackID="1"/>
             <object type="MenuButton" x="100" y="300" width="400" height="100" textureID="exitbutton" numFrames="0" callbackID="2"/>
         </OBJECTS>
+		
+		-->
+	
     </MENU>
     
     <PLAY>

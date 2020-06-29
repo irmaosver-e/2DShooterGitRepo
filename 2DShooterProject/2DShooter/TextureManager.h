@@ -5,6 +5,7 @@
 #include <map>
 #include <SDL.h>
 #include "Singleton.h"
+#include "Tileset.h"
 
 class TextureManager : public Singleton<TextureManager>
 {
@@ -21,10 +22,16 @@ public:
 	void clearTextureMap();
 	void clearFromTextureMap(std::string id);
 
+	std::map<std::string, Animation>& getAnimationMap() { return m_animationMap; }
+
 	std::map<std::string, SDL_Texture*> getTextureMap() { return m_textureMap; }
 
 
 private:	
+	SDL_Rect m_srcRect;
+	SDL_Rect m_destRect;
+
+	std::map<std::string, Animation> m_animationMap;
 	std::map<std::string, SDL_Texture*> m_textureMap;
 };
 

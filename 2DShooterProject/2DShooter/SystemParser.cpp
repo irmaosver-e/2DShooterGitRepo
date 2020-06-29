@@ -185,7 +185,7 @@ bool SystemParser::parseFiles(TiXmlElement* pFilesRoot)
 	{
 		if (e->Value() == std::string("location"))
 		{
-			TheGame::Instance().setAssetsPath(e->Attribute("path"));
+			TheGame::Instance().setAssetsRoot(e->Attribute("path"));
 		}
 		else if (e->Value() == std::string("state"))
 		{

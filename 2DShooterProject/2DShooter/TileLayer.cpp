@@ -10,6 +10,12 @@ TileLayer::TileLayer(int tileSize, const std::vector<Tileset>& tilesets) : m_til
 	m_numRows = TheSDLSystem::Instance().getScreenHeight() / m_tileSize;
 }
 
+TileLayer::TileLayer(const std::vector<Tileset>& tilesets) : 
+	m_tileWidth(1), m_tileHeight(1), m_numColumns(1), m_numRows(1),
+	m_tilesets(tilesets), m_position(0, 0), m_velocity(0, 0)
+{
+}
+
 void TileLayer::update(Level* pLevel)
 {
 	if (m_position.getX() < ((m_mapWidth * m_tileSize) - TheSDLSystem::Instance().getScreenWidth()) - m_tileSize)
@@ -28,11 +34,11 @@ void TileLayer::render()
 {
 	int x, y, x2, y2 = 0;
 
-	x = int(m_position.getX()) / m_tileSize;
-	y = int(m_position.getY()) / m_tileSize;
+	x = int(m_position.getX()) / m_tileWidth;
+	y = int(m_position.getY()) / m_tileHeight;
 
-	x2 = int(m_position.getX()) % m_tileSize;
-	y2 = int(m_position.getY()) % m_tileSize;
+	x2 = int(m_position.getX()) % m_tileWidth;
+	y2 = int(m_position.getY()) % m_tileHeight;
 
 	for (int i = 0; i < m_numRows; i++)
 	{
@@ -48,7 +54,20 @@ void TileLayer::render()
 			Tileset tileset = getTilesetByID(id);
 			id--;
 
-			TheTextureManager::Instance().drawTile(tileset.name, tileset.margin, tileset.spacing, (j * m_tileSize) - x2, (i * m_tileSize) - y2, m_tileSize, m_tileSize, (id - (tileset.firstGridID - 1)) / tileset.numColumns, (id - (tileset.firstGridID - 1)) % tileset.numColumns, TheSDLSystem::Instance().getRenderer());
+			int tile_Y_offset = 0;
+			if (tileset.tileHeight != m_tileHeight)
+			{
+				tile_Y_offset = tileset.tileHeight - m_tileHeight;
+			}
+
+			int tile_X_pos = (j * m_tileWidth) - x2;
+			int tile_Y_pos = ((i * m_tileHeight) - y2) - tile_Y_offset;
+			int tileRow = (id - (tileset.firstGridID - 1)) / tileset.numColumns;
+			int tileColumn = (id - (tileset.firstGridID - 1)) % tileset.numColumns;
+			
+			TheTextureManager::Instance().drawTile(tileset.name, tileset.margin, tileset.spacing,
+													tile_X_pos, tile_Y_pos, tileset.tileWidth, tileset.tileHeight, 
+													tileRow, tileColumn, TheSDLSystem::Instance().getRenderer());
 		}
 	}
 }

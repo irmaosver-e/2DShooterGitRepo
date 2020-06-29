@@ -28,7 +28,7 @@ private:
 
 	CollisionManager m_collisionManager;
 
-	std::vector<GameObject*> m_gameObjects;
+	//std::vector<GameObject*> m_gameObjects;
 
 	Level* pLevel;
 };

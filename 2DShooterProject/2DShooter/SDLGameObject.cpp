@@ -23,12 +23,17 @@ void SDLGameObject::load(std::unique_ptr<LoaderParams> const& pParams)
 
 	m_numFrames = pParams->getNumFrames();
 	//m_animSpeed = pParams->getAnimSpeed();
+
+	//m_collisionShape
 }
 
 void SDLGameObject::draw()
 {	
-	TheTextureManager::Instance().drawFrame(m_textureID, (Uint32)m_position.getX(), (Uint32)m_position.getY(),
-											m_width, m_height, m_currentRow, m_currentFrame, TheSDLSystem::Instance().getRenderer(), m_angle, m_alpha);
+	//TheTextureManager::Instance().drawFrame(m_textureID, (Uint32)m_position.getX(), (Uint32)m_position.getY(),
+	//										m_width, m_height, m_currentRow, m_currentFrame, TheSDLSystem::Instance().getRenderer(), m_angle, m_alpha);
+	
+	TheTextureManager::Instance().drawTile(m_textureID,2, 2, (Uint32)m_position.getX(), (Uint32)m_position.getY(),
+		m_width, m_height, m_currentRow, m_currentFrame, TheSDLSystem::Instance().getRenderer());
 }
 
 void SDLGameObject::update()

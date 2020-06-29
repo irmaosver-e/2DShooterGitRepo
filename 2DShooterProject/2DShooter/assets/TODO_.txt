@@ -5,3 +5,4 @@
 * assets location should be parsed from gameOptions XML
 * use the singleton template class
 * create a specific ObjCreator template class
+* fix tilelayer tilesize var to width or heigth

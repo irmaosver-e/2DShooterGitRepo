@@ -37,7 +37,7 @@ bool GameOverState::onEnter()
 {
 	// parse the state
 	StateParser stateParser;
-	stateParser.parseState(TheGame::Instance().getAssetsPath(), TheGame::Instance().getStatesFile(), s_gameOverID, &m_gameObjects, &m_textureIDList);
+	stateParser.parseState(TheGame::Instance().getAssetsRoot(), TheGame::Instance().getStatesFile(), s_gameOverID, &m_gameObjects, &m_textureIDList);
 
 	m_callbacks.push_back(0);
 	m_callbacks.push_back(s_gameOverToMain);

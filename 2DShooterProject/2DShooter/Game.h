@@ -32,10 +32,10 @@ public:
 	void setLevelComplete(bool levelComplete) { m_bLevelComplete = levelComplete; }
 	void addLevelFile(int levelNumber, std::string filename);
 
-	void setAssetsPath(std::string path) { m_assetsPath = path; }
+	void setAssetsRoot(std::string path) { m_assetsRoot = path; }
 	void setStatesFile(std::string filename) { m_statesFile = filename; }
 
-	std::string getAssetsPath() { return m_assetsPath; }
+	std::string getAssetsRoot() { return m_assetsRoot; }
 	std::string getStatesFile() { return m_statesFile; }
 
 	bool getchangingStateFlag() { return m_bChangingState; }
@@ -64,7 +64,7 @@ private:
 	int m_nextLevel;
 	bool m_bLevelComplete;
 
-	std::string m_assetsPath;
+	std::string m_assetsRoot;
 	std::string m_statesFile;
 	std::map<int, std::string> m_levelFiles;
 	std::map<int, std::string> m_tileSetFiles;
