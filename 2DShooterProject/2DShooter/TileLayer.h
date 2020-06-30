@@ -24,9 +24,14 @@ public:
 	void setNumColumns(int numColumns) { m_numColumns = numColumns; }
 	void setNumRows(int numRows) { m_numRows = numRows; }
 
+	int& getTileSize() { return m_tileSize; }
+	int& getTileWidth() { return m_tileWidth; }
+	int& getTileHeight() { return m_tileHeight; }
+	int& getNumColumns() { return m_numColumns; }
+	int& getNumRows() { return m_numRows; }
+
 	void setMapWidth(int mapWidth) { m_mapWidth = mapWidth; }
 
-	int getTileSize() { return m_tileSize; }
 	const std::vector<std::vector<int>>& getTileIDs() { return m_tileIDs; }
 
 	Tileset getTilesetByID(int tileID);
@@ -47,7 +52,7 @@ private:
 	Vector2D m_position;
 	Vector2D m_velocity;
 
-	const std::vector<Tileset> &m_tilesets;
+	const std::vector<Tileset> m_tilesets;
 	std::vector<std::vector<int>> m_tileIDs;
 };
 

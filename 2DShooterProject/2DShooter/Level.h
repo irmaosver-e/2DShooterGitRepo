@@ -13,44 +13,6 @@
 #include "Tileset.h"
 
 class TileLayer;
-/*
-struct Animation
-{
-	std::string mapName;
-	int frameDuration;
-	std::vector<int> tileIDs;
-
-};
-
-struct ObjectTile
-{
-	int frameDuration;
-	std::string type;
-	
-	std::vector<SDL_Rect> collisionShape;
-	Animation animation;
-
-	//collisionBox pair< Offset(X,Y), Dimentions(Width, Height)>
-	std::vector<std::pair<Vector2D*, Vector2D*>*> collisionBoxes;
-	std::vector<int> framesTileIDs;
-};
-
-struct Tileset
-{
-	int firstGridID;
-	int tileWidth;
-	int tileHeight;
-	int spacing;	
-	int margin;
-	int width;
-	int height;
-	int numColumns;
-	int tileCount;
-	std::string name;
-	std::map<std::string, ObjectTile*> objTileMap;
-};
-
-*/
 
 class Level
 {
@@ -60,7 +22,6 @@ public:
 	void update();
 	void render();
 
-	std::vector<Tileset>* getTilesets() { return &m_tilesets; }
 	std::vector<Layer*>* getLayers() { return &m_layers; }
 
 	Player* getPlayer() { return m_pPlayer; }
@@ -80,7 +41,6 @@ private:
 
 	Player* m_pPlayer;
 
-	std::vector<Tileset> m_tilesets;
 	std::vector<Layer*> m_layers;
 	std::vector<TileLayer*> m_collisionLayers;
 

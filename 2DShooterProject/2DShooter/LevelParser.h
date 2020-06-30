@@ -4,12 +4,8 @@
 #include <iostream>
 #include <vector>
 #include "tinyxml.h"
-
-class Level;
-struct Tileset;
-struct ObjectTile;
-class Layer;
-class TileLayer;
+#include "Tileset.h"
+#include "Level.h"
 
 class LevelParser
 {
@@ -31,11 +27,8 @@ private:
 	bool parseTextures(std::string fileName, std::string id);
 	TiXmlElement* loadDocument(TiXmlDocument& xmlDoc, std::string assetsLocation, std::string levelFile);
 
-	int m_mapTileWidth;
-	int m_mapTileHeight;
-	int m_mapNumColumns;
-	int m_mapNumRows;
-
+	TiXmlElement* m_mapRoot;
+	std::vector<Tileset> m_tilesets;
 	Level* m_pLevel;
 };
 
