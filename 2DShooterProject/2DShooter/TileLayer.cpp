@@ -4,6 +4,7 @@
 #include "Game.h"
 #include "TextureManager.h"
 
+//possibly redundant
 TileLayer::TileLayer(int tileSize, const std::vector<Tileset>& tilesets) : m_tileSize(tileSize), m_tilesets(tilesets), m_position(0,0), m_velocity(0,0)
 {
 	m_numColumns = (TheSDLSystem::Instance().getScreenWidth() / m_tileSize) + 1;
@@ -18,7 +19,7 @@ TileLayer::TileLayer(const std::vector<Tileset>& tilesets) :
 
 void TileLayer::update(Level* pLevel)
 {
-	if (m_position.getX() < ((m_mapWidth * m_tileSize) - TheSDLSystem::Instance().getScreenWidth()) - m_tileSize)
+	if (m_position.getX() < ((m_mapWidth * m_tileWidth) - TheSDLSystem::Instance().getScreenWidth()) - m_tileWidth)
 	{
 		m_velocity.setX(TheGame::Instance().getScrollSpeed());
 		m_position += m_velocity;

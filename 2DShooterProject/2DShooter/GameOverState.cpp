@@ -35,9 +35,9 @@ void GameOverState::render()
 
 bool GameOverState::onEnter()
 {
-	// parse the state
-	StateParser stateParser;
-	stateParser.parseState(TheGame::Instance().getAssetsRoot(), TheGame::Instance().getStatesFile(), s_gameOverID, &m_gameObjects, &m_textureIDList);
+	// to be updated with a LevelParser
+	//StateParser stateParser;
+	//stateParser.parseState(TheGame::Instance().getAssetsRoot(), TheGame::Instance().getStatesFile(), s_gameOverID, &m_gameObjects, &m_textureIDList);
 
 	m_callbacks.push_back(0);
 	m_callbacks.push_back(s_gameOverToMain);

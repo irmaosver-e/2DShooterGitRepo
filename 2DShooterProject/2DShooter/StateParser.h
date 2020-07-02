@@ -3,25 +3,31 @@
 
 #include <iostream>
 #include <vector>
-#include "tinyxml.h"
+#include "Parser.h"
 #include "GameObject.h"
 #include "GameState.h"
 
-class StateParser
+class StateParser : public Parser
 {
 public:
 
 	StateParser() {}
 	~StateParser() {}
 
+	/* redundant
 	bool parseState(std::string assetsLocation, std::string stateFile, std::string stateID,
 					std::vector<GameObject*> *pObjects, std::vector<std::string> *pTextureIDs);
+					*/
+	/* redundant
+	void parseTextures(std::string assetsLocation,TiXmlElement* pTextureRoot, std::vector<std::string> *pTextureIDs);
+	*/
+	/* to be made redundant
+	void parseObjects(TiXmlElement* pObjectRoot, std::vector<GameObject*> *pObjects);
+	*/
 
 	bool parseState(GameState* pState);
 
 private:
-	void parseObjects(TiXmlElement* pObjectRoot, std::vector<GameObject*> *pObjects);
-	void parseTextures(std::string assetsLocation,TiXmlElement* pTextureRoot, std::vector<std::string> *pTextureIDs);
 
 	void parseAudio(TiXmlElement* pAudioElem);
 

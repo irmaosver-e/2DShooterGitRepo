@@ -24,7 +24,9 @@
     <ClCompile Include="Bullet.cpp" />
     <ClCompile Include="BulletHandler.cpp" />
     <ClCompile Include="CollisionManager.cpp" />
+    <ClCompile Include="Cursor.cpp" />
     <ClCompile Include="Eskeletor.cpp" />
+    <ClCompile Include="GameState.cpp" />
     <ClCompile Include="Glider.cpp" />
     <ClCompile Include="Game.cpp" />
     <ClCompile Include="GameObjectFactory.cpp" />
@@ -38,6 +40,7 @@
     <ClCompile Include="MenuButton.cpp" />
     <ClCompile Include="MainMenuState.cpp" />
     <ClCompile Include="ObjectLayer.cpp" />
+    <ClCompile Include="Parser.cpp" />
     <ClCompile Include="PauseState.cpp" />
     <ClCompile Include="Player.cpp" />
     <ClCompile Include="PlayState.cpp" />
@@ -67,6 +70,7 @@
     <ClInclude Include="Callback.h" />
     <ClInclude Include="Collision.h" />
     <ClInclude Include="CollisionManager.h" />
+    <ClInclude Include="Cursor.h" />
     <ClInclude Include="Enemy.h" />
     <ClInclude Include="Eskeletor.h" />
     <ClInclude Include="Game.h" />
@@ -86,6 +90,7 @@
     <ClInclude Include="MainMenuState.h" />
     <ClInclude Include="MenuState.h" />
     <ClInclude Include="ObjectLayer.h" />
+    <ClInclude Include="Parser.h" />
     <ClInclude Include="PauseState.h" />
     <ClInclude Include="Player.h" />
     <ClInclude Include="PlayState.h" />

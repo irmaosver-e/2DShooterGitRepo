@@ -11,18 +11,7 @@ bool SystemParser::parseSystem(const char* configFile)
 	//create XML doc
 	TiXmlDocument xmlDoc;
 
-	//load the file state
-	if (!xmlDoc.LoadFile(configFile))
-	{
-		std::cout << "SystemParser::parseSystem could not load - " << configFile << "\n";
-		std::cerr << xmlDoc.ErrorDesc() << "\n";
-		return false;
-	}
-
-	//get the root element
-	TiXmlElement* pRoot = xmlDoc.RootElement();
-
-	// --------------- up to here is all the same in all parsers
+	TiXmlElement* pRoot = loadDocument(xmlDoc,"", configFile);
 
 	//pre declare the window root node
 	TiXmlElement* pWindowRoot = nullptr;

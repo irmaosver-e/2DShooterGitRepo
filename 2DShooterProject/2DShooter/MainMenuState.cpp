@@ -12,30 +12,10 @@ const std::string MainMenuState::s_menuID = "MENU";
 
 void MainMenuState::update()
 {
-	if (TheInputHandler::Instance().isKeyDown(SDL_SCANCODE_SPACE))
-	{
-		s_menuToPlay();
-	}
-
-	/* to de implemented
+	// to be implemented
 	if (m_loadingComplete && !m_exiting)
 	{
-		if (m_pLevel)
-		{
-			m_pLevel->update();
-		}
-	}
-	*/
-
-	if (!m_gameObjects.empty())
-	{
-		for (unsigned int i = 0; i < m_gameObjects.size(); i++)
-		{
-			if (m_gameObjects[i] != 0)
-			{
-				m_gameObjects[i]->update();
-			}
-		}
+		GameState::update();
 	}
 }
 
@@ -43,10 +23,7 @@ void MainMenuState::render()
 {
 	if (m_loadingComplete)
 	{
-		if (m_pLevel != 0)
-		{
-			m_pLevel->render();
-		}
+		GameState::render();
 	}
 }
 

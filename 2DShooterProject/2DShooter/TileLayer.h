@@ -18,11 +18,6 @@ public:
 	virtual void render();
 
 	void setTileIDs(const std::vector<std::vector<int>>& data) { m_tileIDs = data; }
-	void setTileSize(int tileSize) { m_tileSize = tileSize; }
-	void setTileWidth(int tileWidth) { m_tileWidth = tileWidth; }
-	void setTileHeight(int tileHeight) { m_tileHeight = tileHeight; }
-	void setNumColumns(int numColumns) { m_numColumns = numColumns; }
-	void setNumRows(int numRows) { m_numRows = numRows; }
 
 	int& getTileSize() { return m_tileSize; }
 	int& getTileWidth() { return m_tileWidth; }

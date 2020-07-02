@@ -1,9 +1,9 @@
 #ifndef __SystemParser__
 #define __SystemParser__
 
-#include "tinyxml.h"
+#include "Parser.h"
 
-class SystemParser
+class SystemParser : public Parser
 {
 public:
 	SystemParser() {}

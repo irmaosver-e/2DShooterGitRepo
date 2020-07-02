@@ -16,6 +16,7 @@ public:
 	std::vector<GameObject*>* getGameObjects() { return &m_gameObjects; }
 
 private:
+
 	// check for collisions between game objects
 	CollisionManager m_collisionManager;
 

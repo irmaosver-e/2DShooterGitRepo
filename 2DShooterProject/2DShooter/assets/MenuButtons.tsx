@@ -6,8 +6,8 @@
    <object id="1" name="colisionBox" x="12" y="12" width="168" height="40"/>
   </objectgroup>
   <animation>
+   <frame tileid="2" duration="400"/>
    <frame tileid="0" duration="400"/>
-   <frame tileid="2" duration="800"/>
   </animation>
  </tile>
  <tile id="1" type="exitbutton">
@@ -15,8 +15,8 @@
    <object id="1" name="colisionBox" x="12" y="12" width="168" height="40"/>
   </objectgroup>
   <animation>
+   <frame tileid="3" duration="400"/>
    <frame tileid="1" duration="400"/>
-   <frame tileid="3" duration="800"/>
   </animation>
  </tile>
 </tileset>

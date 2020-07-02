@@ -13,7 +13,7 @@ class Level;
 class PlayState : public GameState
 {
 public:
-	virtual ~PlayState() { delete pLevel; }
+	virtual ~PlayState() { delete m_pLevel; }
 
 	virtual void update();
 	virtual void render();
@@ -26,11 +26,9 @@ public:
 private:
 	static const std::string s_playID;
 
-	CollisionManager m_collisionManager;
+	//CollisionManager m_collisionManager;
 
-	//std::vector<GameObject*> m_gameObjects;
-
-	Level* pLevel;
+	//Level* pLevel;
 };
 
 #endif /* defined ( __PlayState__ ) */

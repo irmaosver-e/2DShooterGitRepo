@@ -79,6 +79,9 @@
     <Filter Include="Source Files\Layers">
       <UniqueIdentifier>{cf278ad9-6b49-4ce3-b7d3-670a1f7c7c9c}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Header Files\Parsers\Parser">
+      <UniqueIdentifier>{b6686f0a-527c-4457-a76b-87281bc8ee28}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="AnimatedGraphic.cpp">
@@ -194,6 +197,15 @@
     </ClCompile>
     <ClCompile Include="Tileset.cpp">
       <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="GameState.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Cursor.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Parser.cpp">
+      <Filter>Source Files\Parsers</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -333,6 +345,12 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="Tileset.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Parser.h">
+      <Filter>Header Files\Parsers\Parser</Filter>
+    </ClInclude>
+    <ClInclude Include="Cursor.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

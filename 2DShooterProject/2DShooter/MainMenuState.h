@@ -9,7 +9,7 @@
 class MainMenuState : public MenuState
 {
 public:
-	virtual ~MainMenuState() {}
+	virtual ~MainMenuState() { delete m_pLevel; }
 
 	virtual void update();
 	virtual void render();
@@ -20,8 +20,6 @@ public:
 
 private:
 	static const std::string s_menuID;
-
-	//std::vector<GameObject*> m_gameObjects;
 
 	virtual void setCallbacks(const std::vector<Callback>& callbacks);
 

@@ -2,10 +2,11 @@
 
 #include "Game.h"
 #include "SDLSystem.h"
-#include "TextureManager.h"
+//#include "TextureManager.h"
 #include "SoundManager.h"
-#include "GameObjectFactory.h"
+//#include "GameObjectFactory.h"
 
+/* redundant
 bool StateParser::parseState(std::string assetsLocation, std::string stateFile, std::string stateID, 
 								std::vector<GameObject*> *pObjects, std::vector<std::string> *pTextureIDs)
 {
@@ -70,27 +71,58 @@ bool StateParser::parseState(std::string assetsLocation, std::string stateFile, 
 
 	return true;
 }
+*/
+/*to be made redundant
+void StateParser::parseTextures(std::string assetsLocation, TiXmlElement* pTextureRoot, std::vector<std::string> *pTextureIDs)
+{
+	for (TiXmlElement* e = pTextureRoot->FirstChildElement(); e != nullptr; e = e->NextSiblingElement())
+	{
+		std::string filename = e->Attribute("filename");
+		std::string id = e->Attribute("ID");
+
+		pTextureIDs->push_back(id);
+		if (!TheTextureManager::Instance().load(assetsLocation + filename, id, TheSDLSystem::Instance().getRenderer()))
+		{
+			std::cout << "StateParser::parseTextures -- failed to load texture " << filename << "\n";
+		}
+	}
+}
+*/
+/*to be made redundant
+void StateParser::parseObjects(TiXmlElement* pObjectRoot, std::vector<GameObject*> *pObjects)
+{
+	for (TiXmlElement* e = pObjectRoot->FirstChildElement(); e != NULL; e = e->NextSiblingElement())
+	{
+		int x, y, width, height, numFrames, callbackID, animSpeed;
+		std::string textureID;
+
+		e->Attribute("x", &x);
+		e->Attribute("y", &y);
+		e->Attribute("width", &width);
+		e->Attribute("height", &height);
+		e->Attribute("numFrames", &numFrames);
+		if (!e->Attribute("callbackID", &callbackID)) { callbackID = 0; }
+		if (!e->Attribute("animSpeed", &animSpeed)) { animSpeed = 1; }
+
+		textureID = e->Attribute("textureID");
+
+		GameObject* pGameObject = TheGameObjectFactory::Instance().create(e->Attribute("type"));
+		pGameObject->load(std::unique_ptr<LoaderParams>(new LoaderParams(x, y, width, height, textureID, numFrames, callbackID, animSpeed)));
+		pObjects->push_back(pGameObject);
+	}
+}
+*/
 
 bool StateParser::parseState(GameState* pState)
 {
 	//create XML doc
 	TiXmlDocument xmlDoc;
 
-	std::string file = TheGame::Instance().getAssetsRoot() + TheGame::Instance().getStatesFile();
-	//load the file state
-	if (!xmlDoc.LoadFile(file))
-	{
-		std::cerr << xmlDoc.ErrorDesc() << "\n";
-		return false;
-	}
-
 	//get the root element
-	TiXmlElement* pRoot = xmlDoc.RootElement();
-
-	//pre declare the states root node
-	TiXmlElement* pStateRoot = nullptr;
+	TiXmlElement* pRoot = loadDocument(xmlDoc, TheGame::Instance().getAssetsRoot(), TheGame::Instance().getStatesFile());
 
 	//get this states root node and assign it to pStateRoot
+	TiXmlElement* pStateRoot = nullptr;
 	for (TiXmlElement* e = pRoot->FirstChildElement(); e != nullptr; e = e->NextSiblingElement())
 	{
 		if (e->Value() == pState->getStateID())
@@ -100,10 +132,9 @@ bool StateParser::parseState(GameState* pState)
 		}
 	}
 
+	//get pStageElem and pAudioElem from the root node
 	TiXmlElement* pStageElem = nullptr;
 	TiXmlElement * pAudioElem = nullptr;
-
-	//get pStageElem and pAudioElem from the root node
 	for (TiXmlElement* e = pStateRoot->FirstChildElement(); e != nullptr; e = e->NextSiblingElement())
 	{
 		if (e->Value() == std::string("STAGE"))
@@ -124,11 +155,13 @@ bool StateParser::parseState(GameState* pState)
 		}
 	}
 
+	//parse a subpath if present 
 	std::string path = TheGame::Instance().getAssetsRoot();
 	if (pStageElem->FirstChildElement()->Attribute("subpath"))
 	{
 		path += pStageElem->FirstChildElement()->Attribute("subpath");
 	}
+
 	pState->setStageAssetsPath(path);
 	pState->setStageMapFile(pStageElem->FirstChildElement()->Attribute("filename"));
 
@@ -136,21 +169,6 @@ bool StateParser::parseState(GameState* pState)
 	parseAudio(pAudioElem);
 
 	return true;
-}
-
-void StateParser::parseTextures(std::string assetsLocation, TiXmlElement* pTextureRoot, std::vector<std::string> *pTextureIDs)
-{
-	for (TiXmlElement* e = pTextureRoot->FirstChildElement(); e != nullptr; e = e->NextSiblingElement())
-	{
-		std::string filename = e->Attribute("filename");
-		std::string id = e->Attribute("ID");
-
-		pTextureIDs->push_back(id);
-		if (!TheTextureManager::Instance().load(assetsLocation + filename, id, TheSDLSystem::Instance().getRenderer()))
-		{
-			std::cout << "StateParser::parseTextures -- failed to load texture " << filename << "\n";
-		}
-	}
 }
 
 void StateParser::parseAudio(TiXmlElement* pAudioElem)
@@ -179,25 +197,3 @@ void StateParser::parseAudio(TiXmlElement* pAudioElem)
 	}
 }
 
-void StateParser::parseObjects(TiXmlElement* pObjectRoot, std::vector<GameObject*> *pObjects)
-{
-	for (TiXmlElement* e = pObjectRoot->FirstChildElement(); e != NULL; e = e->NextSiblingElement())
-	{
-		int x, y, width, height, numFrames, callbackID, animSpeed;
-		std::string textureID;
-
-		e->Attribute("x", &x);
-		e->Attribute("y", &y);
-		e->Attribute("width", &width);
-		e->Attribute("height", &height);
-		e->Attribute("numFrames", &numFrames);
-		if (!e->Attribute("callbackID", &callbackID)) { callbackID = 0; }
-		if (!e->Attribute("animSpeed", &animSpeed)) { animSpeed = 1; }
-
-		textureID = e->Attribute("textureID");
-
-		GameObject* pGameObject = TheGameObjectFactory::Instance().create(e->Attribute("type"));
-		pGameObject->load(std::unique_ptr<LoaderParams>(new LoaderParams(x, y, width, height, textureID, numFrames, callbackID, animSpeed)));
-		pObjects->push_back(pGameObject);
-	}
-}

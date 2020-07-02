@@ -30,10 +30,7 @@ void PlayState::update()
 			TheGame::Instance().getStateMachine()->changeState(new GameOverState());
 		}
 
-		if (pLevel)
-		{
-			pLevel->update();
-		}
+		GameState::update();
 	}
 }
 
@@ -41,10 +38,7 @@ void PlayState::render()
 {
 	if (m_loadingComplete)
 	{
-		if (pLevel != 0)
-		{
-			pLevel->render();
-		}
+		GameState::render();
 
 		for (int i = 0; i < TheGame::Instance().getPlayerLives(); i++)
 		{
@@ -61,7 +55,7 @@ bool PlayState::onEnter()
 	TheGame::Instance().setPlayerLives(3);
 
 	LevelParser levelParser;
-	pLevel = levelParser.parseLevel(TheGame::Instance().getAssetsRoot(), TheGame::Instance().getLevelFiles()[TheGame::Instance().getCurrentLevel()]);
+	m_pLevel = levelParser.parseLevel(TheGame::Instance().getAssetsRoot(), TheGame::Instance().getLevelFiles()[TheGame::Instance().getCurrentLevel()]);
 
 	TheSoundManager::Instance().load("assets/boom.wav", "explode", SOUND_SFX);
 	TheSoundManager::Instance().load("assets/phaser.wav", "shoot", SOUND_SFX);
@@ -71,7 +65,7 @@ bool PlayState::onEnter()
 	TheTextureManager::Instance().load("assets/bullet3.png", "bullet3", TheSDLSystem::Instance().getRenderer());
 	TheTextureManager::Instance().load("assets/lives.png", "lives", TheSDLSystem::Instance().getRenderer());
 
-	if (pLevel)
+	if (m_pLevel)
 	{
 		m_loadingComplete = true;
 	}

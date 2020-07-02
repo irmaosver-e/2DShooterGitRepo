@@ -1,13 +1,11 @@
 #ifndef __LevelParser__
 #define __LevelParser__
 
-#include <iostream>
-#include <vector>
-#include "tinyxml.h"
+#include "Parser.h"
 #include "Tileset.h"
 #include "Level.h"
 
-class LevelParser
+class LevelParser : public Parser
 {
 public:
 	LevelParser() : m_pLevel(nullptr) {}
@@ -25,7 +23,6 @@ private:
 	void parseImageLayer(TiXmlElement* pImageElement);
 
 	bool parseTextures(std::string fileName, std::string id);
-	TiXmlElement* loadDocument(TiXmlDocument& xmlDoc, std::string assetsLocation, std::string levelFile);
 
 	TiXmlElement* m_mapRoot;
 	std::vector<Tileset> m_tilesets;

@@ -26,8 +26,10 @@ void PauseState::render()
 
 bool PauseState::onEnter()
 {
+	/* to be updated with a LevelParser
 	StateParser stateParser;
 	stateParser.parseState(TheGame::Instance().getAssetsRoot(), TheGame::Instance().getStatesFile(), s_pauseID, &m_gameObjects, &m_textureIDList);
+	*/
 
 	m_callbacks.push_back(0);
 	m_callbacks.push_back(s_pauseToMain);

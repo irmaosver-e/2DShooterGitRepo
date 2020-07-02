@@ -14,6 +14,7 @@
 #include "ScrollingBackground.h"
 #include "MenuButton.h"
 #include "Player.h"
+#include "Cursor.h"
 #include "RoofTurret.h"
 #include "ShotGlider.h"
 #include "Eskeletor.h"
@@ -39,6 +40,7 @@ bool Game::init(const char* configFile)
 	// register the types for the game
 	TheGameObjectFactory::Instance().registerType("MenuButton", new ObjCreator<MenuButton>);
 	TheGameObjectFactory::Instance().registerType("Player", new ObjCreator<Player>);
+	TheGameObjectFactory::Instance().registerType("Cursor", new ObjCreator<Cursor>);
 	TheGameObjectFactory::Instance().registerType("AnimatedGraphic", new ObjCreator<AnimatedGraphic>);
 	TheGameObjectFactory::Instance().registerType("ScrollingBackground", new ObjCreator<ScrollingBackground>);
 	TheGameObjectFactory::Instance().registerType("Turret", new ObjCreator<Turret>);
@@ -47,7 +49,6 @@ bool Game::init(const char* configFile)
 	TheGameObjectFactory::Instance().registerType("ShotGlider", new ObjCreator<ShotGlider>);
 	TheGameObjectFactory::Instance().registerType("Eskeletor", new ObjCreator<Eskeletor>);
 	TheGameObjectFactory::Instance().registerType("Level1Boss", new ObjCreator<Level1Boss>);
-
 
 	// start the menu state
 	m_pGameStateMachine = new GameStateMachine();
