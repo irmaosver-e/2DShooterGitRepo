@@ -13,6 +13,7 @@
 #include "Tileset.h"
 
 class TileLayer;
+class ImageLayer;
 
 class Level
 {
@@ -36,16 +37,23 @@ public:
 
 private:
 	friend class LevelParser;
+	
+	//to be made redundant
 	Level() {}
+	
 	Level(std::string location, std::string file) : m_assetsLocation(location), m_mapFile(file) {}
 
 	Player* m_pPlayer;
 
 	std::vector<Layer*> m_layers;
 	std::vector<TileLayer*> m_collisionLayers;
+	//std::vector<ImageLayer*> m_imageLayers;
 
 	std::string m_assetsLocation;
 	std::string m_mapFile;
+
+	//future implementation check for collisions between game objects
+	CollisionManager m_collisionManager;
 };
 
 #endif /* defined ( __Level__ ) */

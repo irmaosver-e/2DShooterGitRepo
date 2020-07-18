@@ -1,7 +1,5 @@
 #include "Cursor.h"
 
-#include <SDL.h>
-
 #include "SDLSystem.h"
 #include "InputHandler.h"
 
@@ -59,12 +57,13 @@ void Cursor::handleInput()
 
 	if (TheInputHandler::Instance().isKeyDown(SDL_SCANCODE_SPACE))
 	{
+		//temporary TEST
 		m_animSpeed = 300;
 	}
 	else
 	{
-		static int anim = m_animSpeed;
-		if (m_animSpeed > anim)
+		// temporary TEST
+		if (m_animSpeed > 150)
 		{
 			m_animSpeed--;
 		}
@@ -105,6 +104,5 @@ void Cursor::handleInput()
 
 void Cursor::handleAnimation()
 {
-	m_currentFrame = int((SDL_GetTicks() / (m_animSpeed)) % m_numFrames);
-	//m_currentFrame = int((SDL_GetTicks() / (100)) % m_numFrames);
+	m_currentFrame = (TheSDLSystem::Instance().getRunningTime() / m_animSpeed) % m_numFrames;
 }

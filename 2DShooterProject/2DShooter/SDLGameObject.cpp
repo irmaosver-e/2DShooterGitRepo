@@ -20,7 +20,6 @@ void SDLGameObject::load(std::unique_ptr<LoaderParams> const& pParams)
 	m_width = pParams->getWidth();
 	m_height = pParams->getHeight();
 	m_textureID = pParams->getTextureID();
-
 	m_numFrames = pParams->getNumFrames();
 	m_animSpeed = pParams->getAnimSpeed();
 
@@ -39,9 +38,14 @@ void SDLGameObject::draw()
 void SDLGameObject::update()
 {
 	m_position += m_velocity;
-	m_currentFrame = int(((SDL_GetTicks() / (1000 / 3)) % m_numFrames));
 }
 
+int SDLGameObject::getAnimatedFrame(float speedModifier)
+{
+	return int(TheSDLSystem::Instance().getRunningTime() / (m_animSpeed / speedModifier)) % m_numFrames;
+}
+
+//to be made redundant
 void SDLGameObject::doDyingAnimation()
 {
 	//keeps scrolling w the map

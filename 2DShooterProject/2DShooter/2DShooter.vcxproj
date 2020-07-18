@@ -32,6 +32,7 @@
     <ClCompile Include="GameObjectFactory.cpp" />
     <ClCompile Include="GameOverState.cpp" />
     <ClCompile Include="GameStateMachine.cpp" />
+    <ClCompile Include="ImageLayer.cpp" />
     <ClCompile Include="InputHandler.cpp" />
     <ClCompile Include="Level.cpp" />
     <ClCompile Include="Level1Boss.cpp" />
@@ -80,6 +81,7 @@
     <ClInclude Include="GameState.h" />
     <ClInclude Include="GameStateMachine.h" />
     <ClInclude Include="Glider.h" />
+    <ClInclude Include="ImageLayer.h" />
     <ClInclude Include="Layer.h" />
     <ClInclude Include="InputHandler.h" />
     <ClInclude Include="Level.h" />

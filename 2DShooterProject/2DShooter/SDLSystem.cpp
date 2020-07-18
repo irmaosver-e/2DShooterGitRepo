@@ -2,7 +2,8 @@
 #include "SystemParser.h"
 #include <iostream>
 
-SDLSystem::SDLSystem(token) : m_pWindow(nullptr), m_pRenderer(nullptr), m_frameTime(0.0f), m_fps(60)
+//game frame rate set to 60 by default
+SDLSystem::SDLSystem(token) : m_pWindow(nullptr), m_pRenderer(nullptr), m_frameTime(0.0f), m_frameCount(1), m_fps(60)
 {
 }
 
@@ -70,6 +71,7 @@ bool SDLSystem::capFrameRate()
 	if (m_frameTime >= (1000.f / m_fps))
 	{
 		//std::cout << "ALLOWED frame - FPS: " << (1000 / m_frameTime) << "\n";
+		countFrame();
 		m_frameTime = 0.0f;
 		lastTime = thisTime;
 		return true;
@@ -77,6 +79,16 @@ bool SDLSystem::capFrameRate()
 
 	lastTime = thisTime;
 	return false;
+}
+
+void SDLSystem::countFrame()
+{
+	m_frameCount++;
+
+	if (m_frameCount > m_fps)
+	{
+		m_frameCount = 1;
+	}
 }
 
 void SDLSystem::quit()

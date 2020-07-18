@@ -5,6 +5,7 @@
 #include "TextureManager.h"
 #include "SoundManager.h"
 #include "ObjectLayer.h"
+#include "ImageLayer.h"
 #include "TileLayer.h"
 #include "GameObjectFactory.h"
 #include "base64.h"
@@ -399,6 +400,8 @@ void LevelParser::parseObjTile(TiXmlElement* pTileElement, ObjectTile& objectTil
 
 void LevelParser::parseLayer(TiXmlElement* pLayerElement)
 {	
+	Layer* pLayer = nullptr;
+
 	if (pLayerElement->Value() == std::string("group"))
 	{
 		for (TiXmlElement* e = pLayerElement->FirstChildElement(); e != NULL; e = e->NextSiblingElement())
@@ -408,23 +411,28 @@ void LevelParser::parseLayer(TiXmlElement* pLayerElement)
 	}
 	else if (pLayerElement->Value() == std::string("layer"))
 	{
-		parseTileLayer(pLayerElement);
+		pLayer = parseTileLayer(pLayerElement);
 	}
 	else if (pLayerElement->Value() == std::string("imagelayer"))
 	{
-		parseImageLayer(pLayerElement);
+		pLayer = parseImageLayer(pLayerElement);
 	}
 	else if (pLayerElement->Value() == std::string("objectgroup"))
 	{
-		parseObjectLayer(pLayerElement);
+		pLayer = parseObjectLayer(pLayerElement);
 	}
 	else
 	{
 		std::cout << "invalid layer Type: " << pLayerElement->Value() << " in level map \n";
 	}
+
+	if (pLayer)
+	{
+		m_pLevel->getLayers()->push_back(pLayer);
+	}
 }
 
-void LevelParser::parseTileLayer(TiXmlElement* pTileElement)
+Layer* LevelParser::parseTileLayer(TiXmlElement* pTileElement)
 {
 	TileLayer* pTileLayer = new TileLayer(m_tilesets);
 	
@@ -501,10 +509,10 @@ void LevelParser::parseTileLayer(TiXmlElement* pTileElement)
 		m_pLevel->getCollisionLayers()->push_back(pTileLayer);
 	}
 
-	m_pLevel->getLayers()->push_back(pTileLayer);
+	return pTileLayer;
 }
 
-void LevelParser::parseObjectLayer(TiXmlElement* pObjectElement)
+Layer* LevelParser::parseObjectLayer(TiXmlElement* pObjectElement)
 {
 	ObjectLayer* pObjectLayer = new ObjectLayer();
 
@@ -576,12 +584,12 @@ void LevelParser::parseObjectLayer(TiXmlElement* pObjectElement)
 		
 		pObjectLayer->getGameObjects()->push_back(pGameObject);
 	}
-	m_pLevel->getLayers()->push_back(pObjectLayer);
+	return pObjectLayer;
 }
 
-void LevelParser::parseImageLayer(TiXmlElement* pImageElement)
+Layer* LevelParser::parseImageLayer(TiXmlElement* pImageElement)
 {
-	ObjectLayer* pObjectLayer = new ObjectLayer();
+	ImageLayer* pImageLayer = new ImageLayer();
 
 	int x = 0, y = 0, width = 0, height = 0, numFrames = 1, callbackID = 0, animSpeed = 1;
 	std::string imageFile;
@@ -612,9 +620,9 @@ void LevelParser::parseImageLayer(TiXmlElement* pImageElement)
 
 	pGameObject->load(std::unique_ptr<LoaderParams>(new LoaderParams(x, y, width, height, textureID, numFrames, callbackID, animSpeed)));
 
-	pObjectLayer->getGameObjects()->push_back(pGameObject);
+	pImageLayer->getGameObjects()->push_back(pGameObject);
 
-	m_pLevel->getLayers()->push_back(pObjectLayer);
+	return pImageLayer;
 }
 
 bool LevelParser::parseTextures(std::string fileName, std::string id)

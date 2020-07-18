@@ -18,9 +18,9 @@ private:
 
 	void parseLayer(TiXmlElement* pLayerElement);
 	
-	void parseTileLayer(TiXmlElement* pTileElement);
-	void parseObjectLayer(TiXmlElement* pObjectElement);
-	void parseImageLayer(TiXmlElement* pImageElement);
+	Layer* parseTileLayer(TiXmlElement* pTileElement);
+	Layer* parseObjectLayer(TiXmlElement* pObjectElement);
+	Layer* parseImageLayer(TiXmlElement* pImageElement);
 
 	bool parseTextures(std::string fileName, std::string id);
 

@@ -20,7 +20,6 @@ public:
 	virtual void clean() = 0;
 	virtual void collision() = 0;
 	virtual std::string objType() = 0;
-	virtual std::vector<SDL_Rect>& getColisionShape() { return m_collisionShape; }
 
 	Vector2D& getPosition() { return m_position; }
 	Vector2D& getVelocity() { return m_velocity; }
@@ -56,8 +55,6 @@ protected:
 		m_alpha(255)
 	{
 	}
-
-	std::vector<SDL_Rect> m_collisionShape;
 
 	//movement variables
 	Vector2D m_position;

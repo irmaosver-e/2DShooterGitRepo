@@ -18,7 +18,7 @@ public:
 private:
 
 	// check for collisions between game objects
-	CollisionManager m_collisionManager;
+	//CollisionManager m_collisionManager;
 
 	std::vector<GameObject*> m_gameObjects;
 

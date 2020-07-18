@@ -21,18 +21,23 @@ public:
 	int getScreenWidth() const { return SDL_GetWindowSurface(m_pWindow)->w; }
 	int getScreenHeight() const { return SDL_GetWindowSurface(m_pWindow)->h; }
 
-	float getDTSecs(){ return m_frameTime; }
+	int getRunningTime(){ return SDL_GetTicks(); }
+	const int& getFrameCount() { return m_frameCount; }
+	
 	bool capFrameRate();
 
 	SDL_Renderer* getRenderer() const { return m_pRenderer; }
 	SDL_Window* getWindow() const { return m_pWindow; }
 
 private:
+	void countFrame();
+
 	SDL_Window* m_pWindow;
 	SDL_Renderer* m_pRenderer;
 
 	int m_fps;
 	float m_frameTime;
+	int m_frameCount;
 };
 
 typedef SDLSystem TheSDLSystem;

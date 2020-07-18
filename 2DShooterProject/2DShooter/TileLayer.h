@@ -38,7 +38,6 @@ private:
 	int m_numRows;
 	int m_tileSize;
 
-	//MENUTEST
 	int m_tileWidth;
 	int m_tileHeight;
 

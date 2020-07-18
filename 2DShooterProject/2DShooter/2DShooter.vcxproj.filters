@@ -82,6 +82,12 @@
     <Filter Include="Header Files\Parsers\Parser">
       <UniqueIdentifier>{b6686f0a-527c-4457-a76b-87281bc8ee28}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Source Files\Parsers\Parser">
+      <UniqueIdentifier>{8b05f2a0-9407-43e7-810f-b901fab49765}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\Layers\Layer">
+      <UniqueIdentifier>{35deb699-5b33-465e-b2c0-08f15833f50d}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="AnimatedGraphic.cpp">
@@ -205,7 +211,10 @@
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="Parser.cpp">
-      <Filter>Source Files\Parsers</Filter>
+      <Filter>Source Files\Parsers\Parser</Filter>
+    </ClCompile>
+    <ClCompile Include="ImageLayer.cpp">
+      <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -262,9 +271,6 @@
     </ClInclude>
     <ClInclude Include="InputHandler.h">
       <Filter>Header Files\Handlers</Filter>
-    </ClInclude>
-    <ClInclude Include="Layer.h">
-      <Filter>Header Files\Layers</Filter>
     </ClInclude>
     <ClInclude Include="Level.h">
       <Filter>Header Files</Filter>
@@ -352,6 +358,12 @@
     </ClInclude>
     <ClInclude Include="Cursor.h">
       <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="ImageLayer.h">
+      <Filter>Header Files\Layers</Filter>
+    </ClInclude>
+    <ClInclude Include="Layer.h">
+      <Filter>Header Files\Layers\Layer</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

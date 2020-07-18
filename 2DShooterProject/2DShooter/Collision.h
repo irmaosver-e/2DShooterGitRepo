@@ -1,7 +1,7 @@
 #ifndef __Collision__
 #define __Collision__
 
-#include "SDL.h"
+#include "SDL_rect.h"
 #include "Vector2D.h"
 
 const static int s_buffer = 4;

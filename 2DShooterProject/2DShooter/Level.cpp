@@ -1,10 +1,10 @@
 #include "Level.h"
 
-#include <math.h>
-#include "TextureManager.h"
+//#include <math.h>
+//#include "TextureManager.h"
 #include "Game.h"
 #include "Layer.h"
-#include "TileLayer.h"
+//#include "TileLayer.h"
 
 Level::~Level()
 {
@@ -19,6 +19,7 @@ Level::~Level()
 void Level::update()
 {
 	//check colisions here?
+	//pass state from game singleton to collision manager?
 
 	for (unsigned int i = 0; i < m_layers.size(); i++)
 	{
