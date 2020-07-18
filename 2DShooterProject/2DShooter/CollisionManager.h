@@ -21,7 +21,7 @@ class TileLayer;
 class CollisionManager : public Singleton<CollisionManager>
 {
 public:
-    CollisionManager(token) {}
+    CollisionManager(token) : m_pObjects(nullptr) {}
 
     //to be made redundant
     void checkPlayerEnemyBulletCollision(Player* pPlayer);
@@ -29,10 +29,16 @@ public:
     void checkEnemyPlayerBulletCollision(const std::vector<GameObject*>& objects);
     void checkPlayerTileCollision(Player* pPlayer, const std::vector<TileLayer*>& collisionLayers);
 
-    std::vector<ObjectCollisionType>& GetCollisionObjects { return m_collisionObjects; }
+    void setLayerObjects(std::vector<GameObject*>* pLayerObjects) { m_pObjects = pLayerObjects; }
+  
+    void checkCollision(GameObject* pFocusedObject);
 
+    //maybe
+    //std::vector<ObjectCollisionType>& GetCollisionObjects { return m_collisionObjects; }
 private:
-        std::vector<ObjectCollisionType> m_collisionObjects;
+        std::vector<GameObject*>* m_pObjects;
+
+        std::vector<ObjectCollisionType> m_collisionObjects;        
 };
 
 typedef CollisionManager TheCollisionManager;

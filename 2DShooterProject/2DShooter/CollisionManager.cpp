@@ -153,3 +153,62 @@ void CollisionManager::checkPlayerTileCollision(Player* pPlayer, const std::vect
         }
     }
 }
+
+void CollisionManager::checkCollision(GameObject* pFocusedObject)
+{
+    std::vector<SDL_Rect> focusedObjColShape;
+
+    for (std::vector<ObjectCollisionType>::iterator it = m_collisionObjects.begin(); it != m_collisionObjects.end(); it++)
+    {
+        //finds the focused object collision object type
+        if (pFocusedObject->objType() == (*it).name)
+        {
+            //if focused object doenst have a collide againt list it is passive, skip collision check
+            if (!(*it).collidesAgainst.empty())
+            {
+                //goes through the collidesAgainst vector then test collision against the layerObjects
+                /*for (std::vector<std::string>::iterator it )
+                {
+
+                }
+                */
+
+
+            }
+
+        }
+    }
+
+    SDL_Rect* pRect1 = new SDL_Rect();
+    pRect1->x = pFocusedObject->getPosition().getX();
+    pRect1->y = pFocusedObject->getPosition().getY();
+    pRect1->w = pFocusedObject->getWidth();
+    pRect1->h = pFocusedObject->getHeight();
+
+    for (unsigned int i = 0; i < objects.size(); i++)
+    {
+        if (objects[i]->objType() != std::string("Enemy") || !objects[i]->updating())
+        {
+            continue;
+        }
+
+        SDL_Rect* pRect2 = new SDL_Rect();
+        pRect2->x = (int)objects[i]->getPosition().getX();
+        pRect2->y = (int)objects[i]->getPosition().getY();
+        pRect2->w = objects[i]->getWidth();
+        pRect2->h = objects[i]->getHeight();
+
+        if (RectRect(pRect1, pRect2))
+        {
+            if (!objects[i]->dead() && !objects[i]->dying())
+            {
+                pPlayer->collision();
+            }
+        }
+
+        delete pRect2;
+    }
+
+    delete pRect1;
+
+}

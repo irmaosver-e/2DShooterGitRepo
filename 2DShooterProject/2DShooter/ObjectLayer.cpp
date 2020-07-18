@@ -16,6 +16,7 @@ ObjectLayer::~ObjectLayer()
 
 void ObjectLayer::update(Level* pLevel)
 {
+    TheCollisionManager::Instance().setLayerObjects( &m_gameObjects );
     //m_collisionManager.checkCollision(GameObject* obj, std::vector<GameObject*>* objs);
     /*
     //should check colisions in level
@@ -35,6 +36,8 @@ void ObjectLayer::update(Level* pLevel)
     {
         for (std::vector<GameObject*>::iterator it = m_gameObjects.begin(); it != m_gameObjects.end();)
         {
+            TheCollisionManager::Instance().checkCollision(*it);
+
             if ((*it)->getPosition().getX() <= TheSDLSystem::Instance().getScreenWidth())
             {
                 (*it)->setUpdating(true);
