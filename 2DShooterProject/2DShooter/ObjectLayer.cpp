@@ -16,7 +16,6 @@ ObjectLayer::~ObjectLayer()
 
 void ObjectLayer::update(Level* pLevel)
 {
-    TheCollisionManager::Instance().setLayerObjects( &m_gameObjects );
     //m_collisionManager.checkCollision(GameObject* obj, std::vector<GameObject*>* objs);
     /*
     //should check colisions in level

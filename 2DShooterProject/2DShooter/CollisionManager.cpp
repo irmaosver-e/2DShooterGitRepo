@@ -154,30 +154,89 @@ void CollisionManager::checkPlayerTileCollision(Player* pPlayer, const std::vect
     }
 }
 
-void CollisionManager::checkCollision(GameObject* pFocusedObject)
+ObjectCollisionType* CollisionManager::getCollisionObject(std::string colType)
 {
-    std::vector<SDL_Rect> focusedObjColShape;
-
-    for (std::vector<ObjectCollisionType>::iterator it = m_collisionObjects.begin(); it != m_collisionObjects.end(); it++)
+    ObjectCollisionType* pObjColType = nullptr;
+    for (std::vector<ObjectCollisionType>::iterator itColType = m_collisionObjects.begin();
+        itColType != m_collisionObjects.end();
+        ++itColType)
     {
         //finds the focused object collision object type
-        if (pFocusedObject->objType() == (*it).name)
+        if (colType == (*itColType).name)
         {
-            //if focused object doenst have a collide againt list it is passive, skip collision check
-            if (!(*it).collidesAgainst.empty())
+            pObjColType = &(*itColType);
+        }
+    }
+
+    return pObjColType;
+}
+
+void CollisionManager::calculateObjColShape(GameObject& focusedObj, ObjectCollisionType& objColType, std::vector<SDL_Rect>& targetShape)
+{
+    //adds the object position to object collision box and stores in focusedObjColShape
+    for (std::vector<SDL_Rect>::iterator itColBox = objColType.collisionShape.begin();
+        itColBox != objColType.collisionShape.end();
+        ++itColBox)
+    {
+        targetShape.push_back(*itColBox);
+
+        targetShape.back().x += focusedObj.getPosition().getX();
+        targetShape.back().w += focusedObj.getPosition().getX();
+
+        targetShape.back().y += focusedObj.getPosition().getY();
+        targetShape.back().h += focusedObj.getPosition().getY();
+    }
+}
+
+void CollisionManager::checkCollision(GameObject* pFocusedObject)
+{
+    ObjectCollisionType* pFocusedObjColType = getCollisionObject(pFocusedObject->objType());
+
+    //tests if the pFocusedObject exists in the vector of ObjectCollisionType
+    if (pFocusedObjColType)
+    {
+        //if focused object doenst have a collide againt list it is passive, skip collision check
+        if (!pFocusedObjColType->collidesAgainst.empty())
+        {
+            //creates a ObjColShapes to test collision against
+            std::vector<SDL_Rect> focusedObjColShape;
+            std::vector<SDL_Rect> VsObjColShape;
+
+            //adds the object position to object collision box and stores in focusedObjColShape
+            calculateObjColShape(*pFocusedObject, *pFocusedObjColType, focusedObjColShape);
+
+            //goes through the collidesAgainst vector to test collision against the VSObjects
+            for (std::vector<std::string>::iterator itVSCollision = pFocusedObjColType->collidesAgainst.begin();
+                itVSCollision != pFocusedObjColType->collidesAgainst.end();
+                ++itVSCollision)
             {
-                //goes through the collidesAgainst vector then test collision against the layerObjects
-                /*for (std::vector<std::string>::iterator it )
+                //loads objects of type to be collided
+                std::vector<GameObject*> VsObjects;
+                m_currentLevel->getObjectsfromLayers(VsObjects, (*itVSCollision));
+
+                //looks for a collision type for the VSObject
+                ObjectCollisionType* pVSObjColType = getCollisionObject(VsObjects.back()->objType());
+
+                //tests if the VsObject exists in the vector of pVSObjColType
+                if (pVSObjColType)
                 {
+                    //goes through the gathered VsObjects to test for collisions
+                    for (std::vector<GameObject*>::iterator itVsObject = VsObjects.begin();
+                        itVsObject != VsObjects.end();
+                        ++itVsObject)
+                    {
+                        //adds the object position to object collision box and stores in VsObjColShape
+                        calculateObjColShape(*(*itVsObject), *pVSObjColType, VsObjColShape);
 
-                }
-                */
-
-
+                        //test collision
+                    }
+                }               
             }
 
         }
     }
+
+    //_____________________________-
 
     SDL_Rect* pRect1 = new SDL_Rect();
     pRect1->x = pFocusedObject->getPosition().getX();
@@ -185,6 +244,7 @@ void CollisionManager::checkCollision(GameObject* pFocusedObject)
     pRect1->w = pFocusedObject->getWidth();
     pRect1->h = pFocusedObject->getHeight();
 
+    /*
     for (unsigned int i = 0; i < objects.size(); i++)
     {
         if (objects[i]->objType() != std::string("Enemy") || !objects[i]->updating())
@@ -210,5 +270,5 @@ void CollisionManager::checkCollision(GameObject* pFocusedObject)
     }
 
     delete pRect1;
-
+    */
 }

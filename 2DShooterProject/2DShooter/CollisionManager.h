@@ -2,6 +2,7 @@
 #define __CollisionManager__
 
 #include "Singleton.h"
+#include "Level.h"
 #include <vector>
 
 struct ObjectCollisionType
@@ -21,7 +22,7 @@ class TileLayer;
 class CollisionManager : public Singleton<CollisionManager>
 {
 public:
-    CollisionManager(token) : m_pObjects(nullptr) {}
+    CollisionManager(token) : m_currentLevel(nullptr) {}
 
     //to be made redundant
     void checkPlayerEnemyBulletCollision(Player* pPlayer);
@@ -29,16 +30,20 @@ public:
     void checkEnemyPlayerBulletCollision(const std::vector<GameObject*>& objects);
     void checkPlayerTileCollision(Player* pPlayer, const std::vector<TileLayer*>& collisionLayers);
 
-    void setLayerObjects(std::vector<GameObject*>* pLayerObjects) { m_pObjects = pLayerObjects; }
-  
+    void setCurrentLevel(Level* currentLevel) { m_currentLevel = currentLevel; }
+ 
     void checkCollision(GameObject* pFocusedObject);
 
     //maybe
     //std::vector<ObjectCollisionType>& GetCollisionObjects { return m_collisionObjects; }
 private:
-        std::vector<GameObject*>* m_pObjects;
+        Level* m_currentLevel;
 
-        std::vector<ObjectCollisionType> m_collisionObjects;        
+        std::vector<ObjectCollisionType> m_collisionObjects;
+
+        ObjectCollisionType* getCollisionObject(std::string colType);
+        void calculateObjColShape(GameObject& focusedObj, ObjectCollisionType& objColType, std::vector<SDL_Rect>& targetShape);
+
 };
 
 typedef CollisionManager TheCollisionManager;

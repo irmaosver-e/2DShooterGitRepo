@@ -361,6 +361,8 @@ void LevelParser::parseTileset(TiXmlElement* pTilesetElement)
 
 void LevelParser::parseObjTile(TiXmlElement* pTileElement, ObjectTile& objectTile)
 {
+	//should load the collision type somewhere here probably
+
 	objectTile.type = pTileElement->Attribute("type");
 	
 	for (TiXmlElement* e = pTileElement->FirstChildElement(); e != NULL; e = e->NextSiblingElement())
@@ -574,7 +576,7 @@ Layer* LevelParser::parseObjectLayer(TiXmlElement* pObjectElement)
 		pGameObject->load(std::unique_ptr<LoaderParams>(new LoaderParams(x, y, width, height, objTileType, numFrames, callbackID, animSpeed)));
 	
 		//sets the object colisionshape
-		pGameObject->getColisionShape() = collisionShape;
+		//pGameObject->getColisionShape() = collisionShape;
 
 		
 		if (objType == "Player")
@@ -583,6 +585,8 @@ Layer* LevelParser::parseObjectLayer(TiXmlElement* pObjectElement)
 		}
 		
 		pObjectLayer->getGameObjects()->push_back(pGameObject);
+
+		m_pLevel->getObjectLayers()->push_back(pObjectLayer);
 	}
 	return pObjectLayer;
 }

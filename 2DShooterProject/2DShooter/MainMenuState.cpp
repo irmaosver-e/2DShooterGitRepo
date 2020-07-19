@@ -8,6 +8,8 @@
 #include "MenuButton.h"
 #include "PlayState.h"
 
+#include "CollisionManager.h"
+
 const std::string MainMenuState::s_menuID = "MENU";
 
 void MainMenuState::update()
@@ -31,6 +33,8 @@ bool MainMenuState::onEnter()
 {
 	LevelParser levelParser;
 	m_pLevel = levelParser.parseLevel(m_stageAssetsPath, m_stageMapFile);
+
+	TheCollisionManager::Instance().setCurrentLevel(m_pLevel);
 
 	m_callbacks.push_back(0); //pushback 0 callbackID start from 1
 	m_callbacks.push_back(s_menuToPlay);

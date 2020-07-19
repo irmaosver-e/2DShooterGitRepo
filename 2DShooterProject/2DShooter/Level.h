@@ -9,11 +9,14 @@
 #include "Player.h"
 #include "CollisionManager.h"
 
+#include "ObjectLayer.h"
+
 
 #include "Tileset.h"
 
 class TileLayer;
 class ImageLayer;
+//class ObjectLayer;
 
 class Level
 {
@@ -30,6 +33,9 @@ public:
 
 	std::vector<TileLayer*>* getCollisionLayers() { return &m_collisionLayers; }
 	const std::vector<TileLayer*>& getCollidableLayers() { return m_collisionLayers; }
+	
+	std::vector<ObjectLayer*>* getObjectLayers() { return &m_objectLayers; }
+	void getObjectsfromLayers(std::vector<GameObject*>& objContainer, std::string objType = "all", std::string layer = "all");
 
 	std::string getlevelMapFilePath() { return (m_assetsLocation + m_mapFile); }
 	std::string getlevelMapFileName() { return m_mapFile; }
@@ -47,13 +53,14 @@ private:
 
 	std::vector<Layer*> m_layers;
 	std::vector<TileLayer*> m_collisionLayers;
+	std::vector<ObjectLayer*> m_objectLayers;
 	//std::vector<ImageLayer*> m_imageLayers;
 
 	std::string m_assetsLocation;
 	std::string m_mapFile;
 
 	//future implementation check for collisions between game objects
-	CollisionManager m_collisionManager;
+	//CollisionManager m_collisionManager;
 };
 
 #endif /* defined ( __Level__ ) */
