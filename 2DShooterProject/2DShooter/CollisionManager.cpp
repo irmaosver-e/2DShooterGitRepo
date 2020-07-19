@@ -188,7 +188,26 @@ void CollisionManager::calculateObjColShape(GameObject& focusedObj, ObjectCollis
     }
 }
 
-void CollisionManager::checkCollision(GameObject* pFocusedObject)
+bool CollisionManager::testShapeVsShapeCollision(std::vector<SDL_Rect>& collisionShapeA, std::vector<SDL_Rect>& collisionShapeB)
+{
+    for (std::vector<SDL_Rect>::iterator itObjColBoxA = collisionShapeA.begin();
+        itObjColBoxA != collisionShapeA.end();
+        ++itObjColBoxA)
+    {
+        for (std::vector<SDL_Rect>::iterator itObjColBoxB = collisionShapeB.begin();
+            itObjColBoxB != collisionShapeB.end();
+            ++itObjColBoxB)
+        {
+            if (RectRect(&(*itObjColBoxA), &(*itObjColBoxB)))
+            {
+                return true;
+            }
+        }
+    }
+    return false;
+}
+
+bool CollisionManager::checkCollision(GameObject* pFocusedObject)
 {
     ObjectCollisionType* pFocusedObjColType = getCollisionObject(pFocusedObject->objType());
 
@@ -228,47 +247,20 @@ void CollisionManager::checkCollision(GameObject* pFocusedObject)
                         //adds the object position to object collision box and stores in VsObjColShape
                         calculateObjColShape(*(*itVsObject), *pVSObjColType, VsObjColShape);
 
-                        //test collision
+                        //test collision shapes
+                        if (testShapeVsShapeCollision(focusedObjColShape, VsObjColShape))
+                        {
+                            pFocusedObject->collision();
+                            
+                            //maybe
+                            //(*itVsObject)->collision();
+                            
+                            return true;
+                        }
                     }
                 }               
             }
-
         }
     }
-
-    //_____________________________-
-
-    SDL_Rect* pRect1 = new SDL_Rect();
-    pRect1->x = pFocusedObject->getPosition().getX();
-    pRect1->y = pFocusedObject->getPosition().getY();
-    pRect1->w = pFocusedObject->getWidth();
-    pRect1->h = pFocusedObject->getHeight();
-
-    /*
-    for (unsigned int i = 0; i < objects.size(); i++)
-    {
-        if (objects[i]->objType() != std::string("Enemy") || !objects[i]->updating())
-        {
-            continue;
-        }
-
-        SDL_Rect* pRect2 = new SDL_Rect();
-        pRect2->x = (int)objects[i]->getPosition().getX();
-        pRect2->y = (int)objects[i]->getPosition().getY();
-        pRect2->w = objects[i]->getWidth();
-        pRect2->h = objects[i]->getHeight();
-
-        if (RectRect(pRect1, pRect2))
-        {
-            if (!objects[i]->dead() && !objects[i]->dying())
-            {
-                pPlayer->collision();
-            }
-        }
-
-        delete pRect2;
-    }
-
-    delete pRect1;
-    */
+    return false;
 }

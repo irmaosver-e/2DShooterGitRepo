@@ -9,14 +9,12 @@
 #include "Player.h"
 #include "CollisionManager.h"
 
-#include "ObjectLayer.h"
-
 
 #include "Tileset.h"
 
 class TileLayer;
 class ImageLayer;
-//class ObjectLayer;
+class ObjectLayer;
 
 class Level
 {

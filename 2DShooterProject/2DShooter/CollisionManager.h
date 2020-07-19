@@ -32,7 +32,7 @@ public:
 
     void setCurrentLevel(Level* currentLevel) { m_currentLevel = currentLevel; }
  
-    void checkCollision(GameObject* pFocusedObject);
+    bool checkCollision(GameObject* pFocusedObject);
 
     //maybe
     //std::vector<ObjectCollisionType>& GetCollisionObjects { return m_collisionObjects; }
@@ -43,7 +43,7 @@ private:
 
         ObjectCollisionType* getCollisionObject(std::string colType);
         void calculateObjColShape(GameObject& focusedObj, ObjectCollisionType& objColType, std::vector<SDL_Rect>& targetShape);
-
+        bool testShapeVsShapeCollision(std::vector<SDL_Rect>& collisionShapeA, std::vector<SDL_Rect>& collisionShapeB);
 };
 
 typedef CollisionManager TheCollisionManager;
