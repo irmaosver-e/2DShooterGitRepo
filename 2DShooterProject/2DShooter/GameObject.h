@@ -21,6 +21,7 @@ public:
 	virtual void collision() = 0;
 	virtual std::string objType() = 0;
 
+	std::string getTextureID() { return m_textureID; }
 	Vector2D& getPosition() { return m_position; }
 	Vector2D& getVelocity() { return m_velocity; }
 	int getWidth() { return m_width; }
@@ -28,6 +29,8 @@ public:
 	bool updating() { return m_bUpdating; }
 	bool dead() { return m_bDead; }
 	bool dying() { return m_bDying; }
+	bool& isColliding() { return m_bColliding; }
+
 
 	void setUpdating(bool updating) { m_bUpdating = updating; }
 	
@@ -49,6 +52,7 @@ protected:
 		m_currentRow(0),
 		m_currentFrame(0),
 		m_bUpdating(false),
+		m_bColliding(false),
 		m_bDead(false),
 		m_bDying(false),
 		m_angle(0),
@@ -74,6 +78,7 @@ protected:
 
 	//common boolean variables
 	bool m_bUpdating;
+	bool m_bColliding;
 	bool m_bDead;
 	bool m_bDying;
 

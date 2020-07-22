@@ -1,10 +1,8 @@
 #include "Level.h"
 
-//#include <math.h>
-//#include "TextureManager.h"
 #include "Game.h"
-#include "Layer.h"
-//#include "TileLayer.h"
+#include "ObjectLayer.h"
+
 
 Level::~Level()
 {
@@ -36,15 +34,13 @@ void Level::getObjectsfromLayers(std::vector<GameObject*>& objContainer, std::st
 {
 	if (layer == "all")
 	{
-		for (std::vector<ObjectLayer*>::iterator itObjLayers = m_objectLayers.begin();
-			itObjLayers != m_objectLayers.end();
-			++itObjLayers)
+		for(unsigned int i = 0; i < m_objectLayers.size(); i++)
 		{
-			for (std::vector<GameObject*>::iterator itObject = (*itObjLayers)->getGameObjects()->begin();
-				itObject != (*itObjLayers)->getGameObjects()->end();
+			for (std::vector<GameObject*>::iterator itObject = m_objectLayers[i]->getGameObjects()->begin();
+				itObject != m_objectLayers[i]->getGameObjects()->end();
 				++itObject)
 			{
-				if (objType == (*itObject)->objType() || objType == "all")
+				if (objType == (*itObject)->getTextureID() || objType == "all")
 				{
 					objContainer.push_back(*itObject);
 				}
@@ -54,6 +50,6 @@ void Level::getObjectsfromLayers(std::vector<GameObject*>& objContainer, std::st
 	else
 	{
 		//to be expanded
-		m_objectLayers.at(0);
+		//m_objectLayers.at(0);
 	}
 }

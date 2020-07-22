@@ -53,15 +53,6 @@ bool MainMenuState::onExit()
 {
 	m_exiting = true;
 
-	// clean the game objects
-	if (m_loadingComplete && !m_gameObjects.empty())
-	{
-		m_gameObjects.back()->clean();
-		m_gameObjects.pop_back();
-	}
-
-	m_gameObjects.clear();
-
 	// reset the input handler
 	TheInputHandler::Instance().reset();
 
@@ -71,15 +62,18 @@ bool MainMenuState::onExit()
 
 void MainMenuState::setCallbacks(const std::vector<Callback>& callbacks)
 {
+	std::vector<GameObject*> pObjectsContainer;
+	m_pLevel->getObjectsfromLayers(pObjectsContainer);
+
 	//go through the game objects
-	if (!m_gameObjects.empty())
+	if (!pObjectsContainer.empty())
 	{
-		for (unsigned int i = 0; i < m_gameObjects.size(); i++)
+		for (unsigned int i = 0; i < pObjectsContainer.size(); i++)
 		{
 			// if they are of type menu button assign callbacks based on IDs
-			if (dynamic_cast<MenuButton*>(m_gameObjects[i]))
+			if (dynamic_cast<MenuButton*>(pObjectsContainer[i]))
 			{
-				MenuButton* pButton = dynamic_cast<MenuButton*>(m_gameObjects[i]);
+				MenuButton* pButton = dynamic_cast<MenuButton*>(pObjectsContainer[i]);
 				pButton->setCallback(callbacks[pButton->getCallbackID()]);
 			}
 		}

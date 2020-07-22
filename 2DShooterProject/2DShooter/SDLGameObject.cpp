@@ -40,10 +40,12 @@ void SDLGameObject::update()
 	m_position += m_velocity;
 }
 
+/*
 int SDLGameObject::getAnimatedFrame(float speedModifier)
 {
 	return int(TheSDLSystem::Instance().getRunningTime() / (m_animSpeed / speedModifier)) % m_numFrames;
 }
+*/
 
 //to be made redundant
 void SDLGameObject::doDyingAnimation()

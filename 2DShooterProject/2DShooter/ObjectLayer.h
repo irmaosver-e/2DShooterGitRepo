@@ -4,6 +4,7 @@
 #include <vector>
 #include "Layer.h"
 #include "CollisionManager.h"
+#include "GameObject.h"
 
 class ObjectLayer : public Layer
 {

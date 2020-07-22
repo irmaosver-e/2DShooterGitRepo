@@ -13,8 +13,8 @@
 #include "Tileset.h"
 
 class TileLayer;
-class ImageLayer;
 class ObjectLayer;
+class ImageLayer;
 
 class Level
 {

@@ -4,6 +4,7 @@
 #include "Singleton.h"
 #include "Level.h"
 #include <vector>
+#include "SDL_Rect.h"
 
 struct ObjectCollisionType
 {
@@ -31,6 +32,7 @@ public:
     void checkPlayerTileCollision(Player* pPlayer, const std::vector<TileLayer*>& collisionLayers);
 
     void setCurrentLevel(Level* currentLevel) { m_currentLevel = currentLevel; }
+    void addCollisionObject(ObjectCollisionType objColType) { m_collisionObjects.push_back(objColType); }
  
     bool checkCollision(GameObject* pFocusedObject);
 

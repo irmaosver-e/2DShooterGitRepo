@@ -1,10 +1,11 @@
 #include "CollisionManager.h"
 
-#include "Collision.h"
 #include "Player.h"
 #include "Enemy.h"
 #include "BulletHandler.h"
 #include "TileLayer.h"
+
+//#include "SDLSystem.h"
 
 void CollisionManager::checkPlayerEnemyBulletCollision(Player* pPlayer)
 {
@@ -25,6 +26,7 @@ void CollisionManager::checkPlayerEnemyBulletCollision(Player* pPlayer)
         pRect2->w = (int)pEnemyBullet->getWidth();
         pRect2->h = (int)pEnemyBullet->getHeight();
 
+        /*
         if (RectRect(pRect1, pRect2))
         {
             if (!pPlayer->dying() && !pEnemyBullet->dying())
@@ -33,6 +35,7 @@ void CollisionManager::checkPlayerEnemyBulletCollision(Player* pPlayer)
                 pPlayer->collision();
             }
         }
+        */
 
         delete pRect2;
     }
@@ -61,6 +64,7 @@ void CollisionManager::checkPlayerEnemyCollision(Player* pPlayer, const std::vec
         pRect2->w = objects[i]->getWidth();
         pRect2->h = objects[i]->getHeight();
 
+        /*
         if (RectRect(pRect1, pRect2))
         {
             if (!objects[i]->dead() && !objects[i]->dying())
@@ -68,6 +72,7 @@ void CollisionManager::checkPlayerEnemyCollision(Player* pPlayer, const std::vec
                 pPlayer->collision();
             }
         }
+        */
 
         delete pRect2;
     }
@@ -103,6 +108,7 @@ void CollisionManager::checkEnemyPlayerBulletCollision(const std::vector<GameObj
             pRect2->w = (int)pPlayerBullet->getWidth();
             pRect2->h = (int)pPlayerBullet->getHeight();
 
+            /*
             if (RectRect(pRect1, pRect2))
             {
                 if (!pObject->dying() && !pPlayerBullet->dying())
@@ -113,6 +119,7 @@ void CollisionManager::checkEnemyPlayerBulletCollision(const std::vector<GameObj
 
             }
 
+            */
             delete pRect1;
             delete pRect2;
         }
@@ -157,14 +164,13 @@ void CollisionManager::checkPlayerTileCollision(Player* pPlayer, const std::vect
 ObjectCollisionType* CollisionManager::getCollisionObject(std::string colType)
 {
     ObjectCollisionType* pObjColType = nullptr;
-    for (std::vector<ObjectCollisionType>::iterator itColType = m_collisionObjects.begin();
-        itColType != m_collisionObjects.end();
-        ++itColType)
+    
+    for(unsigned int i = 0; i < m_collisionObjects.size(); i++)
     {
         //finds the focused object collision object type
-        if (colType == (*itColType).name)
+        if (colType == m_collisionObjects[i].name)
         {
-            pObjColType = &(*itColType);
+            pObjColType = &m_collisionObjects[i];
         }
     }
 
@@ -181,24 +187,36 @@ void CollisionManager::calculateObjColShape(GameObject& focusedObj, ObjectCollis
         targetShape.push_back(*itColBox);
 
         targetShape.back().x += focusedObj.getPosition().getX();
-        targetShape.back().w += focusedObj.getPosition().getX();
-
         targetShape.back().y += focusedObj.getPosition().getY();
-        targetShape.back().h += focusedObj.getPosition().getY();
+
+        // draws collision boxes and texture boxes for debugging
+        //include SDL_Systems
+        /*
+
+        SDL_Rect objTexture;
+        objTexture.x = focusedObj.getPosition().getX();
+        objTexture.y = focusedObj.getPosition().getY();
+        objTexture.w = focusedObj.getWidth();
+        objTexture.h = focusedObj.getHeight();
+
+        SDL_SetRenderDrawColor(TheSDLSystem::Instance().getRenderer(), 255,0,0,0);
+        SDL_RenderDrawRect(TheSDLSystem::Instance().getRenderer(), &objTexture);
+        SDL_RenderPresent(TheSDLSystem::Instance().getRenderer());
+
+        SDL_SetRenderDrawColor(TheSDLSystem::Instance().getRenderer(), 0, 255, 0, 0);
+        SDL_RenderDrawRect(TheSDLSystem::Instance().getRenderer(), &targetShape.back());
+        SDL_RenderPresent(TheSDLSystem::Instance().getRenderer());
+        */
     }
 }
 
 bool CollisionManager::testShapeVsShapeCollision(std::vector<SDL_Rect>& collisionShapeA, std::vector<SDL_Rect>& collisionShapeB)
 {
-    for (std::vector<SDL_Rect>::iterator itObjColBoxA = collisionShapeA.begin();
-        itObjColBoxA != collisionShapeA.end();
-        ++itObjColBoxA)
+    for(unsigned int i = 0; i < collisionShapeA.size(); i++)
     {
-        for (std::vector<SDL_Rect>::iterator itObjColBoxB = collisionShapeB.begin();
-            itObjColBoxB != collisionShapeB.end();
-            ++itObjColBoxB)
-        {
-            if (RectRect(&(*itObjColBoxA), &(*itObjColBoxB)))
+        for (unsigned int j = 0; j < collisionShapeB.size(); j++)
+        {         
+            if (SDL_HasIntersection(&collisionShapeA[i], &collisionShapeB[j]))
             {
                 return true;
             }
@@ -209,7 +227,7 @@ bool CollisionManager::testShapeVsShapeCollision(std::vector<SDL_Rect>& collisio
 
 bool CollisionManager::checkCollision(GameObject* pFocusedObject)
 {
-    ObjectCollisionType* pFocusedObjColType = getCollisionObject(pFocusedObject->objType());
+    ObjectCollisionType* pFocusedObjColType = getCollisionObject(pFocusedObject->getTextureID());
 
     //tests if the pFocusedObject exists in the vector of ObjectCollisionType
     if (pFocusedObjColType)
@@ -234,29 +252,31 @@ bool CollisionManager::checkCollision(GameObject* pFocusedObject)
                 m_currentLevel->getObjectsfromLayers(VsObjects, (*itVSCollision));
 
                 //looks for a collision type for the VSObject
-                ObjectCollisionType* pVSObjColType = getCollisionObject(VsObjects.back()->objType());
+                ObjectCollisionType* pVSObjColType = getCollisionObject(*itVSCollision);
 
                 //tests if the VsObject exists in the vector of pVSObjColType
                 if (pVSObjColType)
                 {
                     //goes through the gathered VsObjects to test for collisions
-                    for (std::vector<GameObject*>::iterator itVsObject = VsObjects.begin();
-                        itVsObject != VsObjects.end();
-                        ++itVsObject)
+                    for (unsigned int i = 0; i < VsObjects.size(); i++)
                     {
                         //adds the object position to object collision box and stores in VsObjColShape
-                        calculateObjColShape(*(*itVsObject), *pVSObjColType, VsObjColShape);
+                        calculateObjColShape(*(VsObjects[i]), *pVSObjColType, VsObjColShape);
 
                         //test collision shapes
                         if (testShapeVsShapeCollision(focusedObjColShape, VsObjColShape))
                         {
                             pFocusedObject->collision();
+                            pFocusedObject->isColliding() = true;
+                            VsObjects[i]->isColliding() = true;
                             
                             //maybe
-                            //(*itVsObject)->collision();
+                            //VsObjects[i]->collision();
                             
                             return true;
                         }
+                        pFocusedObject->isColliding() = false;
+                        VsObjects[i]->isColliding() = false;
                     }
                 }               
             }

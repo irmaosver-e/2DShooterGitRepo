@@ -1,8 +1,3 @@
 * in main get values for game window from a file
-* create a SDLSystem parser
-* create a SDL System class that will control frameRate
-* Remove SDL specific code from Game move to SDLSystem
 * assets location should be parsed from gameOptions XML
-* use the singleton template class
-* create a specific ObjCreator template class
 * fix tilelayer tilesize var to width or heigth

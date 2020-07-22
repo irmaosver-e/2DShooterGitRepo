@@ -355,7 +355,7 @@ void LevelParser::parseTileset(TiXmlElement* pTilesetElement)
 		}
 	}
 
-	//to be revised !!!!!!  maybe better have tilesets here  !!!!!!!!!!!!!!!!!!!!!1
+	//to be revised !!!!!!  maybe better have tilesets here  !!!!!!!!!!!!!!!!!!!!
 	m_tilesets.push_back(tileset);
 }
 
@@ -365,9 +365,20 @@ void LevelParser::parseObjTile(TiXmlElement* pTileElement, ObjectTile& objectTil
 
 	objectTile.type = pTileElement->Attribute("type");
 	
+	ObjectCollisionType objColType;
+	objColType.name = objectTile.type;
+	
 	for (TiXmlElement* e = pTileElement->FirstChildElement(); e != NULL; e = e->NextSiblingElement())
 	{
-		if (e->Value() == std::string("objectgroup"))
+		if (e->Value() == std::string("properties"))
+		{
+			//to be simplemented
+			for (TiXmlElement* vsCollision = e->FirstChildElement(); vsCollision != NULL; vsCollision = vsCollision->NextSiblingElement())
+			{
+				objColType.collidesAgainst.push_back(vsCollision->Attribute("value"));
+			}
+		}
+		else if (e->Value() == std::string("objectgroup"))
 		{
 			//parse the colision shape boxes
 			for (TiXmlElement* object = e->FirstChildElement(); object != NULL; object = object->NextSiblingElement())
@@ -381,6 +392,7 @@ void LevelParser::parseObjTile(TiXmlElement* pTileElement, ObjectTile& objectTil
 
 				objectTile.collisionShape.push_back(collisionBox);
 			}
+			objColType.collisionShape = objectTile.collisionShape;
 		}
 		else if (e->Value() == std::string("animation"))
 		{
@@ -398,6 +410,8 @@ void LevelParser::parseObjTile(TiXmlElement* pTileElement, ObjectTile& objectTil
 			objectTile.animation = objAnimation; 
 		}
 	}
+
+	TheCollisionManager::Instance().addCollisionObject(objColType);
 }
 
 void LevelParser::parseLayer(TiXmlElement* pLayerElement)
@@ -574,20 +588,17 @@ Layer* LevelParser::parseObjectLayer(TiXmlElement* pObjectElement)
 		}
 		
 		pGameObject->load(std::unique_ptr<LoaderParams>(new LoaderParams(x, y, width, height, objTileType, numFrames, callbackID, animSpeed)));
-	
-		//sets the object colisionshape
-		//pGameObject->getColisionShape() = collisionShape;
 
-		
 		if (objType == "Player")
 		{
 			m_pLevel->setPlayer(dynamic_cast<Player*>(pGameObject));
 		}
 		
 		pObjectLayer->getGameObjects()->push_back(pGameObject);
-
-		m_pLevel->getObjectLayers()->push_back(pObjectLayer);
 	}
+
+	m_pLevel->getObjectLayers()->push_back(pObjectLayer);
+
 	return pObjectLayer;
 }
 

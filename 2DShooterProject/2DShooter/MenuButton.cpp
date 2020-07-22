@@ -15,6 +15,27 @@ void MenuButton::draw()
 
 void MenuButton::update()
 {
+	if (m_bColliding)
+	{
+		m_currentFrame = MOUSE_OVER;
+
+		if (m_bButtonPressed)
+		{
+			// do some animation
+
+			if (m_callback != 0)
+			{
+				m_callback();
+			}
+		}
+
+	}
+	else
+	{
+		m_currentFrame = MOUSE_OUT;
+	}
+
+	/* redundant Respond to mouse pointer directly
 	Vector2D* pMousePos = TheInputHandler::Instance().getMousePosition();
 
 	if (pMousePos->getX() < (m_position.getX() + m_width) &&
@@ -43,9 +64,19 @@ void MenuButton::update()
 	{
 		m_currentFrame = MOUSE_OUT;
 	}
+	*/
+
 }
 
 void MenuButton::clean()
 {
 	SDLGameObject::clean();
+}
+
+void MenuButton::collision()
+{
+	if (TheInputHandler::Instance().isKeyDown(SDL_SCANCODE_RETURN))
+	{
+		m_bButtonPressed = true;
+	}
 }
