@@ -536,6 +536,7 @@ Layer* LevelParser::parseObjectLayer(TiXmlElement* pObjectElement)
 	for (TiXmlElement* e = pObjectElement->FirstChildElement(); e != NULL; e = e->NextSiblingElement())
 	{
 		int x = 0, y = 0, width = 0, height = 0, numFrames = 1, animSpeed = 1, callbackID = 0;
+		std::string sfx;
 		std::string objType;
 		std::string objTileType;
 
@@ -568,6 +569,10 @@ Layer* LevelParser::parseObjectLayer(TiXmlElement* pObjectElement)
 						callbackID = 2;
 					}
 				}
+				if (property->Attribute("name") == std::string("sfx"))
+				{
+					sfx = property->Attribute("value");
+				}
 			}
 		}
 
@@ -587,7 +592,7 @@ Layer* LevelParser::parseObjectLayer(TiXmlElement* pObjectElement)
 
 		}
 		
-		pGameObject->load(std::unique_ptr<LoaderParams>(new LoaderParams(x, y, width, height, objTileType, numFrames, callbackID, animSpeed)));
+		pGameObject->load(std::unique_ptr<LoaderParams>(new LoaderParams(x, y, width, height, objTileType, numFrames, callbackID, animSpeed, sfx)));
 
 		if (objType == "Player")
 		{

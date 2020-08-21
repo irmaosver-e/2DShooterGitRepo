@@ -56,7 +56,8 @@ protected:
 		m_bDead(false),
 		m_bDying(false),
 		m_angle(0),
-		m_alpha(255)
+		m_alpha(255),
+		m_sfx("")
 	{
 	}
 
@@ -87,6 +88,9 @@ protected:
 
 	//alpha
 	int m_alpha;
+
+	//soundFXs
+	std::string m_sfx;
 
 };
 

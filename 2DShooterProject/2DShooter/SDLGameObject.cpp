@@ -22,6 +22,7 @@ void SDLGameObject::load(std::unique_ptr<LoaderParams> const& pParams)
 	m_textureID = pParams->getTextureID();
 	m_numFrames = pParams->getNumFrames();
 	m_animSpeed = pParams->getAnimSpeed();
+	m_sfx = pParams->getSFX();
 
 	//m_collisionShape
 }

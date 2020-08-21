@@ -1,5 +1,6 @@
 #include "MenuButton.h"
 #include "InputHandler.h"
+#include "SoundManager.h"
 
 void MenuButton::load(std::unique_ptr<LoaderParams> const& pParams)
 {
@@ -23,10 +24,12 @@ void MenuButton::update()
 		{
 			// do some animation
 
-			if (m_callback != 0)
-			{
-				m_callback();
-			}
+			// do soundFX
+			TheSoundManager::Instance().playSound(m_sfx, 0);
+
+			//turned off for testing
+			//if(m_callback != 0) m_callback();
+			
 		}
 
 	}

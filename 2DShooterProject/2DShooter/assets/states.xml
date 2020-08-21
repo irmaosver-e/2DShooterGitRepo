@@ -16,6 +16,7 @@ exitFromMenu = 2
 		</STAGE>
 		<SOUND>
 		    <music subpath="sounds/" filename="DST_ElectroRock.ogg" musicID= "music1"/>
+			<sfx subpath="sounds/" filename="ButtonSelect.wav" sfxID= "buttonSelect_SFX"/>
 			<!--
 			<sfx subpath="assets/" filename="fx.wav" sfxID= "sfx1"/>
 			-->
