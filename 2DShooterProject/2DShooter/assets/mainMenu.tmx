@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<map version="1.2" tiledversion="1.3.5" orientation="orthogonal" renderorder="right-down" width="20" height="15" tilewidth="32" tileheight="32" infinite="0" nextlayerid="10" nextobjectid="18">
+ <properties>
+  <property name="music1" value="loop"/>
+ </properties>
+ <tileset firstgid="1" source="MenuPartsA.tsx"/>
+ <tileset firstgid="5" source="MenuButtons.tsx"/>
+ <tileset firstgid="9" source="Cursor.tsx"/>
+ <group id="3" name="BackGround">
+  <imagelayer id="2" name="BGWallpaper">
+   <image source="MenuBG.png" width="640" height="480"/>
+   <properties>
+    <property name="type" value="AnimatedGraphic"/>
+   </properties>
+  </imagelayer>
+  <layer id="1" name="BGTiles" width="20" height="15">
+   <data encoding="base64" compression="zlib">
+   eJxjYBgFgwkwEqmOiaauGAWjgDqAmUh1LESqAwAPUAAL
+  </data>
+  </layer>
+ </group>
+ <objectgroup id="8" name="Object Layer Buttons">
+  <object id="13" name="MenuButton" type="playbutton" gid="5" x="129" y="192" width="192" height="64">
+   <properties>
+    <property name="callbackID" value="menuToPlay"/>
+    <property name="sfx" value="buttonSelect_SFX"/>
+   </properties>
+  </object>
+  <object id="14" name="MenuButton" type="exitbutton" gid="6" x="341" y="304" width="192" height="64">
+   <properties>
+    <property name="callbackID" value="exitFromMenu"/>
+    <property name="sfx" value="buttonSelect_SFX"/>
+   </properties>
+  </object>
+  <object id="16" name="Cursor" type="mousepointer" gid="9" x="315" y="235" width="32" height="32"/>
+ </objectgroup>
+</map>

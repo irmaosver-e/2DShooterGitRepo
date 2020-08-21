@@ -177,14 +177,14 @@
   <PropertyGroup Label="UserMacros" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <LinkIncremental>true</LinkIncremental>
-    <IncludePath>C:\Users\User\source\repos\Libraries\SDL2_image-2.0.5\include;C:\Users\User\source\repos\Libraries\SDL2_mixer-2.0.4\include;C:\Users\User\source\repos\Libraries\SDL2\include;C:\Users\User\source\repos\Libraries\zlib128-dll\include;$(IncludePath)</IncludePath>
-    <LibraryPath>C:\Users\User\source\repos\Libraries\SDL2_image-2.0.5\lib\x86;C:\Users\User\source\repos\Libraries\SDL2_mixer-2.0.4\lib\x86;C:\Users\User\source\repos\Libraries\SDL2\lib\x86;C:\Users\User\source\repos\Libraries\zlib128-dll\lib;$(LibraryPath)</LibraryPath>
+    <IncludePath>C:\Users\User\source\repos\Libraries\SDL2_image-2.0.5\include;C:\Users\User\source\repos\Libraries\SDL2_mixer-2.0.4\include;C:\Users\User\source\repos\Libraries\SDL2\include;C:\Users\User\source\repos\Libraries\zlib128-dll\include;D:\NANI\Repos\Libraries\SDL2_mixer-2.0.4\SDL2_mixer-2.0.4\acinclude;D:\NANI\Repos\Libraries\SDL2_image-2.0.5\SDL2_image-2.0.5\acinclude;D:\NANI\Repos\Libraries\SDL2_mixer-2.0.4\include;D:\NANI\Repos\Libraries\SDL2_image-2.0.5\include;D:\NANI\Repos\Libraries\zlib128\include;D:\NANI\Repos\Libraries\SDL2\include;$(IncludePath)</IncludePath>
+    <LibraryPath>C:\Users\User\source\repos\Libraries\SDL2_image-2.0.5\lib\x86;C:\Users\User\source\repos\Libraries\SDL2_mixer-2.0.4\lib\x86;C:\Users\User\source\repos\Libraries\SDL2\lib\x86;C:\Users\User\source\repos\Libraries\zlib128-dll\lib;D:\NANI\Repos\Libraries\zlib128\lib;D:\NANI\Repos\Libraries\SDL2_mixer-2.0.4\lib\x86;D:\NANI\Repos\Libraries\SDL2_image-2.0.5\lib\x86;D:\NANI\Repos\Libraries\SDL2\lib\x86;$(LibraryPath)</LibraryPath>
     <OutDir>$(SolutionDir)bin\$(Platform)\$(Configuration)\</OutDir>
     <IntDir>$(SolutionDir)bin\intermediates\$(Platform)\$(Configuration)\</IntDir>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <LinkIncremental>true</LinkIncremental>
-    <IncludePath>$(IncludePath)</IncludePath>
+    <IncludePath>C:\Users\User\source\repos\Libraries\SDL2_image-2.0.5\include;C:\Users\User\source\repos\Libraries\SDL2_mixer-2.0.4\include;C:\Users\User\source\repos\Libraries\SDL2\include;C:\Users\User\source\repos\Libraries\zlib128-dll\include;$(IncludePath)</IncludePath>
     <LibraryPath>C:\Users\User\source\repos\Libraries\SDL2_image-2.0.5\lib\x86;C:\Users\User\source\repos\Libraries\SDL2_mixer-2.0.4\lib\x86;C:\Users\User\source\repos\Libraries\SDL2\lib\x86;C:\Users\User\source\repos\Libraries\zlib128-dll\lib;$(LibraryPath)</LibraryPath>
     <OutDir>$(SolutionDir)bin\$(Platform)\$(Configuration)\</OutDir>
     <IntDir>$(SolutionDir)bin\intermediates\$(Platform)\$(Configuration)\</IntDir>
