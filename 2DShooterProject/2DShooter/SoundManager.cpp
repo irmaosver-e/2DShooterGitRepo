@@ -57,6 +57,36 @@ bool SoundManager::load(std::string fileName, std::string id, sound_type soundTy
 	return false;
 }
 
+bool SoundManager::playSoundOnce(std::string sfxID, int sourceID)
+{
+	bool playingSound = true;
+
+	//first check new request / new client / new sfx same client
+	if (m_sfxChecker.empty() || 
+		m_sfxChecker.find(sourceID) == m_sfxChecker.end() ||
+		m_sfxChecker[sourceID].find(sfxID) == m_sfxChecker[sourceID].end())
+	{
+		//logs the sourceID to sfxID to channel 
+		m_sfxChecker[sourceID][sfxID] = Mix_PlayChannel(-1, m_sfxs[sfxID], 0);
+	}
+	else
+	{
+		if (!Mix_Playing(m_sfxChecker[sourceID][sfxID]))
+		{
+			m_sfxChecker[sourceID].erase(sfxID);
+
+			if (m_sfxChecker[sourceID].empty())
+			{
+				m_sfxChecker.erase(sourceID);
+			}
+			
+			playingSound = false;
+		}
+	}
+
+	return playingSound;
+}
+
 void SoundManager::playSound(std::string id, int loop)
 {
 	Mix_PlayChannel(-1, m_sfxs[id], loop);

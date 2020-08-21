@@ -18,18 +18,24 @@ void MenuButton::update()
 {
 	if (m_bColliding)
 	{
-		m_currentFrame = MOUSE_OVER;
-
 		if (m_bButtonPressed)
 		{
 			// do some animation
 
 			// do soundFX
-			TheSoundManager::Instance().playSound(m_sfx, 0);
-
-			//turned off for testing
-			//if(m_callback != 0) m_callback();
-			
+			if (!TheSoundManager::Instance().playSoundOnce(m_sfx, (int)this))
+			{
+				m_bButtonPressed = false;
+				
+				if (m_callback != 0)
+				{
+					m_callback();
+				}
+			}
+		}
+		else
+		{
+			m_currentFrame = MOUSE_OVER;
 		}
 
 	}
