@@ -5,7 +5,6 @@
 #include "TextureManager.h"
 #include "AnimatedGraphic.h"
 #include "Game.h"
-#include "MenuButton.h"
 #include "InputHandler.h"
 #include "StateParser.h"
 
@@ -17,15 +16,6 @@ void GameOverState::update()
 	{
 		GameState::update();
 	}
-	/*
-	if (m_loadingComplete && !m_gameObjects.empty())
-	{
-		for (unsigned int i = 0; i < m_gameObjects.size(); i++)
-		{
-			m_gameObjects[i]->update();
-		}
-	}
-	*/
 }
 
 void GameOverState::render()
@@ -34,28 +24,11 @@ void GameOverState::render()
 	{
 		GameState::render();
 	}
-
-	/*
-	if (m_loadingComplete && !m_gameObjects.empty())
-	{
-		for (unsigned int i = 0; i < m_gameObjects.size(); i++)
-		{
-			m_gameObjects[i]->draw();
-		}
-	}
-	*/
 }
 
 bool GameOverState::onEnter()
 {
-	// to be updated with a LevelParser
-	//StateParser stateParser;
-	//stateParser.parseState(TheGame::Instance().getAssetsRoot(), TheGame::Instance().getStatesFile(), s_gameOverID, &m_gameObjects, &m_textureIDList);
-	LevelParser levelParser;
-	m_pLevel = levelParser.parseLevel(m_stageAssetsPath, m_stageMapFile);
-
-	TheCollisionManager::Instance().setCurrentLevel(m_pLevel);
-
+	GameState::onEnter();
 
 	m_callbacks.push_back(0);
 	m_callbacks.push_back(s_gameOverToMain);
@@ -69,55 +42,6 @@ bool GameOverState::onEnter()
 	std::cout << "entering GameOverState\n";
 	return true;
 }
-
-bool GameOverState::onExit()
-{
-	if (m_loadingComplete && !m_gameObjects.empty())
-	{
-		for (unsigned int i = 0; i < m_gameObjects.size(); i++)
-		{
-			m_gameObjects[i]->clean();
-			delete m_gameObjects[i];
-		}
-
-		m_gameObjects.clear();
-	}
-
-	std::cout << m_gameObjects.size();
-
-	// clear the texture manager
-	for (unsigned int i = 0; i < m_textureIDList.size(); i++)
-	{
-		TheTextureManager::Instance().clearFromTextureMap(m_textureIDList[i]);
-	}
-
-	TheInputHandler::Instance().reset();
-
-	std::cout << "exiting GameOverState\n";
-	return true;
-}
-
-/*
-void GameOverState::setCallbacks(const std::vector<Callback>& callbacks)
-{
-	std::vector<GameObject*> pObjectsContainer;
-	m_pLevel->getObjectsfromLayers(pObjectsContainer);
-
-	//go through the game objects
-	if (!pObjectsContainer.empty())
-	{
-		for (unsigned int i = 0; i < pObjectsContainer.size(); i++)
-		{
-			// if they are of type menu button assign callbacks based on IDs
-			if (dynamic_cast<MenuButton*>(pObjectsContainer[i]))
-			{
-				MenuButton* pButton = dynamic_cast<MenuButton*>(pObjectsContainer[i]);
-				pButton->setCallback(callbacks[pButton->getCallbackID()]);
-			}
-		}
-	}
-}
-*/
 
 void GameOverState::s_gameOverToMain()
 {

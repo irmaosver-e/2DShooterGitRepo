@@ -5,6 +5,7 @@
 #include <vector>
 
 #include "Level.h"
+#include "InputHandler.h"
 
 class GameObject;
 
@@ -15,8 +16,43 @@ public:
 
 	virtual void update();
 	virtual void render();
-	virtual bool onEnter() = 0;
-	virtual bool onExit() = 0;
+	virtual bool onEnter()
+	{
+		LevelParser levelParser;
+		m_pLevel = levelParser.parseLevel(m_stageAssetsPath, m_stageMapFile);
+
+		TheCollisionManager::Instance().setCurrentLevel(m_pLevel);
+
+		return true;
+	}
+
+	virtual bool onExit()
+	{
+		// needs revising
+		/*
+		if (m_loadingComplete && !m_gameObjects.empty())
+		{
+			for (unsigned int i = 0; i < m_gameObjects.size(); i++)
+			{
+				m_gameObjects[i]->clean();
+				delete m_gameObjects[i];
+			}
+			m_gameObjects.clear();
+		}
+		// clear the texture manager
+		for (unsigned int i = 0; i < m_textureIDList.size(); i++)
+		{
+			TheTextureManager::Instance().clearFromTextureMap(m_textureIDList[i]);
+		}
+		*/
+
+		// pop m_callbacks????
+
+		TheInputHandler::Instance().reset();
+
+		std::cout << "exiting State\n";
+		return true;
+	}
 
 	//virtual void resume() {}
 	//std::vector<std::string>* getTextureIDList() { return &m_textureIDList; }

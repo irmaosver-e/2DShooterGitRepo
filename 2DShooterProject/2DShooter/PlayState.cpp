@@ -11,6 +11,8 @@
 #include "LevelParser.h"
 #include "Level.h"
 
+#include "TextureManager.h"
+
 
 const std::string PlayState::s_playID = "PLAY";
 
@@ -54,12 +56,7 @@ bool PlayState::onEnter()
 	std::cout << "PlayState::onEnter()   setPlayerLives(3) hardcoded";
 	TheGame::Instance().setPlayerLives(3);
 
-	LevelParser levelParser;
-	m_pLevel = levelParser.parseLevel(m_stageAssetsPath, m_stageMapFile);
-	//m_pLevel = levelParser.parseLevel(TheGame::Instance().getAssetsRoot(), TheGame::Instance().getLevelFiles()[TheGame::Instance().getCurrentLevel()]);
-
-	//TheSoundManager::Instance().load("assets/boom.wav", "explode", SOUND_SFX);
-	//TheSoundManager::Instance().load("assets/phaser.wav", "shoot", SOUND_SFX);	
+	GameState::onEnter();
 
 	TheTextureManager::Instance().load("assets/bullet1.png", "bullet1", TheSDLSystem::Instance().getRenderer());
 	TheTextureManager::Instance().load("assets/bullet2.png", "bullet2", TheSDLSystem::Instance().getRenderer());
