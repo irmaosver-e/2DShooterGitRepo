@@ -4,32 +4,26 @@ const std::string PauseState::s_pauseID = "PAUSE";
 
 void PauseState::update()
 {
-	if (m_loadingComplete && !m_gameObjects.empty())
+	if (m_loadingComplete && !m_exiting)
 	{
-		for (unsigned int i = 0; i < m_gameObjects.size(); i++)
-		{
-			m_gameObjects[i]->update();
-		}
+		GameState::update();
 	}
 }
 
 void PauseState::render()
 {
-	if (m_loadingComplete && !m_gameObjects.empty())
+	if (m_loadingComplete)
 	{
-		for (unsigned int i = 0; i < m_gameObjects.size(); i++)
-		{
-			m_gameObjects[i]->draw();
-		}
+		GameState::render();
 	}
 }
 
 bool PauseState::onEnter()
 {
-	/* to be updated with a LevelParser
-	StateParser stateParser;
-	stateParser.parseState(TheGame::Instance().getAssetsRoot(), TheGame::Instance().getStatesFile(), s_pauseID, &m_gameObjects, &m_textureIDList);
-	*/
+	LevelParser levelParser;
+	m_pLevel = levelParser.parseLevel(m_stageAssetsPath, m_stageMapFile);
+
+	TheCollisionManager::Instance().setCurrentLevel(m_pLevel);
 
 	m_callbacks.push_back(0);
 	m_callbacks.push_back(s_pauseToMain);
@@ -45,6 +39,8 @@ bool PauseState::onEnter()
 
 bool PauseState::onExit()
 {
+	// needs revising
+	/*
 	if (m_loadingComplete && !m_gameObjects.empty())
 	{
 		for (unsigned int i = 0; i < m_gameObjects.size(); i++)
@@ -59,6 +55,8 @@ bool PauseState::onExit()
 	{
 		TheTextureManager::Instance().clearFromTextureMap(m_textureIDList[i]);
 	}
+	*/
+
 	TheInputHandler::Instance().reset();
 
 	std::cout << "exiting PauseState\n";
@@ -67,15 +65,18 @@ bool PauseState::onExit()
 
 void PauseState::setCallbacks(const std::vector<Callback>& callbacks)
 {
-	// go through the game objects
-	if (!m_gameObjects.empty())
+	std::vector<GameObject*> pObjectsContainer;
+	m_pLevel->getObjectsfromLayers(pObjectsContainer);
+
+	//go through the game objects
+	if (!pObjectsContainer.empty())
 	{
-		for (unsigned int i = 0; i < m_gameObjects.size(); i++)
+		for (unsigned int i = 0; i < pObjectsContainer.size(); i++)
 		{
-			// if they are of type MenuButton then assign a callback based on the id passed in from the file
-			if (dynamic_cast<MenuButton*>(m_gameObjects[i]))
+			// if they are of type menu button assign callbacks based on IDs
+			if (dynamic_cast<MenuButton*>(pObjectsContainer[i]))
 			{
-				MenuButton* pButton = dynamic_cast<MenuButton*>(m_gameObjects[i]);
+				MenuButton* pButton = dynamic_cast<MenuButton*>(pObjectsContainer[i]);
 				pButton->setCallback(callbacks[pButton->getCallbackID()]);
 			}
 		}

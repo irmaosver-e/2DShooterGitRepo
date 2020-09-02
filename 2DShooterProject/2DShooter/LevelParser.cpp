@@ -560,11 +560,15 @@ Layer* LevelParser::parseObjectLayer(TiXmlElement* pObjectElement)
 			{
 				if (property->Attribute("name") == std::string("callbackID"))
 				{
-					if (property->Attribute("value") == std::string("menuToPlay"))
+					if (property->Attribute("value") == std::string("menuToPlay") ||
+						property->Attribute("value") == std::string("pauseToMain") ||
+						property->Attribute("value") == std::string("gameOverToMain"))
 					{
 						callbackID = 1;
 					}
-					else if (property->Attribute("value") == std::string("exitFromMenu"))
+					else if (property->Attribute("value") == std::string("exitFromMenu") ||
+							 property->Attribute("value") == std::string("resumePlay") ||
+							 property->Attribute("value") == std::string("restartPlay"))
 					{
 						callbackID = 2;
 					}

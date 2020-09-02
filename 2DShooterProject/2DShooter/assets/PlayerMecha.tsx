@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<tileset version="1.2" tiledversion="1.3.5" name="PlayerMecha" tilewidth="64" tileheight="64" spacing="2" margin="2" tilecount="6" columns="3">
+<tileset version="1.4" tiledversion="1.4.2" name="PlayerMecha" tilewidth="64" tileheight="64" spacing="2" margin="2" tilecount="6" columns="3">
  <image source="PlayerMecha.png" width="202" height="136"/>
  <tile id="0" type="playermecha">
   <objectgroup draworder="index" id="2">

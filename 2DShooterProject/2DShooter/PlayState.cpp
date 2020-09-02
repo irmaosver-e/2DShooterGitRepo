@@ -58,8 +58,8 @@ bool PlayState::onEnter()
 	m_pLevel = levelParser.parseLevel(m_stageAssetsPath, m_stageMapFile);
 	//m_pLevel = levelParser.parseLevel(TheGame::Instance().getAssetsRoot(), TheGame::Instance().getLevelFiles()[TheGame::Instance().getCurrentLevel()]);
 
-	TheSoundManager::Instance().load("assets/boom.wav", "explode", SOUND_SFX);
-	TheSoundManager::Instance().load("assets/phaser.wav", "shoot", SOUND_SFX);
+	//TheSoundManager::Instance().load("assets/boom.wav", "explode", SOUND_SFX);
+	//TheSoundManager::Instance().load("assets/phaser.wav", "shoot", SOUND_SFX);	
 
 	TheTextureManager::Instance().load("assets/bullet1.png", "bullet1", TheSDLSystem::Instance().getRenderer());
 	TheTextureManager::Instance().load("assets/bullet2.png", "bullet2", TheSDLSystem::Instance().getRenderer());

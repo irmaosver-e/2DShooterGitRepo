@@ -2,8 +2,8 @@
 
 <!--
 Callback List
-menuToPlay = 1
-exitFromMenu = 2
+menuToPlay / pauseToMain / gameOverToMain = 1
+exitFromMenu / resumePlay / restartPlay = 2
 -->
 
 <STATES>
@@ -21,8 +21,7 @@ exitFromMenu = 2
 			<sfx subpath="assets/" filename="fx.wav" sfxID= "sfx1"/>
 			-->
 		</SOUND>	
-    </MENU>
-    
+    </MENU> 
     <PLAY>
 		<STAGE>
 		<!--
@@ -32,6 +31,8 @@ exitFromMenu = 2
 		</STAGE>
 		<SOUND>
 		    <music subpath="sounds/" filename="DST_ElectroRock.ogg" musicID= "music1"/>
+			<sfx subpath="sounds/" filename="boom.wav" sfxID= "explode"/>
+			<sfx subpath="sounds/" filename="phaser.wav" sfxID= "shoot"/>
 			<!--
 			<sfx subpath="assets/" filename="fx.wav" sfxID= "sfx1"/>
 			-->
@@ -51,19 +52,38 @@ exitFromMenu = 2
     </PLAY>
     
     <PAUSE>
-        <TEXTURES>
-            <texture filename="resume.png" ID="resumebutton"/>
-            <texture filename="main.png" ID="mainbutton"/>
-        </TEXTURES>
-        
-        <OBJECTS>
-            <object type="MenuButton" x="200" y="100" width="200" height="80" textureID="mainbutton" numFrames="0" callbackID="1"/>
-            <object type="MenuButton" x="200" y="300" width="200" height="80" textureID="resumebutton" numFrames="0" callbackID="2"/>
-        </OBJECTS>
+        <STAGE>
+		<!--
+		    <map subpath="assets/" filename="map1.tmx" stageID="1"/>
+			-->
+			<map filename="pauseMenu.tmx" stageID="0"/>
+		</STAGE>
+		<SOUND>
+		    <music subpath="sounds/" filename="DST_ElectroRock.ogg" musicID= "music1"/>
+			<sfx subpath="sounds/" filename="ButtonSelect.wav" sfxID= "buttonSelect_SFX"/>
+			<!--
+			<sfx subpath="assets/" filename="fx.wav" sfxID= "sfx1"/>
+			-->
+		</SOUND>
     </PAUSE>
 
     
     <GAMEOVER>
+		<STAGE>
+		<!--
+		    <map subpath="assets/" filename="map1.tmx" stageID="1"/>
+			-->
+			<map filename="gameOverMenu.tmx" stageID="0"/>
+		</STAGE>
+		<SOUND>
+		    <music subpath="sounds/" filename="DST_ElectroRock.ogg" musicID= "music1"/>
+			<sfx subpath="sounds/" filename="ButtonSelect.wav" sfxID= "buttonSelect_SFX"/>
+			<!--
+			<sfx subpath="assets/" filename="fx.wav" sfxID= "sfx1"/>
+			-->
+		</SOUND>
+		
+		<!--
         <TEXTURES>
             <texture filename="gameover.png" ID="gameovertext"/>
             <texture filename="main.png" ID="mainbutton"/>
@@ -75,5 +95,7 @@ exitFromMenu = 2
             <object type="MenuButton" x="200" y="200" width="200" height="80" textureID="mainbutton" numFrames="0" callbackID="1"/>
             <object type="MenuButton" x="200" y="300" width="200" height="80" textureID="restartbutton" numFrames="0" callbackID="2"/>
         </OBJECTS>
+		-->
+	
     </GAMEOVER>
 </STATES>

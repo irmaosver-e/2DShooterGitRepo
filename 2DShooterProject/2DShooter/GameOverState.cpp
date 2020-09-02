@@ -13,6 +13,11 @@ const std::string GameOverState::s_gameOverID = "GAMEOVER";
 
 void GameOverState::update()
 {
+	if (m_loadingComplete && !m_exiting)
+	{
+		GameState::update();
+	}
+	/*
 	if (m_loadingComplete && !m_gameObjects.empty())
 	{
 		for (unsigned int i = 0; i < m_gameObjects.size(); i++)
@@ -20,10 +25,17 @@ void GameOverState::update()
 			m_gameObjects[i]->update();
 		}
 	}
+	*/
 }
 
 void GameOverState::render()
 {
+	if (m_loadingComplete)
+	{
+		GameState::render();
+	}
+
+	/*
 	if (m_loadingComplete && !m_gameObjects.empty())
 	{
 		for (unsigned int i = 0; i < m_gameObjects.size(); i++)
@@ -31,6 +43,7 @@ void GameOverState::render()
 			m_gameObjects[i]->draw();
 		}
 	}
+	*/
 }
 
 bool GameOverState::onEnter()
@@ -38,6 +51,11 @@ bool GameOverState::onEnter()
 	// to be updated with a LevelParser
 	//StateParser stateParser;
 	//stateParser.parseState(TheGame::Instance().getAssetsRoot(), TheGame::Instance().getStatesFile(), s_gameOverID, &m_gameObjects, &m_textureIDList);
+	LevelParser levelParser;
+	m_pLevel = levelParser.parseLevel(m_stageAssetsPath, m_stageMapFile);
+
+	TheCollisionManager::Instance().setCurrentLevel(m_pLevel);
+
 
 	m_callbacks.push_back(0);
 	m_callbacks.push_back(s_gameOverToMain);
