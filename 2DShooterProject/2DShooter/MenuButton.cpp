@@ -23,7 +23,7 @@ void MenuButton::update()
 			// do some animation
 
 			// do soundFX
-			if (!TheSoundManager::Instance().playSoundOnce(m_sfx, (int)this))
+			if (!TheSoundManager::Instance().playSoundOnce(m_sfx, (int)this)) // uses memory address "(int)this" as a ID for the object   
 			{
 				m_bButtonPressed = false;
 				

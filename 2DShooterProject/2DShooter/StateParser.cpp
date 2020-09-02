@@ -162,8 +162,8 @@ bool StateParser::parseState(GameState* pState)
 		path += pStageElem->FirstChildElement()->Attribute("subpath");
 	}
 
-	pState->setStageAssetsPath(path);
-	pState->setStageMapFile(pStageElem->FirstChildElement()->Attribute("filename"));
+	pState->stageAssetsPath() = path;
+	pState->stageMapFileName() = pStageElem->FirstChildElement()->Attribute("filename");
 
 	//create function
 	parseAudio(pAudioElem);

@@ -6,9 +6,9 @@
 
 Level::~Level()
 {
-	for (unsigned int i = 0; i < m_layers.size(); i++)
+	for (Layer* pLayer : m_layers)
 	{
-		delete m_layers[i];
+		delete pLayer;
 	}
 
 	m_layers.clear();
@@ -16,17 +16,17 @@ Level::~Level()
 
 void Level::update()
 {
-	for (unsigned int i = 0; i < m_layers.size(); i++)
+	for (Layer* pLayer : m_layers)
 	{
-		m_layers[i]->update(this);
+		pLayer->update(this);
 	}
 }
 
 void Level::render()
 {
-	for (unsigned int i = 0; i < m_layers.size(); i++)
+	for (Layer* pLayer : m_layers)
 	{
-		m_layers[i]->render();
+		pLayer->render();
 	}
 }
 

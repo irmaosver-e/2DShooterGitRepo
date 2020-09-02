@@ -1,30 +1,10 @@
 #include "GameOverState.h"
 
+#include "Game.h"
 #include "MainMenuState.h"
 #include "PlayState.h"
-#include "TextureManager.h"
-#include "AnimatedGraphic.h"
-#include "Game.h"
-#include "InputHandler.h"
-#include "StateParser.h"
 
 const std::string GameOverState::s_gameOverID = "GAMEOVER";
-
-void GameOverState::update()
-{
-	if (m_loadingComplete && !m_exiting)
-	{
-		GameState::update();
-	}
-}
-
-void GameOverState::render()
-{
-	if (m_loadingComplete)
-	{
-		GameState::render();
-	}
-}
 
 bool GameOverState::onEnter()
 {

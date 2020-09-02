@@ -1,17 +1,68 @@
 #include "GameState.h"
 
-void GameState::update()
+#include "InputHandler.h"
+
+bool GameState::update()
 {
-	if (m_pLevel)
+	if (m_loadingComplete && !m_exiting)
 	{
-		m_pLevel->update();
+		if (m_pLevel)
+		{
+			m_pLevel->update();
+			return true;
+		}
 	}
+	return false;
 }
 
-void GameState::render()
+bool GameState::render()
 {
-	if (m_pLevel != 0)
+	if (m_loadingComplete)
 	{
-		m_pLevel->render();
+		if (m_pLevel != 0)
+		{
+			m_pLevel->render();
+			return true;
+		}
 	}
+	return false;
+}
+
+bool GameState::onEnter()
+{
+	LevelParser levelParser;
+	m_pLevel = levelParser.parseLevel(m_stageAssetsPath, m_stageMapFile);
+
+	TheCollisionManager::Instance().setCurrentLevel(m_pLevel);
+
+	return true;
+}
+
+bool GameState::onExit()
+{		// needs revising
+		/*
+		if (m_loadingComplete && !m_gameObjects.empty())
+		{
+			for (unsigned int i = 0; i < m_gameObjects.size(); i++)
+			{
+				m_gameObjects[i]->clean();
+				delete m_gameObjects[i];
+			}
+			m_gameObjects.clear();
+		}
+		// clear the texture manager
+		for (unsigned int i = 0; i < m_textureIDList.size(); i++)
+		{
+			TheTextureManager::Instance().clearFromTextureMap(m_textureIDList[i]);
+		}
+		*/
+
+		// pop m_callbacks????
+
+	m_exiting = true;
+
+	TheInputHandler::Instance().reset();
+
+	std::cout << "exiting " << getStateID() << " State\n";
+	return true;
 }

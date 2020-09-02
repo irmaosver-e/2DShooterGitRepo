@@ -8,9 +8,10 @@ class PauseState : public MenuState
 public:
 	virtual ~PauseState() { delete m_pLevel; }
 
-	virtual void update();
-	virtual void render();
 	virtual bool onEnter();
+	virtual bool onExit();
+
+	virtual bool update();
 
 	virtual std::string getStateID() const { return s_pauseID; }
 

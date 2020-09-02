@@ -16,9 +16,9 @@
 
 const std::string PlayState::s_playID = "PLAY";
 
-void PlayState::update()
+bool PlayState::update()
 {
-	if (m_loadingComplete && !m_exiting)
+	if (GameState::update())
 	{
 		if (TheInputHandler::Instance().isKeyDown(SDL_SCANCODE_ESCAPE))
 		{
@@ -32,23 +32,27 @@ void PlayState::update()
 			TheGame::Instance().getStateMachine()->changeState(new GameOverState());
 		}
 
-		GameState::update();
+		return true;
 	}
+
+	return false;
 }
 
-void PlayState::render()
+bool PlayState::render()
 {
-	if (m_loadingComplete)
+	if (GameState::render())
 	{
-		GameState::render();
-
 		for (int i = 0; i < TheGame::Instance().getPlayerLives(); i++)
 		{
 			TheTextureManager::Instance().drawFrame("lives", i * 30, 0, 32, 30, 0, 0, TheSDLSystem::Instance().getRenderer(), 0.0, 255);
 		}
 
 		TheBulletHandler::Instance().drawBullets();
+
+		return true;
 	}
+
+	return false;
 }
 
 bool PlayState::onEnter()
@@ -74,11 +78,9 @@ bool PlayState::onEnter()
 
 bool PlayState::onExit()
 {
-	m_exiting = true;
+	GameState::onExit();
 
-	TheInputHandler::Instance().reset();
 	TheBulletHandler::Instance().clearBullets();
 
-	std::cout << "exiting PlayState\n";
 	return true;
 }

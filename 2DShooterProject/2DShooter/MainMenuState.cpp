@@ -6,22 +6,6 @@
 
 const std::string MainMenuState::s_menuID = "MENU";
 
-void MainMenuState::update()
-{
-	if (m_loadingComplete && !m_exiting)
-	{
-		GameState::update();
-	}
-}
-
-void MainMenuState::render()
-{
-	if (m_loadingComplete)
-	{
-		GameState::render();
-	}
-}
-
 bool MainMenuState::onEnter()
 {
 	GameState::onEnter();
