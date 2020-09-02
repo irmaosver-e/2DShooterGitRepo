@@ -19,7 +19,7 @@ public:
 
 	virtual std::string getStateID() const { return s_gameOverID; }
 
-	virtual void setCallbacks(const std::vector<Callback>& callbacks);
+	//virtual void setCallbacks(const std::vector<Callback>& callbacks);
 
 private:
 	static const std::string s_gameOverID;

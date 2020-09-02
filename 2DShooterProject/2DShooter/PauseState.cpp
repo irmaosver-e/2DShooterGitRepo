@@ -63,6 +63,7 @@ bool PauseState::onExit()
 	return true;
 }
 
+/*
 void PauseState::setCallbacks(const std::vector<Callback>& callbacks)
 {
 	std::vector<GameObject*> pObjectsContainer;
@@ -82,6 +83,7 @@ void PauseState::setCallbacks(const std::vector<Callback>& callbacks)
 		}
 	}
 }
+*/
 
 void PauseState::s_pauseToMain()
 {

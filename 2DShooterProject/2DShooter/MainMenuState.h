@@ -21,7 +21,7 @@ public:
 private:
 	static const std::string s_menuID;
 
-	virtual void setCallbacks(const std::vector<Callback>& callbacks);
+	//virtual void setCallbacks(const std::vector<Callback>& callbacks);
 
 	//call back functions for menu items
 	static void s_menuToPlay();

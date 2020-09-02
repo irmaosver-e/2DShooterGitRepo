@@ -97,19 +97,27 @@ bool GameOverState::onExit()
 	return true;
 }
 
+/*
 void GameOverState::setCallbacks(const std::vector<Callback>& callbacks)
 {
+	std::vector<GameObject*> pObjectsContainer;
+	m_pLevel->getObjectsfromLayers(pObjectsContainer);
+
 	//go through the game objects
-	for (unsigned int i = 0; i < m_gameObjects.size(); i++)
+	if (!pObjectsContainer.empty())
 	{
-		// if they are of type menu button assign callbacks based on IDs
-		if (dynamic_cast<MenuButton*>(m_gameObjects[i]))
+		for (unsigned int i = 0; i < pObjectsContainer.size(); i++)
 		{
-			MenuButton* pButton = dynamic_cast<MenuButton*>(m_gameObjects[i]);
-			pButton->setCallback(callbacks[pButton->getCallbackID()]);
+			// if they are of type menu button assign callbacks based on IDs
+			if (dynamic_cast<MenuButton*>(pObjectsContainer[i]))
+			{
+				MenuButton* pButton = dynamic_cast<MenuButton*>(pObjectsContainer[i]);
+				pButton->setCallback(callbacks[pButton->getCallbackID()]);
+			}
 		}
 	}
 }
+*/
 
 void GameOverState::s_gameOverToMain()
 {

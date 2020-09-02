@@ -60,6 +60,7 @@ bool MainMenuState::onExit()
 	return true;
 }
 
+/*
 void MainMenuState::setCallbacks(const std::vector<Callback>& callbacks)
 {
 	std::vector<GameObject*> pObjectsContainer;
@@ -79,6 +80,7 @@ void MainMenuState::setCallbacks(const std::vector<Callback>& callbacks)
 		}
 	}
 }
+*/
 
 void MainMenuState::s_menuToPlay()
 {
