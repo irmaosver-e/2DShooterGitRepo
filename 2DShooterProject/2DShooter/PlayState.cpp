@@ -22,6 +22,7 @@ bool PlayState::update()
 	{
 		if (TheInputHandler::Instance().isKeyDown(SDL_SCANCODE_ESCAPE))
 		{
+			TheSoundManager::Instance().playSound("pause", 0);
 			TheGame::Instance().getStateMachine()->pushState(new PauseState());
 		}
 

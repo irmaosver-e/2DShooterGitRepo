@@ -457,9 +457,6 @@ Layer* LevelParser::parseTileLayer(TiXmlElement* pTileElement)
 	m_mapRoot->Attribute("width", &pTileLayer->getNumColumns());
 	m_mapRoot->Attribute("height", &pTileLayer->getNumRows());
 
-	//setTileSize to be revised
-	m_mapRoot->Attribute("tilewidth", &pTileLayer->getTileSize());
-
 	bool collidable = false;
 
 	TiXmlElement* pDataNode = nullptr;

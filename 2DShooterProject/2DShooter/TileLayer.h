@@ -10,7 +10,6 @@
 class TileLayer : public Layer
 {
 public:
-	TileLayer(int tileSize, const std::vector<Tileset>& tilesets);
 	TileLayer(const std::vector<Tileset>& tilesets);
 	virtual ~TileLayer() {}
 
@@ -19,7 +18,6 @@ public:
 
 	void setTileIDs(const std::vector<std::vector<int>>& data) { m_tileIDs = data; }
 
-	int& getTileSize() { return m_tileSize; }
 	int& getTileWidth() { return m_tileWidth; }
 	int& getTileHeight() { return m_tileHeight; }
 	int& getNumColumns() { return m_numColumns; }

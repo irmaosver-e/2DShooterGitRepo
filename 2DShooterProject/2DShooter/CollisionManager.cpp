@@ -138,19 +138,19 @@ void CollisionManager::checkPlayerTileCollision(Player* pPlayer, const std::vect
 
         int x, y, tileColumn, tileRow, tileid = 0;
 
-        x = (int)layerPos.getX() / pTileLayer->getTileSize();
-        y = (int)layerPos.getY() / pTileLayer->getTileSize();
+        x = (int)layerPos.getX() / pTileLayer->getTileWidth();
+        y = (int)layerPos.getY() / pTileLayer->getTileHeight();
 
         if (pPlayer->getVelocity().getX() >= 0 || pPlayer->getVelocity().getY() >= 0)
         {
-            tileColumn = ((int)(pPlayer->getPosition().getX() + pPlayer->getWidth()) / pTileLayer->getTileSize());
-            tileRow = ((int)(pPlayer->getPosition().getY() + pPlayer->getHeight()) / pTileLayer->getTileSize());
+            tileColumn = ((int)(pPlayer->getPosition().getX() + pPlayer->getWidth()) / pTileLayer->getTileWidth());
+            tileRow = ((int)(pPlayer->getPosition().getY() + pPlayer->getHeight()) / pTileLayer->getTileHeight());
             tileid = tiles[tileRow + y][tileColumn + x];
         }
         else if (pPlayer->getVelocity().getX() < 0 || pPlayer->getVelocity().getY() < 0)
         {
-            tileColumn = (int)pPlayer->getPosition().getX() / pTileLayer->getTileSize();
-            tileRow = (int)pPlayer->getPosition().getY() / pTileLayer->getTileSize();
+            tileColumn = (int)pPlayer->getPosition().getX() / pTileLayer->getTileWidth();
+            tileRow = (int)pPlayer->getPosition().getY() / pTileLayer->getTileHeight();
             tileid = tiles[tileRow + y][tileColumn + x];
         }
 

@@ -4,13 +4,6 @@
 #include "Game.h"
 #include "TextureManager.h"
 
-//possibly redundant
-TileLayer::TileLayer(int tileSize, const std::vector<Tileset>& tilesets) : m_tileSize(tileSize), m_tilesets(tilesets), m_position(0,0), m_velocity(0,0)
-{
-	m_numColumns = (TheSDLSystem::Instance().getScreenWidth() / m_tileSize) + 1;
-	m_numRows = TheSDLSystem::Instance().getScreenHeight() / m_tileSize;
-}
-
 TileLayer::TileLayer(const std::vector<Tileset>& tilesets) : 
 	m_tileWidth(1), m_tileHeight(1), m_numColumns(1), m_numRows(1),
 	m_tilesets(tilesets), m_position(0, 0), m_velocity(0, 0)
@@ -23,7 +16,6 @@ void TileLayer::update(Level* pLevel)
 	{
 		m_velocity.setX(TheGame::Instance().getScrollSpeed());
 		m_position += m_velocity;
-
 	}
 	else
 	{
@@ -41,11 +33,14 @@ void TileLayer::render()
 	x2 = int(m_position.getX()) % m_tileWidth;
 	y2 = int(m_position.getY()) % m_tileHeight;
 
-	for (int i = 0; i < m_numRows; i++)
+	int onScreenCols = TheSDLSystem::Instance().getScreenWidth() / m_tileWidth;
+	int onScreenRows = TheSDLSystem::Instance().getScreenHeight() / m_tileHeight;
+
+	for (int tileRowPos = 0; tileRowPos < onScreenRows; tileRowPos++)
 	{
-		for (int j = 0; j < m_numColumns; j++)
+		for (int tileColPos = 0; tileColPos < onScreenCols; tileColPos++)
 		{		
-			int id = m_tileIDs[i + y][j + x];
+			int id = m_tileIDs[tileRowPos + y][tileColPos + x];
 
 			if (id == 0)
 			{
@@ -61,8 +56,8 @@ void TileLayer::render()
 				tile_Y_offset = tileset.tileHeight - m_tileHeight;
 			}
 
-			int tile_X_pos = (j * m_tileWidth) - x2;
-			int tile_Y_pos = ((i * m_tileHeight) - y2) - tile_Y_offset;
+			int tile_X_pos = (tileColPos * m_tileWidth) - x2;
+			int tile_Y_pos = ((tileRowPos * m_tileHeight) - y2) - tile_Y_offset;
 			int tileRow = (id - (tileset.firstGridID - 1)) / tileset.numColumns;
 			int tileColumn = (id - (tileset.firstGridID - 1)) % tileset.numColumns;
 			

@@ -13,8 +13,10 @@
 	<FILES>
 		<location path="assets/"/>
 		<state filename="states.xml"/>
+		<!-- redundant so far
 		<level stage="1" filename="map1.tmx"/>
 		<level stage="2" filename="map2.tmx"/>
+		-->
 	</FILES>
 </SYSTEM>
 	

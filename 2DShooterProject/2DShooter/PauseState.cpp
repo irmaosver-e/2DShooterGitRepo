@@ -10,7 +10,7 @@ const std::string PauseState::s_pauseID = "PAUSE";
 
 bool PauseState::onEnter()
 {
-	TheSoundManager::Instance().playSound("pause", 0);
+	TheInputHandler::Instance().reset();
 
 	GameState::onEnter();
 
@@ -30,8 +30,6 @@ bool PauseState::onExit()
 {
 	GameState::onExit();
 
-	TheSoundManager::Instance().playSound("unPause", 0);
-
 	return false;
 }
 
@@ -39,13 +37,12 @@ bool PauseState::update()
 {
 	if (GameState::update())
 	{
-		/*
-		//to be implemented
 		if (TheInputHandler::Instance().isKeyDown(SDL_SCANCODE_ESCAPE))
 		{
-			//s_resumePlay();
+			TheSoundManager::Instance().playSound("unPause", 0);
+			s_resumePlay();
 		}
-		*/
+
 		return true;
 	}
 	return false;
