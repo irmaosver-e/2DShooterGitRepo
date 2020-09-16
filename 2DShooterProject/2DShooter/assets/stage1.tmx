@@ -1,18 +1,26 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<map version="1.4" tiledversion="1.4.2" orientation="orthogonal" renderorder="right-down" width="200" height="15" tilewidth="32" tileheight="32" infinite="0" nextlayerid="8" nextobjectid="3">
+<map version="1.4" tiledversion="1.4.2" orientation="orthogonal" renderorder="right-down" width="200" height="15" tilewidth="32" tileheight="32" infinite="0" nextlayerid="9" nextobjectid="3">
  <tileset firstgid="1" source="s1TerrainTest.tsx"/>
  <tileset firstgid="199" source="PlayerMecha.tsx"/>
  <group id="2" name="BackGround">
-  <imagelayer id="3" name="BGWallPaper" visible="0">
+  <imagelayer id="3" name="BGWallPaper">
    <image source="StarryBG.png" width="6400" height="480"/>
    <properties>
     <property name="type" value="AnimatedGraphic"/>
    </properties>
   </imagelayer>
  </group>
- <layer id="7" name="Tile Layer 1" width="200" height="15">
+ <layer id="7" name="Non-Collidable" width="200" height="15">
   <data encoding="base64" compression="zlib">
    eJzt1UEOgCAMBMBe+P+XjSeJJkQxQjEzLyDtLo1gV2Y/ABLTDwB4roQbWjMParJwKKEfrKnEmPzqB1yN6h9tdpCb3cxj9jm5HXCPfvyH/+698+0wU0aQs29lnW3Wd7Gunkz15vDr/OoHPVq50Q9WswGbAAEK
+  </data>
+ </layer>
+ <layer id="8" name="Collidables" width="200" height="15">
+  <properties>
+   <property name="collidable" type="bool" value="true"/>
+  </properties>
+  <data encoding="base64" compression="zlib">
+   eJzt1bENACAIBMBf2f0b4wAWVoLeTfAkPCQAAJCM2wGAI9U7Wz0fsPdbf3+bF2Dpdvu65QWArvxcurCrAADwvgnYzwP6
   </data>
  </layer>
  <group id="6" name="MidGround">

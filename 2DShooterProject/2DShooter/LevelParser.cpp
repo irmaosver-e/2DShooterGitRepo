@@ -470,7 +470,10 @@ Layer* LevelParser::parseTileLayer(TiXmlElement* pTileElement)
 				{
 					if (property->Attribute("name") == std::string("collidable"))
 					{
-						collidable = true;
+						if (property->Attribute("value") == std::string("true"))
+						{
+							collidable = true;
+						}
 					}
 				}
 			}
