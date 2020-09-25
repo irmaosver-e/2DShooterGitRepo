@@ -7,7 +7,7 @@
 class GameStateMachine
 {
 public:
-	GameStateMachine() {}
+	GameStateMachine() : m_changingState(false) {}
 	~GameStateMachine() {}
 
 	void changeState(GameState* pState);
@@ -23,6 +23,7 @@ public:
 
 private:
 	std::vector<GameState*> m_gameStates;
+	bool m_changingState;
 };
 
 #endif /* defined ( __GameStateMachine__ ) */

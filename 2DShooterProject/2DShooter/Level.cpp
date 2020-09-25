@@ -30,6 +30,18 @@ void Level::render()
 	}
 }
 
+TileLayer* Level::getTileLayerByName(std::string tileLayer)
+{
+	for (int i = 0; i < m_tileLayers.size(); i++)
+	{
+		if(m_tileLayers[i]->getLayerName() == tileLayer)
+		{
+			return m_tileLayers[i];
+		}
+	}
+	return nullptr;
+}
+
 void Level::getObjectsfromLayers(std::vector<GameObject*>& objContainer, std::string objType, std::string layer)
 {
 	if (layer == "all")

@@ -5,6 +5,8 @@
 
 void GameStateMachine::changeState(GameState* pState)
 {
+	m_changingState = true;
+
 	if (!m_gameStates.empty() && (m_gameStates.back()->getStateID() == pState->getStateID()))
 	{
 		// trying to change to same state - do nothing
@@ -34,9 +36,13 @@ void GameStateMachine::popState()
 	{
 		m_gameStates.back()->onExit();
 		m_gameStates.pop_back();
-	}
 
-	//m_gameStates.back()->resume();
+		if (!m_changingState)
+		{
+			m_gameStates.back()->resume();
+		}
+	}
+	m_changingState = false;
 }
 
 void GameStateMachine::reloadState()

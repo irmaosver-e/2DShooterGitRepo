@@ -5,7 +5,7 @@
 
 #include "Vector2D.h"
 #include "Layer.h"
-#include "Level.h"
+#include "TileSet.h"
 
 class TileLayer : public Layer
 {
@@ -18,6 +18,7 @@ public:
 
 	void setTileIDs(const std::vector<std::vector<int>>& data) { m_tileIDs = data; }
 
+	std::string& getLayerName() { return m_layerName; }
 	int& getTileWidth() { return m_tileWidth; }
 	int& getTileHeight() { return m_tileHeight; }
 	int& getNumColumns() { return m_numColumns; }
@@ -32,9 +33,14 @@ public:
 	const Vector2D getPosition() { return m_position; }
 
 private:
+
+	std::string m_layerName;
 	int m_numColumns;
 	int m_numRows;
+	
+	//possibly redundant
 	int m_tileSize;
+	//-----------
 
 	int m_tileWidth;
 	int m_tileHeight;

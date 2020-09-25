@@ -14,6 +14,7 @@ public:
 	virtual bool render();
 	virtual bool onEnter();
 	virtual bool onExit();
+	virtual bool resume();
 
 	virtual std::string getStateID() const = 0;
 

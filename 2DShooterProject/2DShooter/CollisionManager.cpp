@@ -3,163 +3,8 @@
 #include "Player.h"
 #include "Enemy.h"
 #include "BulletHandler.h"
-#include "TileLayer.h"
 
-//#include "SDLSystem.h"
-
-void CollisionManager::checkPlayerEnemyBulletCollision(Player* pPlayer)
-{
-    SDL_Rect* pRect1 = new SDL_Rect();
-    pRect1->x = (int)pPlayer->getPosition().getX();
-    pRect1->y = (int)pPlayer->getPosition().getY();
-    pRect1->w = (int)pPlayer->getWidth();
-    pRect1->h = (int)pPlayer->getHeight();
-
-    for (unsigned int i = 0; i < TheBulletHandler::Instance().getEnemyBullets().size(); i++)
-    {
-        EnemyBullet* pEnemyBullet = TheBulletHandler::Instance().getEnemyBullets()[i];
-
-        SDL_Rect* pRect2 = new SDL_Rect();
-        pRect2->x = (int)pEnemyBullet->getPosition().getX();
-        pRect2->y = (int)pEnemyBullet->getPosition().getY();
-
-        pRect2->w = (int)pEnemyBullet->getWidth();
-        pRect2->h = (int)pEnemyBullet->getHeight();
-
-        /*
-        if (RectRect(pRect1, pRect2))
-        {
-            if (!pPlayer->dying() && !pEnemyBullet->dying())
-            {
-                pEnemyBullet->collision();
-                pPlayer->collision();
-            }
-        }
-        */
-
-        delete pRect2;
-    }
-
-    delete pRect1;
-}
-
-void CollisionManager::checkPlayerEnemyCollision(Player* pPlayer, const std::vector<GameObject*>& objects)
-{
-    SDL_Rect* pRect1 = new SDL_Rect();
-    pRect1->x = (int)pPlayer->getPosition().getX();
-    pRect1->y = (int)pPlayer->getPosition().getY();
-    pRect1->w = pPlayer->getWidth();
-    pRect1->h = pPlayer->getHeight();
-
-    for (unsigned int i = 0; i < objects.size(); i++)
-    {
-        if (objects[i]->objType() != std::string("Enemy") || !objects[i]->updating())
-        {
-            continue;
-        }
-
-        SDL_Rect* pRect2 = new SDL_Rect();
-        pRect2->x = (int)objects[i]->getPosition().getX();
-        pRect2->y = (int)objects[i]->getPosition().getY();
-        pRect2->w = objects[i]->getWidth();
-        pRect2->h = objects[i]->getHeight();
-
-        /*
-        if (RectRect(pRect1, pRect2))
-        {
-            if (!objects[i]->dead() && !objects[i]->dying())
-            {
-                pPlayer->collision();
-            }
-        }
-        */
-
-        delete pRect2;
-    }
-
-    delete pRect1;
-
-}
-
-void CollisionManager::checkEnemyPlayerBulletCollision(const std::vector<GameObject*>& objects)
-{
-    for (unsigned int i = 0; i < objects.size(); i++)
-    {
-        GameObject* pObject = objects[i];
-
-        for (unsigned int j = 0; j < TheBulletHandler::Instance().getPlayerBullets().size(); j++)
-        {
-            if (pObject->objType() != std::string("Enemy") || !pObject->updating())
-            {
-                continue;
-            }
-
-            SDL_Rect* pRect1 = new SDL_Rect();
-            pRect1->x = (int)pObject->getPosition().getX();
-            pRect1->y = (int)pObject->getPosition().getY();
-            pRect1->w = (int)pObject->getWidth();
-            pRect1->h = (int)pObject->getHeight();
-
-            PlayerBullet* pPlayerBullet = TheBulletHandler::Instance().getPlayerBullets()[j];
-
-            SDL_Rect* pRect2 = new SDL_Rect();
-            pRect2->x = (int)pPlayerBullet->getPosition().getX();
-            pRect2->y = (int)pPlayerBullet->getPosition().getY();
-            pRect2->w = (int)pPlayerBullet->getWidth();
-            pRect2->h = (int)pPlayerBullet->getHeight();
-
-            /*
-            if (RectRect(pRect1, pRect2))
-            {
-                if (!pObject->dying() && !pPlayerBullet->dying())
-                {
-                    pPlayerBullet->collision();
-                    pObject->collision();
-                }
-
-            }
-
-            */
-            delete pRect1;
-            delete pRect2;
-        }
-    }
-
-}
-
-void CollisionManager::checkPlayerTileCollision(Player* pPlayer, const std::vector<TileLayer*>& collisionLayers)
-{
-    for (std::vector<TileLayer*>::const_iterator it = collisionLayers.begin(); it != collisionLayers.end(); ++it)
-    {
-        TileLayer* pTileLayer = (*it);
-        std::vector<std::vector<int>> tiles = pTileLayer->getTileIDs();
-
-        Vector2D layerPos = pTileLayer->getPosition();
-
-        int x, y, tileColumn, tileRow, tileid = 0;
-
-        x = (int)layerPos.getX() / pTileLayer->getTileWidth();
-        y = (int)layerPos.getY() / pTileLayer->getTileHeight();
-
-        if (pPlayer->getVelocity().getX() >= 0 || pPlayer->getVelocity().getY() >= 0)
-        {
-            tileColumn = ((int)(pPlayer->getPosition().getX() + pPlayer->getWidth()) / pTileLayer->getTileWidth());
-            tileRow = ((int)(pPlayer->getPosition().getY() + pPlayer->getHeight()) / pTileLayer->getTileHeight());
-            tileid = tiles[tileRow + y][tileColumn + x];
-        }
-        else if (pPlayer->getVelocity().getX() < 0 || pPlayer->getVelocity().getY() < 0)
-        {
-            tileColumn = (int)pPlayer->getPosition().getX() / pTileLayer->getTileWidth();
-            tileRow = (int)pPlayer->getPosition().getY() / pTileLayer->getTileHeight();
-            tileid = tiles[tileRow + y][tileColumn + x];
-        }
-
-        if (tileid != 0)
-        {
-            pPlayer->collision();
-        }
-    }
-}
+#include "SDLSystem.h"
 
 ObjectCollisionType* CollisionManager::getCollisionObject(std::string colType)
 {
@@ -180,19 +25,17 @@ ObjectCollisionType* CollisionManager::getCollisionObject(std::string colType)
 void CollisionManager::calculateObjColShape(GameObject& focusedObj, ObjectCollisionType& objColType, std::vector<SDL_Rect>& targetShape)
 {
     //adds the object position to object collision box and stores in focusedObjColShape
-    for (std::vector<SDL_Rect>::iterator itColBox = objColType.collisionShape.begin();
-        itColBox != objColType.collisionShape.end();
-        ++itColBox)
+    for (SDL_Rect colBox : objColType.collisionShape)
     {
-        targetShape.push_back(*itColBox);
+        targetShape.push_back(colBox);
 
         targetShape.back().x += focusedObj.getPosition().getX();
         targetShape.back().y += focusedObj.getPosition().getY();
 
         // draws collision boxes and texture boxes for debugging
         //include SDL_Systems
+        
         /*
-
         SDL_Rect objTexture;
         objTexture.x = focusedObj.getPosition().getX();
         objTexture.y = focusedObj.getPosition().getY();
@@ -205,8 +48,44 @@ void CollisionManager::calculateObjColShape(GameObject& focusedObj, ObjectCollis
 
         SDL_SetRenderDrawColor(TheSDLSystem::Instance().getRenderer(), 0, 255, 0, 0);
         SDL_RenderDrawRect(TheSDLSystem::Instance().getRenderer(), &targetShape.back());
-        SDL_RenderPresent(TheSDLSystem::Instance().getRenderer());
+        SDL_RenderPresent(TheSDLSystem::Instance().getRenderer()); 
+
         */
+    }
+}
+
+
+void CollisionManager::calculateTileLayerColShape(TileLayer* pTileLayer, std::vector<SDL_Rect>& targetShape)
+{
+    Vector2D layerPos = pTileLayer->getPosition();
+
+    //calculate the layer Shape
+    int firstOnScreenColumn = layerPos.getX() / pTileLayer->getTileWidth();
+    int firstOnScreenRow = layerPos.getY() / pTileLayer->getTileHeight();
+
+    int onScreenColumns = TheSDLSystem::Instance().getScreenWidth() / pTileLayer->getTileWidth();
+    int onScreenRows = TheSDLSystem::Instance().getScreenHeight() / pTileLayer->getTileHeight();
+
+    for (int row = 0; row < onScreenRows; row++)
+    {
+        for (int col = 0; col < onScreenColumns; col++)
+        {
+            if (pTileLayer->getTileIDs()[row + firstOnScreenRow][col + firstOnScreenColumn] != 0)
+            {
+                SDL_Rect colBox;
+                colBox.x = 0;
+                colBox.y = 0;
+                colBox.w = pTileLayer->getTileWidth();
+                colBox.h = pTileLayer->getTileHeight();
+                targetShape.push_back(colBox);
+
+                int tileXoffset = (int)layerPos.getX() % pTileLayer->getTileWidth();
+                int tileYoffset = (int)layerPos.getY() % pTileLayer->getTileHeight();
+
+                targetShape.back().x += (col * pTileLayer->getTileWidth()) - tileXoffset;
+                targetShape.back().y = (row * pTileLayer->getTileHeight()) - tileYoffset;
+            }
+        }
     }
 }
 
@@ -232,28 +111,23 @@ bool CollisionManager::checkCollision(GameObject* pFocusedObject)
     //tests if the pFocusedObject exists in the vector of ObjectCollisionType
     if (pFocusedObjColType)
     {
+        //adds the object position to object collision box and stores in focusedObjColShape
+        std::vector<SDL_Rect> focusedObjColShape;
+        calculateObjColShape(*pFocusedObject, *pFocusedObjColType, focusedObjColShape);
+
         //if focused object doenst have a collide againt list it is passive, skip collision check
         if (!pFocusedObjColType->collidesAgainst.empty())
         {
-            //creates a ObjColShapes to test collision against
-            std::vector<SDL_Rect> focusedObjColShape;
-            std::vector<SDL_Rect> VsObjColShape;
-
-            //adds the object position to object collision box and stores in focusedObjColShape
-            calculateObjColShape(*pFocusedObject, *pFocusedObjColType, focusedObjColShape);
-
             //goes through the collidesAgainst vector to test collision against the VSObjects
-            for (std::vector<std::string>::iterator itVSCollision = pFocusedObjColType->collidesAgainst.begin();
-                itVSCollision != pFocusedObjColType->collidesAgainst.end();
-                ++itVSCollision)
+            for(std::string versusCollision : pFocusedObjColType->collidesAgainst)
             {
                 //loads objects of type to be collided
                 std::vector<GameObject*> VsObjects;
-                m_currentLevel->getObjectsfromLayers(VsObjects, (*itVSCollision));
+                m_currentLevel->getObjectsfromLayers(VsObjects, versusCollision);
 
                 //looks for a collision type for the VSObject
-                ObjectCollisionType* pVSObjColType = getCollisionObject(*itVSCollision);
-
+                ObjectCollisionType* pVSObjColType = getCollisionObject(versusCollision);
+                                
                 //tests if the VsObject exists in the vector of pVSObjColType
                 if (pVSObjColType)
                 {
@@ -261,6 +135,7 @@ bool CollisionManager::checkCollision(GameObject* pFocusedObject)
                     for (unsigned int i = 0; i < VsObjects.size(); i++)
                     {
                         //adds the object position to object collision box and stores in VsObjColShape
+                        std::vector<SDL_Rect> VsObjColShape;
                         calculateObjColShape(*(VsObjects[i]), *pVSObjColType, VsObjColShape);
 
                         //test collision shapes
@@ -279,6 +154,54 @@ bool CollisionManager::checkCollision(GameObject* pFocusedObject)
                         VsObjects[i]->isColliding() = false;
                     }
                 }               
+            }
+        }
+
+        //if focused object doenst have a collide against Layer list it is passive against Layers, skip collision check
+        if (!pFocusedObjColType->collidesAgainstLayer.empty())
+        {
+            //goes through the collidesAgainstLayer vector to test collision against the LayerTiles
+            for (std::string tileLayerCollision : pFocusedObjColType->collidesAgainstLayer)
+            {
+               //adds the layer position to tiles collision box and stores in layerShape
+               std::vector<SDL_Rect> layerShape;
+               calculateTileLayerColShape(m_currentLevel->getTileLayerByName(tileLayerCollision), layerShape);
+                
+                /*
+                * 
+                * could use part of this code to improve speed of code
+                if (pFocusedObject->getVelocity().getX() >= 0 || pFocusedObject->getVelocity().getY() >= 0)
+                {
+                    tileColumn = ((int)(pFocusedObject->getPosition().getX() + pFocusedObject->getWidth()) / pVSTileLayer->getTileWidth());
+                    tileRow = ((int)(pFocusedObject->getPosition().getY() + pFocusedObject->getHeight()) / pVSTileLayer->getTileHeight());
+                    tileid = pVSTileLayer->getTileIDs()[tileRow + y][tileColumn + x];
+                }
+                else if (pFocusedObject->getVelocity().getX() < 0 || pFocusedObject->getVelocity().getY() < 0)
+                {
+                    tileColumn = (int)pFocusedObject->getPosition().getX() / pVSTileLayer->getTileWidth();
+                    tileRow = (int)pFocusedObject->getPosition().getY() / pVSTileLayer->getTileHeight();
+                    tileid = pVSTileLayer->getTileIDs()[tileRow + y][tileColumn + x];
+                }
+
+                if (tileid != 0)
+                {
+                    pFocusedObject->collision();
+                    pFocusedObject->isColliding() = true;
+                    return true;
+                }
+                */
+
+
+                //test collision shapes
+                if (testShapeVsShapeCollision(focusedObjColShape, layerShape))
+                {
+                    pFocusedObject->collision();
+                    pFocusedObject->isColliding() = true;
+
+                    return true;
+                }
+                pFocusedObject->isColliding() = false;
+
             }
         }
     }

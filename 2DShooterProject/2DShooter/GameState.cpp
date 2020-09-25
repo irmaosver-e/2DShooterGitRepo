@@ -1,6 +1,8 @@
 #include "GameState.h"
 
 #include "InputHandler.h"
+#include "LevelParser.h"
+#include "CollisionManager.h"
 
 bool GameState::update()
 {
@@ -64,5 +66,12 @@ bool GameState::onExit()
 	TheInputHandler::Instance().reset();
 
 	std::cout << "exiting " << getStateID() << " State\n";
+	return true;
+}
+
+bool GameState::resume()
+{
+	TheCollisionManager::Instance().setCurrentLevel(m_pLevel);
+
 	return true;
 }

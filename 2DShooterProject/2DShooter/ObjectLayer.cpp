@@ -2,8 +2,10 @@
 
 #include "Game.h"
 #include "SDLSystem.h"
+#include "CollisionManager.h"
 #include "GameObject.h"
 #include "Level.h"
+
 
 ObjectLayer::~ObjectLayer()
 {
@@ -16,20 +18,7 @@ ObjectLayer::~ObjectLayer()
 
 void ObjectLayer::update(Level* pLevel)
 {
-    //m_collisionManager.checkCollision(GameObject* obj, std::vector<GameObject*>* objs);
-    /*
-    //should check colisions in level
-	m_collisionManager.checkPlayerEnemyBulletCollision(pLevel->getPlayer());
-	m_collisionManager.checkEnemyPlayerBulletCollision((const std::vector<GameObject*>&)m_gameObjects);
-	m_collisionManager.checkPlayerEnemyCollision(pLevel->getPlayer(), (const std::vector<GameObject*>&)m_gameObjects);
-	
-	if (pLevel->getPlayer()->getPosition().getX() + pLevel->getPlayer()->getWidth() < TheSDLSystem::Instance().getScreenWidth())
-	{
-		m_collisionManager.checkPlayerTileCollision(pLevel->getPlayer(), pLevel->getCollidableLayers());
-	}
-
-    */
-
+  
     // iterate through the objects
     if (!m_gameObjects.empty())
     {

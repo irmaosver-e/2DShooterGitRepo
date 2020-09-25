@@ -86,8 +86,7 @@ void Player::clean()
 }
 
 void Player::collision()
-{
-	
+{	
 	/*  //godmode for debuging
 	
 	std::cout << "GOD MODE ON in Player::collision() \n";
@@ -99,11 +98,11 @@ void Player::collision()
 	// if the player is not invulnerable then set to dying and change values for death animation tile sheet
 	if (!m_invulnerable && !TheGame::Instance().getLevelComplete())
 	{
-		m_textureID = "largeexplosion";
-		m_currentFrame = 0;
-		m_numFrames = 9;
-		m_width = 60;
-		m_height = 60;
+		//m_textureID = "largeexplosion";
+		//m_currentFrame = 0;
+		//m_numFrames = 9;
+		//m_width = 60;
+		//m_height = 60;
 		m_bDying = true;
 	}
 }
@@ -117,12 +116,12 @@ void Player::ressurect()
 	m_position.setY(200);
 	m_bDying = false;
 
-	m_textureID = "player";
+	//m_textureID = "player";
 
 	m_currentFrame = 0;
-	m_numFrames = 5;
-	m_width = 101;
-	m_height = 46;
+	//m_numFrames = 5;
+	//m_width = 101;
+	//m_height = 46;
 
 	m_dyingCounter = 0;
 	m_invulnerable = true;

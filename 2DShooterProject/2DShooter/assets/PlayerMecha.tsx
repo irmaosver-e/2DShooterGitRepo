@@ -2,6 +2,9 @@
 <tileset version="1.4" tiledversion="1.4.2" name="PlayerMecha" tilewidth="64" tileheight="64" spacing="2" margin="2" tilecount="6" columns="3">
  <image source="PlayerMecha.png" width="202" height="136"/>
  <tile id="0" type="playermecha">
+  <properties>
+   <property name="VsLayerCollision" value="Collidables"/>
+  </properties>
   <objectgroup draworder="index" id="2">
    <object id="1" name="colisionBox" x="14" y="9" width="20" height="35"/>
   </objectgroup>

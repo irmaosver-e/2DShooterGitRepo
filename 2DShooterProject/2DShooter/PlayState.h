@@ -6,9 +6,7 @@
 #include "CollisionManager.h"
 #include "Level.h"
 
-class GameObject;
-class SDLGameObject;
-class Level;
+#include "GameObject.h"
 
 class PlayState : public GameState
 {

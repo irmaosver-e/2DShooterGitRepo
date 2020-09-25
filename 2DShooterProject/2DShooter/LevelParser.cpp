@@ -4,6 +4,7 @@
 #include "SDLSystem.h"
 #include "TextureManager.h"
 #include "SoundManager.h"
+#include "CollisionManager.h"
 #include "ObjectLayer.h"
 #include "ImageLayer.h"
 #include "TileLayer.h"
@@ -372,10 +373,16 @@ void LevelParser::parseObjTile(TiXmlElement* pTileElement, ObjectTile& objectTil
 	{
 		if (e->Value() == std::string("properties"))
 		{
-			//to be simplemented
 			for (TiXmlElement* vsCollision = e->FirstChildElement(); vsCollision != NULL; vsCollision = vsCollision->NextSiblingElement())
 			{
-				objColType.collidesAgainst.push_back(vsCollision->Attribute("value"));
+				if (vsCollision->Attribute("name") == std::string("VsCollision"))
+				{
+					objColType.collidesAgainst.push_back(vsCollision->Attribute("value"));
+				}
+				else if (vsCollision->Attribute("name") == std::string("VsLayerCollision"))
+				{
+					objColType.collidesAgainstLayer.push_back(vsCollision->Attribute("value"));
+				}
 			}
 		}
 		else if (e->Value() == std::string("objectgroup"))
@@ -457,28 +464,11 @@ Layer* LevelParser::parseTileLayer(TiXmlElement* pTileElement)
 	m_mapRoot->Attribute("width", &pTileLayer->getNumColumns());
 	m_mapRoot->Attribute("height", &pTileLayer->getNumRows());
 
-	bool collidable = false;
+	pTileLayer->getLayerName() = pTileElement->Attribute("name");
 
 	TiXmlElement* pDataNode = nullptr;
 	for (TiXmlElement* e = pTileElement->FirstChildElement(); e != NULL; e = e->NextSiblingElement())
 	{
-		if (e->Value() == std::string("properties"))
-		{
-			for (TiXmlElement* property = e->FirstChildElement(); property != NULL; property = property->NextSiblingElement())
-			{
-				if (property->Value() == std::string("property"))
-				{
-					if (property->Attribute("name") == std::string("collidable"))
-					{
-						if (property->Attribute("value") == std::string("true"))
-						{
-							collidable = true;
-						}
-					}
-				}
-			}
-		}
-
 		if (e->Value() == std::string("data"))
 		{
 			pDataNode = e;
@@ -520,10 +510,7 @@ Layer* LevelParser::parseTileLayer(TiXmlElement* pTileElement)
 	pTileLayer->setTileIDs(data);
 	pTileLayer->setMapWidth(mapNumColumns);
 
-	if (collidable)
-	{
-		m_pLevel->getCollisionLayers()->push_back(pTileLayer);
-	}
+	m_pLevel->getTileLayers()->push_back(pTileLayer);
 
 	return pTileLayer;
 }

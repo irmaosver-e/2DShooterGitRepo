@@ -16,9 +16,6 @@
   </data>
  </layer>
  <layer id="8" name="Collidables" width="200" height="15">
-  <properties>
-   <property name="collidable" type="bool" value="true"/>
-  </properties>
   <data encoding="base64" compression="zlib">
    eJzt1bENACAIBMBf2f0b4wAWVoLeTfAkPCQAAJCM2wGAI9U7Wz0fsPdbf3+bF2Dpdvu65QWArvxcurCrAADwvgnYzwP6
   </data>
