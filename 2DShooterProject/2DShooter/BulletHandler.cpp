@@ -26,7 +26,7 @@ void BulletHandler::updateBullets()
             || (*p_it)->getPosition().getY() < 0 || (*p_it)->getPosition().getY() > TheSDLSystem::Instance().getScreenHeight() || (*p_it)->dead())
         {
             //out of screen
-            delete* p_it;
+                   delete* p_it;
             p_it = m_playerBullets.erase(p_it);
         }
         else

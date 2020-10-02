@@ -15,12 +15,15 @@ public:
 	virtual void clean();
 	
 	virtual void collision();
+	int checkLives() { return m_lives; }
 
 	virtual std::string objType() { return "Player"; }
 private:
 	void ressurect();
 	void handleInput();
 	void handleAnimation();
+
+	int m_lives;
 
 	bool m_invulnerable;
 	int m_invulnerableTime;

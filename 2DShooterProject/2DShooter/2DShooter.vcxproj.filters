@@ -58,9 +58,6 @@
     <Filter Include="Header Files\Factory">
       <UniqueIdentifier>{05be20ed-4550-4906-a218-5c50d4ae269a}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Source Files\GameObjs">
-      <UniqueIdentifier>{fc4c82e8-dcef-4356-8bb7-59f1eceb36e9}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Source Files\Handlers &amp; Managers">
       <UniqueIdentifier>{ec759d74-2656-4577-bdea-409638f434e0}</UniqueIdentifier>
     </Filter>
@@ -96,17 +93,11 @@
     <ClCompile Include="base64.cpp">
       <Filter>Resource Files\Base64</Filter>
     </ClCompile>
-    <ClCompile Include="Bullet.cpp">
-      <Filter>Source Files\GameObjs</Filter>
-    </ClCompile>
     <ClCompile Include="BulletHandler.cpp">
       <Filter>Source Files\Handlers &amp; Managers</Filter>
     </ClCompile>
     <ClCompile Include="CollisionManager.cpp">
       <Filter>Source Files\Handlers &amp; Managers</Filter>
-    </ClCompile>
-    <ClCompile Include="Eskeletor.cpp">
-      <Filter>Source Files\GameObjs</Filter>
     </ClCompile>
     <ClCompile Include="Game.cpp">
       <Filter>Source Files</Filter>
@@ -120,17 +111,11 @@
     <ClCompile Include="GameStateMachine.cpp">
       <Filter>Source Files\States</Filter>
     </ClCompile>
-    <ClCompile Include="Glider.cpp">
-      <Filter>Source Files\GameObjs</Filter>
-    </ClCompile>
     <ClCompile Include="InputHandler.cpp">
       <Filter>Source Files\Handlers &amp; Managers</Filter>
     </ClCompile>
     <ClCompile Include="Level.cpp">
       <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="Level1Boss.cpp">
-      <Filter>Source Files\GameObjs</Filter>
     </ClCompile>
     <ClCompile Include="LevelParser.cpp">
       <Filter>Source Files\Parsers</Filter>
@@ -150,9 +135,6 @@
     <ClCompile Include="PauseState.cpp">
       <Filter>Source Files\States</Filter>
     </ClCompile>
-    <ClCompile Include="Player.cpp">
-      <Filter>Source Files\GameObjs</Filter>
-    </ClCompile>
     <ClCompile Include="PlayState.cpp">
       <Filter>Source Files\States</Filter>
     </ClCompile>
@@ -167,9 +149,6 @@
     </ClCompile>
     <ClCompile Include="SDLSystem.cpp">
       <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="ShotGlider.cpp">
-      <Filter>Source Files\GameObjs</Filter>
     </ClCompile>
     <ClCompile Include="SoundManager.cpp">
       <Filter>Source Files\Handlers &amp; Managers</Filter>
@@ -198,9 +177,6 @@
     <ClCompile Include="tinyxmlparser.cpp">
       <Filter>Resource Files\TinyXML</Filter>
     </ClCompile>
-    <ClCompile Include="Turret.cpp">
-      <Filter>Source Files\GameObjs</Filter>
-    </ClCompile>
     <ClCompile Include="Tileset.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
@@ -215,6 +191,27 @@
     </ClCompile>
     <ClCompile Include="GameState.cpp">
       <Filter>Source Files\States</Filter>
+    </ClCompile>
+    <ClCompile Include="Turret.cpp">
+      <Filter>Source Files\Objects</Filter>
+    </ClCompile>
+    <ClCompile Include="Bullet.cpp">
+      <Filter>Source Files\Objects</Filter>
+    </ClCompile>
+    <ClCompile Include="Eskeletor.cpp">
+      <Filter>Source Files\Objects</Filter>
+    </ClCompile>
+    <ClCompile Include="Glider.cpp">
+      <Filter>Source Files\Objects</Filter>
+    </ClCompile>
+    <ClCompile Include="Level1Boss.cpp">
+      <Filter>Source Files\Objects</Filter>
+    </ClCompile>
+    <ClCompile Include="Player.cpp">
+      <Filter>Source Files\Objects</Filter>
+    </ClCompile>
+    <ClCompile Include="ShotGlider.cpp">
+      <Filter>Source Files\Objects</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

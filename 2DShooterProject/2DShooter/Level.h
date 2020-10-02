@@ -22,9 +22,11 @@ public:
 	Player* getPlayer() { return m_pPlayer; }
 	void setPlayer(Player* pPlayer) { m_pPlayer = pPlayer; }
 
+	// redundant ?
 	std::vector<TileLayer*>* getCollisionLayers() { return &m_collisionLayers; }
 	const std::vector<TileLayer*>& getCollidableLayers() { return m_collisionLayers; }
-	
+	//-----------
+
 	std::vector<TileLayer*>* getTileLayers() { return &m_tileLayers; }
 	TileLayer* getTileLayerByName(std::string tileLayer);
 

@@ -22,13 +22,13 @@ bool PlayState::update()
 	{
 		if (TheInputHandler::Instance().isKeyDown(SDL_SCANCODE_ESCAPE))
 		{
-			TheSoundManager::Instance().playSound("pause", 0);
+			//TheSoundManager::Instance().playSound("pause", 0);
 			TheGame::Instance().getStateMachine()->pushState(new PauseState());
 		}
 
 		TheBulletHandler::Instance().updateBullets();
 
-		if (TheGame::Instance().getPlayerLives() == 0)
+		if (m_pLevel->getPlayer()->checkLives() == 0)
 		{
 			TheGame::Instance().getStateMachine()->changeState(new GameOverState());
 		}
@@ -43,9 +43,9 @@ bool PlayState::render()
 {
 	if (GameState::render())
 	{
-		for (int i = 0; i < TheGame::Instance().getPlayerLives(); i++)
+		for (int i = 0; i < m_pLevel->getPlayer()->checkLives(); i++)
 		{
-			TheTextureManager::Instance().drawFrame("lives", i * 30, 0, 32, 30, 0, 0, TheSDLSystem::Instance().getRenderer(), 0.0, 255);
+			TheTextureManager::Instance().drawTile("lives", 2, 2, i * 30, 0, 32, 32, 0, 0, TheSDLSystem::Instance().getRenderer());
 		}
 
 		TheBulletHandler::Instance().drawBullets();
@@ -58,22 +58,15 @@ bool PlayState::render()
 
 bool PlayState::onEnter()
 {
-	std::cout << "PlayState::onEnter()   setPlayerLives(3) hardcoded";
-	TheGame::Instance().setPlayerLives(3);
+	std::cout << "PlayState::onEnter() \n";
 
 	GameState::onEnter();
-
-	TheTextureManager::Instance().load("assets/bullet1.png", "bullet1", TheSDLSystem::Instance().getRenderer());
-	TheTextureManager::Instance().load("assets/bullet2.png", "bullet2", TheSDLSystem::Instance().getRenderer());
-	TheTextureManager::Instance().load("assets/bullet3.png", "bullet3", TheSDLSystem::Instance().getRenderer());
-	TheTextureManager::Instance().load("assets/lives.png", "lives", TheSDLSystem::Instance().getRenderer());
 
 	if (m_pLevel)
 	{
 		m_loadingComplete = true;
 	}
 
-	std::cout << "entering PlayState\n";
 	return true;
 }
 

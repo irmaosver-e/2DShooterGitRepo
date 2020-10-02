@@ -17,4 +17,9 @@
    <frame tileid="5" duration="300"/>
   </animation>
  </tile>
+ <tile id="2" type="lives">
+  <animation>
+   <frame tileid="2" duration="400"/>
+  </animation>
+ </tile>
 </tileset>

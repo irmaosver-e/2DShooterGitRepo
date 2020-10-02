@@ -23,7 +23,6 @@
 Game::Game(token) :
 	m_bRunning(false),
 	m_pGameStateMachine(0),
-	m_playerLives(3),
 	m_scrollSpeed((float)1.8),
 	m_bLevelComplete(false),
 	m_bChangingState(false),
@@ -65,7 +64,7 @@ void Game::run()
 	{
 		handleEvents();
 		update();
-		render();
+			render();
 	}
 }
 

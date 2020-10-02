@@ -18,9 +18,6 @@ public:
 	void clean();
 
 	float getScrollSpeed() const { return m_scrollSpeed; }
-	
-	int getPlayerLives() { return m_playerLives; }
-	void setPlayerLives(int lives) { m_playerLives = lives; }
 
 	const int getCurrentLevel() { return m_currentLevel; }
 	const int getNextLevel() { return m_nextLevel; }
@@ -57,8 +54,6 @@ private:
 	bool m_bChangingState;
 
 	float m_scrollSpeed;
-	
-	int m_playerLives;
 
 	int m_currentLevel;
 	int m_nextLevel;

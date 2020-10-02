@@ -1,8 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<map version="1.4" tiledversion="1.4.2" orientation="orthogonal" renderorder="right-down" width="200" height="15" tilewidth="32" tileheight="32" infinite="0" nextlayerid="9" nextobjectid="3">
+<map version="1.4" tiledversion="1.4.2" orientation="orthogonal" renderorder="right-down" width="200" height="15" tilewidth="32" tileheight="32" infinite="0" nextlayerid="15" nextobjectid="10">
  <tileset firstgid="1" source="s1TerrainTest.tsx"/>
  <tileset firstgid="199" source="PlayerMecha.tsx"/>
- <group id="2" name="BackGround">
+ <tileset firstgid="205" source="Bullet.tsx"/>
+ <group id="2" name="BackGround" locked="1">
   <imagelayer id="3" name="BGWallPaper">
    <image source="StarryBG.png" width="6400" height="480"/>
    <properties>
@@ -10,19 +11,32 @@
    </properties>
   </imagelayer>
  </group>
- <layer id="7" name="Non-Collidable" width="200" height="15">
+ <layer id="7" name="Non-Collidable" width="200" height="15" locked="1">
   <data encoding="base64" compression="zlib">
    eJzt1UEOgCAMBMBe+P+XjSeJJkQxQjEzLyDtLo1gV2Y/ABLTDwB4roQbWjMParJwKKEfrKnEmPzqB1yN6h9tdpCb3cxj9jm5HXCPfvyH/+698+0wU0aQs29lnW3Wd7Gunkz15vDr/OoHPVq50Q9WswGbAAEK
   </data>
  </layer>
- <layer id="8" name="Collidables" width="200" height="15">
+ <layer id="8" name="Collidables" width="200" height="15" locked="1">
   <data encoding="base64" compression="zlib">
    eJzt1bENACAIBMBf2f0b4wAWVoLeTfAkPCQAAJCM2wGAI9U7Wz0fsPdbf3+bF2Dpdvu65QWArvxcurCrAADwvgnYzwP6
   </data>
  </layer>
- <group id="6" name="MidGround">
+ <group id="6" name="MidGround" locked="1">
   <objectgroup id="4" name="PlayField">
-   <object id="1" name="Player" type="playermecha" gid="199" x="80" y="260" width="64" height="64"/>
+   <object id="1" name="Player" type="playermecha" gid="199" x="80" y="260" width="64" height="64">
+    <properties>
+     <property name="Lives" type="int" value="3"/>
+    </properties>
+   </object>
+  </objectgroup>
+ </group>
+ <group id="13" name="OUT_OF_PLAY_AREA">
+  <objectgroup id="14" name="Pools">
+   <object id="7" name="PlayerBullet" type="bulletSmall" gid="205" x="1" y="-50" width="32" height="32"/>
+  </objectgroup>
+  <objectgroup id="11" name="GUI_Field">
+   <object id="4" name="ViewPort" x="0" y="0" width="640" height="480" visible="0"/>
+   <object id="6" name="Lifecounter" type="lives" gid="201" x="21" y="89" width="64" height="64"/>
   </objectgroup>
  </group>
 </map>

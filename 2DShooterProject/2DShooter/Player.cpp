@@ -13,6 +13,7 @@ Player::Player() : SDLGameObject()
 	m_invulnerable = false;
 	m_invulnerableTime = 200;
 	m_invulnerableCounter = 0;
+	m_lives = 1;
 }
 
 void Player::load(std::unique_ptr<LoaderParams> const &pParams)
@@ -21,6 +22,7 @@ void Player::load(std::unique_ptr<LoaderParams> const &pParams)
 	SDLGameObject::load(std::move(pParams));
 
 	// can set up the players inherited values here
+	m_lives = pParams->getLives();
 
 	// set up bullets
 	m_bulletFiringSpeed = 13;
@@ -110,8 +112,8 @@ void Player::collision()
 
 void Player::ressurect()
 {
-	TheGame::Instance().setPlayerLives(TheGame::Instance().getPlayerLives() - 1);
-	
+	m_lives -= 1;
+
 	m_position.setX(10);
 	m_position.setY(200);
 	m_bDying = false;
@@ -155,7 +157,7 @@ void Player::handleInput()
 			if (m_bulletCounter == m_bulletFiringSpeed)
 			{
 				TheSoundManager::Instance().playSound("shoot", 0);
-				TheBulletHandler::Instance().addPlayerBullet((int)m_position.getX() + 90, (int)m_position.getY() + 12, 11, 11, "bullet1", 1, Vector2D(10, 0));
+				TheBulletHandler::Instance().addPlayerBullet((int)m_position.getX() + 90, (int)m_position.getY() + 12, 32, 32, "bulletSmall", 1, Vector2D(10, 0));
 				m_bulletCounter = 0;
 			}
 
