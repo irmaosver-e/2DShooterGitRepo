@@ -26,9 +26,9 @@ bool PlayState::update()
 			TheGame::Instance().getStateMachine()->pushState(new PauseState());
 		}
 
-		TheBulletHandler::Instance().updateBullets();
+		//TheBulletHandler::Instance().updateBullets();
 
-		if (m_pLevel->getPlayer()->checkLives() == 0)
+		if (m_pLevel->getPlayer()->outOfLives())
 		{
 			TheGame::Instance().getStateMachine()->changeState(new GameOverState());
 		}
@@ -48,7 +48,7 @@ bool PlayState::render()
 			TheTextureManager::Instance().drawTile("lives", 2, 2, i * 30, 0, 32, 32, 0, 0, TheSDLSystem::Instance().getRenderer());
 		}
 
-		TheBulletHandler::Instance().drawBullets();
+		//TheBulletHandler::Instance().drawBullets();
 
 		return true;
 	}

@@ -34,9 +34,21 @@ TileLayer* Level::getTileLayerByName(std::string tileLayer)
 {
 	for (int i = 0; i < m_tileLayers.size(); i++)
 	{
-		if(m_tileLayers[i]->getLayerName() == tileLayer)
+		if(m_tileLayers[i]->refLayerName() == tileLayer)
 		{
 			return m_tileLayers[i];
+		}
+	}
+	return nullptr;
+}
+
+ObjectLayer* Level::getObjectLayerByName(std::string objLayer)
+{
+	for (int i = 0; i < m_tileLayers.size(); i++)
+	{
+		if (m_objectLayers[i]->refLayerName() == objLayer)
+		{
+			return m_objectLayers[i];
 		}
 	}
 	return nullptr;

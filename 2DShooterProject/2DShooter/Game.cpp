@@ -12,6 +12,7 @@
 #include "PlayState.h"
 #include "AnimatedGraphic.h"
 #include "ScrollingBackground.h"
+#include "Bullet.h"
 #include "MenuButton.h"
 #include "Player.h"
 #include "Cursor.h"
@@ -28,7 +29,7 @@ Game::Game(token) :
 	m_bChangingState(false),
 	m_currentLevel(1)
 {
-	std::cout << "m_playerLives(3) and m_scrollSpeed((float)1.8) HORDCODED in Game::Game \n";
+	std::cout << "m_scrollSpeed((float)1.8) HORDCODED in Game::Game \n";
 }
 
 bool Game::init(const char* configFile)
@@ -42,6 +43,7 @@ bool Game::init(const char* configFile)
 	TheGameObjectFactory::Instance().registerType("Cursor", new ObjCreator<Cursor>);
 	TheGameObjectFactory::Instance().registerType("AnimatedGraphic", new ObjCreator<AnimatedGraphic>);
 	TheGameObjectFactory::Instance().registerType("ScrollingBackground", new ObjCreator<ScrollingBackground>);
+	TheGameObjectFactory::Instance().registerType("Bullet", new ObjCreator<Bullet>);
 	TheGameObjectFactory::Instance().registerType("Turret", new ObjCreator<Turret>);
 	TheGameObjectFactory::Instance().registerType("RoofTurret", new ObjCreator<RoofTurret>);
 	TheGameObjectFactory::Instance().registerType("Glider", new ObjCreator<Glider>);

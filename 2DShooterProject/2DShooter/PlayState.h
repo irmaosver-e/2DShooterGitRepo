@@ -24,9 +24,6 @@ public:
 private:
 	static const std::string s_playID;
 
-	//CollisionManager m_collisionManager;
-
-	//Level* pLevel;
 };
 
 #endif /* defined ( __PlayState__ ) */

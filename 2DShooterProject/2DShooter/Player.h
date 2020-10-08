@@ -15,7 +15,9 @@ public:
 	virtual void clean();
 	
 	virtual void collision();
+	int& referLives() { return m_lives; }
 	int checkLives() { return m_lives; }
+	bool outOfLives() { return (m_lives > 0) ? false : true; }
 
 	virtual std::string objType() { return "Player"; }
 private:

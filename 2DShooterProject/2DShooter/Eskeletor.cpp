@@ -6,8 +6,8 @@
 Eskeletor::Eskeletor() : Enemy()
 {
     m_dyingTime = 50;
-    m_health = 3;
-    m_moveSpeed = 3;
+    m_health = 2;
+    m_moveSpeed = 1;
     m_bulletFiringSpeed = 50;
 }
 
@@ -19,9 +19,9 @@ void Eskeletor::collision()
     {
         if (!m_bPlayedDeathSound)
         {
-            TheSoundManager::Instance().playSound("explode", 0);
+            //TheSoundManager::Instance().playSound("explode", 0);
 
-            m_textureID = "largeexplosion";
+           // m_textureID = "largeexplosion";
             m_currentFrame = 0;
             m_numFrames = 9;
             m_width = 60;
@@ -41,8 +41,8 @@ void Eskeletor::update()
 
         if (m_bulletCounter == m_bulletFiringSpeed)
         {
-            TheBulletHandler::Instance().addEnemyBullet((int)m_position.getX(), (int)m_position.getY(), 16, 16, "bullet1", 1, Vector2D(-3, 0));
-            TheBulletHandler::Instance().addEnemyBullet((int)m_position.getX(), (int)m_position.getY(), 16, 16, "bullet1", 1, Vector2D(3, 0));
+           // TheBulletHandler::Instance().addEnemyBullet((int)m_position.getX(), (int)m_position.getY(), 16, 16, "bullet1", 1, Vector2D(-3, 0));
+           // TheBulletHandler::Instance().addEnemyBullet((int)m_position.getX(), (int)m_position.getY(), 16, 16, "bullet1", 1, Vector2D(3, 0));
             m_bulletCounter = 0;
         }
         m_bulletCounter++;

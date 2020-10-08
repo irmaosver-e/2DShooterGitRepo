@@ -21,7 +21,7 @@ private:
 	Layer* parseTileLayer(TiXmlElement* pTileElement);
 	Layer* parseObjectLayer(TiXmlElement* pObjectElement);
 	Layer* parseImageLayer(TiXmlElement* pImageElement);
-	void parseOutOfPlayLayer(TiXmlElement* pObjectElement);
+	void parseOutOfPlayLayers(TiXmlElement* pOutElement);
 
 	bool parseTextures(std::string fileName, std::string id);
 

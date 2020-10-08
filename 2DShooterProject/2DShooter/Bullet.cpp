@@ -1,17 +1,17 @@
 #include "Bullet.h"
 
-PlayerBullet::PlayerBullet() : SDLGameObject()
+Bullet::Bullet() : SDLGameObject()
 {
     m_dyingTime = 5;
 }
 
-void PlayerBullet::load(std::unique_ptr<LoaderParams> pParams, Vector2D heading)
+void Bullet::load(std::unique_ptr<LoaderParams> pParams, Vector2D heading)
 {
     SDLGameObject::load(std::move(pParams));
     m_heading = heading;
 }
 
-void PlayerBullet::update()
+void Bullet::update()
 {
     if (!m_bDying)
     {
@@ -28,7 +28,7 @@ void PlayerBullet::update()
     }
 }
 
-void PlayerBullet::collision()
+void Bullet::collision()
 {
     m_textureID = "smallexplosion";
     m_currentFrame = 0;

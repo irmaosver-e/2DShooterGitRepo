@@ -5,7 +5,7 @@
  </properties>
  <tileset firstgid="1" source="MenuPartsA.tsx"/>
  <tileset firstgid="5" source="MenuButtons.tsx"/>
- <tileset firstgid="13" source="Cursor.tsx"/>
+ <tileset firstgid="17" source="Cursor.tsx"/>
  <group id="3" name="BackGround">
   <imagelayer id="2" name="BGWallpaper">
    <image source="MenuBG.png" width="640" height="480"/>
@@ -19,7 +19,7 @@
   </data>
   </layer>
  </group>
- <objectgroup id="8" name="Object Layer Buttons">
+ <objectgroup id="8" name="Buttons">
   <object id="20" name="MenuButton" type="resumeButton" gid="9" x="92" y="244" width="192" height="64">
    <properties>
     <property name="callbackID" value="resumePlay"/>
@@ -32,6 +32,6 @@
     <property name="sfx" value="buttonSelect_SFX"/>
    </properties>
   </object>
-  <object id="16" name="Cursor" type="mousepointer" gid="13" x="315" y="235" width="32" height="32"/>
+  <object id="16" name="Cursor" type="mousepointer" gid="17" x="315" y="235" width="32" height="32"/>
  </objectgroup>
 </map>

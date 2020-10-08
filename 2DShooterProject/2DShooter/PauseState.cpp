@@ -23,6 +23,7 @@ bool PauseState::onEnter()
 	m_loadingComplete = true;
 
 	std::cout << "entering PauseState\n";
+	std::cout << "unPause sound hardcoded in PauseState::update() \n";
 	return true;
 }
 

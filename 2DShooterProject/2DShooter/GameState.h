@@ -18,6 +18,7 @@ public:
 
 	virtual std::string getStateID() const = 0;
 
+	Level* getLevel() { return m_pLevel; }
 	std::string& stageMapFileName() { return m_stageMapFile; }
 	std::string& stageAssetsPath() { return m_stageAssetsPath; }
 

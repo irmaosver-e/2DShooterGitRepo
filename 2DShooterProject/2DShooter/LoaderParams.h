@@ -19,7 +19,7 @@ public:
 		m_soundFX(soundFX){}
 
 	int getX() const { return m_x; }
-	int getY() const { return m_y; }
+ 	int getY() const { return m_y; }
 	int getWidth() const { return m_width; }
 	int getHeight() const { return m_height; }
 	int getNumFrames() const { return m_numFrames; }

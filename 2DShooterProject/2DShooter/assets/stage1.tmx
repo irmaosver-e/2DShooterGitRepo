@@ -1,8 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<map version="1.4" tiledversion="1.4.2" orientation="orthogonal" renderorder="right-down" width="200" height="15" tilewidth="32" tileheight="32" infinite="0" nextlayerid="15" nextobjectid="10">
+<map version="1.4" tiledversion="1.4.2" orientation="orthogonal" renderorder="right-down" width="200" height="15" tilewidth="32" tileheight="32" infinite="0" nextlayerid="15" nextobjectid="13">
  <tileset firstgid="1" source="s1TerrainTest.tsx"/>
  <tileset firstgid="199" source="PlayerMecha.tsx"/>
  <tileset firstgid="205" source="Bullet.tsx"/>
+ <tileset firstgid="206" source="enemy3.tsx"/>
  <group id="2" name="BackGround" locked="1">
   <imagelayer id="3" name="BGWallPaper">
    <image source="StarryBG.png" width="6400" height="480"/>
@@ -21,21 +22,24 @@
    eJzt1bENACAIBMBf2f0b4wAWVoLeTfAkPCQAAJCM2wGAI9U7Wz0fsPdbf3+bF2Dpdvu65QWArvxcurCrAADwvgnYzwP6
   </data>
  </layer>
- <group id="6" name="MidGround" locked="1">
+ <group id="6" name="MidGround">
   <objectgroup id="4" name="PlayField">
    <object id="1" name="Player" type="playermecha" gid="199" x="80" y="260" width="64" height="64">
     <properties>
-     <property name="Lives" type="int" value="3"/>
+     <property name="Lives" type="int" value="4"/>
     </properties>
    </object>
+   <object id="10" name="Eskeletor" type="enemyTest3" gid="206" x="535" y="165" width="32" height="32"/>
+   <object id="11" name="Eskeletor" type="enemyTest3" gid="206" x="487" y="167" width="32" height="32"/>
+   <object id="12" name="Eskeletor" type="enemyTest3" gid="206" x="441" y="182" width="32" height="32"/>
   </objectgroup>
  </group>
  <group id="13" name="OUT_OF_PLAY_AREA">
-  <objectgroup id="14" name="Pools">
+  <objectgroup id="14" name="Bullets">
    <object id="7" name="PlayerBullet" type="bulletSmall" gid="205" x="1" y="-50" width="32" height="32"/>
   </objectgroup>
   <objectgroup id="11" name="GUI_Field">
-   <object id="4" name="ViewPort" x="0" y="0" width="640" height="480" visible="0"/>
+   <object id="4" name="ViewPort" x="0" y="0" width="640" height="480"/>
    <object id="6" name="Lifecounter" type="lives" gid="201" x="21" y="89" width="64" height="64"/>
   </objectgroup>
  </group>

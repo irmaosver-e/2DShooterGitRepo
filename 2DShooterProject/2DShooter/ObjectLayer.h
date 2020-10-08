@@ -14,6 +14,7 @@ public:
 	virtual void render();
 
 	std::vector<GameObject*>* getGameObjects() { return &m_gameObjects; }
+	void addObjectToLayer(GameObject* gameObj) { m_gameObjects.push_back(gameObj); }
 
 private:
 

@@ -3,30 +3,41 @@
 
 #include "SDLGameObject.h"
 
-class PlayerBullet : public SDLGameObject
+class Bullet : public SDLGameObject
 {
 public:
-	PlayerBullet();
-	virtual ~PlayerBullet() {}
+	Bullet();
+	virtual ~Bullet() {}
 
     virtual void load(std::unique_ptr<LoaderParams> pParams, Vector2D heading);
+    virtual void setHeading(Vector2D heading) { m_heading = heading; }
     virtual void draw() { SDLGameObject::draw(); }
     virtual void update();
     virtual void clean() { SDLGameObject::clean(); }
 
     virtual void collision();
 
-    virtual std::string objType() { return "PlayerBullet "; }
+    virtual std::string objType() { return "Bullet "; }
 
 private:
+
 
     Vector2D m_heading;
 };
 
-class EnemyBullet : public PlayerBullet
+class PlayerBullet : public Bullet
 {
 public:
-    EnemyBullet() : PlayerBullet(){}
+    PlayerBullet() : Bullet() {}
+    virtual ~PlayerBullet() {}
+
+    virtual std::string objType() { return "PlayerBullet"; }
+};
+
+class EnemyBullet : public Bullet
+{
+public:
+    EnemyBullet() : Bullet(){}
     virtual ~EnemyBullet() {}
 
     virtual std::string objType() { return "EnemyBullet"; }

@@ -3,6 +3,7 @@
  <image source="PlayerMecha.png" width="202" height="136"/>
  <tile id="0" type="playermecha">
   <properties>
+   <property name="VsCollision" value="enemyTest3"/>
    <property name="VsLayerCollision" value="Collidables"/>
   </properties>
   <objectgroup draworder="index" id="2">

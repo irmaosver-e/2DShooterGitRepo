@@ -5,6 +5,7 @@
 #include "TextureManager.h"
 #include "SoundManager.h"
 #include "CollisionManager.h"
+#include "BulletHandler.h"
 #include "ObjectLayer.h"
 #include "ImageLayer.h"
 #include "TileLayer.h"
@@ -181,11 +182,8 @@ void LevelParser::parseLayer(TiXmlElement* pLayerElement)
 	{	
 		if(pLayerElement->Attribute("name") == std::string("OUT_OF_PLAY_AREA"))
 		{ 
-			if (pLayerElement->Value() == std::string("objectgroup"))
-			{
-				//in progress!!!!
-				parseOutOfPlayLayer(pLayerElement);
-			}
+			parseOutOfPlayLayers(pLayerElement);
+		
 		}
 		else
 		{
@@ -227,7 +225,7 @@ Layer* LevelParser::parseTileLayer(TiXmlElement* pTileElement)
 	m_mapRoot->Attribute("width", &pTileLayer->getNumColumns());
 	m_mapRoot->Attribute("height", &pTileLayer->getNumRows());
 
-	pTileLayer->getLayerName() = pTileElement->Attribute("name");
+	pTileLayer->refLayerName() = pTileElement->Attribute("name");
 
 	TiXmlElement* pDataNode = nullptr;
 	for (TiXmlElement* e = pTileElement->FirstChildElement(); e != NULL; e = e->NextSiblingElement())
@@ -281,6 +279,7 @@ Layer* LevelParser::parseTileLayer(TiXmlElement* pTileElement)
 Layer* LevelParser::parseObjectLayer(TiXmlElement* pObjectElement)
 {
 	ObjectLayer* pObjectLayer = new ObjectLayer();
+	pObjectLayer->refLayerName() = pObjectElement->Attribute("name");
 
 	//loads objects to the object layer
 	for (TiXmlElement* e = pObjectElement->FirstChildElement(); e != NULL; e = e->NextSiblingElement())
@@ -352,6 +351,7 @@ Layer* LevelParser::parseObjectLayer(TiXmlElement* pObjectElement)
 Layer* LevelParser::parseImageLayer(TiXmlElement* pImageElement)
 {
 	ImageLayer* pImageLayer = new ImageLayer();
+	pImageLayer->refLayerName() = pImageElement->Attribute("name");
 
 	int x = 0, y = 0, width = 0, height = 0, numFrames = 1, callbackID = 0, animSpeed = 1;
 	std::string imageFile;
@@ -384,45 +384,58 @@ Layer* LevelParser::parseImageLayer(TiXmlElement* pImageElement)
 
 	pImageLayer->getGameObjects()->push_back(pGameObject);
 
+	m_pLevel->getImageLayers()->push_back(pImageLayer);
+
 	return pImageLayer;
 }
 
-void LevelParser::parseOutOfPlayLayer(TiXmlElement* pObjectElement)
+void LevelParser::parseOutOfPlayLayers(TiXmlElement* pOutElement)
 {
-	/*
-	//loads objects to the object layer
-	for (TiXmlElement* e = pObjectElement->FirstChildElement(); e != NULL; e = e->NextSiblingElement())
+	Layer* pOutLayer = nullptr;
+
+	for (TiXmlElement* e = pOutElement->FirstChildElement(); e != NULL; e = e->NextSiblingElement())
 	{
-		int x = 0, y = 0, width = 0, height = 0, numFrames = 1, animSpeed = 1;
-		std::string sfx;
-		std::string objType;
-		std::string objTileType;
-
-		e->Attribute("x", &x);
-		e->Attribute("y", &y);
-		e->Attribute("width", &width);
-		e->Attribute("height", &height);
-		objType = e->Attribute("name");
-		objTileType = e->Attribute("type");
-
-		//corrects the Y position from the map
-		y -= height;
-
-		//checks if the object has properties
-		TiXmlElement* properties = e->FirstChildElement();
-		if (properties)
+		if (e->Value() == std::string("objectgroup"))
 		{
-			for (TiXmlElement* property = properties->FirstChildElement(); property != NULL; property = property->NextSiblingElement())
+			ObjectLayer* pObjectLayer = new ObjectLayer();
+			pObjectLayer->refLayerName() = e->Attribute("name");
+
+			m_pLevel->getObjectLayers()->push_back(pObjectLayer);
+			pOutLayer = pObjectLayer;
+
+			//if the object layer is the Bullets Layer, poppulate the bulletHandler 
+			if (e->Attribute("name") == std::string("Bullets"))
 			{
-				if (property->Attribute("name") == std::string("sfx"))
+				TheBulletHandler::Instance().registerBulletLayer(pObjectLayer);
+				//TheBulletHandler::Instance().registerBulletLayerName(e->Attribute("name"));
+
+				//goes through every object in the layer
+				for (TiXmlElement* pObjElement = e->FirstChildElement(); pObjElement != NULL; pObjElement = pObjElement->NextSiblingElement())
 				{
-					sfx = property->Attribute("value");
+					int x = 0, y = 0, width = 0, height = 0, numFrames = 1, animSpeed = 1, callbackID = 0, lives = 1;
+					std::string sfx;
+					std::string objType;
+					std::string objTileType;
+
+					pObjElement->Attribute("x", &x);
+					pObjElement->Attribute("y", &y);
+					pObjElement->Attribute("width", &width);
+					pObjElement->Attribute("height", &height);
+					objType = pObjElement->Attribute("name");
+					objTileType = pObjElement->Attribute("type");
+
+					TheBulletHandler::Instance().registerBulletType(objType, 
+						new LoaderParams(x, y, width, height, objTileType, numFrames, lives, callbackID, animSpeed, sfx));
 				}
 			}
 		}
 
+
+		if (pOutLayer)
+		{
+			m_pLevel->getLayers()->push_back(pOutLayer);
+		}
 	}
-	*/
 }
 
 bool LevelParser::parseTextures(std::string fileName, std::string id)
