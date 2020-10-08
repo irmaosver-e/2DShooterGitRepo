@@ -39,6 +39,9 @@ void SDLGameObject::draw()
 void SDLGameObject::update()
 {
 	m_position += m_velocity;
+	
+	// must be after position update
+	InViewCheck();
 }
 
 /*
@@ -47,6 +50,9 @@ int SDLGameObject::getAnimatedFrame(float speedModifier)
 	return int(TheSDLSystem::Instance().getRunningTime() / (m_animSpeed / speedModifier)) % m_numFrames;
 }
 */
+
+
+
 
 //to be made redundant
 void SDLGameObject::doDyingAnimation()
@@ -61,4 +67,5 @@ void SDLGameObject::doDyingAnimation()
 	}
 	m_dyingCounter++; //simple counter ok w fixed frame rate
 }
+
 

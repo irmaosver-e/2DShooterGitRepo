@@ -19,7 +19,10 @@ public:
 
 protected:
 	SDLGameObject();
+
 	void doDyingAnimation();
+
+
 
 	int m_bulletFiringSpeed;
 	int m_bulletCounter;

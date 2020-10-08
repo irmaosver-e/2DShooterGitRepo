@@ -5,26 +5,25 @@ Bullet::Bullet() : SDLGameObject()
     m_dyingTime = 5;
 }
 
-void Bullet::load(std::unique_ptr<LoaderParams> pParams, Vector2D heading)
+void Bullet::load(std::unique_ptr<LoaderParams> pParams)
 {
     SDLGameObject::load(std::move(pParams));
-    m_heading = heading;
+}
+
+void Bullet::draw()
+{
+    SDLGameObject::draw(); 
 }
 
 void Bullet::update()
 {
-    if (!m_bDying)
+    if (!m_bDying && m_bUpdating)
     {
-        m_velocity.setX(m_heading.getX());
-        m_velocity.setY(m_heading.getY());
-
         SDLGameObject::update();
     }
     else
     {
-        m_velocity.setX(0);
-        m_velocity.setY(0);
-        doDyingAnimation();
+        //doDyingAnimation();
     }
 }
 

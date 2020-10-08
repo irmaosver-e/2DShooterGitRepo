@@ -22,12 +22,39 @@ void ObjectLayer::update(Level* pLevel)
     // iterate through the objects
     if (!m_gameObjects.empty())
     {
+        /*
+        for (GameObject* pGameObj : m_gameObjects)
+        {
+            TheCollisionManager::Instance().checkCollision(pGameObj);
+            pGameObj->update();
+
+            if (pGameObj->isInView())
+            {
+                pGameObj->turnObjOn();
+                pGameObj->setUpdating(true);
+                pGameObj->update();
+            }
+            else
+            {
+                pGameObj->turnObjOff();
+                if (pGameObj->objType() != std::string("Player"))
+                {
+                    pGameObj->scroll(TheGame::Instance().getScrollSpeed());
+                }
+            }
+
+        }
+
+        */
+
         for (std::vector<GameObject*>::iterator it = m_gameObjects.begin(); it != m_gameObjects.end();)
         {
             TheCollisionManager::Instance().checkCollision(*it);
 
+            //need revising
             if ((*it)->getPosition().getX() <= TheSDLSystem::Instance().getScreenWidth())
             {
+                (*it)->turnObjOn();
                 (*it)->setUpdating(true);
                 (*it)->update();
             }
@@ -56,17 +83,28 @@ void ObjectLayer::update(Level* pLevel)
             }
 
         }
+        
     }
 }
 
 void ObjectLayer::render()
 {
+    for (GameObject* pGameObj : m_gameObjects)
+    {
+        if (pGameObj->isItOn())
+        {
+            pGameObj->draw();
+        }
+    }
+    /*
     for (unsigned int i = 0; i < m_gameObjects.size(); i++)
     {
+
         if (m_gameObjects[i]->getPosition().getX() <= TheSDLSystem::Instance().getScreenWidth())
         {
             m_gameObjects[i]->draw();
         }
     }
+    */
 }
 

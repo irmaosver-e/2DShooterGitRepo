@@ -9,9 +9,8 @@ public:
 	Bullet();
 	virtual ~Bullet() {}
 
-    virtual void load(std::unique_ptr<LoaderParams> pParams, Vector2D heading);
-    virtual void setHeading(Vector2D heading) { m_heading = heading; }
-    virtual void draw() { SDLGameObject::draw(); }
+    virtual void load(std::unique_ptr<LoaderParams> pParams);
+    virtual void draw();
     virtual void update();
     virtual void clean() { SDLGameObject::clean(); }
 
@@ -20,9 +19,7 @@ public:
     virtual std::string objType() { return "Bullet "; }
 
 private:
-
-
-    Vector2D m_heading;
+    //void turnBulletOff();
 };
 
 class PlayerBullet : public Bullet

@@ -9,6 +9,10 @@ void BulletHandler::fireBullet(std::string bulletType, Vector2D heading)
     { 
         addBullet(bulletType);
     }
+    
+    m_bulletLayer->getGameObjects()->back()->getPosition() = Vector2D(30, 30);
+    m_bulletLayer->getGameObjects()->back()->getVelocity() = heading;
+
 }
 
 void BulletHandler::addBullet(std::string bulletType)
@@ -31,14 +35,14 @@ void BulletHandler::addPlayerBullet(int x, int y, int width, int height, std::st
 {
 
     PlayerBullet* pPlayerBullet = new PlayerBullet();
-    pPlayerBullet->load(std::unique_ptr<LoaderParams>(new LoaderParams(x, y, width, height, textureID, numFrames)), heading);
+   // pPlayerBullet->load(std::unique_ptr<LoaderParams>(new LoaderParams(x, y, width, height, textureID, numFrames)), heading);
     
 }
 
 void BulletHandler::addEnemyBullet(int x, int y, int width, int height, std::string textureID, int numFrames, Vector2D heading)
 {
     EnemyBullet* pEnemyBullet = new EnemyBullet();
-    pEnemyBullet->load(std::unique_ptr<LoaderParams>(new LoaderParams(x, y, width, height, textureID, numFrames)), heading);
+    //pEnemyBullet->load(std::unique_ptr<LoaderParams>(new LoaderParams(x, y, width, height, textureID, numFrames)), heading);
 
     m_enemyBullets.push_back(pEnemyBullet);
 }

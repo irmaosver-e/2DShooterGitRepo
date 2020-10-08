@@ -26,10 +26,15 @@ public:
 	Vector2D& getVelocity() { return m_velocity; }
 	int getWidth() { return m_width; }
 	int getHeight() { return m_height; }
+	bool isItOn() { return m_bIsOn; }
 	bool updating() { return m_bUpdating; }
+	bool isInView() { return m_bInView; }
 	bool dead() { return m_bDead; }
 	bool dying() { return m_bDying; }
 	bool& isColliding() { return m_bColliding; }
+
+	void turnObjOn();
+	void turnObjOff();
 
 
 	void setUpdating(bool updating) { m_bUpdating = updating; }
@@ -43,6 +48,9 @@ public:
 	}
 
 protected:
+
+	void InViewCheck();
+
 	// constructor with default initialisation list
 	GameObject() : m_position(0, 0),
 		m_velocity(0, 0),
@@ -51,6 +59,8 @@ protected:
 		m_height(0),
 		m_currentRow(0),
 		m_currentFrame(0),
+		m_bIsOn(false),
+		m_bInView(false),
 		m_bUpdating(false),
 		m_bColliding(false),
 		m_bDead(false),
@@ -78,6 +88,8 @@ protected:
 	std::string m_textureID;
 
 	//common boolean variables
+	bool m_bIsOn;
+	bool m_bInView;
 	bool m_bUpdating;
 	bool m_bColliding;
 	bool m_bDead;
