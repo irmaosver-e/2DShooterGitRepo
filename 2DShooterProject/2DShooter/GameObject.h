@@ -19,6 +19,8 @@ public:
 	virtual void update() = 0;
 	virtual void clean() = 0;
 	virtual void collision() = 0;
+	virtual void collisionPassive() = 0;
+	virtual void outOfView() = 0;
 	virtual std::string objType() = 0;
 
 	std::string getTextureID() { return m_textureID; }
@@ -26,9 +28,9 @@ public:
 	Vector2D& getVelocity() { return m_velocity; }
 	int getWidth() { return m_width; }
 	int getHeight() { return m_height; }
-	bool isItOn() { return m_bIsOn; }
-	bool updating() { return m_bUpdating; }
+	bool isOn() { return m_bIsOn; }
 	bool isInView() { return m_bInView; }
+	bool updating() { return m_bUpdating; }
 	bool dead() { return m_bDead; }
 	bool dying() { return m_bDying; }
 	bool& isColliding() { return m_bColliding; }
@@ -36,20 +38,14 @@ public:
 	void turnObjOn();
 	void turnObjOff();
 
-
 	void setUpdating(bool updating) { m_bUpdating = updating; }
+	void setInView(bool inView) { m_bInView = inView; }
 	
-	void scroll(float scrollSpeed) 
-	{ 
-		if (objType() != std::string("Player")) // player is never scrolled
-		{
-			m_position.setX(m_position.getX() - scrollSpeed);
-		}
-	}
+	void scroll(float scrollSpeed);
 
 protected:
 
-	void InViewCheck();
+	void inViewCheck();
 
 	// constructor with default initialisation list
 	GameObject() : m_position(0, 0),

@@ -425,7 +425,7 @@ void LevelParser::parseOutOfPlayLayers(TiXmlElement* pOutElement)
 					objTileType = pObjElement->Attribute("type");
 
 					TheBulletHandler::Instance().registerBulletType(objType, 
-						new LoaderParams(x, y, width, height, objTileType, numFrames, lives, callbackID, animSpeed, sfx));
+						new LoaderParams(x, y, width, height, objTileType, numFrames, lives, animSpeed, sfx));
 				}
 			}
 		}

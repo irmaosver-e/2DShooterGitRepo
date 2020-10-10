@@ -35,11 +35,6 @@ void Player::load(std::unique_ptr<LoaderParams> const &pParams)
 	m_dyingTime = 100;
 }
 
-void Player::draw()
-{
-	SDLGameObject::draw();
-}
-
 void Player::update()
 {
 	//if the level is finished, fly off the screen
@@ -80,11 +75,6 @@ void Player::update()
 			m_dyingCounter++;
 		}
 	}
-}
-
-void Player::clean()
-{
-	SDLGameObject::clean();
 }
 
 void Player::collision()
@@ -159,7 +149,7 @@ void Player::handleInput()
 				TheSoundManager::Instance().playSound("shoot", 0);
 				//TheBulletHandler::Instance().addPlayerBullet((int)m_position.getX() + 90, (int)m_position.getY() + 12, 32, 32, "bulletSmall", 1, Vector2D(10, 0));
 
-				TheBulletHandler::Instance().fireBullet("PlayerBullet", Vector2D(10, 0));
+				TheBulletHandler::Instance().fireBullet("PlayerBullet", m_position, Vector2D(10, 0));
 				m_bulletCounter = 0;
 			}
 

@@ -9,13 +9,13 @@ void GameObject::turnObjOn()
 void GameObject::turnObjOff()
 {
 	m_bIsOn = false;
-	//m_bInView = false;
-	//m_bUpdating = false;
-	//m_position = Vector2D(0, 0);
+	m_bInView = false;
+	m_bUpdating = false;
 	m_velocity = Vector2D(0, 0);
 }
 
-void GameObject::InViewCheck()
+
+void GameObject::inViewCheck()
 {
 	int screenWidth = TheSDLSystem::Instance().getScreenWidth();
 	int screenHeight = TheSDLSystem::Instance().getScreenHeight();
@@ -27,10 +27,15 @@ void GameObject::InViewCheck()
 	if (m_position.getX() > screenWidth || objRightEdge < 0 ||
 		m_position.getY() > screenHeight || objButtomEdge < 0)
 	{
-		turnObjOff();
+		m_bInView = false;
 	}
 	else
 	{
-		turnObjOn();
+		m_bInView = true;
 	}
+}
+
+void GameObject::scroll(float scrollSpeed)
+{
+	m_position.setX(m_position.getX() - scrollSpeed);
 }

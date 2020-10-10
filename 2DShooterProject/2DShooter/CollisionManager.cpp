@@ -47,9 +47,7 @@ void CollisionManager::calculateObjColShape(GameObject& focusedObj, ObjectCollis
 
         SDL_SetRenderDrawColor(TheSDLSystem::Instance().getRenderer(), 0, 255, 0, 0);
         SDL_RenderDrawRect(TheSDLSystem::Instance().getRenderer(), &targetShape.back());
-        SDL_RenderPresent(TheSDLSystem::Instance().getRenderer()); 
-
-        
+        SDL_RenderPresent(TheSDLSystem::Instance().getRenderer());      
     }
 }
 
@@ -144,8 +142,8 @@ bool CollisionManager::checkCollision(GameObject* pFocusedObject)
                             pFocusedObject->isColliding() = true;
                             VsObjects[i]->isColliding() = true;
                             
-                            //maybe
-                            //VsObjects[i]->collision();
+                            
+                            VsObjects[i]->collisionPassive();
                             
                             return true;
                         }

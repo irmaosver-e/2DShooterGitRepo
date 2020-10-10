@@ -3,16 +3,36 @@
 #include "GameObjectFactory.h"
 #include "SDLSystem.h"
 
-void BulletHandler::fireBullet(std::string bulletType, Vector2D heading)
+void BulletHandler::fireBullet(std::string bulletType, Vector2D initialPos, Vector2D heading)
 {
-    if(m_bulletLayer->getGameObjects()->empty())
-    { 
-        addBullet(bulletType);
-    }
-    
-    m_bulletLayer->getGameObjects()->back()->getPosition() = Vector2D(30, 30);
-    m_bulletLayer->getGameObjects()->back()->getVelocity() = heading;
+    int availableBulletIndex = -1;
 
+    for (int i = 0; i < m_bulletLayer->getGameObjects()->size(); i++)
+    {
+        if (!m_bulletLayer->getGameObjects()->at(i)->isOn())
+        {
+            availableBulletIndex = i;
+        }
+    }
+
+    if (availableBulletIndex < 0)
+    {
+        addBullet(bulletType);
+        availableBulletIndex += m_bulletLayer->getGameObjects()->size();
+    }
+
+    m_bulletLayer->getGameObjects()->at(availableBulletIndex)->turnObjOn();
+    m_bulletLayer->getGameObjects()->at(availableBulletIndex)->setUpdating(true);
+    m_bulletLayer->getGameObjects()->at(availableBulletIndex)->setInView(true);
+
+    m_bulletLayer->getGameObjects()->at(availableBulletIndex)->getPosition() = initialPos;
+    m_bulletLayer->getGameObjects()->at(availableBulletIndex)->getVelocity() = heading;
+
+    /*
+    //for debugguing
+    std::cout << "bullets in pool " << m_bulletLayer->getGameObjects()->size() << "\n";
+    std::cout << "using bullet " << availableBulletIndex << "\n";
+    */
 }
 
 void BulletHandler::addBullet(std::string bulletType)
@@ -20,14 +40,13 @@ void BulletHandler::addBullet(std::string bulletType)
     GameObject* pBullet = TheGameObjectFactory::Instance().create("Bullet");
 
 
-    //cast the object to a bullet type and move the pointer held in bulletTypes to its load function
+    //load the bullet with the correct bullet type parameters
     pBullet->load(std::unique_ptr<LoaderParams>(new LoaderParams(m_bulletTypes[bulletType]->getX(), m_bulletTypes[bulletType]->getY(),
         m_bulletTypes[bulletType]->getWidth(), m_bulletTypes[bulletType]->getHeight(),
         m_bulletTypes[bulletType]->getTextureID(), m_bulletTypes[bulletType]->getNumFrames(),
-        m_bulletTypes[bulletType]->getLives(), m_bulletTypes[bulletType]->getCallbackID(),
-        m_bulletTypes[bulletType]->getAnimSpeed(), m_bulletTypes[bulletType]->getSFX())));
+        m_bulletTypes[bulletType]->getLives(), m_bulletTypes[bulletType]->getAnimSpeed(), 
+        m_bulletTypes[bulletType]->getSFX())));
 
-    //needs improve, only populate if extra bullet added 
     m_bulletLayer->addObjectToLayer(pBullet);
 }
 

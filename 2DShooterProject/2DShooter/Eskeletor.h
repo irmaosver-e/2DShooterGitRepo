@@ -13,6 +13,7 @@ public:
 
     virtual void collision();
     virtual void update();
+
 };
 
 #endif /* defined ( __Eskeletor__ ) */

@@ -9,14 +9,15 @@ public:
 	Bullet();
 	virtual ~Bullet() {}
 
-    virtual void load(std::unique_ptr<LoaderParams> pParams);
-    virtual void draw();
     virtual void update();
-    virtual void clean() { SDLGameObject::clean(); }
+    
+    
+    virtual void outOfView();
 
     virtual void collision();
+    virtual void collisionPassive();
 
-    virtual std::string objType() { return "Bullet "; }
+    virtual std::string objType() { return "Bullet"; }
 
 private:
     //void turnBulletOff();

@@ -1,5 +1,5 @@
 #include "SDLGameObject.h"
-
+#include "Game.h"
 #include "SDLSystem.h"
 #include "TextureManager.h"
 
@@ -11,6 +11,9 @@ m_dyingTime(0),
 m_dyingCounter(0),
 m_bPlayedDeathSound(false)
 {
+	m_bIsOn = true;
+	m_bInView = true;
+	m_bUpdating = true;
 }
 
 void SDLGameObject::load(std::unique_ptr<LoaderParams> const& pParams)
@@ -32,16 +35,23 @@ void SDLGameObject::draw()
 	//TheTextureManager::Instance().drawFrame(m_textureID, (Uint32)m_position.getX(), (Uint32)m_position.getY(),
 	//										m_width, m_height, m_currentRow, m_currentFrame, TheSDLSystem::Instance().getRenderer(), m_angle, m_alpha);
 	
-	TheTextureManager::Instance().drawTile(m_textureID,2, 2, (Uint32)m_position.getX(), (Uint32)m_position.getY(),
+	TheTextureManager::Instance().drawTile(m_textureID,2, 2, (int)m_position.getX(), (int)m_position.getY(),
 		m_width, m_height, m_currentRow, m_currentFrame, TheSDLSystem::Instance().getRenderer());
 }
 
 void SDLGameObject::update()
 {
 	m_position += m_velocity;
-	
-	// must be after position update
-	InViewCheck();
+	inViewCheck();
+}
+
+void SDLGameObject::outOfView()
+{
+	m_bInView = false;
+	m_bUpdating = false;
+
+	//scroll speed should be held in map, needs change
+	scroll(TheGame::Instance().getScrollSpeed());
 }
 
 /*

@@ -18,6 +18,17 @@ public:
 		m_animSpeed(animSpeed),
 		m_soundFX(soundFX){}
 
+	LoaderParams(int x, int y, int width, int height, std::string textureID, int numFrames, int lives = 1, float animSpeed = 1, std::string soundFX = "") :
+		m_x(x),
+		m_y(y),
+		m_width(width),
+		m_height(height),
+		m_textureID(textureID),
+		m_numFrames(numFrames),
+		m_lives(lives),
+		m_animSpeed(animSpeed),
+		m_soundFX(soundFX) {}
+
 	int getX() const { return m_x; }
  	int getY() const { return m_y; }
 	int getWidth() const { return m_width; }

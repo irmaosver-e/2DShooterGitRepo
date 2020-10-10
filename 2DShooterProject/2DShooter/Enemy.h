@@ -6,6 +6,7 @@
 class Enemy : public SDLGameObject
 {
 public:
+
 	virtual std::string objType() { return "Enemy"; }
 
 protected:

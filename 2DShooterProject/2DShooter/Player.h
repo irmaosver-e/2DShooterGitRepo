@@ -10,11 +10,13 @@ public:
 	virtual ~Player() {}
 
 	virtual void load(std::unique_ptr<LoaderParams> const &pParams);
-	virtual void draw();
 	virtual void update();
-	virtual void clean();
 	
 	virtual void collision();
+
+	//player does nothing if out of view, other objects follow SDLGameObject::outOfView()
+	virtual void outOfView() {}
+
 	int& referLives() { return m_lives; }
 	int checkLives() { return m_lives; }
 	bool outOfLives() { return (m_lives > 0) ? false : true; }

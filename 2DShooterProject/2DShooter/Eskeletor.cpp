@@ -23,7 +23,7 @@ void Eskeletor::collision()
 
            // m_textureID = "largeexplosion";
             m_currentFrame = 0;
-            m_numFrames = 9;
+            m_numFrames = 2;
             m_width = 60;
             m_height = 60;
             m_bDying = true;
@@ -37,6 +37,7 @@ void Eskeletor::update()
     if (!m_bDying)
     {
         scroll((float)(TheGame::Instance().getScrollSpeed()));
+        
         m_velocity.setY((float)m_moveSpeed);
 
         if (m_bulletCounter == m_bulletFiringSpeed)

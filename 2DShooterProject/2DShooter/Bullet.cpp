@@ -5,15 +5,6 @@ Bullet::Bullet() : SDLGameObject()
     m_dyingTime = 5;
 }
 
-void Bullet::load(std::unique_ptr<LoaderParams> pParams)
-{
-    SDLGameObject::load(std::move(pParams));
-}
-
-void Bullet::draw()
-{
-    SDLGameObject::draw(); 
-}
 
 void Bullet::update()
 {
@@ -27,6 +18,15 @@ void Bullet::update()
     }
 }
 
+void Bullet::outOfView()
+{ 
+    turnObjOff();
+    m_position = Vector2D(0, 0);
+    
+    m_bInView = false;
+    m_bUpdating = false;
+}
+
 void Bullet::collision()
 {
     m_textureID = "smallexplosion";
@@ -35,5 +35,10 @@ void Bullet::collision()
     m_width = 20;
     m_height = 20;
     m_bDying = true;
+}
+
+void Bullet::collisionPassive()
+{
+    outOfView();
 }
 

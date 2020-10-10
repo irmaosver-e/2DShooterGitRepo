@@ -16,7 +16,7 @@ public:
     void registerBulletLayer(ObjectLayer* pBulletLayer) { m_bulletLayer = pBulletLayer; }
     void registerBulletType(std::string bulletType, LoaderParams* pParams) { m_bulletTypes[bulletType] = pParams; }
 
-    void fireBullet(std::string bulletType, Vector2D heading);
+    void fireBullet(std::string bulletType, Vector2D initialPos, Vector2D heading);
 
     void addPlayerBullet(int x, int y, int width, int height, std::string textureID, int numFrames, Vector2D heading);
     void addEnemyBullet(int x, int y, int width, int height, std::string textureID, int numFrames, Vector2D heading);
