@@ -4,6 +4,7 @@
 #include "TextureManager.h"
 
 SDLGameObject::SDLGameObject() : GameObject(),
+m_defaultBullet("none"),
 m_bulletFiringSpeed(0),
 m_bulletCounter(0),
 m_moveSpeed(0),
@@ -26,6 +27,7 @@ void SDLGameObject::load(std::unique_ptr<LoaderParams> const& pParams)
 	m_numFrames = pParams->getNumFrames();
 	m_animSpeed = pParams->getAnimSpeed();
 	m_sfx = pParams->getSFX();
+	m_defaultBullet = pParams->refDefaultBullet();
 
 	//m_collisionShape
 }

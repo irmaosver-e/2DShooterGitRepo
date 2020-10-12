@@ -3,7 +3,7 @@
  <image source="enemy3.png" width="104" height="35"/>
  <tile id="0" type="enemyTest3">
   <properties>
-   <property name="VsCollision" value="bulletSmall"/>
+   <property name="VsCollision" value="bulletPlayer"/>
   </properties>
   <objectgroup draworder="index" id="2">
    <object id="1" name="colisionBox" x="4.6591" y="4.95455" width="24.1818" height="21.8409"/>

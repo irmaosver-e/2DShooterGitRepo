@@ -14,7 +14,7 @@ public:
     ~BulletHandler() {}
 
     void registerBulletLayer(ObjectLayer* pBulletLayer) { m_bulletLayer = pBulletLayer; }
-    void registerBulletType(std::string bulletType, LoaderParams* pParams) { m_bulletTypes[bulletType] = pParams; }
+    void registerBulletType(std::string bulletType, LoaderParams& pParams) { m_bulletTypes[bulletType] = pParams; }
 
     void fireBullet(std::string bulletType, Vector2D initialPos, Vector2D heading);
 
@@ -34,7 +34,7 @@ private:
     
     ObjectLayer* m_bulletLayer;
 
-    std::map<std::string, LoaderParams*> m_bulletTypes;
+    std::map<std::string, LoaderParams> m_bulletTypes;
 
     // in play bullets
     //std::vector<GameObject*> m_bullets;

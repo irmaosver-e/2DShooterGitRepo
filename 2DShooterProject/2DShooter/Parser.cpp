@@ -13,3 +13,19 @@ TiXmlElement* Parser::loadDocument(TiXmlDocument& xmlDoc, std::string assetsLoca
 	return xmlDoc.RootElement();
 }
 
+void Parser::getComaSeparatedItems(const char* list, std::vector<std::string>& recipient)
+{
+	std::stringstream comaSeparatedList(list);
+
+	while (comaSeparatedList.good())
+	{
+		std::string resultItem;
+		getline(comaSeparatedList, resultItem, ',');
+
+		//clear result Item from spaces
+		resultItem.erase(remove(resultItem.begin(), resultItem.end(), ' '), resultItem.end());
+
+		recipient.push_back(resultItem);
+	}
+}
+

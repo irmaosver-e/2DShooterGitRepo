@@ -44,6 +44,8 @@ void Eskeletor::update()
         {
            // TheBulletHandler::Instance().addEnemyBullet((int)m_position.getX(), (int)m_position.getY(), 16, 16, "bullet1", 1, Vector2D(-3, 0));
            // TheBulletHandler::Instance().addEnemyBullet((int)m_position.getX(), (int)m_position.getY(), 16, 16, "bullet1", 1, Vector2D(3, 0));
+           TheBulletHandler::Instance().fireBullet(m_defaultBullet, m_position, Vector2D(-10, 0));
+
             m_bulletCounter = 0;
         }
         m_bulletCounter++;

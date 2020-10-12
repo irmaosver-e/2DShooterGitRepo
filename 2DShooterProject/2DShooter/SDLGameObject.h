@@ -24,7 +24,7 @@ protected:
 
 	void doDyingAnimation();
 
-
+	std::string m_defaultBullet;
 
 	int m_bulletFiringSpeed;
 	int m_bulletCounter;

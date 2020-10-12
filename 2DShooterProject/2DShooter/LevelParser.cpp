@@ -130,11 +130,11 @@ void LevelParser::parseObjTile(TiXmlElement* pTileElement, ObjectTile& objectTil
 			{
 				if (vsCollision->Attribute("name") == std::string("VsCollision"))
 				{
-					objColType.collidesAgainst.push_back(vsCollision->Attribute("value"));
+					getComaSeparatedItems(vsCollision->Attribute("value"), objColType.collidesAgainst);
 				}
-				else if (vsCollision->Attribute("name") == std::string("VsLayerCollision"))
+				else if (vsCollision->Attribute("name") == std::string("VsLayerCollision"))	
 				{
-					objColType.collidesAgainstLayer.push_back(vsCollision->Attribute("value"));
+					getComaSeparatedItems(vsCollision->Attribute("value"), objColType.collidesAgainstLayer);
 				}
 			}
 		}
@@ -285,6 +285,7 @@ Layer* LevelParser::parseObjectLayer(TiXmlElement* pObjectElement)
 	for (TiXmlElement* e = pObjectElement->FirstChildElement(); e != NULL; e = e->NextSiblingElement())
 	{
 		int x = 0, y = 0, width = 0, height = 0, numFrames = 1, animSpeed = 1, callbackID = 0, lives = 1;
+		std::string defaultBullet;
 		std::string sfx;
 		std::string objType;
 		std::string objTileType;
@@ -330,10 +331,14 @@ Layer* LevelParser::parseObjectLayer(TiXmlElement* pObjectElement)
 				{
 					property->Attribute("value", &lives);
 				}
+				if (property->Attribute("name") == std::string("DefaultBullet"))
+				{
+					defaultBullet = property->Attribute("value");
+				}
 			}
 		}
 
-		pGameObject->load(std::unique_ptr<LoaderParams>(new LoaderParams(x, y, width, height, objTileType, numFrames, lives, callbackID, animSpeed, sfx)));
+		pGameObject->load(std::unique_ptr<LoaderParams>(new LoaderParams(x, y, width, height, objTileType, numFrames, lives, callbackID, animSpeed, sfx, defaultBullet)));
 
 		if (objType == "Player")
 		{
@@ -412,20 +417,16 @@ void LevelParser::parseOutOfPlayLayers(TiXmlElement* pOutElement)
 				//goes through every object in the layer
 				for (TiXmlElement* pObjElement = e->FirstChildElement(); pObjElement != NULL; pObjElement = pObjElement->NextSiblingElement())
 				{
-					int x = 0, y = 0, width = 0, height = 0, numFrames = 1, animSpeed = 1, callbackID = 0, lives = 1;
-					std::string sfx;
-					std::string objType;
-					std::string objTileType;
+					LoaderParams elementParams;
 
-					pObjElement->Attribute("x", &x);
-					pObjElement->Attribute("y", &y);
-					pObjElement->Attribute("width", &width);
-					pObjElement->Attribute("height", &height);
-					objType = pObjElement->Attribute("name");
-					objTileType = pObjElement->Attribute("type");
+					pObjElement->Attribute("x", elementParams.ptrX());
+					pObjElement->Attribute("y", elementParams.ptrY());
+					pObjElement->Attribute("width", elementParams.ptrWidth());
+					pObjElement->Attribute("height", elementParams.ptrHeight());
+					elementParams.refTextureID() = pObjElement->Attribute("type");
 
-					TheBulletHandler::Instance().registerBulletType(objType, 
-						new LoaderParams(x, y, width, height, objTileType, numFrames, lives, animSpeed, sfx));
+					TheBulletHandler::Instance().registerBulletType(pObjElement->Attribute("name"), elementParams);
+				
 				}
 			}
 		}

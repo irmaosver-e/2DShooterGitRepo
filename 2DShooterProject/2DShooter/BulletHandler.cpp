@@ -9,9 +9,14 @@ void BulletHandler::fireBullet(std::string bulletType, Vector2D initialPos, Vect
 
     for (int i = 0; i < m_bulletLayer->getGameObjects()->size(); i++)
     {
+        //checks if bullet is available
         if (!m_bulletLayer->getGameObjects()->at(i)->isOn())
         {
-            availableBulletIndex = i;
+            //test if the bullet available is of same bullet type fired
+            if (m_bulletLayer->getGameObjects()->at(i)->getTextureID() == m_bulletTypes[bulletType].getTextureID())
+            {
+                availableBulletIndex = i;
+            }
         }
     }
 
@@ -19,6 +24,9 @@ void BulletHandler::fireBullet(std::string bulletType, Vector2D initialPos, Vect
     {
         addBullet(bulletType);
         availableBulletIndex += m_bulletLayer->getGameObjects()->size();
+
+        //for debugging
+        //std::cout << "bullet added: " << bulletType <<"/ pool size " << availableBulletIndex << "\n";
     }
 
     m_bulletLayer->getGameObjects()->at(availableBulletIndex)->turnObjOn();
@@ -28,11 +36,10 @@ void BulletHandler::fireBullet(std::string bulletType, Vector2D initialPos, Vect
     m_bulletLayer->getGameObjects()->at(availableBulletIndex)->getPosition() = initialPos;
     m_bulletLayer->getGameObjects()->at(availableBulletIndex)->getVelocity() = heading;
 
-    /*
+    
     //for debugguing
-    std::cout << "bullets in pool " << m_bulletLayer->getGameObjects()->size() << "\n";
-    std::cout << "using bullet " << availableBulletIndex << "\n";
-    */
+    //std::cout << "bullets in pool: " << m_bulletLayer->getGameObjects()->size() << " / using bullet: " << availableBulletIndex << " / type asked: " << bulletType << " / type used: " << m_bulletLayer->getGameObjects()->at(availableBulletIndex)->getTextureID() << "\n";
+       
 }
 
 void BulletHandler::addBullet(std::string bulletType)
@@ -41,11 +48,11 @@ void BulletHandler::addBullet(std::string bulletType)
 
 
     //load the bullet with the correct bullet type parameters
-    pBullet->load(std::unique_ptr<LoaderParams>(new LoaderParams(m_bulletTypes[bulletType]->getX(), m_bulletTypes[bulletType]->getY(),
-        m_bulletTypes[bulletType]->getWidth(), m_bulletTypes[bulletType]->getHeight(),
-        m_bulletTypes[bulletType]->getTextureID(), m_bulletTypes[bulletType]->getNumFrames(),
-        m_bulletTypes[bulletType]->getLives(), m_bulletTypes[bulletType]->getAnimSpeed(), 
-        m_bulletTypes[bulletType]->getSFX())));
+    pBullet->load(std::unique_ptr<LoaderParams>(new LoaderParams(m_bulletTypes[bulletType].getX(), m_bulletTypes[bulletType].getY(),
+        m_bulletTypes[bulletType].getWidth(), m_bulletTypes[bulletType].getHeight(),
+        m_bulletTypes[bulletType].getTextureID(), m_bulletTypes[bulletType].getNumFrames(),
+        m_bulletTypes[bulletType].getLives(), m_bulletTypes[bulletType].getAnimSpeed(), 
+        m_bulletTypes[bulletType].getSFX())));
 
     m_bulletLayer->addObjectToLayer(pBullet);
 }
