@@ -20,7 +20,9 @@ public:
 	virtual void clean() = 0;
 	virtual void collision() = 0;
 	virtual void collisionPassive() = 0;
+	virtual void collisionWithLayer() = 0;
 	virtual void outOfView() = 0;
+	virtual void inView() = 0;
 	virtual std::string objType() = 0;
 
 	std::string getTextureID() { return m_textureID; }
@@ -35,6 +37,8 @@ public:
 	bool dying() { return m_bDying; }
 	bool& isColliding() { return m_bColliding; }
 
+	void inViewCheck();	
+
 	void turnObjOn();
 	void turnObjOff();
 
@@ -44,8 +48,6 @@ public:
 	void scroll(float scrollSpeed);
 
 protected:
-
-	void inViewCheck();
 
 	// constructor with default initialisation list
 	GameObject() : m_position(0, 0),

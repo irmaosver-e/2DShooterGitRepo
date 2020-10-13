@@ -7,7 +7,10 @@
    <property name="VsLayerCollision" value="Collidables"/>
   </properties>
   <objectgroup draworder="index" id="2">
-   <object id="1" name="colisionBox" x="14" y="9" width="20" height="35"/>
+   <object id="1" name="collisionBox" x="14" y="9" width="20" height="35"/>
+   <object id="2" name="firingPoint" type="PlayerBullet" x="64.5455" y="14">
+    <point/>
+   </object>
   </objectgroup>
   <animation>
    <frame tileid="0" duration="300"/>

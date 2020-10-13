@@ -16,6 +16,7 @@ public:
 
     virtual void collision();
     virtual void collisionPassive();
+    virtual void collisionWithLayer();
 
     virtual std::string objType() { return "Bullet"; }
 

@@ -4,9 +4,13 @@
  <tile id="0" type="enemyTest3">
   <properties>
    <property name="VsCollision" value="bulletPlayer"/>
+   <property name="VsLayerCollision" value="Collidables"/>
   </properties>
   <objectgroup draworder="index" id="2">
-   <object id="1" name="colisionBox" x="4.6591" y="4.95455" width="24.1818" height="21.8409"/>
+   <object id="1" name="collisionBox" x="4.6591" y="4.95455" width="24.1818" height="21.8409"/>
+   <object id="2" name="firingPoint" type="EnemyBullet" x="15.6364" y="34.9091">
+    <point/>
+   </object>
   </objectgroup>
   <animation>
    <frame tileid="0" duration="400"/>

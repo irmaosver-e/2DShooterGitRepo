@@ -13,9 +13,11 @@ public:
 	virtual void draw();
 	virtual void update();
 	virtual void outOfView();
+	virtual void inView();
 	virtual void clean() {} //not implemented in this class
 	virtual void collision() {} //not implemented in this class
 	virtual void collisionPassive() {} //not implemented in this class
+	virtual void collisionWithLayer() {} //not implemented in this class
 
 	virtual std::string objType() { return "SDLGameObject"; }
 
@@ -23,8 +25,6 @@ protected:
 	SDLGameObject();
 
 	void doDyingAnimation();
-
-	std::string m_defaultBullet;
 
 	int m_bulletFiringSpeed;
 	int m_bulletCounter;

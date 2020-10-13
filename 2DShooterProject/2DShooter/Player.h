@@ -13,6 +13,7 @@ public:
 	virtual void update();
 	
 	virtual void collision();
+	virtual void collisionWithLayer();
 
 	//player does nothing if out of view, other objects follow SDLGameObject::outOfView()
 	virtual void outOfView() {}

@@ -99,6 +99,11 @@ void Player::collision()
 	}
 }
 
+void Player::collisionWithLayer()
+{
+	collision();
+}
+
 
 void Player::ressurect()
 {
@@ -149,7 +154,7 @@ void Player::handleInput()
 				TheSoundManager::Instance().playSound("shoot", 0);
 				//TheBulletHandler::Instance().addPlayerBullet((int)m_position.getX() + 90, (int)m_position.getY() + 12, 32, 32, "bulletSmall", 1, Vector2D(10, 0));
 
-				TheBulletHandler::Instance().fireBullet(m_defaultBullet, m_position, Vector2D(10, 0));
+				TheBulletHandler::Instance().fireBullet(m_textureID, m_position, Vector2D(10, 0));
 				m_bulletCounter = 0;
 			}
 

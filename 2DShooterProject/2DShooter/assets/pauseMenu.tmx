@@ -19,7 +19,7 @@
   </data>
   </layer>
  </group>
- <objectgroup id="8" name="Buttons">
+ <objectgroup id="8" name="ObjectField">
   <object id="20" name="MenuButton" type="resumeButton" gid="9" x="92" y="244" width="192" height="64">
    <properties>
     <property name="callbackID" value="resumePlay"/>

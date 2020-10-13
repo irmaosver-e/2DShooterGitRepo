@@ -129,26 +129,31 @@ bool CollisionManager::checkCollision(GameObject* pFocusedObject)
                 if (pVSObjColType)
                 {
                     //goes through the gathered VsObjects to test for collisions
-                    for (unsigned int i = 0; i < VsObjects.size(); i++)
+                    for (GameObject* pVSObject : VsObjects)
                     {
-                        //adds the object position to object collision box and stores in VsObjColShape
-                        std::vector<SDL_Rect> VsObjColShape;
-                        calculateObjColShape(*(VsObjects[i]), *pVSObjColType, VsObjColShape);
-
-                        //test collision shapes
-                        if (testShapeVsShapeCollision(focusedObjColShape, VsObjColShape))
+                        //test collision only if the VSObject is active
+                        if (pVSObject->isOn())
                         {
-                            pFocusedObject->collision();
-                            pFocusedObject->isColliding() = true;
-                            VsObjects[i]->isColliding() = true;
-                            
-                            
-                            VsObjects[i]->collisionPassive();
-                            
-                            return true;
+                            //adds the object position to object collision box and stores in VsObjColShape
+                            std::vector<SDL_Rect> VsObjColShape;
+                            calculateObjColShape(*pVSObject, *pVSObjColType, VsObjColShape);
+
+                            //test collision shapes
+                            if (testShapeVsShapeCollision(focusedObjColShape, VsObjColShape))
+                            {
+                                pFocusedObject->collision();
+                                pFocusedObject->isColliding() = true;
+                                pVSObject->isColliding() = true;
+
+
+                                pVSObject->collisionPassive();
+
+                                return true;
+                            }
                         }
+
                         pFocusedObject->isColliding() = false;
-                        VsObjects[i]->isColliding() = false;
+                        pVSObject->isColliding() = false;
                     }
                 }               
             }
@@ -192,7 +197,7 @@ bool CollisionManager::checkCollision(GameObject* pFocusedObject)
                 //test collision shapes
                 if (testShapeVsShapeCollision(focusedObjColShape, layerShape))
                 {
-                    pFocusedObject->collision();
+                    pFocusedObject->collisionWithLayer();
                     pFocusedObject->isColliding() = true;
 
                     return true;

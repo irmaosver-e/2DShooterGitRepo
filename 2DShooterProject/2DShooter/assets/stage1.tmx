@@ -19,32 +19,19 @@
  </layer>
  <layer id="8" name="Collidables" width="200" height="15" locked="1">
   <data encoding="base64" compression="zlib">
-   eJzt1bENACAIBMBf2f0b4wAWVoLeTfAkPCQAAJCM2wGAI9U7Wz0fsPdbf3+bF2Dpdvu65QWArvxcurCrAADwvgnYzwP6
+   eJzt1TEOACEIBEA+bOH/m+vtqJS9mcR+SVyoAgCAqn07ANDyemdfz5dg3Q5ArIT+dvqRMC9A17TdNy0vAP+zjjeVm8sU/ioAAOT7ADSTBog=
   </data>
  </layer>
  <group id="6" name="MidGround">
   <objectgroup id="4" name="PlayField">
    <object id="1" name="Player" type="playermecha" gid="199" x="80" y="260" width="64" height="64">
     <properties>
-     <property name="DefaultBullet" value="PlayerBullet"/>
      <property name="Lives" type="int" value="4"/>
     </properties>
    </object>
-   <object id="10" name="Eskeletor" type="enemyTest3" gid="207" x="535" y="165" width="32" height="32">
-    <properties>
-     <property name="DefaultBullet" value="EnemyBullet"/>
-    </properties>
-   </object>
-   <object id="11" name="Eskeletor" type="enemyTest3" gid="207" x="487" y="167" width="32" height="32">
-    <properties>
-     <property name="DefaultBullet" value="EnemyBullet"/>
-    </properties>
-   </object>
-   <object id="12" name="Eskeletor" type="enemyTest3" gid="207" x="522" y="277" width="32" height="32">
-    <properties>
-     <property name="DefaultBullet" value="EnemyBullet"/>
-    </properties>
-   </object>
+   <object id="10" name="Eskeletor" type="enemyTest3" gid="207" x="740.333" y="153.333" width="32" height="32"/>
+   <object id="11" name="Eskeletor" type="enemyTest3" gid="207" x="883.667" y="58.3333" width="32" height="32"/>
+   <object id="12" name="Eskeletor" type="enemyTest3" gid="207" x="522" y="277" width="32" height="32"/>
   </objectgroup>
  </group>
  <group id="13" name="OUT_OF_PLAY_AREA">

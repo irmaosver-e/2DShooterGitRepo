@@ -74,11 +74,13 @@ void Level1Boss::update()
 
             if (m_bulletCounter == m_bulletFiringSpeed)
             {
+                /*
                 TheBulletHandler::Instance().addEnemyBullet((int)m_position.getX(), (int)m_position.getY() + 15, 16, 16, "bullet2", 1, Vector2D(-10, 0));
                 TheBulletHandler::Instance().addEnemyBullet((int)m_position.getX(), (int)m_position.getY() + 25, 16, 16, "bullet2", 1, Vector2D(-10, 0));
 
                 TheBulletHandler::Instance().addEnemyBullet((int)m_position.getX(), (int)m_position.getY() + 200, 16, 16, "bullet2", 1, Vector2D(-10, 0));
                 TheBulletHandler::Instance().addEnemyBullet((int)m_position.getX(), (int)m_position.getY() + 215, 16, 16, "bullet2", 1, Vector2D(-10, 0));
+                */
 
                 m_bulletCounter = 0;
             }

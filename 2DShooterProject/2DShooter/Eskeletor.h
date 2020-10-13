@@ -12,6 +12,8 @@ public:
     virtual ~Eskeletor() {}
 
     virtual void collision();
+    virtual void collisionWithLayer();
+
     virtual void update();
 
 };

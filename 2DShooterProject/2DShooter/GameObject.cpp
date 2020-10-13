@@ -10,7 +10,7 @@ void GameObject::turnObjOff()
 {
 	m_bIsOn = false;
 	m_bInView = false;
-	m_bUpdating = false;
+	m_bUpdating = false;	
 	m_velocity = Vector2D(0, 0);
 }
 

@@ -32,6 +32,11 @@ void Eskeletor::collision()
     }
 }
 
+void Eskeletor::collisionWithLayer()
+{
+    collision();
+}
+
 void Eskeletor::update()
 {
     if (!m_bDying)
@@ -42,9 +47,7 @@ void Eskeletor::update()
 
         if (m_bulletCounter == m_bulletFiringSpeed)
         {
-           // TheBulletHandler::Instance().addEnemyBullet((int)m_position.getX(), (int)m_position.getY(), 16, 16, "bullet1", 1, Vector2D(-3, 0));
-           // TheBulletHandler::Instance().addEnemyBullet((int)m_position.getX(), (int)m_position.getY(), 16, 16, "bullet1", 1, Vector2D(3, 0));
-           TheBulletHandler::Instance().fireBullet(m_defaultBullet, m_position, Vector2D(-10, 0));
+           TheBulletHandler::Instance().fireBullet(m_textureID, m_position, Vector2D(-10, 0));
 
             m_bulletCounter = 0;
         }

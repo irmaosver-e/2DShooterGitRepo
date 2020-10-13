@@ -18,7 +18,7 @@ public:
 		m_animSpeed(1),
 		m_soundFX("none") {}
 
-	LoaderParams(int x, int y, int width, int height, std::string textureID, int numFrames, int lives = 1, int callbackID = 0, float animSpeed = 1, std::string soundFX = "", std::string defaultBullet = "") :
+	LoaderParams(int x, int y, int width, int height, std::string textureID, int numFrames, int lives = 1, int callbackID = 0, float animSpeed = 1, std::string soundFX = "") :
 		m_x(x), 
 		m_y(y), 
 		m_width(width), 
@@ -28,8 +28,7 @@ public:
 		m_lives(lives),
 		m_callbackID(callbackID),
 		m_animSpeed(animSpeed),
-		m_soundFX(soundFX),
-		m_defaultBullet(defaultBullet) {}
+		m_soundFX(soundFX) {}
 
 	LoaderParams(int x, int y, int width, int height, std::string textureID, int numFrames, int lives = 1, float animSpeed = 1, std::string soundFX = "") :
 		m_x(x),
@@ -63,7 +62,6 @@ public:
 	int* ptrLives() { return &m_lives; }
 	std::string& refTextureID() { return m_textureID; }
 	std::string& refSFX() { return m_soundFX; }
-	std::string& refDefaultBullet() { return m_defaultBullet; }
 
 private:
 
@@ -76,7 +74,6 @@ private:
 	int m_numFrames;
 	std::string m_textureID;
 	std::string m_soundFX;
-	std::string m_defaultBullet;
 
 	int m_lives;
 	int m_callbackID;

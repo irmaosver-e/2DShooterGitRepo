@@ -42,3 +42,8 @@ void Bullet::collisionPassive()
     outOfView();
 }
 
+void Bullet::collisionWithLayer()
+{
+    outOfView();
+}
+

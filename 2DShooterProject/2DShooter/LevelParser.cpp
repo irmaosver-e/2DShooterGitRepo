@@ -140,17 +140,35 @@ void LevelParser::parseObjTile(TiXmlElement* pTileElement, ObjectTile& objectTil
 		}
 		else if (e->Value() == std::string("objectgroup"))
 		{
-			//parse the colision shape boxes
+			
 			for (TiXmlElement* object = e->FirstChildElement(); object != NULL; object = object->NextSiblingElement())
 			{
-				SDL_Rect collisionBox;
+				//parse the colision shape boxes
+				if (object->Attribute("name") == std::string("collisionBox"))
+				{
+					SDL_Rect collisionBox;
 
-				object->Attribute("x", &collisionBox.x);
-				object->Attribute("y", &collisionBox.y);
-				object->Attribute("width", &collisionBox.w);
-				object->Attribute("height", &collisionBox.h);
+					object->Attribute("x", &collisionBox.x);
+					object->Attribute("y", &collisionBox.y);
+					object->Attribute("width", &collisionBox.w);
+					object->Attribute("height", &collisionBox.h);
 
-				objectTile.collisionShape.push_back(collisionBox);
+					objectTile.collisionShape.push_back(collisionBox);
+				}
+				
+				//parse the firingPoints to bulletHandler
+				if (object->Attribute("name") == std::string("firingPoint"))
+				{
+					FiringPoint firingPoint;
+					object->Attribute("x", &firingPoint.x);
+					object->Attribute("y", &firingPoint.y);
+					firingPoint.bulletType = object->Attribute("type");
+
+					TheBulletHandler::Instance().registerFiringPoint(objectTile.type, firingPoint);
+					//to be implemented
+				}
+				
+
 			}
 			objColType.collisionShape = objectTile.collisionShape;
 		}
@@ -331,14 +349,10 @@ Layer* LevelParser::parseObjectLayer(TiXmlElement* pObjectElement)
 				{
 					property->Attribute("value", &lives);
 				}
-				if (property->Attribute("name") == std::string("DefaultBullet"))
-				{
-					defaultBullet = property->Attribute("value");
-				}
 			}
 		}
 
-		pGameObject->load(std::unique_ptr<LoaderParams>(new LoaderParams(x, y, width, height, objTileType, numFrames, lives, callbackID, animSpeed, sfx, defaultBullet)));
+		pGameObject->load(std::unique_ptr<LoaderParams>(new LoaderParams(x, y, width, height, objTileType, numFrames, lives, callbackID, animSpeed, sfx)));
 
 		if (objType == "Player")
 		{

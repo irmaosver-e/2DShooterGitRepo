@@ -74,7 +74,5 @@ bool PlayState::onExit()
 {
 	GameState::onExit();
 
-	TheBulletHandler::Instance().clearBullets();
-
 	return true;
 }

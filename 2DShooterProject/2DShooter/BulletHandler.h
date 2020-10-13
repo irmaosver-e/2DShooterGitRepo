@@ -7,6 +7,13 @@
 #include "Bullet.h"
 #include "ObjectLayer.h"
 
+struct FiringPoint
+{
+    int x;
+    int y;
+    std::string bulletType;
+};
+
 class BulletHandler : public Singleton<BulletHandler>
 {
 public:
@@ -15,19 +22,9 @@ public:
 
     void registerBulletLayer(ObjectLayer* pBulletLayer) { m_bulletLayer = pBulletLayer; }
     void registerBulletType(std::string bulletType, LoaderParams& pParams) { m_bulletTypes[bulletType] = pParams; }
+    void registerFiringPoint(std::string firingObj, FiringPoint& firingPoint) { m_firingPoints[firingObj] = firingPoint; }
 
-    void fireBullet(std::string bulletType, Vector2D initialPos, Vector2D heading);
-
-    void addPlayerBullet(int x, int y, int width, int height, std::string textureID, int numFrames, Vector2D heading);
-    void addEnemyBullet(int x, int y, int width, int height, std::string textureID, int numFrames, Vector2D heading);
-
-    void updateBullets();
-    void drawBullets();
-
-    void clearBullets();
-
-    const std::vector<PlayerBullet*> getPlayerBullets() { return m_playerBullets; }
-    const std::vector<EnemyBullet*> getEnemyBullets() { return m_enemyBullets; }
+    void fireBullet(std::string firingObj, Vector2D firingObjPos, Vector2D heading);
 
 private:
     void addBullet(std::string bulletType);
@@ -35,11 +32,8 @@ private:
     ObjectLayer* m_bulletLayer;
 
     std::map<std::string, LoaderParams> m_bulletTypes;
+    std::map<std::string, FiringPoint> m_firingPoints;
 
-    // in play bullets
-    //std::vector<GameObject*> m_bullets;
-    std::vector<PlayerBullet*> m_playerBullets;
-    std::vector<EnemyBullet*> m_enemyBullets;
 };
 
 typedef BulletHandler TheBulletHandler;
