@@ -16,13 +16,13 @@ Player::Player() : SDLGameObject()
 	m_lives = 1;
 }
 
-void Player::load(std::unique_ptr<LoaderParams> const &pParams)
+void Player::load(const LoaderParams& rParams)
 {
 	// inherited load function
-	SDLGameObject::load(std::move(pParams));
+	SDLGameObject::load(rParams);
 
 	// can set up the players inherited values here
-	m_lives = pParams->getLives();
+	m_lives = rParams.getLives();
 
 	// set up bullets
 	m_bulletFiringSpeed = 13;

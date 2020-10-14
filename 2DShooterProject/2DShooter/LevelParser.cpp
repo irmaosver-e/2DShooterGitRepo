@@ -362,7 +362,10 @@ Layer* LevelParser::parseObjectLayer(TiXmlElement* pObjectElement)
 			}
 		}
 
-		pGameObject->load(std::unique_ptr<LoaderParams>(new LoaderParams(x, y, width, height, objTileType, numFrames, lives, callbackID, animSpeed, sfx)));
+		//pGameObject->load(std::unique_ptr<LoaderParams>(new LoaderParams(x, y, width, height, objTileType, numFrames, lives, callbackID, animSpeed, sfx)));
+
+		LoaderParams testParams(x, y, width, height, objTileType, numFrames, lives, callbackID, animSpeed, sfx);
+		pGameObject->load(testParams);
 
 		if (objType == "Player")
 		{
@@ -409,7 +412,9 @@ Layer* LevelParser::parseImageLayer(TiXmlElement* pImageElement)
 
 	GameObject* pGameObject = TheGameObjectFactory::Instance().create(type);
 
-	pGameObject->load(std::unique_ptr<LoaderParams>(new LoaderParams(x, y, width, height, textureID, numFrames, callbackID, animSpeed)));
+	//pGameObject->load(std::unique_ptr<LoaderParams>(new LoaderParams(x, y, width, height, textureID, numFrames, callbackID, animSpeed)));
+	LoaderParams testParams(x, y, width, height, textureID, numFrames, callbackID, animSpeed);
+	pGameObject->load(testParams);
 
 	pImageLayer->getGameObjects()->push_back(pGameObject);
 

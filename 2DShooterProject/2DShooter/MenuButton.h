@@ -9,7 +9,7 @@ public:
 	MenuButton() : SDLGameObject(), m_callback(0), m_bReleased(true), m_bButtonPressed(false) {}
 	virtual ~MenuButton() {}
 
-	virtual void load(std::unique_ptr<LoaderParams> const& pParams);
+	virtual void load(const LoaderParams& rParams);
 	virtual void draw();
 	virtual void update();
 	virtual void clean();

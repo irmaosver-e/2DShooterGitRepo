@@ -3,10 +3,10 @@
 #include "SDLSystem.h"
 #include "TextureManager.h"
 
-void ScrollingBackground::load(std::unique_ptr<LoaderParams> const& pParams)
+void ScrollingBackground::load(const LoaderParams& rParams)
 {
-    SDLGameObject::load(std::move(pParams));
-    m_scrollSpeed = pParams->getAnimSpeed();
+    SDLGameObject::load(rParams);
+    m_scrollSpeed = rParams.getAnimSpeed();
 
     m_srcRect1.x = 0;
     m_destRect1.x = (int)m_position.getX();

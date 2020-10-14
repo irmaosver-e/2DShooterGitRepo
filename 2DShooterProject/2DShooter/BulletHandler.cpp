@@ -79,21 +79,17 @@ void BulletHandler::fireBullet(std::string firingObj, Vector2Df firingObjPos, Ve
 void BulletHandler::addBullet(std::string bulletType)
 {
     GameObject* pBullet = TheGameObjectFactory::Instance().create("Bullet");
-    /*
-    pBullet->load(std::unique_ptr<LoaderParams>(new LoaderParams(m_bulletTypes[bulletType].getVec2DParam("position")->getX(), m_bulletTypes[bulletType].getVec2DParam("position")->getY(),
-        m_bulletTypes[bulletType].getVec2DParam("dimentions")->getX(), m_bulletTypes[bulletType].getVec2DParam("dimentions")->getY(),
-        *m_bulletTypes[bulletType].getStringParam("textureID"), m_bulletTypes[bulletType].getNumFrames(),
-        m_bulletTypes[bulletType].getLives(), m_bulletTypes[bulletType].getAnimSpeed(),
-        m_bulletTypes[bulletType].getSFX())));
-        */
     
+    /*
     //load the bullet with the correct bullet type parameters
     pBullet->load(std::unique_ptr<LoaderParams>(new LoaderParams(m_bulletTypes[bulletType].getInitialPosPtr()->getX(), m_bulletTypes[bulletType].getInitialPosPtr()->getY(),
         m_bulletTypes[bulletType].getWidth(), m_bulletTypes[bulletType].getHeight(),
         m_bulletTypes[bulletType].getTextureID(), m_bulletTypes[bulletType].getNumFrames(),
         m_bulletTypes[bulletType].getLives(), m_bulletTypes[bulletType].getAnimSpeed(), 
         m_bulletTypes[bulletType].getSFX())));
-   
+   */
+
+    pBullet->load(m_bulletTypes[bulletType]);
 
     m_bulletLayer->addObjectToLayer(pBullet);
 }

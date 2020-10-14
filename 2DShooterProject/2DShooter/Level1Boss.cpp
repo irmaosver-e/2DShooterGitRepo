@@ -16,9 +16,9 @@ Level1Boss::Level1Boss() : Enemy()
     m_entered = false;
 }
 
-void Level1Boss::load(std::unique_ptr<LoaderParams> const& pParams)
+void Level1Boss::load(const LoaderParams& rParams)
 {
-    SDLGameObject::load(std::move(pParams));
+    SDLGameObject::load(rParams);
     m_velocity.getYRef() = (float)-m_moveSpeed;
 }
 

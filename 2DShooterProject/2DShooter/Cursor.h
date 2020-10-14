@@ -9,7 +9,7 @@ public:
 	Cursor() {}
 	virtual ~Cursor() {}
 
-	virtual void load(std::unique_ptr<LoaderParams> const& pParams);
+	virtual void load(const LoaderParams& rParams);
 	virtual void draw();
 	virtual void update();
 	virtual void clean();

@@ -3,9 +3,9 @@
 #include "SDLSystem.h"
 #include "InputHandler.h"
 
-void Cursor::load(std::unique_ptr<LoaderParams> const& pParams)
+void Cursor::load(const LoaderParams& rParams)
 {
-	SDLGameObject::load(std::move(pParams));
+	SDLGameObject::load(rParams);
 
 	//should get from levelmap
 	m_moveSpeed = 3;

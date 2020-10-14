@@ -9,7 +9,7 @@ public:
     Level1Boss();
     virtual ~Level1Boss() {}
 
-    virtual void load(std::unique_ptr<LoaderParams> const& pParams);
+    virtual void load(const LoaderParams& rParams);
     virtual void collision();
     virtual void update();
 

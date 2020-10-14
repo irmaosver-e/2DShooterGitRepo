@@ -23,7 +23,7 @@ GameObject* GameObjectFactory::create(std::string typeID)
 	//type already created, do nothing
 	if (it == m_creators.end())
 	{
-		std::cout << "could not find type: " << typeID << "\n";
+		std::cout << "type already created or could not find type: " << typeID << "\n";
 		return nullptr;
 	}
 

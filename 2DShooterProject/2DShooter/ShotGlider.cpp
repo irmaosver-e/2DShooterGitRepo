@@ -8,9 +8,9 @@ ShotGlider::ShotGlider() : Glider()
     m_moveSpeed = 3;
 }
 
-void ShotGlider::load(std::unique_ptr<LoaderParams> const& pParams)
+void ShotGlider::load(const LoaderParams& rParams)
 {
-    SDLGameObject::load(std::move(pParams));
+    SDLGameObject::load(rParams);
 
 	m_velocity.getXRef() = (float)-m_moveSpeed;
 }

@@ -2,10 +2,10 @@
 #include "InputHandler.h"
 #include "SoundManager.h"
 
-void MenuButton::load(std::unique_ptr<LoaderParams> const& pParams)
+void MenuButton::load(const LoaderParams& rParams)
 {
-	SDLGameObject::load(std::move(pParams));
-	m_callbackID = pParams->getCallbackID();
+	SDLGameObject::load(rParams);
+	m_callbackID = rParams.getCallbackID();
 	m_currentFrame = MOUSE_OUT; //STARTS AT FRAME 0
 }
 

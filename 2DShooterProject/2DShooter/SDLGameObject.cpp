@@ -16,6 +16,7 @@ m_bPlayedDeathSound(false)
 	m_bUpdating = true;
 }
 
+/*
 void SDLGameObject::load(std::unique_ptr<LoaderParams> const& pParams)
 {
 	m_position = Vector2Df(pParams->getX(), pParams->getY());
@@ -26,6 +27,19 @@ void SDLGameObject::load(std::unique_ptr<LoaderParams> const& pParams)
 	m_numFrames = pParams->getNumFrames();
 	m_animSpeed = pParams->getAnimSpeed();
 	m_sfx = pParams->getSFX();
+}
+*/
+
+void SDLGameObject::load(const LoaderParams& rParams)
+{
+	m_position = Vector2Df(rParams.getX(), rParams.getY());
+
+	m_width = rParams.getWidth();
+	m_height = rParams.getHeight();
+	m_textureID = rParams.getTextureID();
+	m_numFrames = rParams.getNumFrames();
+	m_animSpeed = rParams.getAnimSpeed();
+	m_sfx = rParams.getSFX();
 }
 
 void SDLGameObject::draw()

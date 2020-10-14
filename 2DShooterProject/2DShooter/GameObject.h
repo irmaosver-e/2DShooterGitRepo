@@ -14,7 +14,8 @@ class GameObject
 public:
 	virtual ~GameObject() {}
 
-	virtual void load(std::unique_ptr<LoaderParams> const &pParams) = 0;
+	//virtual void load(std::unique_ptr<LoaderParams> const &pParams) = 0;
+	virtual void load(const LoaderParams& rParams) = 0;
 	virtual void draw() = 0;
 	virtual void update() = 0;
 	virtual void clean() = 0;

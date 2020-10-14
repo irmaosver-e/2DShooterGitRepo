@@ -10,7 +10,7 @@ public:
 	Glider();
 	virtual ~Glider() {}
 	
-	virtual void load(std::unique_ptr<LoaderParams>& pParams);
+	virtual void load(const LoaderParams& rParams);
 	virtual void update();
 	virtual void clean() { std::cout << "Enemy::clean() EMPTY \n"; }
 

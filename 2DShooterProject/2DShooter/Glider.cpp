@@ -9,9 +9,9 @@ Glider::Glider() : Enemy()
     m_gap = 60;
 }
 
-void Glider::load(std::unique_ptr<LoaderParams>& pParams)
+void Glider::load(const LoaderParams& rParams)
 {
-    SDLGameObject::load(std::move(pParams));
+    SDLGameObject::load(rParams);
 
     m_velocity.getXRef() = (float)-m_moveSpeed;
     m_velocity.getYRef() = (float)m_moveSpeed / 2;
