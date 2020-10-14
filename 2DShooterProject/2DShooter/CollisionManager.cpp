@@ -54,7 +54,7 @@ void CollisionManager::calculateObjColShape(GameObject& focusedObj, ObjectCollis
 
 void CollisionManager::calculateTileLayerColShape(TileLayer* pTileLayer, std::vector<SDL_Rect>& targetShape)
 {
-    Vector2D layerPos = pTileLayer->getPosition();
+    Vector2Df layerPos = pTileLayer->getPosition();
 
     //calculate the layer Shape
     int firstOnScreenColumn = layerPos.getX() / pTileLayer->getTileWidth();

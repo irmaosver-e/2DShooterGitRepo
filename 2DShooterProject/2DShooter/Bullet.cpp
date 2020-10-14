@@ -21,7 +21,7 @@ void Bullet::update()
 void Bullet::outOfView()
 { 
     turnObjOff();
-    m_position = Vector2D(0, 0);
+    m_position = Vector2Df(0, 0);
     
     m_bInView = false;
     m_bUpdating = false;

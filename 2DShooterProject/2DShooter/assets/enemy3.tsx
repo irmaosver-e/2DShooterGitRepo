@@ -8,7 +8,7 @@
   </properties>
   <objectgroup draworder="index" id="2">
    <object id="1" name="collisionBox" x="4.6591" y="4.95455" width="24.1818" height="21.8409"/>
-   <object id="2" name="firingPoint" type="EnemyBullet" x="15.6364" y="34.9091">
+   <object id="2" name="firingPoint" type="EnemyBullet" x="-2.86364" y="15.4091">
     <point/>
    </object>
   </objectgroup>

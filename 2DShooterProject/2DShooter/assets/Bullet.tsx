@@ -7,6 +7,9 @@
   </properties>
   <objectgroup draworder="index" id="2">
    <object id="1" name="collisionBox" x="9.75" y="9.97727" width="11.1818" height="11.0909"/>
+   <object id="2" name="anchor" type="PlayerBullet" x="15.5" y="15.5">
+    <point/>
+   </object>
   </objectgroup>
   <animation>
    <frame tileid="0" duration="400"/>
@@ -18,6 +21,9 @@
   </properties>
   <objectgroup draworder="index" id="2">
    <object id="1" name="collisionBox" x="9.6591" y="10.2046" width="11.1818" height="11.0909"/>
+   <object id="2" name="anchor" type="EnemyBullet" x="15.5" y="15.5">
+    <point/>
+   </object>
   </objectgroup>
   <animation>
    <frame tileid="1" duration="400"/>

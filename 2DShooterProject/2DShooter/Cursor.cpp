@@ -18,8 +18,8 @@ void Cursor::draw()
 
 void Cursor::update()
 {
-	m_velocity.setX(0);
-	m_velocity.setY(0);
+	m_velocity.getXRef() = 0;
+	m_velocity.getYRef() = 0;
 	handleInput();
 	SDLGameObject::update();
 	handleAnimation();
@@ -39,20 +39,20 @@ void Cursor::handleInput()
 	// handle keys
 	if (TheInputHandler::Instance().isKeyDown(SDL_SCANCODE_UP) && m_position.getY() > 0)
 	{
-		m_velocity.setY((float)-m_moveSpeed);
+		m_velocity.getYRef() = (float)-m_moveSpeed;
 	}
 	else if (TheInputHandler::Instance().isKeyDown(SDL_SCANCODE_DOWN) && (m_position.getY() + m_height) < TheSDLSystem::Instance().getScreenHeight() - 10)
 	{
-		m_velocity.setY((float)m_moveSpeed);
+		m_velocity.getYRef() = (float)m_moveSpeed;
 	}
 
 	if (TheInputHandler::Instance().isKeyDown(SDL_SCANCODE_LEFT) && m_position.getX() > 0)
 	{
-		m_velocity.setX((float)-m_moveSpeed);
+		m_velocity.getXRef() = (float)-m_moveSpeed;
 	}
 	else if (TheInputHandler::Instance().isKeyDown(SDL_SCANCODE_RIGHT) && (m_position.getX() + m_width) < TheSDLSystem::Instance().getScreenWidth())
 	{
-		m_velocity.setX((float)m_moveSpeed);
+		m_velocity.getXRef() = (float)m_moveSpeed;
 	}
 
 	if (TheInputHandler::Instance().isKeyDown(SDL_SCANCODE_SPACE))

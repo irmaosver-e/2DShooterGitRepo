@@ -18,7 +18,7 @@ m_bPlayedDeathSound(false)
 
 void SDLGameObject::load(std::unique_ptr<LoaderParams> const& pParams)
 {
-	m_position = Vector2D((float)pParams->getX(), (float)pParams->getY());
+	m_position = Vector2Df(pParams->getX(), pParams->getY());
 
 	m_width = pParams->getWidth();
 	m_height = pParams->getHeight();

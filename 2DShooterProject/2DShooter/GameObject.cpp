@@ -11,7 +11,7 @@ void GameObject::turnObjOff()
 	m_bIsOn = false;
 	m_bInView = false;
 	m_bUpdating = false;	
-	m_velocity = Vector2D(0, 0);
+	m_velocity = Vector2Df(0, 0);
 }
 
 
@@ -37,5 +37,5 @@ void GameObject::inViewCheck()
 
 void GameObject::scroll(float scrollSpeed)
 {
-	m_position.setX(m_position.getX() - scrollSpeed);
+	m_position.getXRef() -= scrollSpeed;
 }

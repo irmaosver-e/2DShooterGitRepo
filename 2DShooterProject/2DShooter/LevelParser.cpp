@@ -160,14 +160,24 @@ void LevelParser::parseObjTile(TiXmlElement* pTileElement, ObjectTile& objectTil
 				if (object->Attribute("name") == std::string("firingPoint"))
 				{
 					FiringPoint firingPoint;
-					object->Attribute("x", &firingPoint.x);
-					object->Attribute("y", &firingPoint.y);
+					object->QueryFloatAttribute("x", firingPoint.position.getXPtr());
+					object->QueryFloatAttribute("y", firingPoint.position.getYPtr());
 					firingPoint.bulletType = object->Attribute("type");
 
 					TheBulletHandler::Instance().registerFiringPoint(objectTile.type, firingPoint);
-					//to be implemented
 				}
-				
+				if (object->Attribute("name") == std::string("anchor"))
+				{
+					//to implement goes here first
+					LoaderParams bulletTypeParams;
+
+					//Vector2Df bulletAnchorVec2D;
+					object->QueryFloatAttribute("x", bulletTypeParams.getAnchorPointPtr()->getXPtr());
+					object->QueryFloatAttribute("y", bulletTypeParams.getAnchorPointPtr()->getYPtr());
+
+
+					TheBulletHandler::Instance().registerBulletType(object->Attribute("type"), bulletTypeParams);
+				}
 
 			}
 			objColType.collisionShape = objectTile.collisionShape;
@@ -431,16 +441,16 @@ void LevelParser::parseOutOfPlayLayers(TiXmlElement* pOutElement)
 				//goes through every object in the layer
 				for (TiXmlElement* pObjElement = e->FirstChildElement(); pObjElement != NULL; pObjElement = pObjElement->NextSiblingElement())
 				{
-					LoaderParams elementParams;
+					LoaderParams* pBulletParam = TheBulletHandler::Instance().getBulletTypeParam(pObjElement->Attribute("name"));
 
-					pObjElement->Attribute("x", elementParams.ptrX());
-					pObjElement->Attribute("y", elementParams.ptrY());
-					pObjElement->Attribute("width", elementParams.ptrWidth());
-					pObjElement->Attribute("height", elementParams.ptrHeight());
-					elementParams.refTextureID() = pObjElement->Attribute("type");
+					pObjElement->QueryFloatAttribute("x", pBulletParam->getInitialPosPtr()->getXPtr());
+					pObjElement->QueryFloatAttribute("y", pBulletParam->getInitialPosPtr()->getYPtr());
+					pObjElement->Attribute("width", pBulletParam->getWidthPtr());
+					pObjElement->Attribute("height", pBulletParam->getHeightPtr());
+					
+					pBulletParam->refTextureID() = pObjElement->Attribute("type");		
 
-					TheBulletHandler::Instance().registerBulletType(pObjElement->Attribute("name"), elementParams);
-				
+					TheBulletHandler::Instance().getBulletTypeParam(pObjElement->Attribute("name"));
 				}
 			}
 		}

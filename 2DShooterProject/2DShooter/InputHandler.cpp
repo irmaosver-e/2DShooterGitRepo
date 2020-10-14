@@ -4,7 +4,7 @@
 InputHandler::InputHandler(token) : m_keyboardState(0),
 m_bJoystickInitialised(false),
 m_joystickDeadZone(0),
-m_mousePosition(new Vector2D(0, 0))
+m_mousePosition(new Vector2Df(0, 0))
 {
 	// create button states for the mouse
 	for (int i = 0; i < 3; i++)
@@ -72,8 +72,8 @@ void InputHandler::onKeyUp()
 
 void InputHandler::onMouseMove(SDL_Event& event)
 {
-	m_mousePosition->setX((float)event.motion.x);
-	m_mousePosition->setY((float)event.motion.y);
+	m_mousePosition->getXRef() = (float)event.motion.x;
+	m_mousePosition->getYRef() = (float)event.motion.y;
 }
 
 void InputHandler::onMouseButtonDown(SDL_Event& event)
@@ -117,15 +117,15 @@ void InputHandler::onJoystickAxisMove(SDL_Event& event)
 	{
 		if (event.jaxis.value > m_joystickDeadZone)
 		{
-			m_jostickAxisValues[whichOne].first->setX(1);
+			m_jostickAxisValues[whichOne].first->getXRef() = 1;
 		}
 		else if (event.jaxis.value < -m_joystickDeadZone)
 		{
-			m_jostickAxisValues[whichOne].first->setX(-1);
+			m_jostickAxisValues[whichOne].first->getXRef() = -1;
 		}
 		else
 		{
-			m_jostickAxisValues[whichOne].first->setX(0);
+			m_jostickAxisValues[whichOne].first->getXRef() = 0;
 		}
 	}
 
@@ -134,15 +134,15 @@ void InputHandler::onJoystickAxisMove(SDL_Event& event)
 	{
 		if (event.jaxis.value > m_joystickDeadZone)
 		{
-			m_jostickAxisValues[whichOne].first->setY(1);
+			m_jostickAxisValues[whichOne].first->getYRef() = 1;
 		}
 		else if (event.jaxis.value < -m_joystickDeadZone)
 		{
-			m_jostickAxisValues[whichOne].first->setY(-1);
+			m_jostickAxisValues[whichOne].first->getYRef() = -1;
 		}
 		else
 		{
-			m_jostickAxisValues[whichOne].first->setY(0);
+			m_jostickAxisValues[whichOne].first->getYRef() = 0;
 		}
 	}
 		
@@ -151,15 +151,15 @@ void InputHandler::onJoystickAxisMove(SDL_Event& event)
 	{
 		if (event.jaxis.value > m_joystickDeadZone)
 		{
-			m_jostickAxisValues[whichOne].second->setX(1);
+			m_jostickAxisValues[whichOne].second->getXRef() = 1;
 		}
 		else if (event.jaxis.value < -m_joystickDeadZone)
 		{
-			m_jostickAxisValues[whichOne].second->setX(-1);
+			m_jostickAxisValues[whichOne].second->getXRef() = -1;
 		}
 		else
 		{
-			m_jostickAxisValues[whichOne].second->setX(0);
+			m_jostickAxisValues[whichOne].second->getXRef() = 0;
 		}
 	}
 
@@ -168,15 +168,15 @@ void InputHandler::onJoystickAxisMove(SDL_Event& event)
 	{
 		if (event.jaxis.value > m_joystickDeadZone)
 		{
-			m_jostickAxisValues[whichOne].second->setY(1);
+			m_jostickAxisValues[whichOne].second->getYRef() = 1;
 		}
 		else if (event.jaxis.value < -m_joystickDeadZone)
 		{
-			m_jostickAxisValues[whichOne].second->setY(-1);
+			m_jostickAxisValues[whichOne].second->getYRef() = -1;
 		}
 		else
 		{
-			m_jostickAxisValues[whichOne].second->setY(0);
+			m_jostickAxisValues[whichOne].second->getYRef() = 0;
 		}
 	}
 }
@@ -272,7 +272,7 @@ void InputHandler::initialiseJoystick()
 			if (SDL_JoystickGetAttached(joy))
 			{
 				m_joysticks.push_back(joy);
-				m_jostickAxisValues.push_back(std::make_pair(new Vector2D(0, 0), new Vector2D(0, 0)));
+				m_jostickAxisValues.push_back(std::make_pair(new Vector2Df(0, 0), new Vector2Df(0, 0)));
 				 
 				std::vector<bool> tempButtons;
 				for (int j = 0; j < SDL_JoystickNumButtons(joy); j++)

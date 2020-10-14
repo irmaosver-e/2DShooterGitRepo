@@ -12,7 +12,7 @@ void ShotGlider::load(std::unique_ptr<LoaderParams> const& pParams)
 {
     SDLGameObject::load(std::move(pParams));
 
-	m_velocity.setX((float)-m_moveSpeed);
+	m_velocity.getXRef() = (float)-m_moveSpeed;
 }
 
 void ShotGlider::update()
@@ -29,7 +29,7 @@ void ShotGlider::update()
     }
     else
     {
-        m_velocity.setX(0);
+        m_velocity.getXRef() = 0;
         doDyingAnimation();
     }
 

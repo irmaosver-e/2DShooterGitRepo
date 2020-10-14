@@ -14,12 +14,12 @@ void TileLayer::update(Level* pLevel)
 {
 	if (m_position.getX() < ((m_mapWidth * m_tileWidth) - TheSDLSystem::Instance().getScreenWidth()) - m_tileWidth)
 	{
-		m_velocity.setX(TheGame::Instance().getScrollSpeed());
+		m_velocity.getXRef() = TheGame::Instance().getScrollSpeed();
 		m_position += m_velocity;
 	}
 	else
 	{
-		m_velocity.setX(0);
+		m_velocity.getXRef() = 0;
 	}
 }
 

@@ -19,7 +19,7 @@ Level1Boss::Level1Boss() : Enemy()
 void Level1Boss::load(std::unique_ptr<LoaderParams> const& pParams)
 {
     SDLGameObject::load(std::move(pParams));
-    m_velocity.setY((float)-m_moveSpeed);
+    m_velocity.getYRef() = (float)-m_moveSpeed;
 }
 
 void Level1Boss::collision()
@@ -32,8 +32,8 @@ void Level1Boss::collision()
         {
             if (!m_bPlayedDeathSound)
             {
-                m_position.setX(m_position.getX() + 30);
-                m_position.setY(m_position.getY() + 70);
+                m_position.getXRef() += 30;
+                m_position.getYRef() += 70;
                 TheSoundManager::Instance().playSound("explode", 0);
 
                 m_textureID = "bossexplosion";
@@ -65,11 +65,11 @@ void Level1Boss::update()
         {
             if (m_position.getY() + m_height >= TheSDLSystem::Instance().getScreenHeight())
             {
-                m_velocity.setY((float)-m_moveSpeed);
+                m_velocity.getYRef() = (float)-m_moveSpeed;
             }
             else if (m_position.getY() <= 0)
             {
-                m_velocity.setY((float)m_moveSpeed);
+                m_velocity.getYRef() = (float)m_moveSpeed;
             }
 
             if (m_bulletCounter == m_bulletFiringSpeed)

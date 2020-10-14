@@ -29,7 +29,7 @@ public:
 
 	Tileset getTilesetByID(int tileID);
 
-	const Vector2D getPosition() { return m_position; }
+	const Vector2Df getPosition() { return m_position; }
 
 private:
 
@@ -45,8 +45,8 @@ private:
 
 	int m_mapWidth;
 	
-	Vector2D m_position;
-	Vector2D m_velocity;
+	Vector2Df m_position;
+	Vector2Df m_velocity;
 
 	const std::vector<Tileset> m_tilesets;
 	std::vector<std::vector<int>> m_tileIDs;

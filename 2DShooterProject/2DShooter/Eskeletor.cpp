@@ -41,13 +41,13 @@ void Eskeletor::update()
 {
     if (!m_bDying)
     {
-        scroll((float)(TheGame::Instance().getScrollSpeed()));
+        scroll(TheGame::Instance().getScrollSpeed());
         
-        m_velocity.setY((float)m_moveSpeed);
+        m_velocity.getYRef() = (float)m_moveSpeed;
 
         if (m_bulletCounter == m_bulletFiringSpeed)
         {
-           TheBulletHandler::Instance().fireBullet(m_textureID, m_position, Vector2D(-10, 0));
+           TheBulletHandler::Instance().fireBullet(m_textureID, m_position, Vector2Df(-10, 0));
 
             m_bulletCounter = 0;
         }
@@ -56,7 +56,7 @@ void Eskeletor::update()
     }
     else
     {
-        m_velocity.setY(0);
+        m_velocity.getYRef() = 0;
         doDyingAnimation();
     }
 

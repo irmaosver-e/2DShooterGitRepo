@@ -28,7 +28,7 @@ public:
 
 	bool getButtonState(int joyID, int buttonNumber) { return m_buttonStates[joyID][buttonNumber]; }
 	bool getMouseButtonState(int buttonNumber) { return m_mouseButtonStates[buttonNumber]; }
-	Vector2D* getMousePosition() { return m_mousePosition; }
+	Vector2Df* getMousePosition() { return m_mousePosition; }
 
 	bool isKeyDown(SDL_Scancode key) const;
 	void reset();
@@ -55,7 +55,7 @@ private:
 	void initialiseJoystick();
 
 	std::vector<SDL_Joystick*> m_joysticks;
-	std::vector<std::pair<Vector2D*, Vector2D*>> m_jostickAxisValues;
+	std::vector<std::pair<Vector2Df*, Vector2Df*>> m_jostickAxisValues;
 	std::vector<std::vector<bool>> m_buttonStates;
 
 	bool m_bJoystickInitialised;
@@ -63,7 +63,7 @@ private:
 
 	// mouse specific
 	std::vector<bool> m_mouseButtonStates;
-	Vector2D* m_mousePosition;
+	Vector2Df* m_mousePosition;
 
 	// keyboard specific
 	const Uint8* m_keyboardState;

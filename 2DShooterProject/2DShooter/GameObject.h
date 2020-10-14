@@ -26,8 +26,8 @@ public:
 	virtual std::string objType() = 0;
 
 	std::string getTextureID() { return m_textureID; }
-	Vector2D& getPosition() { return m_position; }
-	Vector2D& getVelocity() { return m_velocity; }
+	Vector2Df& getPosition() { return m_position; }
+	Vector2Df& getVelocity() { return m_velocity; }
 	int getWidth() { return m_width; }
 	int getHeight() { return m_height; }
 	bool isOn() { return m_bIsOn; }
@@ -70,9 +70,9 @@ protected:
 	}
 
 	//movement variables
-	Vector2D m_position;
-	Vector2D m_velocity;
-	Vector2D m_acceleration;
+	Vector2Df m_position;
+	Vector2Df m_velocity;
+	Vector2Df m_acceleration;
 
 	//size variables
 	int m_width;

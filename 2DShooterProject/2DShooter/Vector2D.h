@@ -3,85 +3,122 @@
 
 #include <math.h>
 
-class Vector2D
+template <class T>
+struct Vec2
 {
-public:
-	Vector2D() : m_x(0), m_y(0) {}
-	Vector2D(float x, float y) : m_x(x), m_y(y) {}
-
-	const float getX() { return m_x; }
-	const float getY() { return m_y; }
-
-	void setX(float x) { m_x = x; }
-	void setY(float y) { m_y = y; }
-
-	float lenght() { return (float)sqrt((m_x * m_x) + (m_y * m_y)); }
-
-	void normalize()
+	Vec2(T px = 0, T py = 0)
 	{
-		float l = lenght();
-		if (l > 1) //prevent a 0 divide 
+		m_x = px;
+		m_y = py;
+	}
+
+	T getX() const
+	{
+		return m_x;
+	}
+
+	T getY() const
+	{
+		return m_y;
+	}
+
+	T* getXPtr()
+	{
+		return &m_x;
+	}
+
+	T* getYPtr()
+	{
+		return &m_y;
+	}
+
+	T& getXRef()
+	{
+		return m_x;
+	}
+
+	T& getYRef()
+	{
+		return m_y;
+	}
+
+	T Lenght()
+	{
+		return sqrt(SquareLenght());
+	}
+
+	T SquareLenght()
+	{
+		return (m_x * m_x) + (m_y * m_y);
+	}
+
+	Vec2<T> operator*(T f) const
+	{
+		return Vec2(m_x * f, m_y * f);
+	}
+
+	Vec2<T> operator%(T f) const
+	{
+		return Vec2(m_x % f, m_y % f);
+	}
+
+	void operator +=(const Vec2<T>& v)
+	{
+		m_x += v.m_x ;
+		m_y += v.m_y ;
+	}
+
+	void operator -=(const Vec2<T>& v)
+	{
+		m_x -= v.m_x ;
+		m_y -= v.m_y ;
+	}
+
+	Vec2<T> operator + (const Vec2<T>& v)
+	{
+		return Vec2<T>(m_x + v.m_x , m_y + v.m_y );
+	}
+
+	Vec2<T> operator - (const Vec2<T>& v)
+	{
+		return Vec2<T>(m_x - v.m_x , m_y - v.m_y );
+	}
+
+	bool operator ==(const Vec2<T>& v)
+	{
+		if ((m_x == v.m_x ) && (m_y == v.m_y ))
 		{
-			(*this) *= 1 / l;
+			return true;
 		}
+		return false;
 	}
 
-	Vector2D operator+(const Vector2D& v2)
+	bool operator !=(const Vec2<T>& v)
 	{
-		return Vector2D(m_x + v2.m_x, m_y + v2.m_y);
+		if ((m_x != v.m_x ) && (m_y != v.m_y ))
+		{
+			return true;
+		}
+		return false;
 	}
 
-	friend Vector2D& operator+=(Vector2D& v1, const Vector2D& v2)
+	bool operator>(const Vec2<T>& v) const
 	{
-		v1.m_x += v2.m_x;
-		v1.m_y += v2.m_y;
-
-		return v1;
+		T myArea = m_x * m_y;
+		T vArea = v.m_x  * v.m_y ;
+		if (myArea > vArea)
+		{
+			return true;
+		}
+		return false;
 	}
-
-	Vector2D operator-(const Vector2D& v2)
-	{
-		return Vector2D(m_x - v2.m_x, m_y - v2.m_y);
-	}
-
-	friend Vector2D& operator-=(Vector2D& v1, const Vector2D& v2)
-	{
-		v1.m_x -= v2.m_x;
-		v1.m_y -= v2.m_y;
-
-		return v1;
-	}
-
-	Vector2D operator*(float scalar)
-	{
-		return Vector2D(m_x * scalar, m_y * scalar);
-	}
-
-	Vector2D& operator*=(float scalar)
-	{
-		m_x *= scalar;
-		m_y *= scalar;
-
-		return *this;
-	}
-
-	Vector2D operator/(float scalar)
-	{
-		return Vector2D(m_x / scalar, m_y / scalar);
-	}
-
-	Vector2D& operator/=(float scalar)
-	{
-		m_x /= scalar;
-		m_y /= scalar;
-
-		return *this;
-	}
-
 
 private:
-	float m_x;
-	float m_y;
+	T m_x;
+	T m_y;
 };
+
+typedef Vec2<int> Vector2Di;
+typedef Vec2<float> Vector2Df;
 
 #endif /* defined( __Vector2D__ ) */

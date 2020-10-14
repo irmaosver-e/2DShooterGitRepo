@@ -9,8 +9,7 @@
 
 struct FiringPoint
 {
-    int x;
-    int y;
+    Vector2Df position;
     std::string bulletType;
 };
 
@@ -21,10 +20,12 @@ public:
     ~BulletHandler() {}
 
     void registerBulletLayer(ObjectLayer* pBulletLayer) { m_bulletLayer = pBulletLayer; }
-    void registerBulletType(std::string bulletType, LoaderParams& pParams) { m_bulletTypes[bulletType] = pParams; }
-    void registerFiringPoint(std::string firingObj, FiringPoint& firingPoint) { m_firingPoints[firingObj] = firingPoint; }
+    void registerBulletType(std::string bulletType, LoaderParams& params);
+    void registerFiringPoint(std::string firingObj, FiringPoint& firingPoint);
 
-    void fireBullet(std::string firingObj, Vector2D firingObjPos, Vector2D heading);
+    LoaderParams* getBulletTypeParam(std::string bulletType);
+
+    void fireBullet(std::string firingObj, Vector2Df firingObjPos, Vector2Df heading);
 
 private:
     void addBullet(std::string bulletType);
