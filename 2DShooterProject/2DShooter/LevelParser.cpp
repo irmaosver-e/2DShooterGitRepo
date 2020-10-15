@@ -311,24 +311,20 @@ Layer* LevelParser::parseObjectLayer(TiXmlElement* pObjectElement)
 
 	//loads objects to the object layer
 	for (TiXmlElement* e = pObjectElement->FirstChildElement(); e != NULL; e = e->NextSiblingElement())
-	{
-		int x = 0, y = 0, width = 0, height = 0, numFrames = 1, animSpeed = 1, callbackID = 0, lives = 1;
-		std::string defaultBullet;
-		std::string sfx;
-		std::string objType;
-		std::string objTileType;
+	{		
+		//creates the object according to the name
+		GameObject* pGameObject = TheGameObjectFactory::Instance().create(e->Attribute("name"));
+		LoaderParams objectParams;
 
-		e->Attribute("x", &x);
-		e->Attribute("y", &y);
-		e->Attribute("width", &width);
-		e->Attribute("height", &height);
-		objType = e->Attribute("name");
-		objTileType = e->Attribute("type");
+		//populates the parameters
+		objectParams.getTextureIDRef() = e->Attribute("type");
+		e->QueryFloatAttribute("x", objectParams.getInitialPosPtr()->getXPtr());
+		e->QueryFloatAttribute("y", objectParams.getInitialPosPtr()->getYPtr());
+		e->Attribute("width", objectParams.getWidthPtr());
+		e->Attribute("height", objectParams.getHeightPtr());
 
 		//corrects the Y position from the map
-		y -= height;
-		
-		GameObject* pGameObject = TheGameObjectFactory::Instance().create(objType);
+		objectParams.getYRef() -= objectParams.getHeight();
 
 		//checks if the object has properties
 		TiXmlElement* properties = e->FirstChildElement();
@@ -342,35 +338,33 @@ Layer* LevelParser::parseObjectLayer(TiXmlElement* pObjectElement)
 						property->Attribute("value") == std::string("pauseToMain") ||
 						property->Attribute("value") == std::string("gameOverToMain"))
 					{
-						callbackID = 1;
+						objectParams.getCallbackIDRef() = 1;
 					}
 					else if (property->Attribute("value") == std::string("exitFromMenu") ||
 							 property->Attribute("value") == std::string("resumePlay") ||
 							 property->Attribute("value") == std::string("restartPlay"))
 					{
-						callbackID = 2;
+						objectParams.getCallbackIDRef() = 2;
 					}
 				}
 				if (property->Attribute("name") == std::string("sfx"))
 				{
-					sfx = property->Attribute("value");
+					objectParams.getSFXRef() = property->Attribute("value");
 				}
 				if (property->Attribute("name") == std::string("Lives"))
 				{
-					property->Attribute("value", &lives);
+					property->Attribute("value", objectParams.getLivesPtr());
 				}
 			}
 		}
 
-		//pGameObject->load(std::unique_ptr<LoaderParams>(new LoaderParams(x, y, width, height, objTileType, numFrames, lives, callbackID, animSpeed, sfx)));
-
-		LoaderParams testParams(x, y, width, height, objTileType, numFrames, lives, callbackID, animSpeed, sfx);
-		pGameObject->load(testParams);
-
-		if (objType == "Player")
+		//looks for the player and sets it to the map
+		if (e->Attribute("name") == std::string("Player"))
 		{
 			m_pLevel->setPlayer(dynamic_cast<Player*>(pGameObject));
 		}
+
+		pGameObject->load(objectParams);
 		
 		pObjectLayer->getGameObjects()->push_back(pGameObject);
 	}
@@ -383,14 +377,13 @@ Layer* LevelParser::parseObjectLayer(TiXmlElement* pObjectElement)
 Layer* LevelParser::parseImageLayer(TiXmlElement* pImageElement)
 {
 	ImageLayer* pImageLayer = new ImageLayer();
+	LoaderParams imageParams;
+	
+	std::string imageFile, type;
+
 	pImageLayer->refLayerName() = pImageElement->Attribute("name");
 
-	int x = 0, y = 0, width = 0, height = 0, numFrames = 1, callbackID = 0, animSpeed = 1;
-	std::string imageFile;
-	std::string textureID;
-	std::string type;
-
-	textureID = pImageElement->Attribute("name");
+	imageParams.getTextureIDRef() = pImageElement->Attribute("name");
 
 	//get type from property property 
 	for (TiXmlElement* e = pImageElement->FirstChildElement(); e != NULL; e = e->NextSiblingElement())
@@ -403,18 +396,16 @@ Layer* LevelParser::parseImageLayer(TiXmlElement* pImageElement)
 		else
 		{
 			imageFile = e->Attribute("source");
-			e->Attribute("width", &width);
-			e->Attribute("height", &height);
+			e->Attribute("width", imageParams.getWidthPtr());
+			e->Attribute("height", imageParams.getHeightPtr());
 		}
 	}
 
-	parseTextures(m_pLevel->getlevelAssetsLocation() + imageFile, textureID);
+	parseTextures(m_pLevel->getlevelAssetsLocation() + imageFile, imageParams.getTextureID());
 
 	GameObject* pGameObject = TheGameObjectFactory::Instance().create(type);
 
-	//pGameObject->load(std::unique_ptr<LoaderParams>(new LoaderParams(x, y, width, height, textureID, numFrames, callbackID, animSpeed)));
-	LoaderParams testParams(x, y, width, height, textureID, numFrames, callbackID, animSpeed);
-	pGameObject->load(testParams);
+	pGameObject->load(imageParams);
 
 	pImageLayer->getGameObjects()->push_back(pGameObject);
 
@@ -453,7 +444,7 @@ void LevelParser::parseOutOfPlayLayers(TiXmlElement* pOutElement)
 					pObjElement->Attribute("width", pBulletParam->getWidthPtr());
 					pObjElement->Attribute("height", pBulletParam->getHeightPtr());
 					
-					pBulletParam->refTextureID() = pObjElement->Attribute("type");		
+					pBulletParam->getTextureIDRef() = pObjElement->Attribute("type");		
 
 					TheBulletHandler::Instance().getBulletTypeParam(pObjElement->Attribute("name"));
 				}

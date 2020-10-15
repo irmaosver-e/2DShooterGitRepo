@@ -16,10 +16,10 @@ void BulletHandler::registerBulletType(std::string bulletType, LoaderParams& par
 void BulletHandler::registerFiringPoint(std::string firingObj, FiringPoint& firingPoint)
 {
     //checks if the firingObj already exist before creating
-    std::map<std::string, FiringPoint>::iterator it = m_firingPoints.find(firingObj);
-    if (it == m_firingPoints.end())
+    std::map<std::string, FiringPoint>::iterator it = m_objFire.find(firingObj);
+    if (it == m_objFire.end())
     {
-        m_firingPoints[firingObj] = firingPoint;
+        m_objFire[firingObj] = firingPoint;
     }
 }
 
@@ -45,7 +45,7 @@ void BulletHandler::fireBullet(std::string firingObj, Vector2Df firingObjPos, Ve
         if (!m_bulletLayer->getGameObjects()->at(i)->isOn())
         {
             //test if the bullet available is of same bullet type fired
-            if (m_bulletLayer->getGameObjects()->at(i)->getTextureID() == m_bulletTypes[m_firingPoints[firingObj].bulletType].getTextureID())
+            if (m_bulletLayer->getGameObjects()->at(i)->objType() == m_objFire[firingObj].bulletType)
             {
                 availableBulletIndex = i;
             }
@@ -54,7 +54,7 @@ void BulletHandler::fireBullet(std::string firingObj, Vector2Df firingObjPos, Ve
 
     if (availableBulletIndex < 0)
     {
-        addBullet(m_firingPoints[firingObj].bulletType);
+        addBullet(m_objFire[firingObj].bulletType);
         availableBulletIndex += m_bulletLayer->getGameObjects()->size();
 
         //for debugging
@@ -65,8 +65,8 @@ void BulletHandler::fireBullet(std::string firingObj, Vector2Df firingObjPos, Ve
     m_bulletLayer->getGameObjects()->at(availableBulletIndex)->setUpdating(true);
     m_bulletLayer->getGameObjects()->at(availableBulletIndex)->setInView(true);
 
-    Vector2Df firingPointCoord(m_firingPoints[firingObj].position.getX() , m_firingPoints[firingObj].position.getY());
-    Vector2Df bulletAnchorPoint = *m_bulletTypes[m_firingPoints[firingObj].bulletType].getAnchorPointPtr();
+    Vector2Df firingPointCoord(m_objFire[firingObj].position.getX() , m_objFire[firingObj].position.getY());
+    Vector2Df bulletAnchorPoint = *m_bulletTypes[m_objFire[firingObj].bulletType].getAnchorPointPtr();
     m_bulletLayer->getGameObjects()->at(availableBulletIndex)->getPosition() = firingObjPos + (firingPointCoord - bulletAnchorPoint);
     m_bulletLayer->getGameObjects()->at(availableBulletIndex)->getVelocity() = heading;
 
@@ -78,16 +78,7 @@ void BulletHandler::fireBullet(std::string firingObj, Vector2Df firingObjPos, Ve
 
 void BulletHandler::addBullet(std::string bulletType)
 {
-    GameObject* pBullet = TheGameObjectFactory::Instance().create("Bullet");
-    
-    /*
-    //load the bullet with the correct bullet type parameters
-    pBullet->load(std::unique_ptr<LoaderParams>(new LoaderParams(m_bulletTypes[bulletType].getInitialPosPtr()->getX(), m_bulletTypes[bulletType].getInitialPosPtr()->getY(),
-        m_bulletTypes[bulletType].getWidth(), m_bulletTypes[bulletType].getHeight(),
-        m_bulletTypes[bulletType].getTextureID(), m_bulletTypes[bulletType].getNumFrames(),
-        m_bulletTypes[bulletType].getLives(), m_bulletTypes[bulletType].getAnimSpeed(), 
-        m_bulletTypes[bulletType].getSFX())));
-   */
+    GameObject* pBullet = TheGameObjectFactory::Instance().create(bulletType);
 
     pBullet->load(m_bulletTypes[bulletType]);
 

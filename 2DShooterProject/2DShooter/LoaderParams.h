@@ -10,46 +10,32 @@ class LoaderParams
 {
 public:
 	LoaderParams() :
-		m_x(0),
-		m_y(0),
-		m_width(0),
-		m_height(0),
 		m_textureID("none"),
 		m_numFrames(1),
 		m_lives(1),
 		m_callbackID(0),
 		m_animSpeed(1),
 		m_soundFX("none"),
+		m_dimentions(Dimention2Di()),
 		m_initialPos(Vector2Df()),
 		m_anchorPoint(Vector2Df()) {}
 
-	LoaderParams(int x, int y, int width, int height, std::string textureID, int numFrames, int lives = 1, int callbackID = 0, float animSpeed = 1, std::string soundFX = "") :
-		m_x(x), 
-		m_y(y), 
-		m_width(width), 
-		m_height(height), 
+	LoaderParams(float x, float y, int width, int height, float anchorX, float anchorY, int numFrames, int lives, int callbackID, float animSpeed, std::string textureID, std::string soundFX) :
 		m_textureID(textureID),
 		m_numFrames(numFrames),
 		m_lives(lives),
 		m_callbackID(callbackID),
 		m_animSpeed(animSpeed),
-		m_soundFX(soundFX) {}
+		m_soundFX(soundFX),
+		m_initialPos(Vector2Df(x, y)),
+		m_anchorPoint(Vector2Df(anchorX, anchorY)),
+		m_dimentions(Dimention2Di(width, height)) {}
 
-	LoaderParams(int x, int y, int width, int height, std::string textureID, int numFrames, int lives = 1, float animSpeed = 1, std::string soundFX = "") :
-		m_x(x),
-		m_y(y),
-		m_width(width),
-		m_height(height),
-		m_textureID(textureID),
-		m_numFrames(numFrames),
-		m_lives(lives),
-		m_animSpeed(animSpeed),
-		m_soundFX(soundFX) {}
 
-	int getX() const { return m_x; }
- 	int getY() const { return m_y; }
-	int getWidth() const { return m_width; }
-	int getHeight() const { return m_height; }
+	float getX() const { return m_initialPos.getX(); }
+ 	float getY() const { return m_initialPos.getY(); }
+	int getWidth() const { return m_dimentions.getWidth(); }
+	int getHeight() const { return m_dimentions.getHeight(); }
 	int getNumFrames() const { return m_numFrames; }
 	float getAnimSpeed() const { return m_animSpeed; }
 	int getCallbackID() const { return m_callbackID; }
@@ -57,28 +43,30 @@ public:
 	std::string getTextureID() const { return m_textureID; }
 	std::string getSFX() const { return m_soundFX; }
 
-	int* getXPtr() { return &m_x; }
-	int* getYPtr() { return &m_y; }
-	int* getWidthPtr() { return &m_width; }
-	int* getHeightPtr() { return &m_height; }
-	int* ptrNumFrames() { return &m_numFrames; }
-	float* ptrAnimSpeed() { return &m_animSpeed; }
-	int* ptrCallbackID() { return &m_callbackID; }
-	int* ptrLives() { return &m_lives; }
-	std::string& refTextureID() { return m_textureID; }
-	std::string& refSFX() { return m_soundFX; }
+	float* getXPtr() { return m_initialPos.getXPtr(); }
+	float* getYPtr() { return m_initialPos.getYPtr(); }
+	int* getWidthPtr() { return m_dimentions.getWidthPtr(); }
+	int* getHeightPtr() { return m_dimentions.getHeightPtr(); }
+	int* getNumFramesPtr() { return &m_numFrames; }
+	float* getAnimSpeedPtr() { return &m_animSpeed; }
+	int* getCallbackIDPtr() { return &m_callbackID; }
+	int* getLivesPtr() { return &m_lives; }
+
+	float& getXRef() { return m_initialPos.getXRef(); }
+	float& getYRef() { return m_initialPos.getYRef(); }
+	int& getWidthRef() { return m_dimentions.getWidthRef(); }
+	int& getHeightRef() { return m_dimentions.getHeightRef(); }
+	int& getCallbackIDRef() { return m_callbackID; }
+	std::string& getTextureIDRef() { return m_textureID; }
+	std::string& getSFXRef() { return m_soundFX; }
 
 	Vector2Df* getInitialPosPtr() { return &m_initialPos; }
 	Vector2Df* getAnchorPointPtr() { return &m_anchorPoint; }
+	Dimention2Di* getDimentionsPtr() { return &m_dimentions; }
 
 private:
 
-	int m_x;
-	int m_y;
-
-	int m_width;
-	int m_height;
-
+	Dimention2Di m_dimentions;
 	Vector2Df m_initialPos;
 	Vector2Df m_anchorPoint;
 	

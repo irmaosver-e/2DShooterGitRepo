@@ -48,6 +48,8 @@ private:
 	void update();
 	void handleEvents();
 
+	void registerObjTypes();
+
 	bool m_bRunning;
 
 	GameStateMachine* m_pGameStateMachine;

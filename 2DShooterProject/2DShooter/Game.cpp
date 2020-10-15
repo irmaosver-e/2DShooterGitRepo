@@ -37,19 +37,7 @@ bool Game::init(const char* configFile)
 	SystemParser sysParser;
 	sysParser.parseSystem(configFile);
 
-	// register the types for the game
-	TheGameObjectFactory::Instance().registerType("MenuButton", new ObjCreator<MenuButton>);
-	TheGameObjectFactory::Instance().registerType("Player", new ObjCreator<Player>);
-	TheGameObjectFactory::Instance().registerType("Cursor", new ObjCreator<Cursor>);
-	TheGameObjectFactory::Instance().registerType("AnimatedGraphic", new ObjCreator<AnimatedGraphic>);
-	TheGameObjectFactory::Instance().registerType("ScrollingBackground", new ObjCreator<ScrollingBackground>);
-	TheGameObjectFactory::Instance().registerType("Bullet", new ObjCreator<Bullet>);
-	TheGameObjectFactory::Instance().registerType("Turret", new ObjCreator<Turret>);
-	TheGameObjectFactory::Instance().registerType("RoofTurret", new ObjCreator<RoofTurret>);
-	TheGameObjectFactory::Instance().registerType("Glider", new ObjCreator<Glider>);
-	TheGameObjectFactory::Instance().registerType("ShotGlider", new ObjCreator<ShotGlider>);
-	TheGameObjectFactory::Instance().registerType("Eskeletor", new ObjCreator<Eskeletor>);
-	TheGameObjectFactory::Instance().registerType("Level1Boss", new ObjCreator<Level1Boss>);
+	registerObjTypes();
 
 	// start the menu state
 	m_pGameStateMachine = new GameStateMachine();
@@ -89,6 +77,24 @@ void Game::update()
 void Game::handleEvents()
 {
 	TheInputHandler::Instance().update();
+}
+
+void Game::registerObjTypes()
+{
+	// register the types for the game
+	TheGameObjectFactory::Instance().registerType("MenuButton", new ObjCreator<MenuButton>);
+	TheGameObjectFactory::Instance().registerType("Player", new ObjCreator<Player>);
+	TheGameObjectFactory::Instance().registerType("Cursor", new ObjCreator<Cursor>);
+	TheGameObjectFactory::Instance().registerType("AnimatedGraphic", new ObjCreator<AnimatedGraphic>);
+	TheGameObjectFactory::Instance().registerType("ScrollingBackground", new ObjCreator<ScrollingBackground>);
+	TheGameObjectFactory::Instance().registerType("PlayerBullet", new ObjCreator<PlayerBullet>);
+	TheGameObjectFactory::Instance().registerType("EnemyBullet", new ObjCreator<EnemyBullet>);
+	TheGameObjectFactory::Instance().registerType("Turret", new ObjCreator<Turret>);
+	TheGameObjectFactory::Instance().registerType("RoofTurret", new ObjCreator<RoofTurret>);
+	TheGameObjectFactory::Instance().registerType("Glider", new ObjCreator<Glider>);
+	TheGameObjectFactory::Instance().registerType("ShotGlider", new ObjCreator<ShotGlider>);
+	TheGameObjectFactory::Instance().registerType("Eskeletor", new ObjCreator<Eskeletor>);
+	TheGameObjectFactory::Instance().registerType("Level1Boss", new ObjCreator<Level1Boss>);
 }
 
 void Game::clean()

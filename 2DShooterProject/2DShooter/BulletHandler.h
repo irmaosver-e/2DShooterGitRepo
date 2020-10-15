@@ -33,7 +33,7 @@ private:
     ObjectLayer* m_bulletLayer;
 
     std::map<std::string, LoaderParams> m_bulletTypes;
-    std::map<std::string, FiringPoint> m_firingPoints;
+    std::map<std::string, FiringPoint> m_objFire;
 
 };
 
