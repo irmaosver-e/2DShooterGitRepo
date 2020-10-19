@@ -13,7 +13,7 @@ public:
 	TileLayer(const std::vector<Tileset>& tilesets);
 	virtual ~TileLayer() {}
 
-	virtual void update(Level* pLevel);
+	virtual void update();
 	virtual void render();
 
 	void setTileIDs(const std::vector<std::vector<int>>& data) { m_tileIDs = data; }

@@ -16,6 +16,7 @@ public:
 
 	//virtual void load(std::unique_ptr<LoaderParams> const &pParams) = 0;
 	virtual void load(const LoaderParams& rParams) = 0;
+	virtual void reset(const LoaderParams& rParams) = 0;
 	virtual void draw() = 0;
 	virtual void update() = 0;
 	virtual void clean() = 0;
@@ -46,7 +47,7 @@ public:
 	void setUpdating(bool updating) { m_bUpdating = updating; }
 	void setInView(bool inView) { m_bInView = inView; }
 	
-	void scroll(float scrollSpeed);
+	virtual void scroll(float scrollSpeed);
 
 protected:
 

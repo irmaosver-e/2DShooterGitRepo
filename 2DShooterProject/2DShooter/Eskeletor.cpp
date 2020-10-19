@@ -41,7 +41,7 @@ void Eskeletor::update()
 {
     if (!m_bDying)
     {
-        scroll(TheGame::Instance().getScrollSpeed());
+        //scroll(TheGame::Instance().getScrollSpeed());
         
         m_velocity.getYRef() = (float)m_moveSpeed;
 
@@ -61,4 +61,10 @@ void Eskeletor::update()
     }
 
     SDLGameObject::update();
+}
+
+void Eskeletor::reset(const LoaderParams& rParams)
+{
+    SDLGameObject::load(rParams);
+    m_bDying = false;
 }

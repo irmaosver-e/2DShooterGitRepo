@@ -6,6 +6,7 @@
 #include "SoundManager.h"
 #include "CollisionManager.h"
 #include "BulletHandler.h"
+#include "ObjectSpawner.h"
 #include "ObjectLayer.h"
 #include "ImageLayer.h"
 #include "TileLayer.h"
@@ -253,12 +254,23 @@ Layer* LevelParser::parseTileLayer(TiXmlElement* pTileElement)
 	m_mapRoot->Attribute("width", &pTileLayer->getNumColumns());
 	m_mapRoot->Attribute("height", &pTileLayer->getNumRows());
 
-	pTileLayer->refLayerName() = pTileElement->Attribute("name");
+	pTileLayer->getLayerNameRef() = pTileElement->Attribute("name");
 
 	TiXmlElement* pDataNode = nullptr;
 	for (TiXmlElement* e = pTileElement->FirstChildElement(); e != NULL; e = e->NextSiblingElement())
 	{
-		if (e->Value() == std::string("data"))
+		if (e->Value() == std::string("properties"))
+		{
+			for (TiXmlElement* layerProperty = e->FirstChildElement(); layerProperty != NULL; layerProperty = layerProperty->NextSiblingElement())
+			{
+				if (layerProperty->Attribute("name") == std::string("ScrollSpeed"))
+				{
+					layerProperty->QueryFloatAttribute("value", pTileLayer->getScrollSpeedPtr());
+				}
+			}
+
+		}
+		else if (e->Value() == std::string("data"))
 		{
 			pDataNode = e;
 		}
@@ -307,66 +319,105 @@ Layer* LevelParser::parseTileLayer(TiXmlElement* pTileElement)
 Layer* LevelParser::parseObjectLayer(TiXmlElement* pObjectElement)
 {
 	ObjectLayer* pObjectLayer = new ObjectLayer();
-	pObjectLayer->refLayerName() = pObjectElement->Attribute("name");
 
-	//loads objects to the object layer
+	//sets the name of the object layer
+	pObjectLayer->getLayerNameRef() = pObjectElement->Attribute("name");
+
+	//loads elements from the object layer
 	for (TiXmlElement* e = pObjectElement->FirstChildElement(); e != NULL; e = e->NextSiblingElement())
 	{		
-		//creates the object according to the name
-		GameObject* pGameObject = TheGameObjectFactory::Instance().create(e->Attribute("name"));
-		LoaderParams objectParams;
-
-		//populates the parameters
-		objectParams.getTextureIDRef() = e->Attribute("type");
-		e->QueryFloatAttribute("x", objectParams.getInitialPosPtr()->getXPtr());
-		e->QueryFloatAttribute("y", objectParams.getInitialPosPtr()->getYPtr());
-		e->Attribute("width", objectParams.getWidthPtr());
-		e->Attribute("height", objectParams.getHeightPtr());
-
-		//corrects the Y position from the map
-		objectParams.getYRef() -= objectParams.getHeight();
-
-		//checks if the object has properties
-		TiXmlElement* properties = e->FirstChildElement();
-		if(properties)
+		//gets the layer properties
+		if (e->Value() == std::string("properties"))
 		{
-			for (TiXmlElement* property = properties->FirstChildElement(); property != NULL; property = property->NextSiblingElement())
+			for (TiXmlElement* layerProperty = e->FirstChildElement(); layerProperty != NULL; layerProperty = layerProperty->NextSiblingElement())
 			{
-				if (property->Attribute("name") == std::string("callbackID"))
+				if (layerProperty->Attribute("name") == std::string("ScrollSpeed"))
 				{
-					if (property->Attribute("value") == std::string("menuToPlay") ||
-						property->Attribute("value") == std::string("pauseToMain") ||
-						property->Attribute("value") == std::string("gameOverToMain"))
-					{
-						objectParams.getCallbackIDRef() = 1;
-					}
-					else if (property->Attribute("value") == std::string("exitFromMenu") ||
-							 property->Attribute("value") == std::string("resumePlay") ||
-							 property->Attribute("value") == std::string("restartPlay"))
-					{
-						objectParams.getCallbackIDRef() = 2;
-					}
-				}
-				if (property->Attribute("name") == std::string("sfx"))
-				{
-					objectParams.getSFXRef() = property->Attribute("value");
-				}
-				if (property->Attribute("name") == std::string("Lives"))
-				{
-					property->Attribute("value", objectParams.getLivesPtr());
+					layerProperty->QueryFloatAttribute("value", pObjectLayer->getScrollSpeedPtr());
 				}
 			}
 		}
-
-		//looks for the player and sets it to the map
-		if (e->Attribute("name") == std::string("Player"))
+		else
 		{
-			m_pLevel->setPlayer(dynamic_cast<Player*>(pGameObject));
-		}
+			//creation of object needs to change to object handler
+			//creates the object according to the name
+			//GameObject* pGameObject = TheGameObjectFactory::Instance().create(e->Attribute("name"));
+			
+			//creates the object marker
+			ObjectMarker objMarker;
 
-		pGameObject->load(objectParams);
-		
-		pObjectLayer->getGameObjects()->push_back(pGameObject);
+			//sets the object type/subtype and position to the marker
+			objMarker.objectType = e->Attribute("name");
+			objMarker.objSubType = e->Attribute("type");
+			e->QueryFloatAttribute("x", objMarker.objPositionMarker.getXPtr());
+			
+			//ajust y position of marker
+			float y, height;
+			e->QueryFloatAttribute("y", &y);
+			e->QueryFloatAttribute("height", &height);
+			objMarker.objPositionMarker.getYRef() = y - height;
+
+			objMarker.isActive = true;
+
+			pObjectLayer->getObjMarkersRef().push_back(objMarker);
+
+			//register the parameters to the spawner
+			std::string objSubType = e->Attribute("type");
+			if (!TheObjectSpawner::Instance().checkObjParamsMap(objSubType))
+			{
+				LoaderParams objectParams;
+
+				//populates the parameters
+				objectParams.getTextureIDRef() = e->Attribute("type");
+				e->Attribute("width", objectParams.getWidthPtr());
+				e->Attribute("height", objectParams.getHeightPtr());
+
+				//checks if the object has properties
+				TiXmlElement* properties = e->FirstChildElement();
+				if (properties)
+				{
+					for (TiXmlElement* property = properties->FirstChildElement(); property != NULL; property = property->NextSiblingElement())
+					{
+						if (property->Attribute("name") == std::string("callbackID"))
+						{
+							if (property->Attribute("value") == std::string("menuToPlay") ||
+								property->Attribute("value") == std::string("pauseToMain") ||
+								property->Attribute("value") == std::string("gameOverToMain"))
+							{
+								objectParams.getCallbackIDRef() = 1;
+							}
+							else if (property->Attribute("value") == std::string("exitFromMenu") ||
+								property->Attribute("value") == std::string("resumePlay") ||
+								property->Attribute("value") == std::string("restartPlay"))
+							{
+								objectParams.getCallbackIDRef() = 2;
+							}
+						}
+						if (property->Attribute("name") == std::string("sfx"))
+						{
+							objectParams.getSFXRef() = property->Attribute("value");
+						}
+						if (property->Attribute("name") == std::string("Lives"))
+						{
+							property->Attribute("value", objectParams.getLivesPtr());
+						}
+					}
+				}
+
+				TheObjectSpawner::Instance().registerObjParams(objSubType, objectParams);
+			}
+			
+			//spawns the objects on screen
+			TheObjectSpawner::Instance().spawnObject(*pObjectLayer, pObjectLayer->getObjMarkersRef().back());
+
+			
+			//looks for the player and sets it to the map
+			if (e->Attribute("name") == std::string("Player"))
+			{
+				m_pLevel->setPlayer(dynamic_cast<Player*>(pObjectLayer->getGameObjects()->back()));
+			}
+			
+		}
 	}
 
 	m_pLevel->getObjectLayers()->push_back(pObjectLayer);
@@ -381,17 +432,27 @@ Layer* LevelParser::parseImageLayer(TiXmlElement* pImageElement)
 	
 	std::string imageFile, type;
 
-	pImageLayer->refLayerName() = pImageElement->Attribute("name");
+	pImageLayer->getLayerNameRef() = pImageElement->Attribute("name");
 
 	imageParams.getTextureIDRef() = pImageElement->Attribute("name");
 
-	//get type from property property 
+	//get type from imagelayer property 
 	for (TiXmlElement* e = pImageElement->FirstChildElement(); e != NULL; e = e->NextSiblingElement())
 	{
 		//gets the type from property
 		if (e->Value() == std::string("properties"))
 		{
-			type = e->FirstChildElement()->Attribute("value");
+			for (TiXmlElement* layerProperty = e->FirstChildElement(); layerProperty != NULL; layerProperty = layerProperty->NextSiblingElement())
+			{
+				if (layerProperty->Attribute("name") == std::string("ScrollSpeed"))
+				{
+					layerProperty->QueryFloatAttribute("value", pImageLayer->getScrollSpeedPtr());
+				}
+				else if (layerProperty->Attribute("name") == std::string("type"))
+				{
+					type = layerProperty->Attribute("value");
+				}
+			}
 		}
 		else
 		{
@@ -423,7 +484,7 @@ void LevelParser::parseOutOfPlayLayers(TiXmlElement* pOutElement)
 		if (e->Value() == std::string("objectgroup"))
 		{
 			ObjectLayer* pObjectLayer = new ObjectLayer();
-			pObjectLayer->refLayerName() = e->Attribute("name");
+			pObjectLayer->getLayerNameRef() = e->Attribute("name");
 
 			m_pLevel->getObjectLayers()->push_back(pObjectLayer);
 			pOutLayer = pObjectLayer;

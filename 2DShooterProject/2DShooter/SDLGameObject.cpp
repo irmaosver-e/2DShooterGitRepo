@@ -16,20 +16,6 @@ m_bPlayedDeathSound(false)
 	m_bUpdating = true;
 }
 
-/*
-void SDLGameObject::load(std::unique_ptr<LoaderParams> const& pParams)
-{
-	m_position = Vector2Df(pParams->getX(), pParams->getY());
-
-	m_width = pParams->getWidth();
-	m_height = pParams->getHeight();
-	m_textureID = pParams->getTextureID();
-	m_numFrames = pParams->getNumFrames();
-	m_animSpeed = pParams->getAnimSpeed();
-	m_sfx = pParams->getSFX();
-}
-*/
-
 void SDLGameObject::load(const LoaderParams& rParams)
 {
 	m_position = Vector2Df(rParams.getX(), rParams.getY());
@@ -62,9 +48,6 @@ void SDLGameObject::update()
 void SDLGameObject::outOfView()
 {
 	m_bUpdating = false;
-
-	//scroll speed should be held in map, needs change
-	scroll(TheGame::Instance().getScrollSpeed());
 }
 
 void SDLGameObject::inView()

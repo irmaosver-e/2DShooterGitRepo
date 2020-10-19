@@ -3,20 +3,39 @@
 
 #include <iostream>
 
+#include"Vector2D.h"
+
 class Level;
+
+struct ObjectMarker
+{
+	Vector2Df objPositionMarker;
+	std::string objectType;
+	std::string objSubType;
+	bool isActive;
+};
 
 class Layer
 {
 public:
-	virtual ~Layer() {}
+	Layer() : m_scrollSpeed(0) {}
+
+	virtual ~Layer(){}
 
 	virtual void render() = 0;
-	virtual void update(Level* pLevel) = 0;
+	virtual void update() = 0;
 
-	std::string& refLayerName() { return m_layerName; }
+	std::string& getLayerNameRef() { return m_layerName; }
+	float& getScrollSpeedRef() { return m_scrollSpeed; }
 
-private:
+	float* const getScrollSpeedPtr() { return &m_scrollSpeed; }
+
+protected:
+
 	std::string m_layerName;
+
+	float m_scrollSpeed;
+
 };
 
 #endif /* defined ( __Layer__ ) */

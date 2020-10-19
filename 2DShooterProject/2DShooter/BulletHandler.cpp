@@ -16,10 +16,10 @@ void BulletHandler::registerBulletType(std::string bulletType, LoaderParams& par
 void BulletHandler::registerFiringPoint(std::string firingObj, FiringPoint& firingPoint)
 {
     //checks if the firingObj already exist before creating
-    std::map<std::string, FiringPoint>::iterator it = m_objFire.find(firingObj);
-    if (it == m_objFire.end())
+    std::map<std::string, FiringPoint>::iterator it = m_objFirePoint.find(firingObj);
+    if (it == m_objFirePoint.end())
     {
-        m_objFire[firingObj] = firingPoint;
+        m_objFirePoint[firingObj] = firingPoint;
     }
 }
 
@@ -45,7 +45,7 @@ void BulletHandler::fireBullet(std::string firingObj, Vector2Df firingObjPos, Ve
         if (!m_bulletLayer->getGameObjects()->at(i)->isOn())
         {
             //test if the bullet available is of same bullet type fired
-            if (m_bulletLayer->getGameObjects()->at(i)->objType() == m_objFire[firingObj].bulletType)
+            if (m_bulletLayer->getGameObjects()->at(i)->objType() == m_objFirePoint[firingObj].bulletType)
             {
                 availableBulletIndex = i;
             }
@@ -54,7 +54,7 @@ void BulletHandler::fireBullet(std::string firingObj, Vector2Df firingObjPos, Ve
 
     if (availableBulletIndex < 0)
     {
-        addBullet(m_objFire[firingObj].bulletType);
+        addBullet(m_objFirePoint[firingObj].bulletType);
         availableBulletIndex += m_bulletLayer->getGameObjects()->size();
 
         //for debugging
@@ -65,8 +65,8 @@ void BulletHandler::fireBullet(std::string firingObj, Vector2Df firingObjPos, Ve
     m_bulletLayer->getGameObjects()->at(availableBulletIndex)->setUpdating(true);
     m_bulletLayer->getGameObjects()->at(availableBulletIndex)->setInView(true);
 
-    Vector2Df firingPointCoord(m_objFire[firingObj].position.getX() , m_objFire[firingObj].position.getY());
-    Vector2Df bulletAnchorPoint = *m_bulletTypes[m_objFire[firingObj].bulletType].getAnchorPointPtr();
+    Vector2Df firingPointCoord(m_objFirePoint[firingObj].position.getX() , m_objFirePoint[firingObj].position.getY());
+    Vector2Df bulletAnchorPoint = *m_bulletTypes[m_objFirePoint[firingObj].bulletType].getAnchorPointPtr();
     m_bulletLayer->getGameObjects()->at(availableBulletIndex)->getPosition() = firingObjPos + (firingPointCoord - bulletAnchorPoint);
     m_bulletLayer->getGameObjects()->at(availableBulletIndex)->getVelocity() = heading;
 

@@ -16,6 +16,10 @@ public:
 
     virtual void update();
 
+    virtual void reset(const LoaderParams& rParams);
+
+    virtual std::string objType() { return "Eskeletor"; }
+
 };
 
 #endif /* defined ( __Eskeletor__ ) */

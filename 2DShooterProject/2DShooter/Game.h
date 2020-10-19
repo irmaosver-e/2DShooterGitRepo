@@ -17,8 +17,6 @@ public:
 	void run();
 	void clean();
 
-	float getScrollSpeed() const { return m_scrollSpeed; }
-
 	const int getCurrentLevel() { return m_currentLevel; }
 	const int getNextLevel() { return m_nextLevel; }
 	const int getLevelComplete() { return m_bLevelComplete; }
@@ -54,8 +52,6 @@ private:
 
 	GameStateMachine* m_pGameStateMachine;
 	bool m_bChangingState;
-
-	float m_scrollSpeed;
 
 	int m_currentLevel;
 	int m_nextLevel;

@@ -41,6 +41,7 @@
     <ClCompile Include="main.cpp" />
     <ClCompile Include="MenuButton.cpp" />
     <ClCompile Include="MainMenuState.cpp" />
+    <ClCompile Include="ObjectSpawner.cpp" />
     <ClCompile Include="ObjectLayer.cpp" />
     <ClCompile Include="Parser.cpp" />
     <ClCompile Include="PauseState.cpp" />
@@ -92,6 +93,7 @@
     <ClInclude Include="MenuButton.h" />
     <ClInclude Include="MainMenuState.h" />
     <ClInclude Include="MenuState.h" />
+    <ClInclude Include="ObjectSpawner.h" />
     <ClInclude Include="ObjectLayer.h" />
     <ClInclude Include="Parser.h" />
     <ClInclude Include="PauseState.h" />

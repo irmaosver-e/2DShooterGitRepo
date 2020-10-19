@@ -8,6 +8,8 @@ class Enemy : public SDLGameObject
 public:
 
 	virtual std::string objType() { return "Enemy"; }
+	
+	virtual void outOfView() { turnObjOff(); }
 
 protected:
 	int m_health;

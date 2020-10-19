@@ -24,13 +24,10 @@
 Game::Game(token) :
 	m_bRunning(false),
 	m_pGameStateMachine(0),
-	m_scrollSpeed((float)1.8),
 	m_bLevelComplete(false),
 	m_bChangingState(false),
 	m_currentLevel(1)
-{
-	std::cout << "m_scrollSpeed((float)1.8) HORDCODED in Game::Game \n";
-}
+{}
 
 bool Game::init(const char* configFile)
 {	

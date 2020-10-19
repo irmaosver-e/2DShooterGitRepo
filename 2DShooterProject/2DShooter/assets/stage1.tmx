@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<map version="1.4" tiledversion="1.4.2" orientation="orthogonal" renderorder="right-down" width="200" height="15" tilewidth="32" tileheight="32" infinite="0" nextlayerid="15" nextobjectid="16">
+<map version="1.4" tiledversion="1.4.2" orientation="orthogonal" renderorder="right-down" width="200" height="15" tilewidth="32" tileheight="32" infinite="0" nextlayerid="15" nextobjectid="19">
  <tileset firstgid="1" source="s1TerrainTest.tsx"/>
  <tileset firstgid="199" source="PlayerMecha.tsx"/>
  <tileset firstgid="205" source="Bullet.tsx"/>
@@ -8,29 +8,42 @@
   <imagelayer id="3" name="BGWallPaper">
    <image source="StarryBG.png" width="6400" height="480"/>
    <properties>
+    <property name="ScrollSpeed" type="float" value="1"/>
     <property name="type" value="AnimatedGraphic"/>
    </properties>
   </imagelayer>
  </group>
  <layer id="7" name="Non-Collidable" width="200" height="15" locked="1">
+  <properties>
+   <property name="ScrollSpeed" type="float" value="1.8"/>
+  </properties>
   <data encoding="base64" compression="zlib">
    eJzt1UEOgCAMBMBe+P+XjSeJJkQxQjEzLyDtLo1gV2Y/ABLTDwB4roQbWjMParJwKKEfrKnEmPzqB1yN6h9tdpCb3cxj9jm5HXCPfvyH/+698+0wU0aQs29lnW3Wd7Gunkz15vDr/OoHPVq50Q9WswGbAAEK
   </data>
  </layer>
  <layer id="8" name="Collidables" width="200" height="15" locked="1">
+  <properties>
+   <property name="ScrollSpeed" type="float" value="1.8"/>
+  </properties>
   <data encoding="base64" compression="zlib">
    eJzt1TEOACEIBEA+bOH/m+vtqJS9mcR+SVyoAgCAqn07ANDyemdfz5dg3Q5ArIT+dvqRMC9A17TdNy0vAP+zjjeVm8sU/ioAAOT7ADSTBog=
   </data>
  </layer>
  <group id="6" name="MidGround">
   <objectgroup id="4" name="PlayField">
+   <properties>
+    <property name="ScrollSpeed" type="float" value="1.8"/>
+   </properties>
    <object id="1" name="Player" type="playermecha" gid="199" x="80" y="260" width="64" height="64">
     <properties>
      <property name="Lives" type="int" value="4"/>
     </properties>
    </object>
-   <object id="10" name="Eskeletor" type="enemyTest3" gid="207" x="740.333" y="153.333" width="32" height="32"/>
+   <object id="18" name="Eskeletor" type="enemyTest3" gid="207" x="2048" y="76" width="32" height="32"/>
+   <object id="17" name="Eskeletor" type="enemyTest3" gid="207" x="1662.67" y="76" width="32" height="32"/>
+   <object id="16" name="Eskeletor" type="enemyTest3" gid="207" x="1249.33" y="77.3333" width="32" height="32"/>
    <object id="11" name="Eskeletor" type="enemyTest3" gid="207" x="883.667" y="58.3333" width="32" height="32"/>
+   <object id="10" name="Eskeletor" type="enemyTest3" gid="207" x="740.333" y="153.333" width="32" height="32"/>
    <object id="12" name="Eskeletor" type="enemyTest3" gid="207" x="522" y="277" width="32" height="32"/>
   </objectgroup>
  </group>

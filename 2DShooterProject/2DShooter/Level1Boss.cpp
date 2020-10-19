@@ -52,7 +52,7 @@ void Level1Boss::update()
 {
     if (!m_entered)
     {
-        scroll(TheGame::Instance().getScrollSpeed());
+        //scroll(TheGame::Instance().getScrollSpeed());
 
         if (m_position.getX() < (TheSDLSystem::Instance().getScreenWidth() - (m_width + 20)))
         {
@@ -91,7 +91,7 @@ void Level1Boss::update()
         }
         else
         {
-            scroll(TheGame::Instance().getScrollSpeed());
+            //scroll(TheGame::Instance().getScrollSpeed());
             m_currentFrame = int(((SDL_GetTicks() / (1000 / 3)) % m_numFrames));
 
             if (m_dyingCounter == m_dyingTime)

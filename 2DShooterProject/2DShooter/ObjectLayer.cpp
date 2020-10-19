@@ -3,6 +3,7 @@
 #include "Game.h"
 #include "SDLSystem.h"
 #include "CollisionManager.h"
+#include "ObjectSpawner.h"
 #include "GameObject.h"
 #include "Level.h"
 
@@ -16,8 +17,17 @@ ObjectLayer::~ObjectLayer()
     m_gameObjects.clear();
 }
 
-void ObjectLayer::update(Level* pLevel)
+void ObjectLayer::update()
 {
+     for (ObjectMarker& objMarker : m_objectMarkers)
+    {
+        //scroll marker
+        objMarker.objPositionMarker.getXRef() -= m_scrollSpeed;
+        
+        TheObjectSpawner::Instance().spawnObject(*this, objMarker);
+
+    }
+    
     // iterate through the objects
     if (!m_gameObjects.empty())
     {
@@ -27,6 +37,9 @@ void ObjectLayer::update(Level* pLevel)
 
             if (pGameObj->isOn())
             {
+                pGameObj->scroll(m_scrollSpeed);
+                pGameObj->inViewCheck();
+
                 if (pGameObj->isInView())
                 {
                     pGameObj->inView();
@@ -36,8 +49,6 @@ void ObjectLayer::update(Level* pLevel)
                 {
                     pGameObj->outOfView();
                 }
-
-                pGameObj->inViewCheck();
             }
         }
         /*

@@ -15,8 +15,8 @@ public:
 	virtual void collision();
 	virtual void collisionWithLayer();
 
-	//player does nothing if out of view, other objects follow SDLGameObject::outOfView()
-	virtual void outOfView() {}
+	//player does not scroll empty function
+	virtual void scroll(float scrollSpeed) {}
 
 	int& referLives() { return m_lives; }
 	int checkLives() { return m_lives; }

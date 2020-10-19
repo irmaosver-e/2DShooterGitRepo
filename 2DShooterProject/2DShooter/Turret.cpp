@@ -36,7 +36,7 @@ void Turret::update()
     if (!m_bDying)
     {
         // we want to scroll this object with the rest
-        scroll(TheGame::Instance().getScrollSpeed());
+       // scroll(TheGame::Instance().getScrollSpeed());
 
         if (m_bulletCounter == m_bulletFiringSpeed)
         {
@@ -50,7 +50,7 @@ void Turret::update()
     }
     else
     {
-        scroll(TheGame::Instance().getScrollSpeed());
+        //scroll(TheGame::Instance().getScrollSpeed());
         doDyingAnimation();
     }
 }

@@ -16,7 +16,7 @@ void RoofTurret::update()
     if (!m_bDying)
     {
         // we want to scroll this object with the rest
-        scroll(TheGame::Instance().getScrollSpeed());
+        //scroll(TheGame::Instance().getScrollSpeed());
 
         if (m_bulletCounter == m_bulletFiringSpeed)
         {
@@ -30,7 +30,7 @@ void RoofTurret::update()
     }
     else
     {
-        scroll(TheGame::Instance().getScrollSpeed());
+        //scroll(TheGame::Instance().getScrollSpeed());
         doDyingAnimation();
     }
 }

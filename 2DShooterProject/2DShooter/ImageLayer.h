@@ -10,13 +10,14 @@ class ImageLayer : public Layer
 public:
 	virtual ~ImageLayer();
 
-	virtual void update(Level* pLevel);
+	virtual void update();
 	virtual void render();
 
+	std::vector<ObjectMarker>& getObjMarkersRef() { return m_objectMarkers; }
 	std::vector<GameObject*>* getGameObjects() { return &m_gameObjects; }
 
 private:
-
+	std::vector<ObjectMarker> m_objectMarkers;
 	std::vector<GameObject*> m_gameObjects;
 
 };

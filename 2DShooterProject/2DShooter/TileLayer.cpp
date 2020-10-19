@@ -10,11 +10,14 @@ TileLayer::TileLayer(const std::vector<Tileset>& tilesets) :
 {
 }
 
-void TileLayer::update(Level* pLevel)
+void TileLayer::update()
 {
 	if (m_position.getX() < ((m_mapWidth * m_tileWidth) - TheSDLSystem::Instance().getScreenWidth()) - m_tileWidth)
 	{
-		m_velocity.getXRef() = TheGame::Instance().getScrollSpeed();
+	//rudimentary scroll
+		//m_velocity.getXRef() = TheGame::Instance().getScrollSpeed();
+		m_velocity.getXRef() = m_scrollSpeed;
+
 		m_position += m_velocity;
 	}
 	else

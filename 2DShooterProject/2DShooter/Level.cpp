@@ -18,7 +18,7 @@ void Level::update()
 {
 	for (Layer* pLayer : m_layers)
 	{
-		pLayer->update(this);
+		pLayer->update();
 	}
 }
 
@@ -34,7 +34,7 @@ TileLayer* Level::getTileLayerByName(std::string tileLayer)
 {
 	for (TileLayer* pTileLayer : m_tileLayers)
 	{
-		if(pTileLayer->refLayerName() == tileLayer)
+		if(pTileLayer->getLayerNameRef() == tileLayer)
 		{
 			return pTileLayer;
 		}
@@ -46,7 +46,7 @@ ObjectLayer* Level::getObjectLayerByName(std::string objLayer)
 {
 	for (ObjectLayer* pObjectLayer : m_objectLayers)
 	{
-		if (pObjectLayer->refLayerName() == objLayer)
+		if (pObjectLayer->getLayerNameRef() == objLayer)
 		{
 			return pObjectLayer;
 		}

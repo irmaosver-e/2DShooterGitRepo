@@ -7,8 +7,6 @@
 #include "TileLayer.h"
 #include "ImageLayer.h"
 
-
-
 class Level
 {
 public:

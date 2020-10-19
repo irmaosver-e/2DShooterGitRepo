@@ -11,7 +11,7 @@ ImageLayer::~ImageLayer()
 }
 
 //needs revision
-void ImageLayer::update(Level* pLevel)
+void ImageLayer::update()
 {
     // iterate through the objects
     if (!m_gameObjects.empty())
