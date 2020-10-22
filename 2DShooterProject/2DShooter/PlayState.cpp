@@ -43,12 +43,12 @@ bool PlayState::render()
 {
 	if (GameState::render())
 	{
+		/*
 		for (int i = 0; i < m_pLevel->getPlayer()->checkLives(); i++)
 		{
 			TheTextureManager::Instance().drawTile("lives", 2, 2, i * 30, 0, 32, 32, 0, 0, TheSDLSystem::Instance().getRenderer());
 		}
-
-		//TheBulletHandler::Instance().drawBullets();
+		*/
 
 		return true;
 	}

@@ -1,6 +1,5 @@
 #include "SDLGameObject.h"
 #include "Game.h"
-#include "SDLSystem.h"
 #include "TextureManager.h"
 
 SDLGameObject::SDLGameObject() : GameObject(),
@@ -31,10 +30,10 @@ void SDLGameObject::load(const LoaderParams& rParams)
 void SDLGameObject::draw()
 {	
 	//TheTextureManager::Instance().drawFrame(m_textureID, (Uint32)m_position.getX(), (Uint32)m_position.getY(),
-	//										m_width, m_height, m_currentRow, m_currentFrame, TheSDLSystem::Instance().getRenderer(), m_angle, m_alpha);
+	//										m_width, m_height, m_currentRow, m_currentFrame, m_angle, m_alpha);
 	
 	TheTextureManager::Instance().drawTile(m_textureID,2, 2, (int)m_position.getX(), (int)m_position.getY(),
-		m_width, m_height, m_currentRow, m_currentFrame, TheSDLSystem::Instance().getRenderer());
+		m_width, m_height, m_currentRow, m_currentFrame);
 }
 
 void SDLGameObject::update()

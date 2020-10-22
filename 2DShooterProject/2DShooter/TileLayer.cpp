@@ -66,7 +66,7 @@ void TileLayer::render()
 			
 			TheTextureManager::Instance().drawTile(tileset.name, tileset.margin, tileset.spacing,
 													tile_X_pos, tile_Y_pos, tileset.tileWidth, tileset.tileHeight, 
-													tileRow, tileColumn, TheSDLSystem::Instance().getRenderer());
+													tileRow, tileColumn);
 		}
 	}
 }

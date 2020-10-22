@@ -1,6 +1,8 @@
 #include "SDLSystem.h"
-#include "SystemParser.h"
+
 #include <iostream>
+#include <SDL_Image.h>
+#include "SystemParser.h"
 
 //game frame rate set to 60 by default
 SDLSystem::SDLSystem(token) : m_pWindow(nullptr), m_pRenderer(nullptr), m_frameTime(0.0f), m_frameCount(1), m_fps(60)
@@ -14,7 +16,7 @@ SDLSystem::~SDLSystem()
 	m_pWindow = nullptr;
 }
 
-bool SDLSystem::init(const char* title, int windowXpos, int windowYpos, int screenWidth, int screenHeight, int fps, bool fullScreen,
+bool SDLSystem::init(const char* title, const char* iconPath, int windowXpos, int windowYpos, int screenWidth, int screenHeight, int fps, bool fullScreen,
 						int drawColour_R, int drawColour_G, int drawColour_B, int drawColour_A)
 {
 	m_fps = fps;
@@ -35,6 +37,18 @@ bool SDLSystem::init(const char* title, int windowXpos, int windowYpos, int scre
 
 		if (m_pWindow) //window init success
 		{
+			
+			//loads the icon image to the window
+			SDL_Surface* pIconSurface = IMG_Load(iconPath);
+			if (pIconSurface)
+			{
+				SDL_SetWindowIcon(m_pWindow, pIconSurface);
+			}
+			else 
+			{
+				std::cout << "Unable to load image!" << iconPath << "\n SDL_image Error: " << IMG_GetError() << "\n";
+			}
+
 			m_pRenderer = SDL_CreateRenderer(m_pWindow, -1, SDL_RENDERER_ACCELERATED);
 
 			if (m_pRenderer) //renderer init success

@@ -5,6 +5,7 @@
 #include "SDLSystem.h"
 #include "SystemParser.h"
 #include "TextureManager.h"
+#include "TextManager.h"
 #include "InputHandler.h"
 #include "GameObjectFactory.h"
 #include "MainMenuState.h"
@@ -12,6 +13,7 @@
 #include "PlayState.h"
 #include "AnimatedGraphic.h"
 #include "ScrollingBackground.h"
+#include "HUD.h"
 #include "Bullet.h"
 #include "MenuButton.h"
 #include "Player.h"
@@ -51,7 +53,7 @@ void Game::run()
 	{
 		handleEvents();
 		update();
-			render();
+		render();
 	}
 }
 
@@ -81,6 +83,7 @@ void Game::registerObjTypes()
 	// register the types for the game
 	TheGameObjectFactory::Instance().registerType("MenuButton", new ObjCreator<MenuButton>);
 	TheGameObjectFactory::Instance().registerType("Player", new ObjCreator<Player>);
+	TheGameObjectFactory::Instance().registerType("HUD", new ObjCreator<HUD>);
 	TheGameObjectFactory::Instance().registerType("Cursor", new ObjCreator<Cursor>);
 	TheGameObjectFactory::Instance().registerType("AnimatedGraphic", new ObjCreator<AnimatedGraphic>);
 	TheGameObjectFactory::Instance().registerType("ScrollingBackground", new ObjCreator<ScrollingBackground>);
@@ -106,6 +109,10 @@ void Game::clean()
 	delete m_pGameStateMachine;
 
 	TheTextureManager::Instance().clearTextureMap();
+
+	TheTextManager::Instance().quit();
+
+	//thesoundMAnager.quit ??
 
 	TheSDLSystem::Instance().quit();
 }

@@ -4,6 +4,7 @@
 #include "LevelParser.h"
 #include "CollisionManager.h"
 
+
 bool GameState::update()
 {
 	if (m_loadingComplete && !m_exiting)
@@ -24,6 +25,7 @@ bool GameState::render()
 		if (m_pLevel != 0)
 		{
 			m_pLevel->render();
+
 			return true;
 		}
 	}
@@ -36,6 +38,7 @@ bool GameState::onEnter()
 	m_pLevel = levelParser.parseLevel(m_stageAssetsPath, m_stageMapFile);
 
 	TheCollisionManager::Instance().setCurrentLevel(m_pLevel);
+
 
 	return true;
 }

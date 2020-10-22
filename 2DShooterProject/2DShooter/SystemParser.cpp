@@ -5,6 +5,7 @@
 #include "SDLSystem.h"
 #include "InputHandler.h"
 #include "SoundManager.h"
+#include "TextManager.h"
 
 bool SystemParser::parseSystem(const char* configFile)
 {
@@ -21,6 +22,9 @@ bool SystemParser::parseSystem(const char* configFile)
 
 	//pre declare the Sound root node
 	TiXmlElement* pSoundRoot = nullptr;
+
+	//pre declare the Fonts root node
+	TiXmlElement* pFontsRoot = nullptr;
 
 	//pre declare the Sound root node
 	TiXmlElement* pFilesRoot = nullptr;
@@ -41,6 +45,10 @@ bool SystemParser::parseSystem(const char* configFile)
 		{
 			pSoundRoot = e;
 		}
+		else if (e->Value() == std::string("FONTS"))
+		{
+			pFontsRoot = e;
+		}
 		else if (e->Value() == std::string("FILES"))
 		{
 			pFilesRoot = e;
@@ -59,6 +67,7 @@ bool SystemParser::parseSystem(const char* configFile)
 	if (!parseWindow(pWindowRoot)||
 		!parseInput(pInputRoot) ||
 		!parseSound(pSoundRoot) ||
+		!parseFonts(pFontsRoot) ||
 		!parseFiles(pFilesRoot))
 	{
 		return false;
@@ -74,6 +83,7 @@ bool SystemParser::parseWindow(TiXmlElement* pWindowRoot)
 		return false;
 	}
 
+	const char* iconPath = nullptr;
 	const char* title = nullptr;
 	int xpos, ypos, width, height, fps;
 	int red, green, blue, alpha;
@@ -101,13 +111,18 @@ bool SystemParser::parseWindow(TiXmlElement* pWindowRoot)
 			e->Attribute("B", &blue);
 			e->Attribute("Alpha", &alpha);
 		}
+		else if (e->Value() == std::string("iconParamn"))
+		{
+			iconPath = e->Attribute("fileName");
+			title = e->Attribute("title");
+		}
 		else
 		{
 			std::cout << "could not find " << e->Value() << " in " << pWindowRoot->Value() << " \n";
 		}
 	}
 
-	return TheSDLSystem::Instance().init(title, xpos, ypos, width, height, fps, fullScreen, red, green, blue, alpha);
+	return TheSDLSystem::Instance().init(title, iconPath, xpos, ypos, width, height, fps, fullScreen, red, green, blue, alpha);
 
 }
 
@@ -163,6 +178,38 @@ bool SystemParser::parseSound(TiXmlElement* pSoundRoot)
 	return TheSoundManager::Instance().init(frequency, format, channnels, chunksize);
 }
 
+bool SystemParser::parseFonts(TiXmlElement* pFontsRoot)
+{
+	if (!pFontsRoot)
+	{
+		return false;
+	}
+
+	TheTextManager::Instance().init();
+	for (TiXmlElement* e = pFontsRoot->FirstChildElement(); e != nullptr; e = e->NextSiblingElement())
+	{
+		if (e->Value() == std::string("location"))
+		{
+			TheTextManager::Instance().setFontRepositoryPath(e->Attribute("path"));
+		}
+		else if (e->Value() == std::string("type"))
+		{
+			
+			int fontSize;
+			e->Attribute("size", &fontSize);
+
+			TheTextManager::Instance().loadFont(e->Attribute("fontName"), fontSize, e->Attribute("filename"));
+		}
+		else
+		{
+			std::cout << "could not find " << e->Value() << " in " << pFontsRoot->Value() << " \n";
+		}
+
+	}
+
+	return true;
+}
+
 bool SystemParser::parseFiles(TiXmlElement* pFilesRoot)
 {
 	if (!pFilesRoot)
@@ -186,11 +233,13 @@ bool SystemParser::parseFiles(TiXmlElement* pFilesRoot)
 			e->Attribute("stage", &levelNumber);
 
 			TheGame::Instance().addLevelFile(levelNumber, e->Attribute("filename"));
+
 		}
 		else
 		{
 			std::cout << "could not find " << e->Value() << " in " << pFilesRoot->Value() << " \n";
 		}
+
 	}
 
 	return true;

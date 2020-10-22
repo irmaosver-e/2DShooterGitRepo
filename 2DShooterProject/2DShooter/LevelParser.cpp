@@ -1,7 +1,6 @@
 #include "LevelParser.h"
 
 #include <string>
-#include "SDLSystem.h"
 #include "TextureManager.h"
 #include "SoundManager.h"
 #include "CollisionManager.h"
@@ -338,11 +337,7 @@ Layer* LevelParser::parseObjectLayer(TiXmlElement* pObjectElement)
 			}
 		}
 		else
-		{
-			//creation of object needs to change to object handler
-			//creates the object according to the name
-			//GameObject* pGameObject = TheGameObjectFactory::Instance().create(e->Attribute("name"));
-			
+		{			
 			//creates the object marker
 			ObjectMarker objMarker;
 
@@ -487,7 +482,6 @@ void LevelParser::parseOutOfPlayLayers(TiXmlElement* pOutElement)
 			pObjectLayer->getLayerNameRef() = e->Attribute("name");
 
 			m_pLevel->getObjectLayers()->push_back(pObjectLayer);
-			pOutLayer = pObjectLayer;
 
 			//if the object layer is the Bullets Layer, poppulate the bulletHandler 
 			if (e->Attribute("name") == std::string("Bullets"))
@@ -510,6 +504,38 @@ void LevelParser::parseOutOfPlayLayers(TiXmlElement* pOutElement)
 					TheBulletHandler::Instance().getBulletTypeParam(pObjElement->Attribute("name"));
 				}
 			}
+			if (e->Attribute("name") == std::string("HUD"))
+			{
+				GameObject* pGameObject = TheGameObjectFactory::Instance().create("HUD");
+				LoaderParams pHUDParam;
+
+				pGameObject->load(pHUDParam);
+
+				//goes through every object in the layer
+				for (TiXmlElement* pObjElement = e->FirstChildElement(); pObjElement != NULL; pObjElement = pObjElement->NextSiblingElement())
+				{
+					//LoaderParams pHUDParam;
+
+					//pObjElement->QueryFloatAttribute("x", pHUDParam.getInitialPosPtr()->getXPtr());
+					//pObjElement->QueryFloatAttribute("y", pHUDParam.getInitialPosPtr()->getYPtr());
+					//pObjElement->Attribute("width", pHUDParam.getWidthPtr());
+					//pObjElement->Attribute("height", pHUDParam.getHeightPtr());
+
+					//pHUDParam.getTextureIDRef() = pObjElement->Attribute("type");
+
+					//TheBulletHandler::Instance().getBulletTypeParam(pObjElement->Attribute("name"));
+				}
+
+				pObjectLayer->getGameObjectsRef().push_back(pGameObject);
+				
+				//pGameObject->load(pHUDParam);
+
+				//pImageLayer->getGameObjects()->push_back(pGameObject);
+
+				//m_pLevel->getImageLayers()->push_back(pImageLayer);
+			}
+
+			pOutLayer = pObjectLayer;
 		}
 
 
@@ -522,7 +548,7 @@ void LevelParser::parseOutOfPlayLayers(TiXmlElement* pOutElement)
 
 bool LevelParser::parseTextures(std::string fileName, std::string id)
 {
-	if (!TheTextureManager::Instance().load(fileName, id, TheSDLSystem::Instance().getRenderer()))
+	if (!TheTextureManager::Instance().loadTextureFromFile(fileName, id))
 	{
 		std::cout << "failed to load texture in LevelParser::parseTextures \n";
 		return false;

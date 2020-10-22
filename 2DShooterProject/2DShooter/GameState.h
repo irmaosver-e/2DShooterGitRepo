@@ -5,6 +5,7 @@
 
 #include "Level.h"
 
+
 class GameState
 {
 public:
@@ -33,6 +34,7 @@ protected:
 
 	std::string m_stageAssetsPath;
 	std::string m_stageMapFile;
+
 };
 
 #endif /* defined ( __GameState__ ) */
