@@ -14,6 +14,7 @@ Player::Player() : SDLGameObject()
 	m_invulnerableTime = 200;
 	m_invulnerableCounter = 0;
 	m_lives = 1;
+	m_playerHUD = nullptr;
 }
 
 void Player::load(const LoaderParams& rParams)
@@ -33,6 +34,12 @@ void Player::load(const LoaderParams& rParams)
 
 	// time it takes for death explosion
 	m_dyingTime = 100;
+}
+
+void Player::draw()
+{
+	SDLGameObject::draw();
+	m_playerHUD->draw();
 }
 
 void Player::update()

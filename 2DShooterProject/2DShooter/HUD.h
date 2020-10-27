@@ -2,9 +2,6 @@
 #define __HUD__
 
 #include "SDLGameObject.h"
-#include "Player.h"
-
-#include "AnimatedGraphic.h"
 
 class HUD : public SDLGameObject
 {
@@ -12,17 +9,19 @@ public:
 	HUD() : SDLGameObject() {}
 	virtual ~HUD() {}
 
-	virtual void load(const LoaderParams& rParams);
+	//virtual void load(const LoaderParams& rParams);
 	virtual void draw();
 	virtual void update();
 	virtual void clean();
 
+	void addTextBox(GameObject* textBox) { m_textBoxes.push_back(textBox); }
+
 	virtual std::string objType() { return "HUD"; }
 
 private:
-	Player* m_pPlayer;
 
-	AnimatedGraphic m_animGraphic;
+	std::vector<GameObject*> m_animGraphics;
+	std::vector<GameObject*> m_textBoxes;
 
 };
 

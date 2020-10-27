@@ -14,6 +14,8 @@
 #include "zlib.h"
 #include "Cursor.h"
 
+#include "HUD.h"
+
 Level* LevelParser::parseLevel(std::string assetsLocation, std::string levelFile)
 {
 	m_pLevel = new Level(assetsLocation, levelFile);
@@ -43,9 +45,9 @@ Level* LevelParser::parseLevel(std::string assetsLocation, std::string levelFile
 			parseTileset(e);
 		}
 		else if (e->Value() == std::string("group") ||
-			e->Value() == std::string("objectgroup") ||
-			e->Value() == std::string("layer") ||
-			e->Value() == std::string("imagelayer"))
+				 e->Value() == std::string("objectgroup") ||
+				 e->Value() == std::string("layer") ||
+				 e->Value() == std::string("imagelayer"))
 		{
 			parseLayer(e);
 		}
@@ -478,10 +480,18 @@ void LevelParser::parseOutOfPlayLayers(TiXmlElement* pOutElement)
 	{
 		if (e->Value() == std::string("objectgroup"))
 		{
-			ObjectLayer* pObjectLayer = new ObjectLayer();
-			pObjectLayer->getLayerNameRef() = e->Attribute("name");
+			ObjectLayer* pObjectLayer = nullptr;
 
-			m_pLevel->getObjectLayers()->push_back(pObjectLayer);
+			//if its a HUD DO NOT add to object layer, HUDs belong to objects
+			if (pOutElement->Attribute("name") == std::string("OUT_OF_PLAY_AREA") &&
+				e->Attribute("name") != std::string("ViewPort"))
+			{
+				pObjectLayer = new ObjectLayer();
+				pObjectLayer->getLayerNameRef() = e->Attribute("name");
+
+				m_pLevel->getObjectLayers()->push_back(pObjectLayer);
+			}
+
 
 			//if the object layer is the Bullets Layer, poppulate the bulletHandler 
 			if (e->Attribute("name") == std::string("Bullets"))
@@ -504,38 +514,64 @@ void LevelParser::parseOutOfPlayLayers(TiXmlElement* pOutElement)
 					TheBulletHandler::Instance().getBulletTypeParam(pObjElement->Attribute("name"));
 				}
 			}
-			if (e->Attribute("name") == std::string("HUD"))
+			if (pOutElement->Attribute("name") == std::string("HUDs"))
 			{
-				GameObject* pGameObject = TheGameObjectFactory::Instance().create("HUD");
+
+				HUD* pHUD = dynamic_cast<HUD*>(TheGameObjectFactory::Instance().create("HUD"));
+				
+				//can use pHUDParam to set its position, 0,0 by default in viewport
 				LoaderParams pHUDParam;
+				pHUD->load(pHUDParam);
 
-				pGameObject->load(pHUDParam);
-
-				//goes through every object in the layer
+				//goes through every object in the layer adding it to the HUD
 				for (TiXmlElement* pObjElement = e->FirstChildElement(); pObjElement != NULL; pObjElement = pObjElement->NextSiblingElement())
 				{
-					//LoaderParams pHUDParam;
+					//adds the text boxes to the HUD
+					if (pObjElement->Attribute("name") == std::string("TextBox"))
+					{
+						GameObject* pTextBox = TheGameObjectFactory::Instance().create("TextBox");
+						LoaderParams pTextBoxParam;
 
-					//pObjElement->QueryFloatAttribute("x", pHUDParam.getInitialPosPtr()->getXPtr());
-					//pObjElement->QueryFloatAttribute("y", pHUDParam.getInitialPosPtr()->getYPtr());
-					//pObjElement->Attribute("width", pHUDParam.getWidthPtr());
-					//pObjElement->Attribute("height", pHUDParam.getHeightPtr());
+						pObjElement->QueryFloatAttribute("x", pTextBoxParam.getInitialPosPtr()->getXPtr());
+						pObjElement->QueryFloatAttribute("y", pTextBoxParam.getInitialPosPtr()->getYPtr());
 
-					//pHUDParam.getTextureIDRef() = pObjElement->Attribute("type");
+						//the pObjElement->FirstChildElement() is the text element 
+						pTextBoxParam.getFontTypeRef() = pObjElement->FirstChildElement()->Attribute("fontfamily");
+						pTextBoxParam.getTextBoxMessageRef() = pObjElement->FirstChildElement()->GetText();
+						
+						pTextBox->load(pTextBoxParam);
 
-					//TheBulletHandler::Instance().getBulletTypeParam(pObjElement->Attribute("name"));
+						pHUD->addTextBox(pTextBox);
+
+					}
+					if (pObjElement->Attribute("name") == std::string("AnimatedGraphic"))
+					{
+						//adds the animated Graphics to the HUD
+						std::cout << "AnimatedGraphic \n";
+					}
 				}
 
-				pObjectLayer->getGameObjectsRef().push_back(pGameObject);
-				
+				//the HUD belongs to the Player
+				if (e->Attribute("name") == std::string("Player"))
+				{
+					m_pLevel->getPlayer()->setHUDPtr(pHUD);
+				}
+
+				//pObjectLayer->getGameObjectsRef().push_back(pHUD);
+
 				//pGameObject->load(pHUDParam);
 
 				//pImageLayer->getGameObjects()->push_back(pGameObject);
 
 				//m_pLevel->getImageLayers()->push_back(pImageLayer);
 			}
-
+	
 			pOutLayer = pObjectLayer;
+			
+		}
+		else if (e->Value() == std::string("group"))
+		{
+			parseOutOfPlayLayers(e);
 		}
 
 

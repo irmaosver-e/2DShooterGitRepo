@@ -9,7 +9,6 @@ class SDLGameObject : public GameObject
 public:
 	virtual ~SDLGameObject() {}
 
-	//virtual void load(std::unique_ptr<LoaderParams> const &pParams);
 	virtual void load(const LoaderParams& rParams);
 	virtual void reset(const LoaderParams& rParams) {} //not implemented in this class
 	virtual void draw();

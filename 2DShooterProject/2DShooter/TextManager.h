@@ -18,7 +18,7 @@ public:
 	bool useFont(const std::string& fontName, int fontSize);
 
 	void writeToScreen(const std::string& message, Vector2Df& position, SDL_Color txtColour = {255, 255, 255});
-
+	
 	void setFontRepositoryPath(const std::string& path) { m_fontRepositoryPath = path; }
 
 private:

@@ -57,6 +57,7 @@
     <ClCompile Include="SoundManager.cpp" />
     <ClCompile Include="StateParser.cpp" />
     <ClCompile Include="SystemParser.cpp" />
+    <ClCompile Include="TextBox.cpp" />
     <ClCompile Include="TextManager.cpp" />
     <ClCompile Include="TextureManager.cpp" />
     <ClCompile Include="TileLayer.cpp" />
@@ -113,6 +114,7 @@
     <ClInclude Include="SoundManager.h" />
     <ClInclude Include="StateParser.h" />
     <ClInclude Include="SystemParser.h" />
+    <ClInclude Include="TextBox.h" />
     <ClInclude Include="TextManager.h" />
     <ClInclude Include="TextureManager.h" />
     <ClInclude Include="TileLayer.h" />

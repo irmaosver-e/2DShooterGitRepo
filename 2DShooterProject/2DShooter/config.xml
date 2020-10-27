@@ -13,7 +13,7 @@
 	</AUDIO>
 	<FONTS>
 		<location path="assets/fonts/"/>
-		<type filename="arial.ttf" fontName="arial" size="14" />
+		<type filename="arial.ttf" fontName="Arial" size="14" />
 	</FONTS>
 	<FILES>
 		<location path="assets/"/>

@@ -11,6 +11,7 @@
 #include "MainMenuState.h"
 #include "GameOverState.h"
 #include "PlayState.h"
+#include "TextBox.h"
 #include "AnimatedGraphic.h"
 #include "ScrollingBackground.h"
 #include "HUD.h"
@@ -85,6 +86,7 @@ void Game::registerObjTypes()
 	TheGameObjectFactory::Instance().registerType("Player", new ObjCreator<Player>);
 	TheGameObjectFactory::Instance().registerType("HUD", new ObjCreator<HUD>);
 	TheGameObjectFactory::Instance().registerType("Cursor", new ObjCreator<Cursor>);
+	TheGameObjectFactory::Instance().registerType("TextBox", new ObjCreator<TextBox>);
 	TheGameObjectFactory::Instance().registerType("AnimatedGraphic", new ObjCreator<AnimatedGraphic>);
 	TheGameObjectFactory::Instance().registerType("ScrollingBackground", new ObjCreator<ScrollingBackground>);
 	TheGameObjectFactory::Instance().registerType("PlayerBullet", new ObjCreator<PlayerBullet>);

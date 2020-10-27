@@ -2,6 +2,7 @@
 #define __Player__
 
 #include "SDLGameObject.h"
+#include "HUD.h"
 
 class Player : public SDLGameObject
 {
@@ -10,6 +11,7 @@ public:
 	virtual ~Player() {}
 
 	virtual void load(const LoaderParams& rParams);
+	virtual void draw();
 	virtual void update();
 	
 	virtual void collision();
@@ -22,11 +24,16 @@ public:
 	int checkLives() { return m_lives; }
 	bool outOfLives() { return (m_lives > 0) ? false : true; }
 
+	void setHUDPtr(HUD* pHUD) { m_playerHUD = pHUD; }
+
 	virtual std::string objType() { return "Player"; }
+
 private:
 	void ressurect();
 	void handleInput();
 	void handleAnimation();
+
+	HUD* m_playerHUD;
 
 	int m_lives;
 

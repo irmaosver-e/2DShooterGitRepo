@@ -3,10 +3,13 @@
 #include "TextManager.h"
 #include "SDLSystem.h"
 
+/*
 void HUD::load(const LoaderParams& rParams)
 {
 	SDLGameObject::load(rParams);
 }
+
+*/
 
 void HUD::draw()
 {
@@ -25,13 +28,16 @@ void HUD::draw()
 
 	}
 
-	static int i = 0;
+	//  implementation in progress
+	for (GameObject* animGrafic : m_animGraphics)
+	{
+		animGrafic->draw();
+	}
 
-
-	Vector2Df textPos(50, 50);
-	TheTextManager::Instance().writeToScreen("Love You " + std::to_string(i % 1000) +" Czesia", textPos);
-
-	i++;
+	for (GameObject* textBox : m_textBoxes)
+	{
+		textBox->draw();
+	}
 
 }
 
