@@ -43,7 +43,10 @@ public:
 		m_textBoxMessage(""),
 		m_dimentions(Dimention2Di()),
 		m_initialPos(Vector2Df()),
-		m_anchorPoint(Vector2Df()) {}
+		m_anchorPoint(Vector2Df()) 
+	{
+		m_valueToWatch = nullptr;
+	}
 
 	
 	LoaderParams(float x, float y, int width, int height, float anchorX, float anchorY, int numFrames, int lives, int callbackID, float animSpeed, std::string textureID, std::string soundFX) :
@@ -87,6 +90,9 @@ public:
 	Dimention2Di* getDimentionsPtr() { return &m_dimentions; }
 	Colour* getColourPtr() { return &m_colour; }
 
+	void setValueToWatchPtr(int* pValue) { m_valueToWatch = pValue; }
+	int* getValueToWatchPtr() const{ return m_valueToWatch; }
+
 	float& getXRef() { return m_initialPos.getXRef(); }
 	float& getYRef() { return m_initialPos.getYRef(); }
 	int& getWidthRef() { return m_dimentions.getWidthRef(); }
@@ -107,16 +113,18 @@ private:
 	Vector2Df m_initialPos;
 	Vector2Df m_anchorPoint;
 	
-	int m_numFrames;
 	std::string m_textureID;
 	std::string m_soundFX;
 	std::string m_fontType;
 	std::string m_textBoxMessage;
 
+	int m_numFrames;
 	int m_fontSize;
 	int m_lives;
 	int m_callbackID;
 	float m_animSpeed;
+
+	int* m_valueToWatch;
 };
 
 #endif/* Defined( __LoaderParams__ ) */

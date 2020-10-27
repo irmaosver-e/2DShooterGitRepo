@@ -20,8 +20,8 @@ public:
 	//player does not scroll empty function
 	virtual void scroll(float scrollSpeed) {}
 
-	int& referLives() { return m_lives; }
-	int checkLives() { return m_lives; }
+	int* getLivesPtr() { return &m_lives; }
+	int checkLives() const { return m_lives; }
 	bool outOfLives() { return (m_lives > 0) ? false : true; }
 
 	void setHUDPtr(HUD* pHUD) { m_playerHUD = pHUD; }

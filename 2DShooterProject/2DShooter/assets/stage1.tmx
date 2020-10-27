@@ -51,7 +51,7 @@
   <group id="16" name="HUDs">
    <objectgroup id="11" name="Player">
     <object id="6" name="AnimatedGraphic" type="lives" gid="201" x="21" y="89" width="64" height="64"/>
-    <object id="19" name="TextBox" type="LifecounterTxt" x="92.8333" y="25.8333" width="55.3333" height="33.1667">
+    <object id="19" name="TextBox" type="Lives" x="216.833" y="123.167" width="55.3333" height="33.1667">
      <text fontfamily="Arial" pixelsize="24" color="#ffffff" bold="1">x (#)</text>
     </object>
     <object id="21" name="TextBox" type="ScoreTxt" x="499.833" y="24.25" width="76.5" height="22.5">

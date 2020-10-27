@@ -521,8 +521,8 @@ void LevelParser::parseOutOfPlayLayers(TiXmlElement* pOutElement)
 				HUD* pHUD = dynamic_cast<HUD*>(TheGameObjectFactory::Instance().create("HUD"));
 				
 				//can use pHUDParam to set its position, 0,0 by default in viewport
-				LoaderParams pHUDParam;
-				pHUD->load(pHUDParam);
+				LoaderParams HUDParam;
+				pHUD->load(HUDParam);
 
 				//goes through every object in the layer adding it to the HUD
 				for (TiXmlElement* pObjElement = e->FirstChildElement(); pObjElement != NULL; pObjElement = pObjElement->NextSiblingElement())
@@ -531,22 +531,33 @@ void LevelParser::parseOutOfPlayLayers(TiXmlElement* pOutElement)
 					if (pObjElement->Attribute("name") == std::string("TextBox"))
 					{
 						GameObject* pTextBox = TheGameObjectFactory::Instance().create("TextBox");
-						LoaderParams pTextBoxParam;
+						LoaderParams textBoxParam;
 
-						pObjElement->QueryFloatAttribute("x", pTextBoxParam.getInitialPosPtr()->getXPtr());
-						pObjElement->QueryFloatAttribute("y", pTextBoxParam.getInitialPosPtr()->getYPtr());
+						pObjElement->QueryFloatAttribute("x", textBoxParam.getInitialPosPtr()->getXPtr());
+						pObjElement->QueryFloatAttribute("y", textBoxParam.getInitialPosPtr()->getYPtr());
 
 						//the pObjElement->FirstChildElement() is the text element 
-						pTextBoxParam.getFontTypeRef() = pObjElement->FirstChildElement()->Attribute("fontfamily");
-						pTextBoxParam.getTextBoxMessageRef() = pObjElement->FirstChildElement()->GetText();
+						textBoxParam.getFontTypeRef() = pObjElement->FirstChildElement()->Attribute("fontfamily");
+						textBoxParam.getTextBoxMessageRef() = pObjElement->FirstChildElement()->GetText();
 
-						pObjElement->FirstChildElement()->Attribute("pixelsize", pTextBoxParam.getFontSizePtr());
-						TheTextManager::Instance().loadFont(pTextBoxParam.getFontType(), pTextBoxParam.getFontSize());
+						pObjElement->FirstChildElement()->Attribute("pixelsize", textBoxParam.getFontSizePtr());
+						TheTextManager::Instance().loadFont(textBoxParam.getFontType(), textBoxParam.getFontSize());
 
 						
-						pTextBox->load(pTextBoxParam);
+						//plugs the watched value to the TextBox accordingly
+						if (e->Attribute("name") == std::string("Player"))
+						{
+							if (pObjElement->Attribute("type") == std::string("Lives"))
+							{
+								textBoxParam.setValueToWatchPtr(m_pLevel->getPlayer()->getLivesPtr());
+							}
+						}
 
-						pHUD->addTextBox(pTextBox);
+
+						pTextBox->load(textBoxParam);
+
+
+						pHUD->addTextBox(pTextBox);						
 
 					}
 					if (pObjElement->Attribute("name") == std::string("AnimatedGraphic"))
@@ -556,19 +567,11 @@ void LevelParser::parseOutOfPlayLayers(TiXmlElement* pOutElement)
 					}
 				}
 
-				//the HUD belongs to the Player
+				//adds the HUD to the Owner Object
 				if (e->Attribute("name") == std::string("Player"))
 				{
 					m_pLevel->getPlayer()->setHUDPtr(pHUD);
 				}
-
-				//pObjectLayer->getGameObjectsRef().push_back(pHUD);
-
-				//pGameObject->load(pHUDParam);
-
-				//pImageLayer->getGameObjects()->push_back(pGameObject);
-
-				//m_pLevel->getImageLayers()->push_back(pImageLayer);
 			}
 	
 			pOutLayer = pObjectLayer;
