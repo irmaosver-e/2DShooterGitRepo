@@ -20,6 +20,7 @@ private:
 	std::string m_text;
 	std::string m_fontType;
 	Colour m_textColour;
+	int m_fontSize;
 };
 
 #endif /* defined ( __TextBox__ ) */

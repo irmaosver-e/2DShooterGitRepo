@@ -66,6 +66,7 @@ public:
 	float getAnimSpeed() const { return m_animSpeed; }
 	int getCallbackID() const { return m_callbackID; }
 	int getLives() const { return m_lives; }
+	int getFontSize() const { return m_fontSize; }
 	std::string getTextureID() const { return m_textureID; }
 	std::string getSFX() const { return m_soundFX; }
 	std::string getFontType() const { return m_fontType; }
@@ -80,6 +81,7 @@ public:
 	float* getAnimSpeedPtr() { return &m_animSpeed; }
 	int* getCallbackIDPtr() { return &m_callbackID; }
 	int* getLivesPtr() { return &m_lives; }
+	int* getFontSizePtr() { return &m_fontSize; }
 	Vector2Df* getInitialPosPtr() { return &m_initialPos; }
 	Vector2Df* getAnchorPointPtr() { return &m_anchorPoint; }
 	Dimention2Di* getDimentionsPtr() { return &m_dimentions; }
@@ -90,6 +92,7 @@ public:
 	int& getWidthRef() { return m_dimentions.getWidthRef(); }
 	int& getHeightRef() { return m_dimentions.getHeightRef(); }
 	int& getCallbackIDRef() { return m_callbackID; }
+	int& getFontSizeRef() { return m_fontSize; }
 	std::string& getTextureIDRef() { return m_textureID; }
 	std::string& getSFXRef() { return m_soundFX; }
 	std::string& getFontTypeRef() { return m_fontType; }
@@ -110,6 +113,7 @@ private:
 	std::string m_fontType;
 	std::string m_textBoxMessage;
 
+	int m_fontSize;
 	int m_lives;
 	int m_callbackID;
 	float m_animSpeed;

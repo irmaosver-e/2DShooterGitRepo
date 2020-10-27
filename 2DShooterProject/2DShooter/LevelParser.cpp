@@ -3,6 +3,7 @@
 #include <string>
 #include "TextureManager.h"
 #include "SoundManager.h"
+#include "TextManager.h"
 #include "CollisionManager.h"
 #include "BulletHandler.h"
 #include "ObjectSpawner.h"
@@ -538,6 +539,10 @@ void LevelParser::parseOutOfPlayLayers(TiXmlElement* pOutElement)
 						//the pObjElement->FirstChildElement() is the text element 
 						pTextBoxParam.getFontTypeRef() = pObjElement->FirstChildElement()->Attribute("fontfamily");
 						pTextBoxParam.getTextBoxMessageRef() = pObjElement->FirstChildElement()->GetText();
+
+						pObjElement->FirstChildElement()->Attribute("pixelsize", pTextBoxParam.getFontSizePtr());
+						TheTextManager::Instance().loadFont(pTextBoxParam.getFontType(), pTextBoxParam.getFontSize());
+
 						
 						pTextBox->load(pTextBoxParam);
 

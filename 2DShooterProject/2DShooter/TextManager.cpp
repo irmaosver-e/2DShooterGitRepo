@@ -69,7 +69,14 @@ bool TextManager::useFont(const std::string& fontName, int fontSize)
 		}
 		else
 		{
-			std::cout << "font " << fontName << " does NOT have size " << fontSize << "\n";
+			if (loadFont(fontName, fontSize))
+			{
+				useFont(fontName, fontSize);
+			}
+			else
+			{
+				std::cout << "font " << fontName << " does NOT have size " << fontSize << " and failed to load new size\n";
+			}
 		}
 	}
 	else
