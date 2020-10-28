@@ -34,6 +34,7 @@ class LoaderParams
 public:
 	LoaderParams() :
 		m_colour(Colour()),
+		m_subTypeID("none"),
 		m_textureID("none"),
 		m_numFrames(1),
 		m_lives(1),
@@ -70,7 +71,7 @@ public:
 	int getCallbackID() const { return m_callbackID; }
 	int getLives() const { return m_lives; }
 	int getFontSize() const { return m_fontSize; }
-	std::string getTextureID() const { return m_textureID; }
+	std::string getSubTypeID() const { return m_subTypeID; }
 	std::string getSFX() const { return m_soundFX; }
 	std::string getFontType() const { return m_fontType; }
 	std::string getTextBoxMessage() const { return m_textBoxMessage; }
@@ -99,7 +100,7 @@ public:
 	int& getHeightRef() { return m_dimentions.getHeightRef(); }
 	int& getCallbackIDRef() { return m_callbackID; }
 	int& getFontSizeRef() { return m_fontSize; }
-	std::string& getTextureIDRef() { return m_textureID; }
+	std::string& getSubTypeIDRef() { return m_subTypeID; }
 	std::string& getSFXRef() { return m_soundFX; }
 	std::string& getFontTypeRef() { return m_fontType; }
 	std::string& getTextBoxMessageRef() { return m_textBoxMessage; }
@@ -113,7 +114,7 @@ private:
 	Vector2Df m_initialPos;
 	Vector2Df m_anchorPoint;
 	
-	std::string m_textureID;
+	std::string m_subTypeID;
 	std::string m_soundFX;
 	std::string m_fontType;
 	std::string m_textBoxMessage;
@@ -125,6 +126,9 @@ private:
 	float m_animSpeed;
 
 	int* m_valueToWatch;
+
+	//should be a vector of animations
+	std::string m_textureID;
 };
 
 #endif/* Defined( __LoaderParams__ ) */

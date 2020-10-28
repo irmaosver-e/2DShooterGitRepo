@@ -21,7 +21,10 @@ void SDLGameObject::load(const LoaderParams& rParams)
 
 	m_width = rParams.getWidth();
 	m_height = rParams.getHeight();
-	m_textureID = rParams.getTextureID();
+	m_subTypeID = rParams.getSubTypeID();
+	// for now
+	m_textureID = m_subTypeID;
+	
 	m_numFrames = rParams.getNumFrames();
 	m_animSpeed = rParams.getAnimSpeed();
 	m_sfx = rParams.getSFX();
@@ -32,7 +35,8 @@ void SDLGameObject::draw()
 	//TheTextureManager::Instance().drawFrame(m_textureID, (Uint32)m_position.getX(), (Uint32)m_position.getY(),
 	//										m_width, m_height, m_currentRow, m_currentFrame, m_angle, m_alpha);
 	
-	TheTextureManager::Instance().drawTile(m_textureID,2, 2, (int)m_position.getX(), (int)m_position.getY(),
+	//if spacing, margin, width and height, are automatic if using animated tile
+	TheTextureManager::Instance().drawTile(m_textureID,0, 0, (int)m_position.getX(), (int)m_position.getY(),
 		m_width, m_height, m_currentRow, m_currentFrame);
 }
 

@@ -4,7 +4,7 @@
 
 bool TextManager::init()
 {
-	if (!TTF_Init()) 
+	if (TTF_Init() == -1) 
 	{
 		std::cout << "TTF_Init: " << TTF_GetError() << "\n";
 		return false;
@@ -89,7 +89,9 @@ bool TextManager::useFont(const std::string& fontName, int fontSize)
 
 void TextManager::writeToScreen(const std::string& message, Vector2Df& position, SDL_Color txtColour)
 {
-	SDL_Surface* pMsgSurface = TTF_RenderText_Solid(m_currentFont, message.c_str(), txtColour);
+	//SDL_Surface* pMsgSurface = TTF_RenderText_Solid(m_currentFont, message.c_str(), txtColour);
+	SDL_Surface* pMsgSurface = TTF_RenderText_Blended(m_currentFont, message.c_str(), txtColour);
+	
 	//Draw the text
 	TheTextureManager::Instance().drawFromSurface(pMsgSurface, position, pMsgSurface->w, pMsgSurface->h);
 }

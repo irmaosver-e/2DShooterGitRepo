@@ -12,6 +12,11 @@ struct Animation
 	int sourceColumns;
 	int sourceRows;
 
+	int tileWidth;
+	int tileHeight;
+	int spacing;
+	int margin;
+
 	int frameDuration;
 	std::vector<int> tileIDs;
 

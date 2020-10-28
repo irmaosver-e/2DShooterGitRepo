@@ -27,7 +27,7 @@ public:
 	virtual void inView() = 0;
 	virtual std::string objType() = 0;
 
-	std::string getTextureID() { return m_textureID; }
+	std::string getSubTypeID() { return m_subTypeID; }
 	Vector2Df& getPosition() { return m_position; }
 	Vector2Df& getVelocity() { return m_velocity; }
 	int getWidth() { return m_width; }
@@ -70,6 +70,8 @@ protected:
 		m_sfx("")
 	{
 	}
+
+	std::string m_subTypeID;
 
 	//movement variables
 	Vector2Df m_position;

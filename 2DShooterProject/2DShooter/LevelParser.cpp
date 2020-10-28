@@ -104,6 +104,10 @@ void LevelParser::parseTileset(TiXmlElement* pTilesetElement)
 			objTile.animation.sourceTileSet = tileset.name;
 			objTile.animation.sourceColumns = tileset.numColumns;
 			//objTile.animation.sourceRows = tileset.tileCount / tileset.numColumns;
+			objTile.animation.margin = tileset.margin;
+			objTile.animation.spacing = tileset.spacing;
+			objTile.animation.tileHeight = tileset.tileHeight;
+			objTile.animation.tileWidth = tileset.tileWidth;
 
 			tileset.objTileMap[objTile.type] = objTile;
 
@@ -366,7 +370,7 @@ Layer* LevelParser::parseObjectLayer(TiXmlElement* pObjectElement)
 				LoaderParams objectParams;
 
 				//populates the parameters
-				objectParams.getTextureIDRef() = e->Attribute("type");
+				objectParams.getSubTypeIDRef() = e->Attribute("type");
 				e->Attribute("width", objectParams.getWidthPtr());
 				e->Attribute("height", objectParams.getHeightPtr());
 
@@ -432,7 +436,7 @@ Layer* LevelParser::parseImageLayer(TiXmlElement* pImageElement)
 
 	pImageLayer->getLayerNameRef() = pImageElement->Attribute("name");
 
-	imageParams.getTextureIDRef() = pImageElement->Attribute("name");
+	imageParams.getSubTypeIDRef() = pImageElement->Attribute("name");
 
 	//get type from imagelayer property 
 	for (TiXmlElement* e = pImageElement->FirstChildElement(); e != NULL; e = e->NextSiblingElement())
@@ -460,7 +464,7 @@ Layer* LevelParser::parseImageLayer(TiXmlElement* pImageElement)
 		}
 	}
 
-	parseTextures(m_pLevel->getlevelAssetsLocation() + imageFile, imageParams.getTextureID());
+	parseTextures(m_pLevel->getlevelAssetsLocation() + imageFile, imageParams.getSubTypeID());
 
 	GameObject* pGameObject = TheGameObjectFactory::Instance().create(type);
 
@@ -510,7 +514,7 @@ void LevelParser::parseOutOfPlayLayers(TiXmlElement* pOutElement)
 					pObjElement->Attribute("width", pBulletParam->getWidthPtr());
 					pObjElement->Attribute("height", pBulletParam->getHeightPtr());
 					
-					pBulletParam->getTextureIDRef() = pObjElement->Attribute("type");		
+					pBulletParam->getSubTypeIDRef() = pObjElement->Attribute("type");
 
 					TheBulletHandler::Instance().getBulletTypeParam(pObjElement->Attribute("name"));
 				}
@@ -564,6 +568,31 @@ void LevelParser::parseOutOfPlayLayers(TiXmlElement* pOutElement)
 					{
 						//adds the animated Graphics to the HUD
 						std::cout << "AnimatedGraphic \n";
+						GameObject* pAnimGraphix = TheGameObjectFactory::Instance().create("AnimatedGraphic");
+						LoaderParams animGraphixParam;
+
+						pObjElement->QueryFloatAttribute("x", animGraphixParam.getInitialPosPtr()->getXPtr());
+						pObjElement->QueryFloatAttribute("y", animGraphixParam.getInitialPosPtr()->getYPtr());
+						pObjElement->Attribute("width", animGraphixParam.getDimentionsPtr()->getWidthPtr());
+						pObjElement->Attribute("height", animGraphixParam.getDimentionsPtr()->getHeightPtr());
+						animGraphixParam.getSubTypeIDRef() = pObjElement->Attribute("type");
+
+						animGraphixParam.getInitialPosPtr()->getYRef() -= animGraphixParam.getDimentionsPtr()->getHeight();
+
+						//object specific param population here
+						/* example:
+						if (e->Attribute("name") == std::string("Player"))
+						{
+							if (pObjElement->Attribute("type") == std::string("Lives"))
+							{
+								animGraphixParam.setValueToWatchPtr(m_pLevel->getPlayer()->getLivesPtr());
+							}
+						}
+						*/
+
+						pAnimGraphix->load(animGraphixParam);
+
+						pHUD->addTextBox(pAnimGraphix);
 					}
 				}
 

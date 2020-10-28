@@ -63,6 +63,10 @@ void TextureManager::drawTile(std::string id, int margin, int spacing, int x, in
 	std::string textureID = id;
 	int textureColumn = currentFrame;
 	int textureRow = currentRow;
+	int textureMargin = margin;
+	int textureSpacing = spacing;
+	int textureWidth = width;
+	int textureHeight = height;
 
 	if (m_animationMap.find(id) != m_animationMap.end())
 	{
@@ -70,16 +74,19 @@ void TextureManager::drawTile(std::string id, int margin, int spacing, int x, in
 		
 		textureColumn = m_animationMap[id].tileIDs[currentFrame] % m_animationMap[id].sourceColumns;
 		textureRow = m_animationMap[id].tileIDs[currentFrame] / m_animationMap[id].sourceColumns;
-
+		textureMargin = m_animationMap[id].margin;
+		textureSpacing = m_animationMap[id].spacing;
+		textureWidth = m_animationMap[id].tileWidth;
+		textureHeight = m_animationMap[id].tileHeight;
 	}
 
 	SDL_Rect m_srcRect;
 	SDL_Rect m_destRect;
 
-	m_srcRect.x = margin + (spacing + width) * textureColumn;
-	m_srcRect.y = margin + (spacing + height) * textureRow;
-	m_srcRect.w = m_destRect.w = width;
-	m_srcRect.h = m_destRect.h = height;
+	m_srcRect.x = textureMargin + (textureSpacing + textureWidth) * textureColumn;
+	m_srcRect.y = textureMargin + (textureSpacing + textureHeight) * textureRow;
+	m_srcRect.w = m_destRect.w = textureWidth;
+	m_srcRect.h = m_destRect.h = textureHeight;
 	m_destRect.x = x;
 	m_destRect.y = y;
 

@@ -37,7 +37,7 @@ void ObjectSpawner::spawnObject(ObjectLayer& objLayer, ObjectMarker& objMarker)
 				//std::cout << "object added: " << objMarker.objectType <<"/ pool size " << availableObjIndex << "\n";
 			}
 
-			if(objLayer.getGameObjectsRef().at(availableObjIndex)->getTextureID() != objMarker.objSubType)
+			if(objLayer.getGameObjectsRef().at(availableObjIndex)->getSubTypeID() != objMarker.objSubType)
 			{
 				objLayer.getGameObjectsRef().at(availableObjIndex)->load(m_objParams[objMarker.objSubType]);
 			}

@@ -26,4 +26,9 @@
    <frame tileid="2" duration="400"/>
   </animation>
  </tile>
+ <tile id="5" type="legs">
+  <animation>
+   <frame tileid="5" duration="400"/>
+  </animation>
+ </tile>
 </tileset>

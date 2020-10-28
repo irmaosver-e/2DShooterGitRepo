@@ -9,12 +9,12 @@ public:
 	HUD() : SDLGameObject() {}
 	virtual ~HUD() {}
 
-	//virtual void load(const LoaderParams& rParams);
 	virtual void draw();
 	virtual void update();
 	virtual void clean();
 
 	void addTextBox(GameObject* textBox) { m_textBoxes.push_back(textBox); }
+	void addAnimGraphix(GameObject* animGraphix) { m_animGraphics.push_back(animGraphix); }
 
 	virtual std::string objType() { return "HUD"; }
 

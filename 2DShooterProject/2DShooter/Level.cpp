@@ -64,7 +64,7 @@ void Level::getObjectsfromLayers(std::vector<GameObject*>& objContainer, std::st
 				itObject != m_objectLayers[i]->getGameObjects()->end();
 				++itObject)
 			{
-				if (objType == (*itObject)->getTextureID() || objType == "all")
+				if (objType == (*itObject)->getSubTypeID() || objType == "all")
 				{
 					objContainer.push_back(*itObject);
 				}
