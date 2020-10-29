@@ -110,16 +110,12 @@ void LevelParser::parseTileset(TiXmlElement* pTilesetElement)
 			objTile.animation.tileWidth = tileset.tileWidth;
 
 			tileset.objTileMap[objTile.type] = objTile;
-
 		
 			//copies the object tile to a Owner object list to create tileCollisionObjects later when the object is created 
 			TheTextureManager::Instance().getAnimationMap()[objTile.type] = objTile.animation;
-
 		}
 	}
-
 	m_tilesets.push_back(tileset);
-
 }
 
 void LevelParser::parseObjTile(TiXmlElement* pTileElement, ObjectTile& objectTile)
@@ -546,6 +542,10 @@ void LevelParser::parseOutOfPlayLayers(TiXmlElement* pOutElement)
 							else if (objProperty->Attribute("name") == std::string("VsLayerCollision"))
 							{
 								getComaSeparatedItems(objProperty->Attribute("value"), TheCollisionManager::Instance().getCollisionObject(pBulletParam->getSubTypeID())->collidesAgainstLayer);
+							}
+							else if (objProperty->Attribute("name") == std::string("AnimationList"))
+							{
+								getComaSeparatedItems(objProperty->Attribute("value"), pBulletParam->getAnimationListRef());
 							}
 						}
 					}

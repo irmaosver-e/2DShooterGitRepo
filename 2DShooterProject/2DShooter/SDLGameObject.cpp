@@ -27,6 +27,7 @@ void SDLGameObject::load(const LoaderParams& rParams)
 	
 	//m_numFrames = rParams.getNumFrames();
 	//m_animSpeed = rParams.getAnimSpeed();
+
 	m_animations = rParams.getAnimationList();
 	if (m_animations.empty())
 	{
