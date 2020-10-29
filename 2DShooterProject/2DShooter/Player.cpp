@@ -72,7 +72,6 @@ void Player::update()
 		}
 		else //in death animation
 		{
-			m_currentFrame = int((SDL_GetTicks() / (100)) % m_numFrames);
 
 			//if death animation finished
 			if (m_dyingCounter == m_dyingTime)
@@ -86,8 +85,9 @@ void Player::update()
 
 void Player::collision()
 {	
-	/*  //godmode for debuging
+	m_textureID = m_animations[DAMAGE];
 	
+	/*  //godmode for debuging
 	std::cout << "GOD MODE ON in Player::collision() \n";
 	m_invulnerable = true;
 	
@@ -122,7 +122,7 @@ void Player::ressurect()
 
 	//m_textureID = "player";
 
-	m_currentFrame = 0;
+	//m_currentFrame = 0;
 	//m_numFrames = 5;
 	//m_width = 101;
 	//m_height = 46;
@@ -135,6 +135,12 @@ void Player::handleInput()
 {
 	if (!m_bDead)
 	{
+		if (!m_bDying)
+		{
+			m_currentFrame = IDLE;
+			m_textureID = m_animations[STAND];
+		}
+
 		// handle keys
 		if (TheInputHandler::Instance().isKeyDown(SDL_SCANCODE_UP) && m_position.getY() > 0)
 		{
@@ -145,17 +151,21 @@ void Player::handleInput()
 			m_velocity.getYRef() =(float)m_moveSpeed;
 		}
 
+		
 		if (TheInputHandler::Instance().isKeyDown(SDL_SCANCODE_LEFT) && m_position.getX() > 0)
 		{
 			m_velocity.getXRef() = (float)-m_moveSpeed;
+			m_currentFrame = BACK;
 		}
 		else if (TheInputHandler::Instance().isKeyDown(SDL_SCANCODE_RIGHT) && (m_position.getX() + m_width) < TheSDLSystem::Instance().getScreenWidth())
 		{
 			m_velocity.getXRef() = (float)m_moveSpeed;
+			m_currentFrame = FORWARD;
 		}
 
 		if (TheInputHandler::Instance().isKeyDown(SDL_SCANCODE_SPACE))
 		{
+			m_textureID = m_animations[ATTACK];
 			if (m_bulletCounter == m_bulletFiringSpeed)
 			{
 				TheSoundManager::Instance().playSound("shoot", 0);
@@ -233,23 +243,7 @@ void Player::handleAnimation()
 		m_invulnerableCounter++;
 	}
 
-	// ajust animation angle if the player is alive and moving
-	if (!m_bDead)
-	{
-		if (m_velocity.getX() < 0)
-		{
-			m_angle = -10.0;
-		}
-		else if (m_velocity.getX() > 0)
-		{
-			m_angle = 10.0;
-		}
-		else
-		{
-			m_angle = 0.0;
-		}
-	}
+	refreshTextureVariables();
 
-
-	SDLGameObject::handleAnimation();
+	//m_currentFrame = (TheSDLSystem::Instance().getRunningTime() / m_animSpeed) % m_numFrames;
 }

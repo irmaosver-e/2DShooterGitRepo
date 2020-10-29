@@ -28,6 +28,8 @@ public:
 protected:
 	SDLGameObject();
 
+	void refreshTextureVariables();
+
 	virtual void handleAnimation();
 	void doDyingAnimation();
 

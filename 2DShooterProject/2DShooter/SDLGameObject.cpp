@@ -80,6 +80,12 @@ int SDLGameObject::getAnimatedFrame(float speedModifier)
 
 void SDLGameObject::handleAnimation()
 {
+	refreshTextureVariables();
+	m_currentFrame = (TheSDLSystem::Instance().getRunningTime() / m_animSpeed) % m_numFrames;
+}
+
+void SDLGameObject::refreshTextureVariables()
+{
 	if (m_lastTextureID != m_textureID)
 	{
 		m_numFrames = TheTextureManager::Instance().getAnimationFrameCount(m_textureID);
@@ -87,8 +93,6 @@ void SDLGameObject::handleAnimation()
 
 		m_lastTextureID = m_textureID;
 	}
-
-	m_currentFrame = (TheSDLSystem::Instance().getRunningTime() / m_animSpeed) % m_numFrames;
 }
 
 //to be made redundant

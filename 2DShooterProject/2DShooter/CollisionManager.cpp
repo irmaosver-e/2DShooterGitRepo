@@ -44,6 +44,7 @@ void CollisionManager::calculateObjColShape(GameObject& focusedObj, ObjectCollis
 
         // draws collision boxes and texture boxes for debugging
         //include SDL_Systems
+       
         /*
         SDL_Rect objTexture;
         objTexture.x = focusedObj.getPosition().getX();
@@ -58,8 +59,8 @@ void CollisionManager::calculateObjColShape(GameObject& focusedObj, ObjectCollis
         SDL_SetRenderDrawColor(TheSDLSystem::Instance().getRenderer(), 0, 255, 0, 0);
         SDL_RenderDrawRect(TheSDLSystem::Instance().getRenderer(), &targetShape.back());
         SDL_RenderPresent(TheSDLSystem::Instance().getRenderer());  
-
         */
+        
     }
 }
 

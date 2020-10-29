@@ -29,6 +29,9 @@ public:
 	virtual std::string objType() { return "Player"; }
 
 private:
+	enum player_move { BACK, IDLE, FORWARD };
+	enum player_stance { STAND, ATTACK, DAMAGE };
+
 	void ressurect();
 	void handleInput();
 	virtual void handleAnimation();
