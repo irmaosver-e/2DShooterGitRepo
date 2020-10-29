@@ -13,6 +13,7 @@ struct ObjectCollisionType
 {
     std::string name;
     std::vector<SDL_Rect> collisionShape;
+    std::map<std::string, std::vector<SDL_Rect>> tileCollisionShape;
     std::vector<std::string> collidesAgainst;
     
     std::vector<std::string> collidesAgainstLayer;
@@ -24,7 +25,9 @@ public:
     CollisionManager(token) : m_currentLevel(nullptr) {}
 
     void setCurrentLevel(Level* currentLevel) { m_currentLevel = currentLevel; }
-    void addCollisionObject(ObjectCollisionType objColType) { m_collisionObjects.push_back(objColType); }
+
+    void addCollisionObject(ObjectCollisionType objColType);
+    ObjectCollisionType* getCollisionObject(std::string colType);
  
     bool checkCollision(GameObject* pFocusedObject);
 
@@ -35,7 +38,6 @@ private:
 
         std::vector<ObjectCollisionType> m_collisionObjects;
 
-        ObjectCollisionType* getCollisionObject(std::string colType);
         void calculateObjColShape(GameObject& focusedObj, ObjectCollisionType& objColType, std::vector<SDL_Rect>& targetShape);
         void calculateTileLayerColShape(TileLayer* pTileLayer, std::vector<SDL_Rect>& targetShape);
 

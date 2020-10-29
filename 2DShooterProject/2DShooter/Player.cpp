@@ -68,7 +68,7 @@ void Player::update()
 			m_velocity.getYRef() = 0;
 			handleInput();
 			SDLGameObject::update();
-			handleAnimation();
+			//handleAnimation();
 		}
 		else //in death animation
 		{
@@ -250,6 +250,6 @@ void Player::handleAnimation()
 		}
 	}
 
-	//m_currentFrame = int((SDL_GetTicks() / (100 / m_animSpeed)) % m_numFrames);
-	m_currentFrame = int((SDL_GetTicks() / (100)) % m_numFrames);
+
+	SDLGameObject::handleAnimation();
 }

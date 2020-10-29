@@ -17,10 +17,11 @@ public:
 	virtual void collision();
 
 	virtual std::string objType() { return "Cursor"; }
+
 private:
 
 	void handleInput();
-	void handleAnimation();
+	//void handleAnimation();
 };
 
 #endif /*defined(__Cursor__)*/

@@ -22,14 +22,22 @@
  <objectgroup id="8" name="Object Layer Buttons">
   <object id="18" name="MenuButton" type="restartButton" gid="14" x="220.838" y="182.034" width="192" height="64">
    <properties>
+    <property name="AnimationList" value="restart"/>
+    <property name="VsCollision" value="mousepointer"/>
     <property name="callbackID" value="restartPlay"/>
    </properties>
   </object>
   <object id="19" name="MenuButton" type="menuButton" gid="10" x="220.838" y="310.888" width="192" height="64">
    <properties>
+    <property name="AnimationList" value="menu"/>
+    <property name="VsCollision" value="mousepointer"/>
     <property name="callbackID" value="gameOverToMain"/>
    </properties>
   </object>
-  <object id="16" name="Cursor" type="mousepointer" gid="17" x="315" y="235" width="32" height="32"/>
+  <object id="16" name="Cursor" type="mousepointer" gid="17" x="315" y="235" width="32" height="32">
+   <properties>
+    <property name="AnimationList" value="arrow"/>
+   </properties>
+  </object>
  </objectgroup>
 </map>

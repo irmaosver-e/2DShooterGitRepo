@@ -20,11 +20,15 @@ public:
 	virtual void collisionPassive() {} //not implemented in this class
 	virtual void collisionWithLayer() {} //not implemented in this class
 
+	virtual void addAnimation(std::string& animationID) { m_animations.push_back(animationID); }
+
+
 	virtual std::string objType() { return "SDLGameObject"; }
 
 protected:
 	SDLGameObject();
 
+	virtual void handleAnimation();
 	void doDyingAnimation();
 
 	int m_bulletFiringSpeed;
@@ -36,6 +40,8 @@ protected:
 	int m_dyingCounter;
 
 	bool m_bPlayedDeathSound;
+
+	std::vector<std::string> m_animations;
 };
 
 #endif /* defined( __SDLGameObject__ ) */

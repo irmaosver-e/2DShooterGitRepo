@@ -2,6 +2,8 @@
 #include "Game.h"
 #include "TextureManager.h"
 
+#include "SDLSystem.h"
+
 SDLGameObject::SDLGameObject() : GameObject(),
 m_bulletFiringSpeed(0),
 m_bulletCounter(0),
@@ -22,11 +24,19 @@ void SDLGameObject::load(const LoaderParams& rParams)
 	m_width = rParams.getWidth();
 	m_height = rParams.getHeight();
 	m_subTypeID = rParams.getSubTypeID();
-	// for now
-	m_textureID = m_subTypeID;
 	
-	m_numFrames = rParams.getNumFrames();
-	m_animSpeed = rParams.getAnimSpeed();
+	//m_numFrames = rParams.getNumFrames();
+	//m_animSpeed = rParams.getAnimSpeed();
+	m_animations = rParams.getAnimationList();
+	if (m_animations.empty())
+	{
+		m_textureID = m_subTypeID;
+	}
+	else
+	{
+		m_textureID = m_animations[0];
+	}
+
 	m_sfx = rParams.getSFX();
 }
 
@@ -46,6 +56,7 @@ void SDLGameObject::update()
 	{
 		m_position += m_velocity;
 	}
+	handleAnimation();
 }
 
 void SDLGameObject::outOfView()
@@ -66,7 +77,18 @@ int SDLGameObject::getAnimatedFrame(float speedModifier)
 */
 
 
+void SDLGameObject::handleAnimation()
+{
+	if (m_lastTextureID != m_textureID)
+	{
+		m_numFrames = TheTextureManager::Instance().getAnimationFrameCount(m_textureID);
+		m_animSpeed = TheTextureManager::Instance().getAnimationRef(m_textureID).frameDuration;
 
+		m_lastTextureID = m_textureID;
+	}
+
+	m_currentFrame = (TheSDLSystem::Instance().getRunningTime() / m_animSpeed) % m_numFrames;
+}
 
 //to be made redundant
 void SDLGameObject::doDyingAnimation()

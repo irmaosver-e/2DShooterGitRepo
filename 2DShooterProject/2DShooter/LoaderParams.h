@@ -3,6 +3,7 @@
 
 #include <iostream>
 #include <map>
+#include <vector>
 #include <SDL_pixels.h>
 
 #include "Vector2D.h"
@@ -76,6 +77,7 @@ public:
 	std::string getFontType() const { return m_fontType; }
 	std::string getTextBoxMessage() const { return m_textBoxMessage; }
 	Colour getColour() const { return m_colour; }
+	std::vector<std::string> getAnimationList() const { return m_animations; }
 
 	float* getXPtr() { return m_initialPos.getXPtr(); }
 	float* getYPtr() { return m_initialPos.getYPtr(); }
@@ -105,6 +107,7 @@ public:
 	std::string& getFontTypeRef() { return m_fontType; }
 	std::string& getTextBoxMessageRef() { return m_textBoxMessage; }
 	Colour& getColourRef() { return m_colour; }
+	std::vector<std::string>& getAnimationListRef() { return m_animations; }
 
 private:
 
@@ -129,6 +132,7 @@ private:
 
 	//should be a vector of animations
 	std::string m_textureID;
+	std::vector<std::string> m_animations;
 };
 
 #endif/* Defined( __LoaderParams__ ) */

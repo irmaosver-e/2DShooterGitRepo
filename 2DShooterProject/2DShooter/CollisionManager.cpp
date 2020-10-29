@@ -6,6 +6,14 @@
 
 #include "SDLSystem.h"
 
+void CollisionManager::addCollisionObject(ObjectCollisionType objColType)
+{
+    if (!getCollisionObject(objColType.name))
+    {
+        m_collisionObjects.push_back(objColType);
+    }
+}
+
 ObjectCollisionType* CollisionManager::getCollisionObject(std::string colType)
 {
     ObjectCollisionType* pObjColType = nullptr;
@@ -25,7 +33,9 @@ ObjectCollisionType* CollisionManager::getCollisionObject(std::string colType)
 void CollisionManager::calculateObjColShape(GameObject& focusedObj, ObjectCollisionType& objColType, std::vector<SDL_Rect>& targetShape)
 {
     //adds the object position to object collision box and stores in focusedObjColShape
-    for (SDL_Rect colBox : objColType.collisionShape)
+    //for (SDL_Rect colBox : objColType.collisionShape)
+    
+    for (SDL_Rect colBox : objColType.tileCollisionShape[focusedObj.getTextureID()])
     {
         targetShape.push_back(colBox);
 
@@ -105,6 +115,8 @@ bool CollisionManager::testShapeVsShapeCollision(std::vector<SDL_Rect>& collisio
 
 bool CollisionManager::checkCollision(GameObject* pFocusedObject)
 {
+    //collision objects are created per subtype 
+    //ObjectCollisionType* pFocusedObjColType = getCollisionObject(pFocusedObject->getTextureID());
     ObjectCollisionType* pFocusedObjColType = getCollisionObject(pFocusedObject->getSubTypeID());
 
     //tests if the pFocusedObject exists in the vector of ObjectCollisionType

@@ -28,6 +28,8 @@ private:
 	TiXmlElement* m_mapRoot;
 	std::vector<Tileset> m_tilesets;
 	Level* m_pLevel;
+
+	std::map<std::string, std::vector<ObjectTile>> m_objectTileOwners;
 };
 
 #endif /* defined ( __LevelParser__ ) */

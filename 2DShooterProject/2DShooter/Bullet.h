@@ -11,6 +11,10 @@ public:
 
     virtual void update();
     
+    virtual void load(const LoaderParams& rParams)
+    {
+        SDLGameObject::load(rParams);
+    }
     
     virtual void outOfView();
 

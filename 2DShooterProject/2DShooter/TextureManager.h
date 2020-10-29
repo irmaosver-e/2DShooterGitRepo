@@ -25,6 +25,10 @@ public:
 	void clearTextureMap();
 	void clearFromTextureMap(std::string id);
 
+	int getAnimationFrameCount(std::string& animName) { return m_animationMap[animName].tileIDs.size(); }
+
+	Animation& getAnimationRef(std::string& animName) { return m_animationMap[animName]; }
+	
 	std::map<std::string, Animation>& getAnimationMap() { return m_animationMap; }
 
 	std::map<std::string, SDL_Texture*> getTextureMap() { return m_textureMap; }

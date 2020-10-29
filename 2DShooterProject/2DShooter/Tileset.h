@@ -25,7 +25,7 @@ struct Animation
 struct ObjectTile
 {
 	std::string type;
-
+	std::string owner;
 	std::vector<SDL_Rect> collisionShape;
 	Animation animation;
 };

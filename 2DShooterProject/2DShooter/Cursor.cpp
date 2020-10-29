@@ -9,6 +9,8 @@ void Cursor::load(const LoaderParams& rParams)
 
 	//should get from levelmap
 	m_moveSpeed = 3;
+
+	m_textureID = m_animations[0];
 }
 
 void Cursor::draw()
@@ -22,7 +24,8 @@ void Cursor::update()
 	m_velocity.getYRef() = 0;
 	handleInput();
 	SDLGameObject::update();
-	handleAnimation();
+
+	//SDLGameObject::handleAnimation();
 }
 
 void Cursor::clean()
@@ -100,9 +103,4 @@ void Cursor::handleInput()
 		}
 	}
 	//*/
-}
-
-void Cursor::handleAnimation()
-{
-	m_currentFrame = (TheSDLSystem::Instance().getRunningTime() / m_animSpeed) % m_numFrames;
 }

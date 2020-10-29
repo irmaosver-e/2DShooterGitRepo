@@ -111,43 +111,48 @@ void LevelParser::parseTileset(TiXmlElement* pTilesetElement)
 
 			tileset.objTileMap[objTile.type] = objTile;
 
-			//register the animation with the textureManager
+		
+			//copies the object tile to a Owner object list to create tileCollisionObjects later when the object is created 
 			TheTextureManager::Instance().getAnimationMap()[objTile.type] = objTile.animation;
+
 		}
 	}
 
-	//to be revised !!!!!!  maybe better have tilesets here  !!!!!!!!!!!!!!!!!!!!
 	m_tilesets.push_back(tileset);
+
 }
 
 void LevelParser::parseObjTile(TiXmlElement* pTileElement, ObjectTile& objectTile)
 {
-	//should load the collision type somewhere here probably
-
 	objectTile.type = pTileElement->Attribute("type");
 	
-	ObjectCollisionType objColType;
-	objColType.name = objectTile.type;
+	ObjectCollisionType* pObjColType = nullptr;
+	//objColType.name = objectTile.type;
 	
 	for (TiXmlElement* e = pTileElement->FirstChildElement(); e != NULL; e = e->NextSiblingElement())
 	{
 		if (e->Value() == std::string("properties"))
 		{
-			for (TiXmlElement* vsCollision = e->FirstChildElement(); vsCollision != NULL; vsCollision = vsCollision->NextSiblingElement())
+			for (TiXmlElement* tileProperty = e->FirstChildElement(); tileProperty != NULL; tileProperty = tileProperty->NextSiblingElement())
 			{
-				if (vsCollision->Attribute("name") == std::string("VsCollision"))
+				if (tileProperty->Attribute("name") == std::string("OwnerSubType"))
 				{
-					getComaSeparatedItems(vsCollision->Attribute("value"), objColType.collidesAgainst);
-				}
-				else if (vsCollision->Attribute("name") == std::string("VsLayerCollision"))	
-				{
-					getComaSeparatedItems(vsCollision->Attribute("value"), objColType.collidesAgainstLayer);
+					objectTile.owner = tileProperty->Attribute("value");
+					pObjColType = TheCollisionManager::Instance().getCollisionObject(objectTile.owner);
+
+					if (!pObjColType)
+					{
+						ObjectCollisionType colType;
+						colType.name = objectTile.owner;
+
+						TheCollisionManager::Instance().addCollisionObject(colType);
+						pObjColType = TheCollisionManager::Instance().getCollisionObject(colType.name);
+					}			
 				}
 			}
 		}
 		else if (e->Value() == std::string("objectgroup"))
 		{
-			
 			for (TiXmlElement* object = e->FirstChildElement(); object != NULL; object = object->NextSiblingElement())
 			{
 				//parse the colision shape boxes
@@ -171,23 +176,23 @@ void LevelParser::parseObjTile(TiXmlElement* pTileElement, ObjectTile& objectTil
 					object->QueryFloatAttribute("y", firingPoint.position.getYPtr());
 					firingPoint.bulletType = object->Attribute("type");
 
-					TheBulletHandler::Instance().registerFiringPoint(objectTile.type, firingPoint);
+					TheBulletHandler::Instance().registerFiringPoint(objectTile.owner, firingPoint);
 				}
 				if (object->Attribute("name") == std::string("anchor"))
 				{
-					//to implement goes here first
+					
 					LoaderParams bulletTypeParams;
 
-					//Vector2Df bulletAnchorVec2D;
 					object->QueryFloatAttribute("x", bulletTypeParams.getAnchorPointPtr()->getXPtr());
 					object->QueryFloatAttribute("y", bulletTypeParams.getAnchorPointPtr()->getYPtr());
-
 
 					TheBulletHandler::Instance().registerBulletType(object->Attribute("type"), bulletTypeParams);
 				}
 
 			}
-			objColType.collisionShape = objectTile.collisionShape;
+			//objColType.collisionShape = objectTile.collisionShape;
+			
+			pObjColType->tileCollisionShape[objectTile.type] = objectTile.collisionShape;
 		}
 		else if (e->Value() == std::string("animation"))
 		{
@@ -206,7 +211,7 @@ void LevelParser::parseObjTile(TiXmlElement* pTileElement, ObjectTile& objectTil
 		}
 	}
 
-	TheCollisionManager::Instance().addCollisionObject(objColType);
+	//TheCollisionManager::Instance().addCollisionObject(objColType);
 }
 
 void LevelParser::parseLayer(TiXmlElement* pLayerElement)
@@ -395,18 +400,30 @@ Layer* LevelParser::parseObjectLayer(TiXmlElement* pObjectElement)
 								objectParams.getCallbackIDRef() = 2;
 							}
 						}
-						if (property->Attribute("name") == std::string("sfx"))
+						else if (property->Attribute("name") == std::string("sfx"))
 						{
 							objectParams.getSFXRef() = property->Attribute("value");
 						}
-						if (property->Attribute("name") == std::string("Lives"))
+						else if (property->Attribute("name") == std::string("Lives"))
 						{
 							property->Attribute("value", objectParams.getLivesPtr());
+						}	 
+						else if (property->Attribute("name") == std::string("AnimationList"))
+						{
+							getComaSeparatedItems(property->Attribute("value"), objectParams.getAnimationListRef());
+						}
+						else if (property->Attribute("name") == std::string("VsCollision"))
+						{
+							getComaSeparatedItems(property->Attribute("value"), TheCollisionManager::Instance().getCollisionObject(objectParams.getSubTypeID())->collidesAgainst);
+						}
+						else if (property->Attribute("name") == std::string("VsLayerCollision"))
+						{
+							getComaSeparatedItems(property->Attribute("value"), TheCollisionManager::Instance().getCollisionObject(objectParams.getSubTypeID())->collidesAgainstLayer);
 						}
 					}
 				}
 
-				TheObjectSpawner::Instance().registerObjParams(objSubType, objectParams);
+				TheObjectSpawner::Instance().registerObjParams(objSubType, objectParams);	
 			}
 			
 			//spawns the objects on screen
@@ -502,7 +519,7 @@ void LevelParser::parseOutOfPlayLayers(TiXmlElement* pOutElement)
 			if (e->Attribute("name") == std::string("Bullets"))
 			{
 				TheBulletHandler::Instance().registerBulletLayer(pObjectLayer);
-				//TheBulletHandler::Instance().registerBulletLayerName(e->Attribute("name"));
+				//TheBulletHandler::Instance().registerBulletLayerName(e->Attribute("name"));				
 
 				//goes through every object in the layer
 				for (TiXmlElement* pObjElement = e->FirstChildElement(); pObjElement != NULL; pObjElement = pObjElement->NextSiblingElement())
@@ -515,6 +532,23 @@ void LevelParser::parseOutOfPlayLayers(TiXmlElement* pOutElement)
 					pObjElement->Attribute("height", pBulletParam->getHeightPtr());
 					
 					pBulletParam->getSubTypeIDRef() = pObjElement->Attribute("type");
+
+					// get bullet properties
+					if (pObjElement->FirstChildElement()->Value() == std::string("properties"))
+					{
+						for (TiXmlElement* objProperty = pObjElement->FirstChildElement()->FirstChildElement(); objProperty != NULL; objProperty = objProperty->NextSiblingElement())
+						{
+							//adds the vsCollision to the collision manager
+							if (objProperty->Attribute("name") == std::string("VsCollision"))
+							{
+								getComaSeparatedItems(objProperty->Attribute("value"), TheCollisionManager::Instance().getCollisionObject(pBulletParam->getSubTypeID())->collidesAgainst);
+							}
+							else if (objProperty->Attribute("name") == std::string("VsLayerCollision"))
+							{
+								getComaSeparatedItems(objProperty->Attribute("value"), TheCollisionManager::Instance().getCollisionObject(pBulletParam->getSubTypeID())->collidesAgainstLayer);
+							}
+						}
+					}
 
 					TheBulletHandler::Instance().getBulletTypeParam(pObjElement->Attribute("name"));
 				}

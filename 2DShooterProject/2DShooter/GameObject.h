@@ -28,6 +28,7 @@ public:
 	virtual std::string objType() = 0;
 
 	std::string getSubTypeID() { return m_subTypeID; }
+	std::string getTextureID() { return m_textureID; }
 	Vector2Df& getPosition() { return m_position; }
 	Vector2Df& getVelocity() { return m_velocity; }
 	int getWidth() { return m_width; }
@@ -67,7 +68,8 @@ protected:
 		m_bDying(false),
 		m_angle(0),
 		m_alpha(255),
-		m_sfx("")
+		m_sfx(""),
+		m_lastTextureID("")
 	{
 	}
 
@@ -88,6 +90,7 @@ protected:
 	int m_numFrames;
 	int m_animSpeed;
 	std::string m_textureID;
+	std::string m_lastTextureID;
 
 	//common boolean variables
 	bool m_bIsOn;

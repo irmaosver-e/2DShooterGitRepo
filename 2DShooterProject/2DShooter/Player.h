@@ -31,7 +31,7 @@ public:
 private:
 	void ressurect();
 	void handleInput();
-	void handleAnimation();
+	virtual void handleAnimation();
 
 	HUD* m_playerHUD;
 
