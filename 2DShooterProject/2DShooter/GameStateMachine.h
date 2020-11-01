@@ -7,7 +7,10 @@
 class GameStateMachine
 {
 public:
-	GameStateMachine() : m_changingState(false) {}
+	GameStateMachine() : 
+		m_pCurrentState(nullptr),
+		m_changingState(false){}
+
 	~GameStateMachine() {}
 
 	void changeState(GameState* pState);
@@ -23,6 +26,8 @@ public:
 
 private:
 	std::vector<GameState*> m_gameStates;
+	std::vector<GameState*> m_previousStates;
+	GameState* m_pCurrentState;
 	bool m_changingState;
 };
 

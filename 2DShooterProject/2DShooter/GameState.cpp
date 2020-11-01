@@ -39,6 +39,8 @@ bool GameState::onEnter()
 
 	TheCollisionManager::Instance().setCurrentLevel(m_pLevel);
 
+	m_exiting = false;
+
 
 	return true;
 }

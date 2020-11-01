@@ -119,6 +119,7 @@ void Game::clean()
 	TheSDLSystem::Instance().quit();
 }
 
+
 void Game::setCurrentLevel(int currentLevel)
 {
 	m_currentLevel = currentLevel;

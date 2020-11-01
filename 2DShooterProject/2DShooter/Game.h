@@ -18,12 +18,12 @@ public:
 	void clean();
 
 	const int getCurrentLevel() { return m_currentLevel; }
-	const int getNextLevel() { return m_nextLevel; }
+	//const int getNextLevel() { return m_nextLevel; }
 	const int getLevelComplete() { return m_bLevelComplete; }
-	std::map<int, std::string> getLevelFiles() { return m_levelFiles; }
+	//std::map<int, std::string> getLevelFiles() { return m_levelFiles; }
 
 	void setCurrentLevel(int currentLevel);
-	void setNextLevel(int nextLevel) { m_nextLevel = nextLevel; }
+	//void setNextLevel(int nextLevel) { m_nextLevel = nextLevel; }
 	void setLevelComplete(bool levelComplete) { m_bLevelComplete = levelComplete; }
 	void addLevelFile(int levelNumber, std::string filename);
 
