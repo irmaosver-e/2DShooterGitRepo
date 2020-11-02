@@ -1,7 +1,7 @@
 #include "GameState.h"
 
 #include "InputHandler.h"
-#include "LevelParser.h"
+#include "ParserManager.h"
 #include "CollisionManager.h"
 
 
@@ -34,8 +34,14 @@ bool GameState::render()
 
 bool GameState::onEnter()
 {
-	LevelParser levelParser;
-	m_pLevel = levelParser.parseLevel(m_stageAssetsPath, m_stageMapFile);
+	//only parse once
+	if (!m_pLevel)
+	{
+		m_pLevel = TheParserManager::Instance().getLevelParserRef().parseLevel();
+	}
+	
+	//LevelParser levelParser;
+	//m_pLevel = levelParser.parseLevel(m_stageAssetsPath, m_stageMapFile);
 
 	TheCollisionManager::Instance().setCurrentLevel(m_pLevel);
 

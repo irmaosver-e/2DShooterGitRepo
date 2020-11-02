@@ -97,7 +97,7 @@ void Level1Boss::update()
             if (m_dyingCounter == m_dyingTime)
             {
                 m_bDead = true;
-                TheGame::Instance().setLevelComplete(true);
+                //TheGame::Instance().setLevelComplete(true);
             }
             m_dyingCounter++;
 

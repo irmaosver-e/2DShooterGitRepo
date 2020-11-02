@@ -1,6 +1,6 @@
 #include "PauseState.h"
 
-#include "Game.h"
+#include "GameStateMachine.h"
 #include "MainMenuState.h"
 
 #include "InputHandler.h"
@@ -51,10 +51,10 @@ bool PauseState::update()
 
 void PauseState::s_pauseToMain()
 {
-	TheGame::Instance().getStateMachine()->changeState(new MainMenuState());
+	TheGameStateMachine::Instance().changeState(new MainMenuState());
 }
 
 void PauseState::s_resumePlay()
 {
-	TheGame::Instance().getStateMachine()->popState();
+	TheGameStateMachine::Instance().popState();
 }

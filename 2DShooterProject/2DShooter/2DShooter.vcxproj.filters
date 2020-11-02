@@ -231,6 +231,9 @@
     <ClCompile Include="TextBox.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="ParserManager.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="AnimatedGraphic.h">
@@ -393,6 +396,9 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="TextBox.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="ParserManager.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

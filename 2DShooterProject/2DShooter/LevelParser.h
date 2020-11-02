@@ -8,9 +8,14 @@
 class LevelParser : public Parser
 {
 public:
-	LevelParser() : m_pLevel(nullptr) {}
+	LevelParser() : 
+		m_pLevel(nullptr),
+		m_levelMapFile(""){}
 
-	Level* parseLevel(std::string assetsLocation, std::string levelFile);
+	Level* parseLevel();
+	Level* parseLevel(std::string assetsLocation, std::string levelFile) {}
+	
+	void setLevelFile(std::string& fileName) { m_levelMapFile = fileName; }
 
 private:
 	void parseTileset(TiXmlElement* pTilesetElement);
@@ -23,13 +28,23 @@ private:
 	Layer* parseImageLayer(TiXmlElement* pImageElement);
 	void parseOutOfPlayLayers(TiXmlElement* pOutElement);
 
-	bool parseTextures(std::string fileName, std::string id);
+	bool parseTextures(std::string& fileName, std::string id);
+
+	void resetParser()
+	{
+		m_mapRoot = nullptr;
+		m_pLevel = nullptr;
+		m_tilesets.clear();
+		m_objectTileOwners.clear();
+	}
 
 	TiXmlElement* m_mapRoot;
 	std::vector<Tileset> m_tilesets;
 	Level* m_pLevel;
 
 	std::map<std::string, std::vector<ObjectTile>> m_objectTileOwners;
+
+	std::string m_levelMapFile;
 };
 
 #endif /* defined ( __LevelParser__ ) */

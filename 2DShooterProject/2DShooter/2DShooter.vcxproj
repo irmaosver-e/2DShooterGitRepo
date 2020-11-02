@@ -45,6 +45,7 @@
     <ClCompile Include="ObjectSpawner.cpp" />
     <ClCompile Include="ObjectLayer.cpp" />
     <ClCompile Include="Parser.cpp" />
+    <ClCompile Include="ParserManager.cpp" />
     <ClCompile Include="PauseState.cpp" />
     <ClCompile Include="Player.cpp" />
     <ClCompile Include="PlayState.cpp" />
@@ -101,6 +102,7 @@
     <ClInclude Include="ObjectSpawner.h" />
     <ClInclude Include="ObjectLayer.h" />
     <ClInclude Include="Parser.h" />
+    <ClInclude Include="ParserManager.h" />
     <ClInclude Include="PauseState.h" />
     <ClInclude Include="Player.h" />
     <ClInclude Include="PlayState.h" />

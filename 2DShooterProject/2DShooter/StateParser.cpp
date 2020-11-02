@@ -1,117 +1,9 @@
 #include "StateParser.h"
 
-#include "Game.h"
 #include "SDLSystem.h"
-//#include "TextureManager.h"
+#include "ParserManager.h"
 #include "SoundManager.h"
-//#include "GameObjectFactory.h"
 
-/* redundant
-bool StateParser::parseState(std::string assetsLocation, std::string stateFile, std::string stateID, 
-								std::vector<GameObject*> *pObjects, std::vector<std::string> *pTextureIDs)
-{
-	//create XML doc
-	TiXmlDocument xmlDoc;
-
-	//load the file state
-	if (!xmlDoc.LoadFile(assetsLocation + stateFile))
-	{
-		std::cerr << xmlDoc.ErrorDesc() << "\n";
-		return false;
-	}
-
-	//get the root element
-	TiXmlElement* pRoot = xmlDoc.RootElement();
-
-	//pre declare the states root node
-	TiXmlElement* pStateRoot = nullptr;
-
-	//get this states root node and assign it to pStateRoot
-	for (TiXmlElement* e = pRoot->FirstChildElement(); e != nullptr; e = e->NextSiblingElement())
-	{
-		if (e->Value() == stateID)
-		{
-			pStateRoot = e;
-			break;
-		}
-	}
-
-	//predeclare the texture root
-	TiXmlElement* pTextureRoot = nullptr;
-
-	//pre declare the object root node
-	TiXmlElement* pObjectRoot = nullptr;
-
-	//get the root node and assign it to pTextureRoot
-	for (TiXmlElement* e = pStateRoot->FirstChildElement(); e != nullptr; e = e->NextSiblingElement())
-	{
-		if (e->Value() == std::string("TEXTURES"))
-		{
-			pTextureRoot = e;
-		}
-		else if (e->Value() == std::string("OBJECTS"))
-		{
-			pObjectRoot = e;
-		}
-		else
-		{
-			std::cout << "no TiXmlElement* for " << e ->Value() << " in StateParser::parseState \n" ;
-			if (pTextureRoot && pObjectRoot)
-			{
-				break;
-			}
-		}
-	}
-
-	//parse textures
-	parseTextures(assetsLocation, pTextureRoot, pTextureIDs);
-
-	//parse the objects
-	parseObjects(pObjectRoot, pObjects);
-
-	return true;
-}
-*/
-/*to be made redundant
-void StateParser::parseTextures(std::string assetsLocation, TiXmlElement* pTextureRoot, std::vector<std::string> *pTextureIDs)
-{
-	for (TiXmlElement* e = pTextureRoot->FirstChildElement(); e != nullptr; e = e->NextSiblingElement())
-	{
-		std::string filename = e->Attribute("filename");
-		std::string id = e->Attribute("ID");
-
-		pTextureIDs->push_back(id);
-		if (!TheTextureManager::Instance().load(assetsLocation + filename, id, TheSDLSystem::Instance().getRenderer()))
-		{
-			std::cout << "StateParser::parseTextures -- failed to load texture " << filename << "\n";
-		}
-	}
-}
-*/
-/*to be made redundant
-void StateParser::parseObjects(TiXmlElement* pObjectRoot, std::vector<GameObject*> *pObjects)
-{
-	for (TiXmlElement* e = pObjectRoot->FirstChildElement(); e != NULL; e = e->NextSiblingElement())
-	{
-		int x, y, width, height, numFrames, callbackID, animSpeed;
-		std::string textureID;
-
-		e->Attribute("x", &x);
-		e->Attribute("y", &y);
-		e->Attribute("width", &width);
-		e->Attribute("height", &height);
-		e->Attribute("numFrames", &numFrames);
-		if (!e->Attribute("callbackID", &callbackID)) { callbackID = 0; }
-		if (!e->Attribute("animSpeed", &animSpeed)) { animSpeed = 1; }
-
-		textureID = e->Attribute("textureID");
-
-		GameObject* pGameObject = TheGameObjectFactory::Instance().create(e->Attribute("type"));
-		pGameObject->load(std::unique_ptr<LoaderParams>(new LoaderParams(x, y, width, height, textureID, numFrames, callbackID, animSpeed)));
-		pObjects->push_back(pGameObject);
-	}
-}
-*/
 
 bool StateParser::parseState(GameState* pState)
 {
@@ -119,7 +11,7 @@ bool StateParser::parseState(GameState* pState)
 	TiXmlDocument xmlDoc;
 
 	//get the root element
-	TiXmlElement* pRoot = loadDocument(xmlDoc, TheGame::Instance().getAssetsRoot(), TheGame::Instance().getStatesFile());
+	TiXmlElement* pRoot = loadDocument(xmlDoc, TheParserManager::Instance().m_rootPath, m_stateFile);
 
 	//get this states root node and assign it to pStateRoot
 	TiXmlElement* pStateRoot = nullptr;
@@ -156,16 +48,19 @@ bool StateParser::parseState(GameState* pState)
 	}
 
 	//parse a subpath if present 
-	std::string path = TheGame::Instance().getAssetsRoot();
+	//std::string path = TheParserManager::Instance().m_rootPath;
+	std::string subpath = "";
 	if (pStageElem->FirstChildElement()->Attribute("subpath"))
 	{
-		path += pStageElem->FirstChildElement()->Attribute("subpath");
+		subpath += pStageElem->FirstChildElement()->Attribute("subpath");
 	}
 
-	pState->stageAssetsPath() = path;
-	pState->stageMapFileName() = pStageElem->FirstChildElement()->Attribute("filename");
+	subpath += pStageElem->FirstChildElement()->Attribute("filename");
+	//pState->stageAssetsPath() = path;
+	//pState->stageMapFileName() = pStageElem->FirstChildElement()->Attribute("filename");
 
-	//create function
+	TheParserManager::Instance().m_levelParser.setLevelFile(subpath);
+
 	parseAudio(pAudioElem);
 
 	return true;
@@ -175,7 +70,7 @@ void StateParser::parseAudio(TiXmlElement* pAudioElem)
 {
 	for (TiXmlElement* e = pAudioElem->FirstChildElement(); e != nullptr; e = e->NextSiblingElement())
 	{
-		std::string filename = TheGame::Instance().getAssetsRoot();
+		std::string filename = TheParserManager::Instance().m_rootPath + TheParserManager::Instance().m_audioFolder;
 		if (e->Attribute("subpath"))
 		{
 			filename += e->Attribute("subpath");

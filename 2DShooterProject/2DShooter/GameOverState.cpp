@@ -1,6 +1,6 @@
 #include "GameOverState.h"
 
-#include "Game.h"
+#include "GameStateMachine.h"
 #include "MainMenuState.h"
 #include "PlayState.h"
 
@@ -25,12 +25,12 @@ bool GameOverState::onEnter()
 
 void GameOverState::s_gameOverToMain()
 {
-	TheGame::Instance().getStateMachine()->changeState(new MainMenuState());
+	TheGameStateMachine::Instance().changeState(new MainMenuState());
 }
 
 void GameOverState::s_restartPlay()
 {
-	TheGame::Instance().getStateMachine()->changeState(new PlayState());
+	TheGameStateMachine::Instance().changeState(new PlayState());
 }
 
 

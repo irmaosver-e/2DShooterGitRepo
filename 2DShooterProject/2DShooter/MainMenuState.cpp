@@ -1,6 +1,6 @@
 #include "MainMenuState.h"
 
-#include "Game.h"
+#include "GameStateMachine.h"
 #include "PlayState.h"
 
 
@@ -25,10 +25,10 @@ bool MainMenuState::onEnter()
 
 void MainMenuState::s_menuToPlay()
 {
-	TheGame::Instance().getStateMachine()->changeState(new PlayState());
+	TheGameStateMachine::Instance().changeState(new PlayState());
 }
 
 void MainMenuState::s_exitFromMenu()
 {
-	TheGame::Instance().quit();
+	TheGameStateMachine::Instance().quit();
 }

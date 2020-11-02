@@ -16,6 +16,8 @@ public:
 	bool registerType(std::string typeID, BaseCreator* pCreator);
 	GameObject* create(std::string typeID);
 
+	void clearCreators();
+
 private:
 	std::map<std::string, BaseCreator*> m_creators;
 };

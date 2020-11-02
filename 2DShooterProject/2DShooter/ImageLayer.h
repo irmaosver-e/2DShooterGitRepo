@@ -12,7 +12,7 @@ public:
 
 	virtual void update();
 	virtual void render();
-
+	
 	std::vector<ObjectMarker>& getObjMarkersRef() { return m_objectMarkers; }
 	std::vector<GameObject*>* getGameObjects() { return &m_gameObjects; }
 

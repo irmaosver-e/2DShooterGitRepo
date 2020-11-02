@@ -1,7 +1,7 @@
 #include "SystemParser.h"
 #include "tinyxml.h"
 
-#include "Game.h"
+#include "ParserManager.h"
 #include "SDLSystem.h"
 #include "InputHandler.h"
 #include "SoundManager.h"
@@ -12,7 +12,8 @@ bool SystemParser::parseSystem(const char* configFile)
 	//create XML doc
 	TiXmlDocument xmlDoc;
 
-	TiXmlElement* pRoot = loadDocument(xmlDoc,"", configFile);
+	std::string configStr = configFile;
+	TiXmlElement* pRoot = loadDocument(xmlDoc, TheParserManager::Instance().m_rootPath, configStr);
 
 	//pre declare the window root node
 	TiXmlElement* pWindowRoot = nullptr;
@@ -64,11 +65,11 @@ bool SystemParser::parseSystem(const char* configFile)
 	}
 
 	//parse systems
-	if (!parseWindow(pWindowRoot)||
+	if (!parseFiles(pFilesRoot) ||
+		!parseWindow(pWindowRoot) ||
 		!parseInput(pInputRoot) ||
 		!parseSound(pSoundRoot) ||
-		!parseFonts(pFontsRoot) ||
-		!parseFiles(pFilesRoot))
+		!parseFonts(pFontsRoot))
 	{
 		return false;
 	};
@@ -83,7 +84,7 @@ bool SystemParser::parseWindow(TiXmlElement* pWindowRoot)
 		return false;
 	}
 
-	const char* iconPath = nullptr;
+	std::string iconPath = TheParserManager::Instance().m_rootPath + TheParserManager::Instance().m_imagesFolder;
 	const char* title = nullptr;
 	int xpos, ypos, width, height, fps;
 	int red, green, blue, alpha;
@@ -113,7 +114,7 @@ bool SystemParser::parseWindow(TiXmlElement* pWindowRoot)
 		}
 		else if (e->Value() == std::string("iconParamn"))
 		{
-			iconPath = e->Attribute("fileName");
+			iconPath += e->Attribute("fileName");
 			title = e->Attribute("title");
 		}
 		else
@@ -122,7 +123,8 @@ bool SystemParser::parseWindow(TiXmlElement* pWindowRoot)
 		}
 	}
 
-	return TheSDLSystem::Instance().init(title, iconPath, xpos, ypos, width, height, fps, fullScreen, red, green, blue, alpha);
+
+	return TheSDLSystem::Instance().init(title, iconPath.c_str(), xpos, ypos, width, height, fps, fullScreen, red, green, blue, alpha);
 
 }
 
@@ -186,15 +188,11 @@ bool SystemParser::parseFonts(TiXmlElement* pFontsRoot)
 	}
 
 	TheTextManager::Instance().init();
+	TheTextManager::Instance().setFontRepositoryPath(TheParserManager::Instance().m_rootPath + TheParserManager::Instance().m_fontsFolder);
 	for (TiXmlElement* e = pFontsRoot->FirstChildElement(); e != nullptr; e = e->NextSiblingElement())
 	{
-		if (e->Value() == std::string("location"))
+		if (e->Value() == std::string("type"))
 		{
-			TheTextManager::Instance().setFontRepositoryPath(e->Attribute("path"));
-		}
-		else if (e->Value() == std::string("type"))
-		{
-			
 			int fontSize;
 			e->Attribute("size", &fontSize);
 
@@ -219,20 +217,26 @@ bool SystemParser::parseFiles(TiXmlElement* pFilesRoot)
 
 	for (TiXmlElement* e = pFilesRoot->FirstChildElement(); e != nullptr; e = e->NextSiblingElement())
 	{
-		if (e->Value() == std::string("location"))
+		if (e->Value() == std::string("AssetPaths"))
 		{
-			TheGame::Instance().setAssetsRoot(e->Attribute("path"));
+			TheParserManager::Instance().m_rootPath = e->Attribute("root");
+			TheParserManager::Instance().m_imagesFolder = e->Attribute("images");
+			TheParserManager::Instance().m_audioFolder = e->Attribute("audio");
+			TheParserManager::Instance().m_fontsFolder = e->Attribute("fonts");
+			TheParserManager::Instance().m_mapsFolder = e->Attribute("maps");
+			TheParserManager::Instance().m_tilesetsFolder = e->Attribute("tilesets");
 		}
-		else if (e->Value() == std::string("state"))
+		else if (e->Value() == std::string("statesFile"))
 		{
-			TheGame::Instance().setStatesFile(e->Attribute("filename"));
+			std::string stateFileName = e->Attribute("filename");
+			TheParserManager::Instance().m_stateParser.setStateFile(stateFileName);
 		}
-		else if (e->Value() == std::string("level"))
-		{
-			int levelNumber;
-			e->Attribute("stage", &levelNumber);
+		else if (e->Value() == std::string("level")) // SO FAR REDUNDANT!!!
+		{ 
+			//int levelNumber;
+			//e->Attribute("stage", &levelNumber);
 
-			TheGame::Instance().addLevelFile(levelNumber, e->Attribute("filename"));
+			//TheGame::Instance().addLevelFile(levelNumber, e->Attribute("filename"));
 
 		}
 		else

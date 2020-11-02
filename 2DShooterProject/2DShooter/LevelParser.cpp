@@ -1,6 +1,7 @@
 #include "LevelParser.h"
 
 #include <string>
+#include "ParserManager.h"
 #include "TextureManager.h"
 #include "SoundManager.h"
 #include "TextManager.h"
@@ -17,13 +18,24 @@
 
 #include "HUD.h"
 
-Level* LevelParser::parseLevel(std::string assetsLocation, std::string levelFile)
+Level* LevelParser::parseLevel()
 {
-	m_pLevel = new Level(assetsLocation, levelFile);
+	
+	std::string assetsLocation = TheParserManager::Instance().m_rootPath + TheParserManager::Instance().m_mapsFolder;
+
+
+	//m_pLevel = new Level(assetsLocation, levelFile);
+
+	if (m_pLevel)
+	{
+		resetParser();
+	}
+
+	m_pLevel = new Level();
 
 	TiXmlDocument xmlDoc;
 
-	m_mapRoot = loadDocument(xmlDoc, assetsLocation, levelFile);
+	m_mapRoot = loadDocument(xmlDoc, assetsLocation, m_levelMapFile);
 
 	TiXmlElement* pProperties = NULL;
 	std::vector<TiXmlElement*> pLayerElements;
@@ -54,7 +66,7 @@ Level* LevelParser::parseLevel(std::string assetsLocation, std::string levelFile
 		}
 		else
 		{
-			std::cout << "invalid value: " << e->Value() << " in" << levelFile << "\n";
+			std::cout << "invalid value: " << e->Value() << " in" << m_levelMapFile << "\n";
 		}
 	}
 
@@ -66,7 +78,10 @@ void LevelParser::parseTileset(TiXmlElement* pTilesetElement)
 
 	TiXmlDocument tilesetDoc;
 
-	TiXmlElement* pTilesetRoot = loadDocument(tilesetDoc, m_pLevel->getlevelAssetsLocation(), pTilesetElement->Attribute("source"));
+	std::string tilesetPath = TheParserManager::Instance().m_rootPath + TheParserManager::Instance().m_tilesetsFolder;
+	std::string tilesetFileName = pTilesetElement->Attribute("source");
+	
+	TiXmlElement* pTilesetRoot = loadDocument(tilesetDoc, tilesetPath, tilesetFileName);
 
 	Tileset tileset;
 
@@ -91,7 +106,8 @@ void LevelParser::parseTileset(TiXmlElement* pTilesetElement)
 		if (e->Value() == std::string("image"))
 		{
 			//add tileset to textureManager
-			parseTextures((m_pLevel->getlevelAssetsLocation() + e->Attribute("source")), tileset.name);
+			std::string textureFile = TheParserManager::Instance().m_rootPath + TheParserManager::Instance().m_imagesFolder + e->Attribute("source");
+			parseTextures(textureFile, tileset.name);
 			
 			e->Attribute("width", &tileset.sourceWidth);
 			e->Attribute("height", &tileset.sourceHeight);
@@ -186,7 +202,6 @@ void LevelParser::parseObjTile(TiXmlElement* pTileElement, ObjectTile& objectTil
 				}
 
 			}
-			//objColType.collisionShape = objectTile.collisionShape;
 			
 			pObjColType->tileCollisionShape[objectTile.type] = objectTile.collisionShape;
 		}
@@ -206,8 +221,6 @@ void LevelParser::parseObjTile(TiXmlElement* pTileElement, ObjectTile& objectTil
 			objectTile.animation = objAnimation; 
 		}
 	}
-
-	//TheCollisionManager::Instance().addCollisionObject(objColType);
 }
 
 void LevelParser::parseLayer(TiXmlElement* pLayerElement)
@@ -219,7 +232,6 @@ void LevelParser::parseLayer(TiXmlElement* pLayerElement)
 		if(pLayerElement->Attribute("name") == std::string("OUT_OF_PLAY_AREA"))
 		{ 
 			parseOutOfPlayLayers(pLayerElement);
-		
 		}
 		else
 		{
@@ -431,7 +443,6 @@ Layer* LevelParser::parseObjectLayer(TiXmlElement* pObjectElement)
 			{
 				m_pLevel->setPlayer(dynamic_cast<Player*>(pObjectLayer->getGameObjects()->back()));
 			}
-			
 		}
 	}
 
@@ -471,13 +482,13 @@ Layer* LevelParser::parseImageLayer(TiXmlElement* pImageElement)
 		}
 		else
 		{
-			imageFile = e->Attribute("source");
+			imageFile = TheParserManager::Instance().m_rootPath + TheParserManager::Instance().m_imagesFolder + e->Attribute("source");
 			e->Attribute("width", imageParams.getWidthPtr());
 			e->Attribute("height", imageParams.getHeightPtr());
 		}
 	}
 
-	parseTextures(m_pLevel->getlevelAssetsLocation() + imageFile, imageParams.getSubTypeID());
+	parseTextures(imageFile, imageParams.getSubTypeID());
 
 	GameObject* pGameObject = TheGameObjectFactory::Instance().create(type);
 
@@ -515,7 +526,6 @@ void LevelParser::parseOutOfPlayLayers(TiXmlElement* pOutElement)
 			if (e->Attribute("name") == std::string("Bullets"))
 			{
 				TheBulletHandler::Instance().registerBulletLayer(pObjectLayer);
-				//TheBulletHandler::Instance().registerBulletLayerName(e->Attribute("name"));				
 
 				//goes through every object in the layer
 				for (TiXmlElement* pObjElement = e->FirstChildElement(); pObjElement != NULL; pObjElement = pObjElement->NextSiblingElement())
@@ -653,7 +663,7 @@ void LevelParser::parseOutOfPlayLayers(TiXmlElement* pOutElement)
 	}
 }
 
-bool LevelParser::parseTextures(std::string fileName, std::string id)
+bool LevelParser::parseTextures(std::string& fileName, std::string id)
 {
 	if (!TheTextureManager::Instance().loadTextureFromFile(fileName, id))
 	{

@@ -27,9 +27,15 @@ public:
 
 	bool parseState(GameState* pState);
 
+	void setStateFile(std::string& fileName) { m_stateFile = fileName; }
+
 private:
 
 	void parseAudio(TiXmlElement* pAudioElem);
+
+	std::string m_stateFile;
+
+
 
 };
 

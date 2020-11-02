@@ -1,5 +1,5 @@
 #include "InputHandler.h"
-#include "Game.h"
+#include "GameStateMachine.h"
 
 InputHandler::InputHandler(token) : m_keyboardState(0),
 m_bJoystickInitialised(false),
@@ -204,7 +204,7 @@ void InputHandler::update()
 		switch (event.type)
 		{
 		case SDL_QUIT:
-			TheGame::Instance().quit();
+			TheGameStateMachine::Instance().quit();
 			break;
 
 		case SDL_JOYAXISMOTION:

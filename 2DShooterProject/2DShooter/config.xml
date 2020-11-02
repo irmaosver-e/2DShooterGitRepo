@@ -3,7 +3,7 @@
 	<WINDOW>
 		<properties window_X_Pos="100" window_Y_Pos="100" screen_Width="640" screen_Height="480" frame_Rate="50" fullscreen="false"/>
 		<drawColour R="0" G="0" B="0" Alpha="255"/>
-		<iconParamn fileName="assets/shipIcon.png" title="Nani's Shooter"/>
+		<iconParamn fileName="shipIcon.png" title="Nani's Shooter"/>
 	</WINDOW>
 	<PERIPHERALS>
 		<joysticks sensibility="1000"/>
@@ -12,12 +12,11 @@
 		<properties frequency="22050" bits="16" channnels="2" chunksize="4096"/>
 	</AUDIO>
 	<FONTS>
-		<location path="assets/fonts/"/>
 		<type filename="arial.ttf" fontName="Arial" size="14" />
 	</FONTS>
 	<FILES>
-		<location path="assets/"/>
-		<state filename="states.xml"/>
+		<AssetPaths root="assets/" images="images/" audio="sounds/" fonts="fonts/" maps="maps/" tilesets="tilesets/"/>
+		<statesFile filename="states.xml"/>
 		<!-- redundant so far
 		<level stage="1" filename="map1.tmx"/>
 		<level stage="2" filename="map2.tmx"/>

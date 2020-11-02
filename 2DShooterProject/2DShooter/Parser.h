@@ -8,7 +8,7 @@
 class Parser
 {
 public:
-	TiXmlElement* loadDocument(TiXmlDocument& xmlDoc, std::string assetsLocation, std::string file);
+	TiXmlElement* loadDocument(TiXmlDocument& xmlDoc, std::string& assetsLocation, std::string& file);
 	
 protected:
 	

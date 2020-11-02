@@ -37,6 +37,9 @@ public:
 private:
 	friend class LevelParser;
 
+	Level() {}
+
+	//possibly redundant
 	Level(std::string location, std::string file) : m_assetsLocation(location), m_mapFile(file) {}
 
 	Player* m_pPlayer;
@@ -46,7 +49,7 @@ private:
 	std::vector<TileLayer*> m_tileLayers;
 	std::vector<ImageLayer*> m_imageLayers;
 
-
+	//possibly redundant
 	std::string m_assetsLocation;
 	std::string m_mapFile;
 

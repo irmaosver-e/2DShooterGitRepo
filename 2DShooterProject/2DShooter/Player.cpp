@@ -44,6 +44,7 @@ void Player::draw()
 
 void Player::update()
 {
+	/* NEEDS REVISION
 	//if the level is finished, fly off the screen
 	if (TheGame::Instance().getLevelComplete())
 	{
@@ -61,6 +62,7 @@ void Player::update()
 	}
 	else
 	{
+	*/
 		//if player NOT in death animation
 		if (!m_bDying)
 		{
@@ -80,7 +82,7 @@ void Player::update()
 			}
 			m_dyingCounter++;
 		}
-	}
+	
 }
 
 void Player::collision()
@@ -95,7 +97,8 @@ void Player::collision()
 	
 
 	// if the player is not invulnerable then set to dying and change values for death animation tile sheet
-	if (!m_invulnerable && !TheGame::Instance().getLevelComplete())
+	//if (!m_invulnerable && !TheGame::Instance().getLevelComplete())
+	if (!m_invulnerable)
 	{
 		//m_textureID = "largeexplosion";
 		//m_currentFrame = 0;

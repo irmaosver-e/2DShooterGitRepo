@@ -1,11 +1,11 @@
 #include "GameStateMachine.h"
 
 #include <iostream>
-#include "StateParser.h"
+#include "ParserManager.h"
 
 void GameStateMachine::changeState(GameState* pState)
 {
-	m_changingState = true;
+	m_bChangingState = true;
 
 	if (!m_gameStates.empty())
 	{
@@ -22,13 +22,13 @@ void GameStateMachine::changeState(GameState* pState)
 
 	pushState(pState);
 
-	m_changingState = false;
+	m_bChangingState = false;
 }
 
 void GameStateMachine::pushState(GameState* pState)
 {
 	// if only pushing the state store the previous state for poping
-	if (!m_changingState && !m_gameStates.empty())
+	if (!m_bChangingState && !m_gameStates.empty())
 	{
 		m_pPreviousState = m_pCurrentState;
 	}
@@ -49,8 +49,11 @@ void GameStateMachine::pushState(GameState* pState)
 	}
 
 	//parse state if non existent
-	StateParser stateParser;
-	stateParser.parseState(pState);
+
+	TheParserManager::Instance().getStateParserRef().parseState(pState);
+	
+	//StateParser stateParser;
+	//stateParser.parseState(pState);
 
 	m_gameStates.push_back(pState);
 
@@ -65,7 +68,7 @@ void GameStateMachine::popState()
 	{
 		m_pCurrentState->onExit();
 
-		if (m_changingState)
+		if (m_bChangingState)
 		{
 			if (m_pPreviousState)
 			{
@@ -103,17 +106,20 @@ void GameStateMachine::render()
 	}
 }
 
+void GameStateMachine::quit()
+{
+	m_bQuitStates = true;
+}
+
 void GameStateMachine::clean()
 {
-	m_changingState = true;
+	m_bChangingState = true;
 	popState();
 
 	m_pCurrentState = nullptr;
 
 	for (GameState* state : m_gameStates)
 	{
-		state->onExit();
-
 		delete state;
 	}
 

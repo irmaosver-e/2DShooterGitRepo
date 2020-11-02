@@ -6,8 +6,10 @@
 #include "SystemParser.h"
 #include "TextureManager.h"
 #include "TextManager.h"
+#include "ParserManager.h"
 #include "InputHandler.h"
 #include "GameObjectFactory.h"
+#include "GameStateMachine.h"
 #include "MainMenuState.h"
 #include "GameOverState.h"
 #include "PlayState.h"
@@ -24,28 +26,21 @@
 #include "Eskeletor.h"
 #include "Level1Boss.h"
 
-Game::Game(token) :
-	m_bRunning(false),
-	m_pGameStateMachine(0),
-	m_bLevelComplete(false),
-	m_bChangingState(false),
-	m_currentLevel(1)
-{}
+Game::Game() :
+	m_bRunning(false){}
 
 bool Game::init(const char* configFile)
 {	
-	SystemParser sysParser;
-	sysParser.parseSystem(configFile);
+	if (TheParserManager::Instance().getSystemParserRef().parseSystem(configFile))
+	{
+		registerObjTypes();
 
-	registerObjTypes();
+		TheGameStateMachine::Instance().changeState(new MainMenuState());
 
-	// start the menu state
-	m_pGameStateMachine = new GameStateMachine();
-	m_pGameStateMachine->changeState(new MainMenuState());
+		m_bRunning = true; //everything inited successfully, start the main loop
+	}
 
-	m_bRunning = true; //everything inited successfully, start the main loop
-
-	return true;
+	return m_bRunning;
 }
 
 void Game::run()
@@ -56,6 +51,11 @@ void Game::run()
 		update();
 		render();
 	}
+	
+	if (TheGameStateMachine::Instance().getQuitStates())
+	{
+		m_bRunning = false;
+	}
 }
 
 void Game::render()
@@ -63,7 +63,7 @@ void Game::render()
 	//clear the renderer to the draw colour
 	TheSDLSystem::Instance().clearScreen();
 
-	m_pGameStateMachine->render();
+	TheGameStateMachine::Instance().render();
 
 	//draw to the window
 	TheSDLSystem::Instance().drawScreen();
@@ -71,7 +71,7 @@ void Game::render()
 
 void Game::update()
 {
-	m_pGameStateMachine->update();
+	TheGameStateMachine::Instance().update();
 }
 
 void Game::handleEvents()
@@ -105,12 +105,11 @@ void Game::clean()
 
 	TheInputHandler::Instance().clean();
 
-	m_pGameStateMachine->clean();
-
-	m_pGameStateMachine = nullptr;
-	delete m_pGameStateMachine;
+	TheGameStateMachine::Instance().clean();
 
 	TheTextureManager::Instance().clearTextureMap();
+
+	TheGameObjectFactory::Instance().clearCreators();
 
 	TheTextManager::Instance().quit();
 
@@ -119,14 +118,15 @@ void Game::clean()
 	TheSDLSystem::Instance().quit();
 }
 
-
+/*
 void Game::setCurrentLevel(int currentLevel)
 {
 	m_currentLevel = currentLevel;
-	m_pGameStateMachine->reloadState();
+	TheGameStateMachine::Instance().reloadState();
 	m_bLevelComplete = false;
 }
-
+*/
+/*
 void Game::addLevelFile(int levelNumber, std::string filename)
 {
 	std::map<int, std::string>::iterator it = m_levelFiles.find(levelNumber);
@@ -138,3 +138,4 @@ void Game::addLevelFile(int levelNumber, std::string filename)
 		m_levelFiles[levelNumber] = filename;
 	}
 }
+*/

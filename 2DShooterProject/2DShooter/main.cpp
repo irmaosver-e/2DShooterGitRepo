@@ -5,11 +5,12 @@ const char* CONFIG_FILE = "config.xml";
 
 int main(int argc, char* args[])
 {
-	if (TheGame::Instance().init(CONFIG_FILE)) //init the Game
+	Game game;
+	if (game.init(CONFIG_FILE)) //init the Game
 	{
-		while (TheGame::Instance().isRunning())
+		while (game.isRunning())
 		{
-			TheGame::Instance().run();
+			game.run();
 		}
 	}
 	else
@@ -18,7 +19,7 @@ int main(int argc, char* args[])
 		return -1;
 	}
 
-	TheGame::Instance().clean();
+	game.clean();
 
 	return 0;
 }

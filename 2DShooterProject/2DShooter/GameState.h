@@ -20,8 +20,8 @@ public:
 	virtual std::string getStateID() const = 0;
 
 	Level* getLevel() { return m_pLevel; }
-	std::string& stageMapFileName() { return m_stageMapFile; }
-	std::string& stageAssetsPath() { return m_stageAssetsPath; }
+	//std::string& stageMapFileName() { return m_stageMapFile; }
+	//std::string& stageAssetsPath() { return m_stageAssetsPath; }
 
 protected:
 
@@ -32,8 +32,8 @@ protected:
 	bool m_loadingComplete;
 	bool m_exiting;
 
-	std::string m_stageAssetsPath;
-	std::string m_stageMapFile;
+	//std::string m_stageAssetsPath;
+	//std::string m_stageMapFile;
 
 };
 
