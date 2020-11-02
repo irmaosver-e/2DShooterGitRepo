@@ -27,9 +27,10 @@ void GameStateMachine::changeState(GameState* pState)
 
 void GameStateMachine::pushState(GameState* pState)
 {
-	if (!m_changingState)
+	// if only pushing the state store the previous state for poping
+	if (!m_changingState && !m_gameStates.empty())
 	{
-		m_previousStates.push_back(m_pCurrentState);
+		m_pPreviousState = m_pCurrentState;
 	}
 
 	//checks if the state already exists
@@ -40,13 +41,14 @@ void GameStateMachine::pushState(GameState* pState)
 			//the state exists already use it instead
 			m_pCurrentState = state;
 			
+			//probably not enter but restart needs checking!!!!!!!!!!!!!1
 			m_pCurrentState->onEnter();
 		
 			return;
 		}
 	}
 
-	//parse state here
+	//parse state if non existent
 	StateParser stateParser;
 	stateParser.parseState(pState);
 
@@ -65,34 +67,19 @@ void GameStateMachine::popState()
 
 		if (m_changingState)
 		{
-			m_previousStates.push_back(m_pCurrentState);
+			if (m_pPreviousState)
+			{
+				m_pPreviousState->onExit();
+			}
 		}
 		else
 		{
-			m_pCurrentState = m_previousStates.back();
-			m_previousStates.pop_back();
-
+			m_pCurrentState = m_pPreviousState;
 			m_pCurrentState->resume();
 		}
+
+		m_pPreviousState = nullptr;
 	}
-
-	/*
-	if (!m_gameStates.empty())
-	{
-		m_pCurrentState->onExit();
-
-		//swap states
-		GameState* pTempSate = m_pPreviousState;
-		m_pCurrentState = m_pPreviousState;
-		m_pPreviousState = pTempSate;
-		//m_gameStates.pop_back();
-
-		if (!m_changingState)
-		{
-			m_pCurrentState->resume();
-		}
-	}
-	*/
 }
 
 void GameStateMachine::reloadState()
@@ -118,12 +105,17 @@ void GameStateMachine::render()
 
 void GameStateMachine::clean()
 {
-	if (!m_gameStates.empty())
+	m_changingState = true;
+	popState();
+
+	m_pCurrentState = nullptr;
+
+	for (GameState* state : m_gameStates)
 	{
-		m_gameStates.back()->onExit();
+		state->onExit();
 
-		delete m_gameStates.back();
-
-		m_gameStates.clear();
+		delete state;
 	}
+
+	m_gameStates.clear();
 }
