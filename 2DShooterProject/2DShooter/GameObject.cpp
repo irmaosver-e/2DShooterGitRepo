@@ -12,6 +12,9 @@ void GameObject::turnObjOff()
 	m_bInView = false;
 	m_bUpdating = false;	
 	m_velocity = Vector2Df(0, 0);
+
+	//sends the object offscreen
+	m_position.getYRef() = -(m_height + 10);
 }
 
 

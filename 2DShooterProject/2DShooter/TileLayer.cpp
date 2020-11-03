@@ -71,6 +71,12 @@ void TileLayer::render()
 	}
 }
 
+void TileLayer::resetPosition()
+{
+	m_position.getXRef() = 0;
+	m_position.getYRef() = 0;
+}
+
 Tileset TileLayer::getTilesetByID(int tileID)
 {
 	for (unsigned int i = 0; i < m_tilesets.size(); i++)

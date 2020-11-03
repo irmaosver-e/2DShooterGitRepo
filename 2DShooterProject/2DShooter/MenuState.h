@@ -16,7 +16,7 @@ protected:
 	{
 		std::vector<GameObject*> pObjectsContainer;
 		m_pLevel->getObjectsfromLayers(pObjectsContainer);
-
+	
 		//go through the game objects
 		if (!pObjectsContainer.empty())
 		{

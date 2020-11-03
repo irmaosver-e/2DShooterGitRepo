@@ -38,8 +38,11 @@ void Player::load(const LoaderParams& rParams)
 
 void Player::reset(const LoaderParams& rParams)
 {
-	// can set up the players inherited values here
+	m_position = Vector2Df(rParams.getX(), rParams.getY());
 	m_lives = rParams.getLives();
+	m_dyingCounter = 0;
+	m_invulnerable = false;
+	m_bDying = false;
 }
 
 void Player::draw()

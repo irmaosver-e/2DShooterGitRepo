@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <tileset version="1.4" tiledversion="1.4.2" name="Player" tilewidth="64" tileheight="64" spacing="2" margin="2" tilecount="9" columns="3">
- <image source="PlayerMecha.png" width="202" height="202"/>
+ <image source="../images/PlayerMecha.png" width="202" height="202"/>
  <tile id="0" type="idle">
   <properties>
    <property name="OwnerSubType" value="playermecha"/>

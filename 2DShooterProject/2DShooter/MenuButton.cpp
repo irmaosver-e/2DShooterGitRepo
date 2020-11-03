@@ -13,6 +13,7 @@ void MenuButton::reset(const LoaderParams& rParams)
 {
 	m_currentFrame = MOUSE_OUT; //STARTS AT FRAME 0
 	m_bButtonPressed = false;
+	m_bColliding = false;
 }
 
 void MenuButton::draw()

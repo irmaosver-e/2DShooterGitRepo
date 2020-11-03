@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <tileset version="1.4" tiledversion="1.4.2" name="Bullet" tilewidth="32" tileheight="32" spacing="2" margin="2" tilecount="2" columns="2">
- <image source="bullet.png" width="70" height="36"/>
+ <image source="../images/bullet.png" width="70" height="36"/>
  <tile id="0" type="yellow">
   <properties>
    <property name="OwnerSubType" value="bulletPlayer"/>

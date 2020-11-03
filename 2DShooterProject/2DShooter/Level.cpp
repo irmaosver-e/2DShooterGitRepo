@@ -32,9 +32,20 @@ void Level::render()
 
 void Level::reset()
 {
+	std::vector<GameObject*> pObjContainer;
+	getObjectsfromLayers(pObjContainer);
+
+	for (GameObject* pGameObject : pObjContainer)
+	{
+		pGameObject->turnObjOff();
+	}
 	for (ObjectLayer* pObjLayer : m_objectLayers)
 	{
-		pObjLayer->reset();
+		pObjLayer->resetMarkers();
+	}
+	for (TileLayer* pTileLayer : m_tileLayers)
+	{
+		pTileLayer->resetPosition();
 	}
 }
 

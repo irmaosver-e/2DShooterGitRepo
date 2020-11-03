@@ -83,10 +83,20 @@ void ObjectLayer::render()
 
 void ObjectLayer::reset()
 {
+    resetMarkers(); 
+    turnObjectsOff();
+}
+
+void ObjectLayer::resetMarkers()
+{
     for (ObjectMarker& rMarker : m_objectMarkers)
     {
         rMarker.reset();
     }
+}
+
+void ObjectLayer::turnObjectsOff()
+{
     for (GameObject* pGameObj : m_gameObjects)
     {
         pGameObj->turnObjOff();

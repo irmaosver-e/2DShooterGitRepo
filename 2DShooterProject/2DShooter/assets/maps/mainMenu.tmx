@@ -3,12 +3,12 @@
  <properties>
   <property name="music1" value="loop"/>
  </properties>
- <tileset firstgid="1" source="MenuPartsA.tsx"/>
- <tileset firstgid="5" source="MenuButtons.tsx"/>
- <tileset firstgid="17" source="Cursor.tsx"/>
+ <tileset firstgid="1" source="../tilesets/MenuPartsA.tsx"/>
+ <tileset firstgid="5" source="../tilesets/MenuButtons.tsx"/>
+ <tileset firstgid="17" source="../tilesets/Cursor.tsx"/>
  <group id="3" name="BackGround">
   <imagelayer id="2" name="BGWallpaper">
-   <image source="MenuBG.png" width="640" height="480"/>
+   <image source="../images/MenuBG.png" width="640" height="480"/>
    <properties>
     <property name="type" value="AnimatedGraphic"/>
    </properties>

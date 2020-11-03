@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <tileset version="1.4" tiledversion="1.4.2" name="MenuButton" tilewidth="192" tileheight="64" spacing="2" margin="2" tilecount="12" columns="2">
- <image source="MenuButtons.png" width="390" height="398"/>
+ <image source="../images/MenuButtons.png" width="390" height="398"/>
  <tile id="0" type="play">
   <properties>
    <property name="OwnerSubType" value="playbutton"/>

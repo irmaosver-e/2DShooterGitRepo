@@ -15,6 +15,8 @@ public:
 
 	virtual void update();
 	virtual void render();
+	
+	void resetPosition();
 
 	void setTileIDs(const std::vector<std::vector<int>>& data) { m_tileIDs = data; }
 
