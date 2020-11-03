@@ -371,6 +371,7 @@ Layer* LevelParser::parseObjectLayer(TiXmlElement* pObjectElement)
 			e->QueryFloatAttribute("y", &y);
 			e->QueryFloatAttribute("height", &height);
 			objMarker.objPositionMarker.getYRef() = y - height;
+			objMarker.objStartPosition = objMarker.objPositionMarker;
 
 			objMarker.isActive = true;
 

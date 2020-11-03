@@ -14,6 +14,7 @@ public:
 
 	void update();
 	void render();
+	void reset();
 
 	std::vector<Layer*>* getLayers() { return &m_layers; }
 

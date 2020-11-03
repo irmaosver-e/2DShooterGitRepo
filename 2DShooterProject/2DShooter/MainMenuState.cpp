@@ -10,12 +10,15 @@ bool MainMenuState::onEnter()
 {
 	GameState::onEnter();
 
-	m_callbacks.push_back(0); //pushback 0 callbackID start from 1
-	m_callbacks.push_back(s_menuToPlay);
-	m_callbacks.push_back(s_exitFromMenu);
+	if (m_callbacks.empty())
+	{
+		m_callbacks.push_back(0); //pushback 0 callbackID start from 1
+		m_callbacks.push_back(s_menuToPlay);
+		m_callbacks.push_back(s_exitFromMenu);
 
-	//set the callbacks for menu items
-	setCallbacks(m_callbacks);
+		//set the callbacks for menu items
+		setCallbacks(m_callbacks);
+	}
 
 	m_loadingComplete = true;
 	std::cout << "MainMenuState::onEnter() - Entering MainMenuState \n";

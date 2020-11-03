@@ -9,10 +9,17 @@ class Level;
 
 struct ObjectMarker
 {
+	Vector2Df objStartPosition;
 	Vector2Df objPositionMarker;
 	std::string objectType;
 	std::string objSubType;
 	bool isActive;
+
+	void reset()
+	{
+		objPositionMarker = objStartPosition;
+		isActive = true;
+	}
 };
 
 class Layer

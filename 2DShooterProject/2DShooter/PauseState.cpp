@@ -14,11 +14,14 @@ bool PauseState::onEnter()
 
 	GameState::onEnter();
 
-	m_callbacks.push_back(0);
-	m_callbacks.push_back(s_pauseToMain);
-	m_callbacks.push_back(s_resumePlay);
+	if (m_callbacks.empty())
+	{
+		m_callbacks.push_back(0);
+		m_callbacks.push_back(s_pauseToMain);
+		m_callbacks.push_back(s_resumePlay);
 
-	setCallbacks(m_callbacks);
+		setCallbacks(m_callbacks);
+	}
 
 	m_loadingComplete = true;
 

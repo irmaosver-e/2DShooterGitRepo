@@ -10,12 +10,16 @@ bool GameOverState::onEnter()
 {
 	GameState::onEnter();
 
-	m_callbacks.push_back(0);
-	m_callbacks.push_back(s_gameOverToMain);
-	m_callbacks.push_back(s_restartPlay);
+	//only load the vector once
+	if (m_callbacks.empty())
+	{
+		m_callbacks.push_back(0);
+		m_callbacks.push_back(s_gameOverToMain);
+		m_callbacks.push_back(s_restartPlay);
 
-	// set the callbacks for menu items
-	setCallbacks(m_callbacks);
+		// set the callbacks for menu items
+		setCallbacks(m_callbacks);
+	}
 
 	m_loadingComplete = true;
 

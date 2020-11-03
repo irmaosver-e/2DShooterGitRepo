@@ -11,6 +11,8 @@ public:
 	virtual ~Player() {}
 
 	virtual void load(const LoaderParams& rParams);
+	virtual void reset(const LoaderParams& rParams);
+
 	virtual void draw();
 	virtual void update();
 	

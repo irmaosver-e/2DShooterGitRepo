@@ -12,6 +12,7 @@ public:
 
 	virtual void update();
 	virtual void render();
+	virtual void reset();
 
 	std::vector<ObjectMarker>& getObjMarkersRef() { return m_objectMarkers; }
 	

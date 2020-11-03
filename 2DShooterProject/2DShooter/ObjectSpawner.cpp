@@ -18,7 +18,8 @@ void ObjectSpawner::spawnObject(ObjectLayer& objLayer, ObjectMarker& objMarker)
 				if (!objLayer.getGameObjects()->at(i)->isOn())
 				{
 					//test if the object available is of same type requested
-					if (objLayer.getGameObjects()->at(i)->objType() == objMarker.objectType)
+					if (objLayer.getGameObjects()->at(i)->objType() == objMarker.objectType &&
+						objLayer.getGameObjects()->at(i)->getSubTypeID() == objMarker.objSubType)
 					{
 						availableObjIndex = i;
 					}
@@ -28,6 +29,7 @@ void ObjectSpawner::spawnObject(ObjectLayer& objLayer, ObjectMarker& objMarker)
 			//no obj in pool add obj
 			if (availableObjIndex < 0)
 			{
+				
 				objLayer.getGameObjectsRef().push_back(TheGameObjectFactory::Instance().create(objMarker.objectType));
 				objLayer.getGameObjectsRef().back()->load(m_objParams[objMarker.objSubType]);
 

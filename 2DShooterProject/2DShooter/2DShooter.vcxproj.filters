@@ -399,7 +399,7 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="ParserManager.h">
-      <Filter>Header Files</Filter>
+      <Filter>Header Files\Managers</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

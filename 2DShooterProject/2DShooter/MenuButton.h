@@ -10,6 +10,7 @@ public:
 	virtual ~MenuButton() {}
 
 	virtual void load(const LoaderParams& rParams);
+	virtual void reset(const LoaderParams& rParams);
 	virtual void draw();
 	virtual void update();
 	virtual void clean();
@@ -19,7 +20,7 @@ public:
 	int getCallbackID() { return m_callbackID; }
 	void setCallback(void(*callback)()) { m_callback = callback; }
 
-	virtual std::string objType() { return "Player"; }
+	virtual std::string objType() { return "MenuButton"; }
 
 private:
 	enum button_state {MOUSE_OUT, MOUSE_OVER, CLICKED};

@@ -36,6 +36,12 @@ void Player::load(const LoaderParams& rParams)
 	m_dyingTime = 100;
 }
 
+void Player::reset(const LoaderParams& rParams)
+{
+	// can set up the players inherited values here
+	m_lives = rParams.getLives();
+}
+
 void Player::draw()
 {
 	SDLGameObject::draw();

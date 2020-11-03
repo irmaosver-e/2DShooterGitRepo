@@ -39,6 +39,12 @@ bool GameState::onEnter()
 	{
 		m_pLevel = TheParserManager::Instance().getLevelParserRef().parseLevel();
 	}
+	else
+	{
+		m_pLevel->reset();
+		//finds the markers on the objectLayersand reset them to initial Pos;
+		//resets the 
+	}
 	
 	//LevelParser levelParser;
 	//m_pLevel = levelParser.parseLevel(m_stageAssetsPath, m_stageMapFile);

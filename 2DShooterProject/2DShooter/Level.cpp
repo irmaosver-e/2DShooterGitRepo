@@ -30,6 +30,14 @@ void Level::render()
 	}
 }
 
+void Level::reset()
+{
+	for (ObjectLayer* pObjLayer : m_objectLayers)
+	{
+		pObjLayer->reset();
+	}
+}
+
 TileLayer* Level::getTileLayerByName(std::string tileLayer)
 {
 	for (TileLayer* pTileLayer : m_tileLayers)
