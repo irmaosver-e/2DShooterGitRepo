@@ -40,9 +40,7 @@ void Eskeletor::collisionWithLayer()
 void Eskeletor::update()
 {
     if (!m_bDying)
-    {
-        //scroll(TheGame::Instance().getScrollSpeed());
-        
+    {        
         m_velocity.getYRef() = (float)m_moveSpeed;
 
         if (m_bulletCounter == m_bulletFiringSpeed)
@@ -65,6 +63,9 @@ void Eskeletor::update()
 
 void Eskeletor::reset(const LoaderParams& rParams)
 {
-    SDLGameObject::load(rParams);
-    m_bDying = false;
+    SDLGameObject::reset(rParams);
+
+    //m_dyingTime = 50;
+    m_health = 2;
+    
 }

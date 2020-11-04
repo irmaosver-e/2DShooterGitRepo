@@ -10,7 +10,7 @@ public:
 	virtual ~SDLGameObject() {}
 
 	virtual void load(const LoaderParams& rParams);
-	virtual void reset(const LoaderParams& rParams) {} //not implemented in this class
+	virtual void reset(const LoaderParams& rParams);
 	virtual void draw();
 	virtual void update();
 	virtual void outOfView();

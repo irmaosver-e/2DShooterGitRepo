@@ -20,6 +20,30 @@ void Level::update()
 	{
 		pLayer->update();
 	}
+
+	if (m_bPlayLevel)
+	{
+		//checks if the boss has been created yet
+		if (!m_pLevelBoss)
+		{
+			for (ObjectLayer* pObjLayer : m_objectLayers)
+			{
+				if (pObjLayer->hasObjectEnteredLayer())
+				{
+					//if an object entered the layer it is the last object in the vector,
+					//checks to see if it is the boss
+					m_pLevelBoss = dynamic_cast<Level1Boss*>(pObjLayer->getGameObjectsRef().back());
+				}
+			}
+		}
+		else
+		{
+			if (m_pLevelBoss->dead())
+			{
+				m_bLevelComplete = true;
+			}
+		}
+	}
 }
 
 void Level::render()
@@ -32,16 +56,11 @@ void Level::render()
 
 void Level::reset()
 {
-	std::vector<GameObject*> pObjContainer;
-	getObjectsfromLayers(pObjContainer);
+	m_bLevelComplete = false;
 
-	for (GameObject* pGameObject : pObjContainer)
-	{
-		pGameObject->turnObjOff();
-	}
 	for (ObjectLayer* pObjLayer : m_objectLayers)
 	{
-		pObjLayer->resetMarkers();
+		pObjLayer->reset();
 	}
 	for (ImageLayer* pImgLayer : m_imageLayers)
 	{
@@ -65,7 +84,7 @@ TileLayer* Level::getTileLayerByName(std::string tileLayer)
 	return nullptr;
 }
 
-ObjectLayer* Level::getObjectLayerByName(std::string objLayer)
+ObjectLayer* Level::getObjectLayerByName(std::string& objLayer)
 {
 	for (ObjectLayer* pObjectLayer : m_objectLayers)
 	{

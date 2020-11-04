@@ -9,6 +9,7 @@ public:
 	Bullet();
 	virtual ~Bullet() {}
 
+    virtual void reset(const LoaderParams& rParams) { m_bColliding = false; }
     virtual void update();
     
     virtual void outOfView();

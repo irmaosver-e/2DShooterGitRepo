@@ -10,13 +10,14 @@ public:
 
     Eskeletor();
     virtual ~Eskeletor() {}
+    virtual void reset(const LoaderParams& rParams);
 
     virtual void collision();
     virtual void collisionWithLayer();
 
     virtual void update();
 
-    virtual void reset(const LoaderParams& rParams);
+    
 
     virtual std::string objType() { return "Eskeletor"; }
 

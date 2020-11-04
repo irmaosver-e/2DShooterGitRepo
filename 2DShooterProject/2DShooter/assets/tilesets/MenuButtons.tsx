@@ -57,8 +57,8 @@
    <object id="1" name="collisionBox" x="12" y="12" width="168" height="40"/>
   </objectgroup>
   <animation>
-   <frame tileid="9" duration="400"/>
    <frame tileid="11" duration="400"/>
+   <frame tileid="9" duration="400"/>
   </animation>
  </tile>
 </tileset>

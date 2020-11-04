@@ -10,9 +10,13 @@ public:
     virtual ~Level1Boss() {}
 
     virtual void load(const LoaderParams& rParams);
+    virtual void reset(const LoaderParams& rParams);
+
     virtual void collision();
     virtual void update();
+    virtual void scroll(float scrollSpeed);
 
+    virtual std::string objType() { return "Level1Boss"; }
 
 private:
     bool m_entered;

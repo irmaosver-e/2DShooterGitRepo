@@ -41,6 +41,15 @@ void SDLGameObject::load(const LoaderParams& rParams)
 	m_sfx = rParams.getSFX();
 }
 
+void SDLGameObject::reset(const LoaderParams& rParams)
+{
+	load(rParams);
+	m_currentFrame = 0;
+	m_bDying = false;
+	m_bDead = false;
+	m_bColliding = false;
+}
+
 void SDLGameObject::draw()
 {	
 	//TheTextureManager::Instance().drawFrame(m_textureID, (Uint32)m_position.getX(), (Uint32)m_position.getY(),

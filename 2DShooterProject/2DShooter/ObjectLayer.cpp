@@ -19,13 +19,22 @@ ObjectLayer::~ObjectLayer()
 
 void ObjectLayer::update()
 {
+    m_bObjCountIncreased = false;
+
      for (ObjectMarker& objMarker : m_objectMarkers)
     {
         //scroll marker
         objMarker.objPositionMarker.getXRef() -= m_scrollSpeed;
         
-        TheObjectSpawner::Instance().spawnObject(*this, objMarker);
+        int objCount = m_gameObjects.size();
 
+        TheObjectSpawner::Instance().spawnObject(*this, objMarker);
+        
+        //spawner adde object
+        if (objCount < m_gameObjects.size())
+        {
+            m_bObjCountIncreased = true;
+        }
     }
     
      // iterate through the objects
@@ -64,7 +73,8 @@ void ObjectLayer::render()
 
 void ObjectLayer::reset()
 {
-    resetMarkers(); 
+    resetMarkers();
+    resetObjects();
     turnObjectsOff();
 }
 
@@ -73,6 +83,15 @@ void ObjectLayer::resetMarkers()
     for (ObjectMarker& rMarker : m_objectMarkers)
     {
         rMarker.reset();
+    }
+}
+
+void ObjectLayer::resetObjects()
+{
+    for (GameObject* pGameObj : m_gameObjects)
+    {
+        std::string subtypeID = pGameObj->getSubTypeID();
+        pGameObj->reset(TheObjectSpawner::Instance().getParameter(subtypeID));
     }
 }
 

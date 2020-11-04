@@ -339,7 +339,7 @@ Layer* LevelParser::parseTileLayer(TiXmlElement* pTileElement)
 Layer* LevelParser::parseObjectLayer(TiXmlElement* pObjectElement)
 {
 	ObjectLayer* pObjectLayer = new ObjectLayer();
-
+	bool hasKeyObjects = false;
 	//sets the name of the object layer
 	pObjectLayer->getLayerNameRef() = pObjectElement->Attribute("name");
 
@@ -442,12 +442,12 @@ Layer* LevelParser::parseObjectLayer(TiXmlElement* pObjectElement)
 			//spawns the objects on screen
 			TheObjectSpawner::Instance().spawnObject(*pObjectLayer, pObjectLayer->getObjMarkersRef().back());
 
-			
 			//looks for the player and sets it to the map
 			if (e->Attribute("name") == std::string("Player"))
 			{
 				m_pLevel->setPlayer(dynamic_cast<Player*>(pObjectLayer->getGameObjects()->back()));
 			}
+
 		}
 	}
 

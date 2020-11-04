@@ -10,6 +10,11 @@ void ObjectSpawner::spawnObject(ObjectLayer& objLayer, ObjectMarker& objMarker)
 		if (objMarker.objPositionMarker.getX() < TheSDLSystem::Instance().getScreenWidth() && objMarker.objPositionMarker.getX() > 0 &&
 			objMarker.objPositionMarker.getY() < TheSDLSystem::Instance().getScreenHeight() && objMarker.objPositionMarker.getY() > 0)
 		{
+			if (objMarker.objSubType == "bossPlane")
+			{
+				std::cout << "boss comming!";
+			}
+
 			int availableObjIndex = -1;
 
 			for (unsigned int i = 0; i < objLayer.getGameObjects()->size(); i++)

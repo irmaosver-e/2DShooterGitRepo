@@ -7,7 +7,7 @@
 
 Level1Boss::Level1Boss() : Enemy()
 {
-    m_health = 100;
+    m_health = 20;
     m_dyingTime = 100;
     m_bulletFiringSpeed = 100;
 
@@ -32,15 +32,15 @@ void Level1Boss::collision()
         {
             if (!m_bPlayedDeathSound)
             {
-                m_position.getXRef() += 30;
-                m_position.getYRef() += 70;
+               // m_position.getXRef() += 30;
+               // m_position.getYRef() += 70;
                 TheSoundManager::Instance().playSound("explode", 0);
 
-                m_textureID = "bossexplosion";
-                m_currentFrame = 0;
-                m_numFrames = 9;
-                m_width = 180;
-                m_height = 180;
+               // m_textureID = "bossexplosion";
+               // m_currentFrame = 0;
+               // m_numFrames = 9;
+               // m_width = 180;
+               // m_height = 180;
                 m_bDying = true;
             }
 
@@ -50,16 +50,7 @@ void Level1Boss::collision()
 
 void Level1Boss::update()
 {
-    if (!m_entered)
-    {
-        //scroll(TheGame::Instance().getScrollSpeed());
-
-        if (m_position.getX() < (TheSDLSystem::Instance().getScreenWidth() - (m_width + 20)))
-        {
-            m_entered = true;
-        }
-    }
-    else
+    if(m_entered)
     {
         if (!m_bDying)
         {
@@ -82,6 +73,8 @@ void Level1Boss::update()
                 TheBulletHandler::Instance().addEnemyBullet((int)m_position.getX(), (int)m_position.getY() + 215, 16, 16, "bullet2", 1, Vector2D(-10, 0));
                 */
 
+                TheBulletHandler::Instance().fireBullet(m_subTypeID, m_position, Vector2Df(-10, 0));
+
                 m_bulletCounter = 0;
             }
 
@@ -92,9 +85,9 @@ void Level1Boss::update()
         else
         {
             //scroll(TheGame::Instance().getScrollSpeed());
-            m_currentFrame = int(((SDL_GetTicks() / (1000 / 3)) % m_numFrames));
+           // m_currentFrame = int(((SDL_GetTicks() / (1000 / 3)) % m_numFrames));
 
-            if (m_dyingCounter == m_dyingTime)
+            if (m_dyingCounter >= m_dyingTime)
             {
                 m_bDead = true;
                 //TheGame::Instance().setLevelComplete(true);
@@ -102,7 +95,29 @@ void Level1Boss::update()
             m_dyingCounter++;
 
         }
-
     }
+}
+
+void Level1Boss::scroll(float scrollSpeed)
+{
+    if(!(m_position.getX() < (TheSDLSystem::Instance().getScreenWidth() - (m_width + 20))))
+    {
+        GameObject::scroll(scrollSpeed);
+    }
+    else
+    {
+        m_entered = true;
+    }
+}
+
+//needs to make it boss
+void Level1Boss::reset(const LoaderParams& rParams)
+{
+    SDLGameObject::reset(rParams);
+    m_entered = false;
+
+    m_health = 20;
+    m_dyingCounter = 0;
+
 }
 

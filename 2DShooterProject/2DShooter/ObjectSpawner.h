@@ -21,6 +21,8 @@ public:
 
     bool checkObjParamsMap(std::string& objSubType);
 
+    LoaderParams& getParameter(std::string& objSubType) { return m_objParams[objSubType]; }
+
 private:
     //void addBullet(std::string bulletType);
 

@@ -1,47 +1,54 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<map version="1.4" tiledversion="1.4.2" orientation="orthogonal" renderorder="right-down" width="200" height="15" tilewidth="32" tileheight="32" infinite="0" nextlayerid="18" nextobjectid="23">
+<map version="1.4" tiledversion="1.4.2" orientation="orthogonal" renderorder="right-down" width="200" height="15" tilewidth="32" tileheight="32" infinite="0" nextlayerid="18" nextobjectid="37">
  <tileset firstgid="1" source="../tilesets/s1TerrainTest.tsx"/>
  <tileset firstgid="199" source="../tilesets/PlayerMecha.tsx"/>
  <tileset firstgid="208" source="../tilesets/Bullet.tsx"/>
  <tileset firstgid="210" source="../tilesets/enemy3.tsx"/>
+ <tileset firstgid="213" source="../tilesets/Boss1.tsx"/>
  <group id="2" name="BackGround" locked="1">
   <imagelayer id="3" name="BGWallPaper" locked="1">
    <image source="../images/StarryBG.png" width="490" height="480"/>
    <properties>
-    <property name="ScrollSpeed" type="float" value="1"/>
+    <property name="ScrollSpeed" type="float" value="1.5"/>
     <property name="Tiled" type="bool" value="true"/>
     <property name="type" value="AnimatedGraphic"/>
    </properties>
   </imagelayer>
-  <imagelayer id="17" name="BGPlanet" offsetx="225" offsety="50">
+  <imagelayer id="17" name="BGPlanet" offsetx="550" offsety="50">
    <image source="../images/earth-planet.png" width="240" height="240"/>
    <properties>
-    <property name="ScrollSpeed" type="float" value="1.5"/>
+    <property name="ScrollSpeed" type="float" value="2.5"/>
     <property name="type" value="AnimatedGraphic"/>
    </properties>
   </imagelayer>
  </group>
- <layer id="7" name="Non-Collidable" width="200" height="15" locked="1">
+ <layer id="7" name="Non-Collidable" width="200" height="15">
   <properties>
-   <property name="ScrollSpeed" type="float" value="1.8"/>
+   <property name="ScrollSpeed" type="float" value="4.8"/>
   </properties>
   <data encoding="base64" compression="zlib">
-   eJzt1UEOgCAMBMBe+P+XjSeJJkQxQjEzLyDtLo1gV2Y/ABLTDwB4roQbWjMParJwKKEfrKnEmPzqB1yN6h9tdpCb3cxj9jm5HXCPfvyH/+698+0wU0aQs29lnW3Wd7Gunkz15vDr/OoHPVq50Q9WswGbAAEK
+   eJzt06ERACAQwLCfnrk5PNUgkglqOgPcrNcB8DF/QPMHNH9A8wc0f0DzBzR/QPMHNH9A8wc0f0DzBzR/QDt/bBkcB9s=
   </data>
  </layer>
- <layer id="8" name="Collidables" width="200" height="15" locked="1">
+ <layer id="8" name="Collidables" width="200" height="15">
   <properties>
-   <property name="ScrollSpeed" type="float" value="1.8"/>
+   <property name="ScrollSpeed" type="float" value="4.8"/>
   </properties>
   <data encoding="base64" compression="zlib">
-   eJzt1TEOACEIBEA+bOH/m+vtqJS9mcR+SVyoAgCAqn07ANDyemdfz5dg3Q5ArIT+dvqRMC9A17TdNy0vAP+zjjeVm8sU/ioAAOT7ADSTBog=
+   eJzt1jEKACAMA8B+2MH/L+5uBUENd+CegimtAgCAqnk7ANDyemdfz5dg3A5ArIT+dvqRMC9Al90HAGeN7f3KjcAv/FUAAMi3AHNlBhc=
   </data>
  </layer>
  <group id="6" name="MidGround">
   <objectgroup id="4" name="PlayField">
    <properties>
-    <property name="ScrollSpeed" type="float" value="1.8"/>
+    <property name="ScrollSpeed" type="float" value="4.8"/>
    </properties>
+   <object id="23" name="Level1Boss" type="bossPlane" gid="213" x="6090" y="369" width="192" height="256">
+    <properties>
+     <property name="AnimationList" value="bossIdle"/>
+     <property name="VsCollision" value="bulletPlayer"/>
+    </properties>
+   </object>
    <object id="1" name="Player" type="playermecha" gid="199" x="80" y="260" width="64" height="64">
     <properties>
      <property name="AnimationList" value="idle, attackIdle, damageIdle"/>
@@ -58,6 +65,97 @@
     </properties>
    </object>
    <object id="17" name="Eskeletor" type="enemyTest3" gid="210" x="675.67" y="66" width="32" height="32">
+    <properties>
+     <property name="AnimationList" value="bug"/>
+     <property name="VsCollision" value="bulletPlayer"/>
+     <property name="VsLayerCollision" value="Collidables"/>
+    </properties>
+   </object>
+   <object id="24" name="Eskeletor" type="enemyTest3" gid="210" x="1472" y="166" width="32" height="32">
+    <properties>
+     <property name="AnimationList" value="bug"/>
+     <property name="VsCollision" value="bulletPlayer"/>
+     <property name="VsLayerCollision" value="Collidables"/>
+    </properties>
+   </object>
+   <object id="25" name="Eskeletor" type="enemyTest3" gid="210" x="738" y="262" width="32" height="32">
+    <properties>
+     <property name="AnimationList" value="bug"/>
+     <property name="VsCollision" value="bulletPlayer"/>
+     <property name="VsLayerCollision" value="Collidables"/>
+    </properties>
+   </object>
+   <object id="26" name="Eskeletor" type="enemyTest3" gid="210" x="1922" y="89" width="32" height="32">
+    <properties>
+     <property name="AnimationList" value="bug"/>
+     <property name="VsCollision" value="bulletPlayer"/>
+     <property name="VsLayerCollision" value="Collidables"/>
+    </properties>
+   </object>
+   <object id="27" name="Eskeletor" type="enemyTest3" gid="210" x="1972" y="130" width="32" height="32">
+    <properties>
+     <property name="AnimationList" value="bug"/>
+     <property name="VsCollision" value="bulletPlayer"/>
+     <property name="VsLayerCollision" value="Collidables"/>
+    </properties>
+   </object>
+   <object id="28" name="Eskeletor" type="enemyTest3" gid="210" x="2018" y="163" width="32" height="32">
+    <properties>
+     <property name="AnimationList" value="bug"/>
+     <property name="VsCollision" value="bulletPlayer"/>
+     <property name="VsLayerCollision" value="Collidables"/>
+    </properties>
+   </object>
+   <object id="29" name="Eskeletor" type="enemyTest3" gid="210" x="2984" y="226.424" width="32" height="32">
+    <properties>
+     <property name="AnimationList" value="bug"/>
+     <property name="VsCollision" value="bulletPlayer"/>
+     <property name="VsLayerCollision" value="Collidables"/>
+    </properties>
+   </object>
+   <object id="30" name="Eskeletor" type="enemyTest3" gid="210" x="3384" y="114.303" width="32" height="32">
+    <properties>
+     <property name="AnimationList" value="bug"/>
+     <property name="VsCollision" value="bulletPlayer"/>
+     <property name="VsLayerCollision" value="Collidables"/>
+    </properties>
+   </object>
+   <object id="31" name="Eskeletor" type="enemyTest3" gid="210" x="3759.76" y="171.879" width="32" height="32">
+    <properties>
+     <property name="AnimationList" value="bug"/>
+     <property name="VsCollision" value="bulletPlayer"/>
+     <property name="VsLayerCollision" value="Collidables"/>
+    </properties>
+   </object>
+   <object id="32" name="Eskeletor" type="enemyTest3" gid="210" x="4553.7" y="341.576" width="32" height="32">
+    <properties>
+     <property name="AnimationList" value="bug"/>
+     <property name="VsCollision" value="bulletPlayer"/>
+     <property name="VsLayerCollision" value="Collidables"/>
+    </properties>
+   </object>
+   <object id="33" name="Eskeletor" type="enemyTest3" gid="210" x="4359.76" y="138.545" width="32" height="32">
+    <properties>
+     <property name="AnimationList" value="bug"/>
+     <property name="VsCollision" value="bulletPlayer"/>
+     <property name="VsLayerCollision" value="Collidables"/>
+    </properties>
+   </object>
+   <object id="34" name="Eskeletor" type="enemyTest3" gid="210" x="5111.27" y="114.303" width="32" height="32">
+    <properties>
+     <property name="AnimationList" value="bug"/>
+     <property name="VsCollision" value="bulletPlayer"/>
+     <property name="VsLayerCollision" value="Collidables"/>
+    </properties>
+   </object>
+   <object id="35" name="Eskeletor" type="enemyTest3" gid="210" x="5284" y="241.576" width="32" height="32">
+    <properties>
+     <property name="AnimationList" value="bug"/>
+     <property name="VsCollision" value="bulletPlayer"/>
+     <property name="VsLayerCollision" value="Collidables"/>
+    </properties>
+   </object>
+   <object id="36" name="Eskeletor" type="enemyTest3" gid="210" x="5414.3" y="396.121" width="32" height="32">
     <properties>
      <property name="AnimationList" value="bug"/>
      <property name="VsCollision" value="bulletPlayer"/>

@@ -27,6 +27,11 @@ bool PlayState::update()
 			TheGameStateMachine::Instance().changeState(new GameOverState());
 		}
 
+		if (m_pLevel->IsLevelComplete())
+		{
+			//should change level
+			TheGameStateMachine::Instance().changeState(new GameOverState());
+		}
 		return true;
 	}
 
@@ -51,6 +56,7 @@ bool PlayState::onEnter()
 
 	if (m_pLevel)
 	{
+		m_pLevel->setAsPlayLevel();
 		m_loadingComplete = true;
 	}
 
