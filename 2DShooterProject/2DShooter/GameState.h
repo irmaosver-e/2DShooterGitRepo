@@ -9,7 +9,7 @@
 class GameState
 {
 public:
-	virtual ~GameState() {}
+	virtual ~GameState() { delete m_pLevel; }
 
 	virtual bool update();
 	virtual bool render();

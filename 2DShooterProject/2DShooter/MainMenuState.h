@@ -6,8 +6,6 @@
 class MainMenuState : public MenuState
 {
 public:
-	virtual ~MainMenuState() { delete m_pLevel; }
-
 	virtual bool onEnter();
 
 	virtual std::string getStateID() const { return s_menuID; }

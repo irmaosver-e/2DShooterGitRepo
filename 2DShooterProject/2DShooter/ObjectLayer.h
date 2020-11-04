@@ -12,9 +12,10 @@ public:
 
 	virtual void update();
 	virtual void render();
-	virtual void reset();
-	virtual void resetMarkers();
-	virtual void turnObjectsOff();
+	
+	void reset();
+	void resetMarkers();
+	void turnObjectsOff();
 
 	std::vector<ObjectMarker>& getObjMarkersRef() { return m_objectMarkers; }
 	

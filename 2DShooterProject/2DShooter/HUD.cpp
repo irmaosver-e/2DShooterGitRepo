@@ -4,6 +4,22 @@
 #include "SDLSystem.h"
 
 
+HUD::~HUD()
+{
+	for (GameObject* animGrafic : m_animGraphics)
+	{
+		delete animGrafic;
+	}
+
+	for (GameObject* textBox : m_textBoxes)
+	{
+		delete textBox;
+	}
+
+	m_animGraphics.clear();
+	m_textBoxes.clear();
+}
+
 void HUD::draw()
 {
 	for (GameObject* animGrafic : m_animGraphics)
@@ -15,13 +31,4 @@ void HUD::draw()
 	{
 		textBox->draw();
 	}
-}
-
-void HUD::update()
-{
-}
-
-void HUD::clean()
-{
-	SDLGameObject::clean();
 }

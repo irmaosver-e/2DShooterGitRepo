@@ -17,6 +17,11 @@ Player::Player() : SDLGameObject()
 	m_playerHUD = nullptr;
 }
 
+Player::~Player()
+{
+	delete m_playerHUD;
+}
+
 void Player::load(const LoaderParams& rParams)
 {
 	// inherited load function

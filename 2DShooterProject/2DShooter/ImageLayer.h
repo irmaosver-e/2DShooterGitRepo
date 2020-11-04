@@ -12,12 +12,14 @@ public:
 
 	virtual void update();
 	virtual void render();
+
+	void resetPosition();
 	
-	std::vector<ObjectMarker>& getObjMarkersRef() { return m_objectMarkers; }
+	Vector2Df& getInitialPosRef() { return m_initialPos; }
 	std::vector<GameObject*>* getGameObjects() { return &m_gameObjects; }
 
 private:
-	std::vector<ObjectMarker> m_objectMarkers;
+	Vector2Df m_initialPos;
 	std::vector<GameObject*> m_gameObjects;
 
 };

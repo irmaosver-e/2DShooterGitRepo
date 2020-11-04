@@ -6,8 +6,6 @@
 class PauseState : public MenuState
 {
 public:
-	virtual ~PauseState() { delete m_pLevel; }
-
 	virtual bool onEnter();
 	virtual bool onExit();
 

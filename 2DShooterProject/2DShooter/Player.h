@@ -8,7 +8,7 @@ class Player : public SDLGameObject
 {
 public:
 	Player();
-	virtual ~Player() {}
+	virtual ~Player();
 
 	virtual void load(const LoaderParams& rParams);
 	virtual void reset(const LoaderParams& rParams);

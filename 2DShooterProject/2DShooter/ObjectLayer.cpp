@@ -28,45 +28,26 @@ void ObjectLayer::update()
 
     }
     
-    // iterate through the objects
-    if (!m_gameObjects.empty())
+     // iterate through the objects
+     for (GameObject* pGameObj : m_gameObjects)
     {
-        for (GameObject* pGameObj : m_gameObjects)
-        {
-            pGameObj->update();
+        pGameObj->update();
 
-            if (pGameObj->isOn())
-            {
-                pGameObj->scroll(m_scrollSpeed);
-                pGameObj->inViewCheck();
-
-                if (pGameObj->isInView())
-                {
-                    pGameObj->inView();
-                    TheCollisionManager::Instance().checkCollision(pGameObj);
-                }
-                else
-                {
-                    pGameObj->outOfView();
-                }
-            }
-        }
-        /*
-        for (std::vector<GameObject*>::iterator it = m_gameObjects.begin(); it != m_gameObjects.end();)
+        if (pGameObj->isOn())
         {
-            // check if dead or off screen
-            if ((*it)->getPosition().getX() < (0 - (*it)->getWidth()) || (*it)->getPosition().getY() > (TheSDLSystem::Instance().getScreenHeight()) || ((*it)->dead()))
+            pGameObj->scroll(m_scrollSpeed);
+            pGameObj->inViewCheck();
+
+            if (pGameObj->isInView())
             {
-                delete* it;
-                it = m_gameObjects.erase(it); // erase from vector and get new iterator
+                pGameObj->inView();
+                TheCollisionManager::Instance().checkCollision(pGameObj);
             }
             else
             {
-                ++it; // increment if all ok
+                pGameObj->outOfView();
             }
-
         }
-        */
     }
 }
 

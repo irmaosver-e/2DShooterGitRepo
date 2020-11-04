@@ -43,6 +43,10 @@ void Level::reset()
 	{
 		pObjLayer->resetMarkers();
 	}
+	for (ImageLayer* pImgLayer : m_imageLayers)
+	{
+		pImgLayer->resetPosition();
+	}
 	for (TileLayer* pTileLayer : m_tileLayers)
 	{
 		pTileLayer->resetPosition();

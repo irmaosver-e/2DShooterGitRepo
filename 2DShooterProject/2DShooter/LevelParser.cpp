@@ -3,6 +3,7 @@
 #include <string>
 #include "ParserManager.h"
 #include "TextureManager.h"
+#include "SDLSystem.h"
 #include "SoundManager.h"
 #include "TextManager.h"
 #include "CollisionManager.h"
@@ -371,10 +372,13 @@ Layer* LevelParser::parseObjectLayer(TiXmlElement* pObjectElement)
 			e->QueryFloatAttribute("y", &y);
 			e->QueryFloatAttribute("height", &height);
 			objMarker.objPositionMarker.getYRef() = y - height;
+			
+			//saves initial position for the spawner
 			objMarker.objStartPosition = objMarker.objPositionMarker;
 
 			objMarker.isActive = true;
 
+			//passes the list of markers to the layer
 			pObjectLayer->getObjMarkersRef().push_back(objMarker);
 
 			//register the parameters to the spawner
@@ -454,14 +458,28 @@ Layer* LevelParser::parseObjectLayer(TiXmlElement* pObjectElement)
 
 Layer* LevelParser::parseImageLayer(TiXmlElement* pImageElement)
 {
+	//image layer only holds 1 image
 	ImageLayer* pImageLayer = new ImageLayer();
+
 	LoaderParams imageParams;
-	
-	std::string imageFile, type;
+
+	if (pImageElement->Attribute("offsetx"))
+	{
+		pImageElement->QueryFloatAttribute("offsetx", pImageLayer->getInitialPosRef().getXPtr());
+		imageParams.getInitialPosPtr()->getXRef() = pImageLayer->getInitialPosRef().getX();
+	}
+	if (pImageElement->Attribute("offsety"))
+	{
+		pImageElement->QueryFloatAttribute("offsety", pImageLayer->getInitialPosRef().getYPtr());
+		imageParams.getInitialPosPtr()->getYRef() = pImageLayer->getInitialPosRef().getY();
+	}
 
 	pImageLayer->getLayerNameRef() = pImageElement->Attribute("name");
 
 	imageParams.getSubTypeIDRef() = pImageElement->Attribute("name");
+	
+	std::string imageFile, objType;
+	bool tileImgInLayer = false;
 
 	//get type from imagelayer property 
 	for (TiXmlElement* e = pImageElement->FirstChildElement(); e != NULL; e = e->NextSiblingElement())
@@ -475,9 +493,16 @@ Layer* LevelParser::parseImageLayer(TiXmlElement* pImageElement)
 				{
 					layerProperty->QueryFloatAttribute("value", pImageLayer->getScrollSpeedPtr());
 				}
+				else if (layerProperty->Attribute("name") == std::string("Tiled"))
+				{
+					if (layerProperty->Attribute("value") == std::string("true"))
+					{
+						tileImgInLayer = true;
+					}
+				}
 				else if (layerProperty->Attribute("name") == std::string("type"))
 				{
-					type = layerProperty->Attribute("value");
+					objType = layerProperty->Attribute("value");
 				}
 			}
 		}
@@ -490,12 +515,25 @@ Layer* LevelParser::parseImageLayer(TiXmlElement* pImageElement)
 	}
 
 	parseTextures(imageFile, imageParams.getSubTypeID());
-
-	GameObject* pGameObject = TheGameObjectFactory::Instance().create(type);
-
+	
+	GameObject* pGameObject = TheGameObjectFactory::Instance().create(objType);
 	pGameObject->load(imageParams);
-
 	pImageLayer->getGameObjects()->push_back(pGameObject);
+
+	//checks if it needs to tile the layer
+	if (tileImgInLayer)
+	{
+		//tile the layer with the same imageObj
+		while (pImageLayer->getGameObjects()->back()->getPosition().getX() < TheSDLSystem::Instance().getScreenWidth())
+		{
+			GameObject* pGameObject = TheGameObjectFactory::Instance().create(objType);
+			pGameObject->load(imageParams);
+
+			//sets the object position just after the end of the previous object
+			pGameObject->getPosition().getXRef() = (pImageLayer->getGameObjects()->back()->getPosition().getX() + imageParams.getWidth());
+			pImageLayer->getGameObjects()->push_back(pGameObject);
+		}
+	}
 
 	m_pLevel->getImageLayers()->push_back(pImageLayer);
 
@@ -672,4 +710,12 @@ bool LevelParser::parseTextures(std::string& fileName, std::string id)
 		return false;
 	}
 	return true;
+}
+
+void LevelParser::resetParser()
+{
+	m_mapRoot = nullptr;
+	m_pLevel = nullptr;
+	m_tilesets.clear();
+	m_objectTileOwners.clear();
 }

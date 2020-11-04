@@ -3,9 +3,9 @@
 
 ImageLayer::~ImageLayer()
 {
-    for (std::vector<GameObject*>::iterator it = m_gameObjects.begin(); it != m_gameObjects.end(); ++it)
+    for (GameObject* pGameObj : m_gameObjects)
     {
-        delete (*it);
+        delete pGameObj;
     }
     m_gameObjects.clear();
 }
@@ -13,47 +13,76 @@ ImageLayer::~ImageLayer()
 //needs revision
 void ImageLayer::update()
 {
-    // iterate through the objects
-    if (!m_gameObjects.empty())
+    //checks if the layers is not tiled only 1 object
+    if (m_gameObjects.size() == 1)
     {
-        for (std::vector<GameObject*>::iterator it = m_gameObjects.begin(); it != m_gameObjects.end();)
+        m_gameObjects.back()->update();
+
+        if (m_gameObjects.back()->isOn())
         {
-            //checks if object entered screen and update, NEEDS REVISING
-            if ((*it)->getPosition().getX() <= TheSDLSystem::Instance().getScreenWidth())
+            m_gameObjects.back()->scroll(m_scrollSpeed);
+            m_gameObjects.back()->inViewCheck();
+
+            if (m_gameObjects.back()->isInView())
             {
-                (*it)->setUpdating(true);
-                (*it)->update();
+                m_gameObjects.back()->inView();
             }
             else
             {
-                (*it)->update();
+                //m_gameObjects.back()->outOfView();
+                m_gameObjects.back()->turnObjOff();
             }
+        }
+    }
+    else
+    {
+        for (GameObject* pGameObj : m_gameObjects)
+        {
+            pGameObj->update();
 
-            //should use collision manager to check if on screen
-            //screen should have a collision box
-            // check if  off screen
-            if ((*it)->getPosition().getX() < (0 - (*it)->getWidth()) || (*it)->getPosition().getY() > (TheSDLSystem::Instance().getScreenHeight()))
+            if (pGameObj->isOn())
             {
-                //deleting object when it goes out of the screen
-                delete* it;
-                it = m_gameObjects.erase(it); // erase from vector and get new iterator
-            }
-            else
-            {
-                ++it; // increment if all ok
-            }
+                pGameObj->scroll(m_scrollSpeed);
+                pGameObj->inViewCheck();
 
+                //needs to be out of view to the left
+                if (!pGameObj->isInView() && pGameObj->getPosition().getX() < 0)
+                {
+                    //calculates the position to be after the last object
+                    pGameObj->getPosition().getXRef() = pGameObj->getWidth() * (m_gameObjects.size() - 1);
+                }
+            }
         }
     }
 }
 
 void ImageLayer::render()
 {
-    for (unsigned int i = 0; i < m_gameObjects.size(); i++)
+    for (GameObject* pGameObj : m_gameObjects)
     {
-        if (m_gameObjects[i]->getPosition().getX() <= TheSDLSystem::Instance().getScreenWidth())
+        if (pGameObj->isOn() && pGameObj->isInView())
         {
-            m_gameObjects[i]->draw();
+            pGameObj->draw();
+        }
+    }
+}
+
+void ImageLayer::resetPosition()
+{
+    if (m_gameObjects.size() == 1)
+    {
+        m_gameObjects.back()->turnObjOn();
+        m_gameObjects.back()->getPosition().getXRef() = m_initialPos.getX();
+        m_gameObjects.back()->getPosition().getYRef() = m_initialPos.getY();
+    }
+    else
+    {
+        if (!m_gameObjects.empty())
+        {
+            for (int i = 0; i < m_gameObjects.size(); i++)
+            {
+                m_gameObjects[i]->getPosition().getXRef() = m_gameObjects[i]->getWidth() * i;
+            }
         }
     }
 }

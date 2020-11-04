@@ -11,8 +11,6 @@
 class PlayState : public GameState
 {
 public:
-	virtual ~PlayState() { delete m_pLevel; }
-
 	virtual bool update();
 	virtual bool render();
 

@@ -7,11 +7,9 @@ class HUD : public SDLGameObject
 {
 public:
 	HUD() : SDLGameObject() {}
-	virtual ~HUD() {}
+	virtual ~HUD();
 
 	virtual void draw();
-	virtual void update();
-	virtual void clean();
 
 	void addTextBox(GameObject* textBox) { m_textBoxes.push_back(textBox); }
 	void addAnimGraphix(GameObject* animGraphix) { m_animGraphics.push_back(animGraphix); }

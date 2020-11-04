@@ -1,14 +1,22 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<map version="1.4" tiledversion="1.4.2" orientation="orthogonal" renderorder="right-down" width="200" height="15" tilewidth="32" tileheight="32" infinite="0" nextlayerid="17" nextobjectid="23">
+<map version="1.4" tiledversion="1.4.2" orientation="orthogonal" renderorder="right-down" width="200" height="15" tilewidth="32" tileheight="32" infinite="0" nextlayerid="18" nextobjectid="23">
  <tileset firstgid="1" source="../tilesets/s1TerrainTest.tsx"/>
  <tileset firstgid="199" source="../tilesets/PlayerMecha.tsx"/>
  <tileset firstgid="208" source="../tilesets/Bullet.tsx"/>
  <tileset firstgid="210" source="../tilesets/enemy3.tsx"/>
  <group id="2" name="BackGround" locked="1">
-  <imagelayer id="3" name="BGWallPaper">
-   <image source="../images/StarryBG.png" width="6400" height="480"/>
+  <imagelayer id="3" name="BGWallPaper" locked="1">
+   <image source="../images/StarryBG.png" width="490" height="480"/>
    <properties>
     <property name="ScrollSpeed" type="float" value="1"/>
+    <property name="Tiled" type="bool" value="true"/>
+    <property name="type" value="AnimatedGraphic"/>
+   </properties>
+  </imagelayer>
+  <imagelayer id="17" name="BGPlanet" offsetx="225" offsety="50">
+   <image source="../images/earth-planet.png" width="240" height="240"/>
+   <properties>
+    <property name="ScrollSpeed" type="float" value="1.5"/>
     <property name="type" value="AnimatedGraphic"/>
    </properties>
   </imagelayer>

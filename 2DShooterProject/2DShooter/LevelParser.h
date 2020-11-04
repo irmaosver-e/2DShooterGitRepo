@@ -30,13 +30,7 @@ private:
 
 	bool parseTextures(std::string& fileName, std::string id);
 
-	void resetParser()
-	{
-		m_mapRoot = nullptr;
-		m_pLevel = nullptr;
-		m_tilesets.clear();
-		m_objectTileOwners.clear();
-	}
+	void resetParser();
 
 	TiXmlElement* m_mapRoot;
 	std::vector<Tileset> m_tilesets;
