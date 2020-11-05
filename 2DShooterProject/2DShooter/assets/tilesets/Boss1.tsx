@@ -9,7 +9,19 @@
    <object id="1" name="collisionBox" x="27.1162" y="106.133" width="146.093" height="41.9545"/>
    <object id="2" name="collisionBox" x="12.3714" y="22.2402" width="138.975" height="41.9545"/>
    <object id="3" name="collisionBox" x="11.863" y="191.043" width="140.5" height="41.9545"/>
-   <object id="4" name="firingPoint" type="EnemyBullet" x="18.8123" y="130.161">
+   <object id="4" name="firingPoint" type="PlayerBullet" x="18.8123" y="130.161">
+    <point/>
+   </object>
+   <object id="5" name="firingPoint" type="EnemyBullet" x="8" y="35">
+    <point/>
+   </object>
+   <object id="6" name="firingPoint" type="EnemyBullet" x="8.33333" y="57">
+    <point/>
+   </object>
+   <object id="7" name="firingPoint" type="EnemyBullet" x="6.66667" y="201.667">
+    <point/>
+   </object>
+   <object id="8" name="firingPoint" type="EnemyBullet" x="7.66667" y="223.667">
     <point/>
    </object>
   </objectgroup>

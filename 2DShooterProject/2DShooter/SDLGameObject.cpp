@@ -44,6 +44,7 @@ void SDLGameObject::load(const LoaderParams& rParams)
 void SDLGameObject::reset(const LoaderParams& rParams)
 {
 	load(rParams);
+	refreshTextureVariables();
 	m_currentFrame = 0;
 	m_bDying = false;
 	m_bDead = false;
@@ -90,7 +91,7 @@ int SDLGameObject::getAnimatedFrame(float speedModifier)
 void SDLGameObject::handleAnimation()
 {
 	refreshTextureVariables();
-	m_currentFrame = (TheSDLSystem::Instance().getRunningTime() / m_animSpeed) % m_numFrames;
+	m_currentFrame = (SDL_GetTicks() / m_animSpeed) % m_numFrames;
 }
 
 void SDLGameObject::refreshTextureVariables()
@@ -104,18 +105,23 @@ void SDLGameObject::refreshTextureVariables()
 	}
 }
 
-//to be made redundant
+//to be renamed, misleading old name
 void SDLGameObject::doDyingAnimation()
 {
-	//keeps scrolling w the map
+	//checks if the dying animation has finished
+   	if (m_currentFrame == (m_numFrames - 1))
+	{
+		m_bDead = true;
+		turnObjOff();
+	}
 
-	m_currentFrame = int((SDL_GetTicks() / (1000 / 3)) % m_numFrames);
-
+	/*
 	if (m_dyingCounter == m_dyingTime)
 	{
 		m_bDead = true;
 	}
 	m_dyingCounter++; //simple counter ok w fixed frame rate
+	*/
 }
 
 

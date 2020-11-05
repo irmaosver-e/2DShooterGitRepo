@@ -21,11 +21,7 @@
 
 Level* LevelParser::parseLevel()
 {
-	
 	std::string assetsLocation = TheParserManager::Instance().m_rootPath + TheParserManager::Instance().m_mapsFolder;
-
-
-	//m_pLevel = new Level(assetsLocation, levelFile);
 
 	if (m_pLevel)
 	{

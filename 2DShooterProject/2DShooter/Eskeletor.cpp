@@ -27,6 +27,7 @@ void Eskeletor::collision()
             m_width = 60;
             m_height = 60;
             m_bDying = true;
+            m_textureID = m_animations[DEAD];
         }
 
     }
@@ -39,6 +40,8 @@ void Eskeletor::collisionWithLayer()
 
 void Eskeletor::update()
 {
+    SDLGameObject::update();
+
     if (!m_bDying)
     {        
         m_velocity.getYRef() = (float)m_moveSpeed;
@@ -57,12 +60,11 @@ void Eskeletor::update()
         m_velocity.getYRef() = 0;
         doDyingAnimation();
     }
-
-    SDLGameObject::update();
 }
 
 void Eskeletor::reset(const LoaderParams& rParams)
 {
+    m_textureID = m_animations[ALIVE];
     SDLGameObject::reset(rParams);
 
     //m_dyingTime = 50;

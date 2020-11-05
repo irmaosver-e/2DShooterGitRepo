@@ -5,10 +5,7 @@
 #include "SoundManager.h"
 #include "InputHandler.h"
 
-#include "PauseState.h"
-#include "GameOverState.h"
 #include "Level.h"
-
 
 const std::string PlayState::s_playID = "PLAY";
 
@@ -19,18 +16,18 @@ bool PlayState::update()
 		if (TheInputHandler::Instance().isKeyDown(SDL_SCANCODE_ESCAPE))
 		{
 			//TheSoundManager::Instance().playSound("pause", 0);
-			TheGameStateMachine::Instance().pushState(new PauseState());
+			TheGameStateMachine::Instance().pushState(PAUSE);
 		}
 
 		if (m_pLevel->getPlayer()->outOfLives())
 		{
-			TheGameStateMachine::Instance().changeState(new GameOverState());
+			TheGameStateMachine::Instance().changeState(GAME_OVER);
 		}
 
 		if (m_pLevel->IsLevelComplete())
 		{
 			//should change level
-			TheGameStateMachine::Instance().changeState(new GameOverState());
+			TheGameStateMachine::Instance().changeState(GAME_OVER);
 		}
 		return true;
 	}
@@ -50,8 +47,6 @@ bool PlayState::render()
 
 bool PlayState::onEnter()
 {
-	std::cout << "PlayState::onEnter() \n";
-
 	GameState::onEnter();
 
 	if (m_pLevel)

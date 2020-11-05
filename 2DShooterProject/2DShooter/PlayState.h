@@ -3,11 +3,6 @@
 
 #include "GameState.h"
 
-#include "CollisionManager.h"
-#include "Level.h"
-
-#include "GameObject.h"
-
 class PlayState : public GameState
 {
 public:

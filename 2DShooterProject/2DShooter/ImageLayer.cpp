@@ -23,13 +23,9 @@ void ImageLayer::update()
             m_gameObjects.back()->scroll(m_scrollSpeed);
             m_gameObjects.back()->inViewCheck();
 
-            if (m_gameObjects.back()->isInView())
+            //needs to be out of view to the left
+            if (!m_gameObjects.back()->isInView() && m_gameObjects.back()->getPosition().getX() < 0)
             {
-                m_gameObjects.back()->inView();
-            }
-            else
-            {
-                //m_gameObjects.back()->outOfView();
                 m_gameObjects.back()->turnObjOff();
             }
         }

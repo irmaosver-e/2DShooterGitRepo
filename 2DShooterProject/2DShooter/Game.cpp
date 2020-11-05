@@ -35,7 +35,7 @@ bool Game::init(const char* configFile)
 	{
 		registerObjTypes();
 
-		TheGameStateMachine::Instance().changeState(new MainMenuState());
+		TheGameStateMachine::Instance().changeState(MAIN);
 
 		m_bRunning = true; //everything inited successfully, start the main loop
 	}

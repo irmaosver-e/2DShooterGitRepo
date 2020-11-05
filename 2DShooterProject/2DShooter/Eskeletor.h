@@ -17,10 +17,10 @@ public:
 
     virtual void update();
 
-    
-
     virtual std::string objType() { return "Eskeletor"; }
 
+private:
+    enum eskeletor_state { ALIVE, DEAD };
 };
 
 #endif /* defined ( __Eskeletor__ ) */

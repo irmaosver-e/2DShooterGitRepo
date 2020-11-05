@@ -1,8 +1,6 @@
 #include "MainMenuState.h"
 
 #include "GameStateMachine.h"
-#include "PlayState.h"
-
 
 const std::string MainMenuState::s_menuID = "MENU";
 
@@ -21,14 +19,13 @@ bool MainMenuState::onEnter()
 	}
 
 	m_loadingComplete = true;
-	std::cout << "MainMenuState::onEnter() - Entering MainMenuState \n";
-
+	
 	return true;
 }
 
 void MainMenuState::s_menuToPlay()
 {
-	TheGameStateMachine::Instance().changeState(new PlayState());
+	TheGameStateMachine::Instance().changeState(PLAY);
 }
 
 void MainMenuState::s_exitFromMenu()

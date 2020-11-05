@@ -1,8 +1,6 @@
 #include "GameOverState.h"
 
 #include "GameStateMachine.h"
-#include "MainMenuState.h"
-#include "PlayState.h"
 
 const std::string GameOverState::s_gameOverID = "GAMEOVER";
 
@@ -29,12 +27,12 @@ bool GameOverState::onEnter()
 
 void GameOverState::s_gameOverToMain()
 {
-	TheGameStateMachine::Instance().changeState(new MainMenuState());
+	TheGameStateMachine::Instance().changeState(MAIN);
 }
 
 void GameOverState::s_restartPlay()
 {
-	TheGameStateMachine::Instance().changeState(new PlayState());
+	TheGameStateMachine::Instance().changeState(PLAY);
 }
 
 

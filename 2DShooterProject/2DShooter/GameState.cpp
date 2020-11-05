@@ -34,6 +34,9 @@ bool GameState::render()
 
 bool GameState::onEnter()
 {
+	//for debugging purposes
+	std::cout << "Entering " << getStateID() << " State\n";
+	
 	//only parse once
 	if (!m_pLevel)
 	{

@@ -8,12 +8,14 @@
 Level1Boss::Level1Boss() : Enemy()
 {
     m_health = 20;
-    m_dyingTime = 100;
     m_bulletFiringSpeed = 100;
 
     m_moveSpeed = 2;
 
     m_entered = false;
+
+    //possibly redundant
+    m_dyingTime = 100;
 }
 
 void Level1Boss::load(const LoaderParams& rParams)
@@ -36,12 +38,10 @@ void Level1Boss::collision()
                // m_position.getYRef() += 70;
                 TheSoundManager::Instance().playSound("explode", 0);
 
-               // m_textureID = "bossexplosion";
-               // m_currentFrame = 0;
-               // m_numFrames = 9;
-               // m_width = 180;
-               // m_height = 180;
-                m_bDying = true;
+               m_bDying = true;
+
+                //not yet implemented
+                //m_textureID = m_animations[DEAD];
             }
 
         }
@@ -84,6 +84,11 @@ void Level1Boss::update()
         }
         else
         {
+          
+            m_velocity.getYRef() = 0;
+            doDyingAnimation();
+
+            /* old code
             //scroll(TheGame::Instance().getScrollSpeed());
            // m_currentFrame = int(((SDL_GetTicks() / (1000 / 3)) % m_numFrames));
 
@@ -93,7 +98,7 @@ void Level1Boss::update()
                 //TheGame::Instance().setLevelComplete(true);
             }
             m_dyingCounter++;
-
+            */
         }
     }
 }

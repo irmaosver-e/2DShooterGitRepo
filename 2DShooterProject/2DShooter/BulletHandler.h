@@ -25,7 +25,7 @@ public:
 
     LoaderParams* getBulletTypeParam(std::string bulletType);
 
-    void fireBullet(std::string firingObj, Vector2Df firingObjPos, Vector2Df heading);
+    void fireBullet(std::string& firingObj, Vector2Df firingObjPos, Vector2Df heading, std::string bulletType = "all");
 
 private:
     void addBullet(std::string bulletType);
@@ -33,7 +33,7 @@ private:
     ObjectLayer* m_bulletLayer;
 
     std::map<std::string, LoaderParams> m_bulletTypes;
-    std::map<std::string, FiringPoint> m_objFirePoint;
+    std::map<std::string, std::vector<FiringPoint>> m_objFirePoint;
 
 };
 
