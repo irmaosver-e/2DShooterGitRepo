@@ -7,11 +7,39 @@
 #include "PauseState.h"
 #include "GameOverState.h"
 
+void GameStateMachine::init()
+{
+	for(int i = MAIN; i < NEXT_LEVEL; i++)
+	{
+		States state = static_cast<States>(i);
+		GameState* pState = createState(state);
+		TheParserManager::Instance().getStateParserRef().parseState(pState);
+
+		if (state == PLAY)
+		{
+			m_playStates.push_back(pState);
+			m_pCurrentState = m_playStates.back();
+		}
+		else
+		{
+			m_menuStates.push_back(pState);
+			m_pCurrentState = m_menuStates.back();
+		}
+
+		//initialize all states for use
+		m_pCurrentState->onEnter();
+		m_pCurrentState->onExit();
+	}
+
+	changeState(MAIN);
+}
+
 void GameStateMachine::changeState(States state)
 {
 	m_bChangingState = true;
 
-	if (!m_gameStates.empty())
+
+	if (m_pCurrentState)
 	{
 		// trying to change to same state - do nothing
 		if (m_pCurrentState->getStateID() == getStateID(state))
@@ -32,41 +60,74 @@ void GameStateMachine::changeState(States state)
 void GameStateMachine::pushState(States state)
 {
 	// if only pushing the state store the previous state for poping
-	if (!m_bChangingState && !m_gameStates.empty())
+	if (m_pCurrentState)
 	{
-		m_pPreviousState = m_pCurrentState;
-	}
-
-	//checks if the state already exists
-	for (GameState* pGameState : m_gameStates)
-	{
-
-		if (pGameState->getStateID() == getStateID(state))
+		//store the previous state if only pushing for poping 
+		//or changing to new level for player transfer
+		if (!m_bChangingState || (state == NEXT_LEVEL))
 		{
-			//the state exists already use it instead
-			m_pCurrentState = pGameState;
-			
-			//probably not enter but restart needs checking!!!!!!!!!!!!!1
-			m_pCurrentState->onEnter();
-		
-			return;
+			m_pPreviousState = m_pCurrentState;
 		}
 	}
 
+	if (state == PLAY || state == NEXT_LEVEL)
+	{
+		for (GameState* pGameState : m_playStates)
+		{
+			if (pGameState->getStateID() == getStateID(state))
+			{
+				//the state exists already use it instead
+				m_pCurrentState = pGameState;
+
+				//probably not enter but restart needs checking!!!!!!!!!!!!!1
+				m_pCurrentState->onEnter();
+
+				return;
+			}
+		}
+	}
+	else
+	{
+		for (GameState* pGameState : m_menuStates)
+		{
+			if (pGameState->getStateID() == getStateID(state))
+			{
+				//the state exists already use it instead
+				m_pCurrentState = pGameState;
+
+				//probably not enter but restart needs checking!!!!!!!!!!!!!1
+				m_pCurrentState->onEnter();
+
+				return;
+			}
+		}
+	}
+	
 	//parse state if non existent
 	GameState* pState = createState(state);
 	TheParserManager::Instance().getStateParserRef().parseState(pState);
 
-	m_gameStates.push_back(pState);
+	if (state == PLAY || state == NEXT_LEVEL)
+	{
+		m_playStates.push_back(pState);
+		m_pCurrentState = m_playStates.back();
+	}
+	else
+	{
+		m_menuStates.push_back(pState);
+		m_pCurrentState = m_menuStates.back();
+	}
 
-	m_pCurrentState = m_gameStates.back();
+	//m_gameStates.push_back(pState);
+
+	//m_pCurrentState = m_gameStates.back();
 
 	m_pCurrentState->onEnter();
 }
 
 void GameStateMachine::popState()
 {
-	if (!m_gameStates.empty())
+	if (m_pCurrentState)
 	{
 		m_pCurrentState->onExit();
 
@@ -94,7 +155,7 @@ void GameStateMachine::reloadState()
 
 void GameStateMachine::update()
 {
-	if (!m_gameStates.empty())
+	if (m_pCurrentState)
 	{
 		m_pCurrentState->update();
 	}
@@ -102,7 +163,7 @@ void GameStateMachine::update()
 
 void GameStateMachine::render()
 {
-	if (!m_gameStates.empty())
+	if (m_pCurrentState)
 	{
 		m_pCurrentState->render();
 	}
@@ -120,12 +181,17 @@ void GameStateMachine::clean()
 
 	m_pCurrentState = nullptr;
 
-	for (GameState* state : m_gameStates)
+	for (GameState* menuState : m_menuStates)
 	{
-		delete state;
+		delete menuState;
+	}
+	for (GameState* playState : m_playStates)
+	{
+		delete playState;
 	}
 
-	m_gameStates.clear();
+	m_menuStates.clear();
+	m_playStates.clear();
 }
 
 GameState* GameStateMachine::createState(States& state)
@@ -157,6 +223,8 @@ std::string GameStateMachine::getStateID(States& state)
 		return "PAUSE";
 	case GAME_OVER:
 		return "GAMEOVER";
+	case NEXT_LEVEL:
+		return "NEXT_LEVEL";
 	}
 
 	return "NO_STATE_FOUND";

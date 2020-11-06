@@ -5,7 +5,7 @@
 #include "Singleton.h"
 #include "GameState.h"
 
-enum States {MAIN, PLAY, PAUSE, GAME_OVER};
+enum States {MAIN, PLAY, PAUSE, GAME_OVER, NEXT_LEVEL};
 
 class GameStateMachine : public Singleton<GameStateMachine>
 {
@@ -17,6 +17,8 @@ public:
 		m_bChangingState(false) {}
 
 	~GameStateMachine() {}
+
+	void init();
 
 	void changeState(States state);
 	void pushState(States state);
@@ -30,17 +32,20 @@ public:
 
 	bool getQuitStates() { return m_bQuitStates; }
 
-	std::vector<GameState*>& getGameStates() { return m_gameStates; }
+	//redundant
+	//std::vector<GameState*>& getGameStates() { return m_gameStates; }
 
 private:
 	GameState* createState(States& state);
 	std::string getStateID(States& state);
 
-	std::vector<GameState*> m_gameStates;
+	std::vector<GameState*> m_menuStates;
+	std::vector<GameState*> m_playStates;
 	GameState* m_pCurrentState;
 	GameState* m_pPreviousState;
 	bool m_bChangingState;
 	bool m_bQuitStates;
+
 };
 
 typedef GameStateMachine TheGameStateMachine;

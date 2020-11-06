@@ -31,7 +31,7 @@ protected:
 	void refreshTextureVariables();
 
 	virtual void handleAnimation();
-	void doDyingAnimation();
+	virtual void handleDying();
 
 	int m_bulletFiringSpeed;
 	int m_bulletCounter;

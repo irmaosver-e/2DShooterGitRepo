@@ -10,9 +10,6 @@
 #include "InputHandler.h"
 #include "GameObjectFactory.h"
 #include "GameStateMachine.h"
-#include "MainMenuState.h"
-#include "GameOverState.h"
-#include "PlayState.h"
 #include "TextBox.h"
 #include "AnimatedGraphic.h"
 #include "ScrollingBackground.h"
@@ -35,7 +32,7 @@ bool Game::init(const char* configFile)
 	{
 		registerObjTypes();
 
-		TheGameStateMachine::Instance().changeState(MAIN);
+		TheGameStateMachine::Instance().init();
 
 		m_bRunning = true; //everything inited successfully, start the main loop
 	}
@@ -117,25 +114,3 @@ void Game::clean()
 
 	TheSDLSystem::Instance().quit();
 }
-
-/*
-void Game::setCurrentLevel(int currentLevel)
-{
-	m_currentLevel = currentLevel;
-	TheGameStateMachine::Instance().reloadState();
-	m_bLevelComplete = false;
-}
-*/
-/*
-void Game::addLevelFile(int levelNumber, std::string filename)
-{
-	std::map<int, std::string>::iterator it = m_levelFiles.find(levelNumber);
-	
-	//does nothing if the level file is repeated
-	if (it == m_levelFiles.end())
-	{
-		//file not in map 
-		m_levelFiles[levelNumber] = filename;
-	}
-}
-*/

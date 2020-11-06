@@ -34,8 +34,7 @@ void Level1Boss::collision()
         {
             if (!m_bPlayedDeathSound)
             {
-               // m_position.getXRef() += 30;
-               // m_position.getYRef() += 70;
+
                 TheSoundManager::Instance().playSound("explode", 0);
 
                m_bDying = true;
@@ -65,14 +64,6 @@ void Level1Boss::update()
 
             if (m_bulletCounter == m_bulletFiringSpeed)
             {
-                /*
-                TheBulletHandler::Instance().addEnemyBullet((int)m_position.getX(), (int)m_position.getY() + 15, 16, 16, "bullet2", 1, Vector2D(-10, 0));
-                TheBulletHandler::Instance().addEnemyBullet((int)m_position.getX(), (int)m_position.getY() + 25, 16, 16, "bullet2", 1, Vector2D(-10, 0));
-
-                TheBulletHandler::Instance().addEnemyBullet((int)m_position.getX(), (int)m_position.getY() + 200, 16, 16, "bullet2", 1, Vector2D(-10, 0));
-                TheBulletHandler::Instance().addEnemyBullet((int)m_position.getX(), (int)m_position.getY() + 215, 16, 16, "bullet2", 1, Vector2D(-10, 0));
-                */
-
                 TheBulletHandler::Instance().fireBullet(m_subTypeID, m_position, Vector2Df(-10, 0));
 
                 m_bulletCounter = 0;
@@ -86,7 +77,7 @@ void Level1Boss::update()
         {
           
             m_velocity.getYRef() = 0;
-            doDyingAnimation();
+            handleDying();
 
             /* old code
             //scroll(TheGame::Instance().getScrollSpeed());

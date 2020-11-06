@@ -105,8 +105,7 @@ void SDLGameObject::refreshTextureVariables()
 	}
 }
 
-//to be renamed, misleading old name
-void SDLGameObject::doDyingAnimation()
+void SDLGameObject::handleDying()
 {
 	//checks if the dying animation has finished
    	if (m_currentFrame == (m_numFrames - 1))

@@ -51,6 +51,6 @@ void Turret::update()
     else
     {
         //scroll(TheGame::Instance().getScrollSpeed());
-        doDyingAnimation();
+        handleDying();
     }
 }

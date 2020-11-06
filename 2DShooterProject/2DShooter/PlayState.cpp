@@ -26,8 +26,7 @@ bool PlayState::update()
 
 		if (m_pLevel->IsLevelComplete())
 		{
-			//should change level
-			TheGameStateMachine::Instance().changeState(GAME_OVER);
+			TheGameStateMachine::Instance().changeState(NEXT_LEVEL);
 		}
 		return true;
 	}

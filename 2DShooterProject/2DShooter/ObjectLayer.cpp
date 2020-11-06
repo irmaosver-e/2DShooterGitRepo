@@ -102,4 +102,3 @@ void ObjectLayer::turnObjectsOff()
         pGameObj->turnObjOff();
     }
 }
-

@@ -58,7 +58,7 @@ void Eskeletor::update()
     else
     {
         m_velocity.getYRef() = 0;
-        doDyingAnimation();
+        handleDying();
     }
 }
 

@@ -30,7 +30,7 @@ void ShotGlider::update()
     else
     {
         m_velocity.getXRef() = 0;
-        doDyingAnimation();
+        handleDying();
     }
 
     SDLGameObject::update();

@@ -40,7 +40,12 @@ void Level::update()
 		{
 			if (m_pLevelBoss->dead())
 			{
-				m_bLevelComplete = true;
+				m_pPlayer->flyOffScreen();
+				
+				if (!m_pPlayer->isInView())
+				{
+					m_bLevelComplete = true; 
+				}
 			}
 		}
 	}

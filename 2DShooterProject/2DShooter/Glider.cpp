@@ -37,7 +37,7 @@ void Glider::update()
     {
         m_velocity.getXRef() = 0;
         m_velocity.getYRef() = 0;
-        doDyingAnimation();
+        handleDying();
     }
 
     SDLGameObject::update();

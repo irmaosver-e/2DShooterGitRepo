@@ -19,6 +19,8 @@ public:
 	virtual void collision();
 	virtual void collisionWithLayer();
 
+	void flyOffScreen();
+
 	//player does not scroll empty function
 	virtual void scroll(float scrollSpeed) {}
 
@@ -43,6 +45,7 @@ private:
 	int m_lives;
 
 	bool m_invulnerable;
+	bool m_bFlyingOffScreen;
 	int m_invulnerableTime;
 	int m_invulnerableCounter;
 };

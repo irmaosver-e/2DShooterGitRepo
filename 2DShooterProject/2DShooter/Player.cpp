@@ -10,6 +10,7 @@
 
 Player::Player() : SDLGameObject()
 {
+	m_bFlyingOffScreen = false;
 	m_invulnerable = false;
 	m_invulnerableTime = 200;
 	m_invulnerableCounter = 0;
@@ -48,6 +49,7 @@ void Player::reset(const LoaderParams& rParams)
 	m_dyingCounter = 0;
 	m_invulnerable = false;
 	m_bDying = false;
+	m_bFlyingOffScreen = false;
 }
 
 void Player::draw()
@@ -58,31 +60,17 @@ void Player::draw()
 
 void Player::update()
 {
-	/* NEEDS REVISION
-	//if the level is finished, fly off the screen
-	if (TheGame::Instance().getLevelComplete())
-	{
-		if (m_position.getX() >= TheSDLSystem::Instance().getScreenWidth())
-		{
-			TheGame::Instance().setCurrentLevel(TheGame::Instance().getCurrentLevel() + 1);
-		}
-		else
-		{
-			m_velocity.getXRef() = 3;
-			m_velocity.getYRef() = 0;
-			SDLGameObject::update();
-			handleAnimation();
-		}
-	}
-	else
-	{
-	*/
 		//if player NOT in death animation
 		if (!m_bDying)
-		{
-			m_velocity.getXRef() = 0;
-			m_velocity.getYRef() = 0;
-			handleInput();
+		{	
+			if (!m_bFlyingOffScreen)
+			{
+				m_velocity.getXRef() = 0;
+				m_velocity.getYRef() = 0;
+
+				handleInput();
+			}
+
 			SDLGameObject::update();
 			//handleAnimation();
 		}
@@ -100,20 +88,17 @@ void Player::update()
 }
 
 void Player::collision()
-{	
-	m_textureID = m_animations[DAMAGE];
-	
+{		
 	/*  //godmode for debuging
 	std::cout << "GOD MODE ON in Player::collision() \n";
 	m_invulnerable = true;
 	
 	*/  //-----------------------
-	
-
-	// if the player is not invulnerable then set to dying and change values for death animation tile sheet
-	//if (!m_invulnerable && !TheGame::Instance().getLevelComplete())
+		
 	if (!m_invulnerable)
 	{
+		m_currentFrame = BACK;
+		m_textureID = m_animations[DAMAGE];
 		//m_textureID = "largeexplosion";
 		//m_currentFrame = 0;
 		//m_numFrames = 9;
@@ -128,6 +113,22 @@ void Player::collisionWithLayer()
 	collision();
 }
 
+void Player::flyOffScreen()
+{
+	if (!m_bFlyingOffScreen)
+	{
+		m_textureID = m_animations[STAND];
+		m_currentFrame = FORWARD;
+		m_velocity.getXRef() = 0;
+		m_velocity.getYRef() = 0;
+
+		m_bFlyingOffScreen = true;
+		m_invulnerable = true;
+	}
+
+	m_velocity.getXRef() = (float)m_moveSpeed;
+}
+
 
 void Player::ressurect()
 {
@@ -137,12 +138,6 @@ void Player::ressurect()
 	m_position.getYRef() = 200;
 	m_bDying = false;
 
-	//m_textureID = "player";
-
-	//m_currentFrame = 0;
-	//m_numFrames = 5;
-	//m_width = 101;
-	//m_height = 46;
 
 	m_dyingCounter = 0;
 	m_invulnerable = true;
@@ -152,6 +147,7 @@ void Player::handleInput()
 {
 	if (!m_bDead)
 	{
+		//no key pressed
 		if (!m_bDying)
 		{
 			m_currentFrame = IDLE;
