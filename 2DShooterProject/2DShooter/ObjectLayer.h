@@ -25,11 +25,12 @@ public:
 	void turnObjectsOff();
 
 	std::vector<ObjectMarker>& getObjMarkersRef() { return m_objectMarkers; }
+	std::vector<ObjectMarker>* getObjMarkersPtr() { return &m_objectMarkers; }
 	
 	std::vector<GameObject*>* getGameObjects() { return &m_gameObjects; }
 	std::vector<GameObject*>& getGameObjectsRef() { return m_gameObjects; }
-	bool hasObjectEnteredLayer() { return m_bObjCountIncreased; }
 	
+	bool hasObjectEnteredLayer() { return m_bObjCountIncreased; }
 	void addObjectToLayer(GameObject* gameObj) { m_gameObjects.push_back(gameObj); }
 
 private:

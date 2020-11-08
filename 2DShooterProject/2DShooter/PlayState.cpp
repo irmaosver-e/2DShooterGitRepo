@@ -46,15 +46,18 @@ bool PlayState::render()
 
 bool PlayState::onEnter()
 {
-	GameState::onEnter();
-
 	if (m_pLevel)
 	{
 		m_pLevel->setAsPlayLevel();
+
+		GameState::onEnter();
+
 		m_loadingComplete = true;
+
+		return true;
 	}
 
-	return true;
+	return false;
 }
 
 bool PlayState::onExit()

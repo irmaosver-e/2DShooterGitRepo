@@ -7,7 +7,7 @@
 #include "InputHandler.h"
 #include "BulletHandler.h"
 #include "SoundManager.h"
-
+ 
 Player::Player() : SDLGameObject()
 {
 	m_bFlyingOffScreen = false;
@@ -127,6 +127,20 @@ void Player::flyOffScreen()
 	}
 
 	m_velocity.getXRef() = (float)m_moveSpeed;
+}
+
+void Player::initPlayFieldVariables(ObjectLayer* pPlayFieldObjLayer)
+{
+	m_pPlayFieldObjLayer = pPlayFieldObjLayer;
+	m_pPlayerMarker = &pPlayFieldObjLayer->getObjMarkersRef().back();
+	m_pPlayerMarker->isActive = false;
+}
+
+void Player::enterPlayField()
+{
+	std::cout << "in progress Player::enterPlayField() \n";
+	//the spawner will add extra objects on top of the play field
+	m_pPlayFieldObjLayer->getGameObjectsRef().push_back(this);
 }
 
 

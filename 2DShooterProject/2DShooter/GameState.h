@@ -10,6 +10,7 @@ class GameState
 {
 public:
 	virtual ~GameState() { delete m_pLevel; }
+	virtual void init();
 
 	virtual bool update();
 	virtual bool render();
@@ -28,7 +29,8 @@ protected:
 	GameState() : m_loadingComplete(false), m_exiting(false){}
 	
 	Level* m_pLevel;
-
+	
+	//possibly redundant
 	bool m_loadingComplete;
 	bool m_exiting;
 

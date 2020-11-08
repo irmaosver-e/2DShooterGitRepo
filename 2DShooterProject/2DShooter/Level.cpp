@@ -1,6 +1,6 @@
 #include "Level.h"
 
-#include "Game.h"
+#include "SoundManager.h"
 #include "ObjectLayer.h"
 
 
@@ -59,7 +59,7 @@ void Level::render()
 	}
 }
 
-void Level::reset()
+void Level::resetLevel()
 {
 	m_bLevelComplete = false;
 
@@ -75,6 +75,22 @@ void Level::reset()
 	{
 		pTileLayer->resetPosition();
 	}
+}
+
+void Level::onEnter()
+{
+	TheSoundManager::Instance().playMusic(m_levelMusicID, m_loopMusic);
+	
+	if (m_bPlayLevel && !m_pPlayer)
+	{
+		m_pPlayer = dynamic_cast<Player*>(m_pPlayerLayer->getGameObjects()->back());
+	}
+}
+
+void Level::onExit()
+{
+	resetLevel();
+	m_pPlayer = nullptr;
 }
 
 TileLayer* Level::getTileLayerByName(std::string tileLayer)
@@ -123,4 +139,10 @@ void Level::getObjectsfromLayers(std::vector<GameObject*>& objContainer, std::st
 		//to be expanded
 		//m_objectLayers.at(0);
 	}
+}
+
+void Level::setLevelMusic(std::string& musicID, int& loop)
+{
+	m_levelMusicID = musicID;
+	m_loopMusic = loop;
 }

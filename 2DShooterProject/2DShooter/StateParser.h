@@ -31,12 +31,11 @@ public:
 
 private:
 
+	void parseStage(TiXmlElement* pStageElem);
 	void parseAudio(TiXmlElement* pAudioElem);
 
 	std::string m_stateFile;
-
-
-
+	
 };
 
 #endif /* defined ( __StateParser__ ) */

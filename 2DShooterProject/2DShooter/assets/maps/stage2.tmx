@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<map version="1.4" tiledversion="1.4.2" orientation="orthogonal" renderorder="right-down" width="200" height="15" tilewidth="32" tileheight="32" infinite="0" nextlayerid="19" nextobjectid="41">
+<map version="1.4" tiledversion="1.4.2" orientation="orthogonal" renderorder="right-down" width="200" height="15" tilewidth="32" tileheight="32" infinite="0" nextlayerid="20" nextobjectid="41">
  <tileset firstgid="1" source="../tilesets/s1TerrainTest.tsx"/>
  <tileset firstgid="199" source="../tilesets/PlayerMecha.tsx"/>
  <tileset firstgid="208" source="../tilesets/Bullet.tsx"/>
@@ -72,6 +72,7 @@
     </properties>
    </object>
   </objectgroup>
+  <objectgroup id="19" name="PlayerLayer"/>
  </group>
  <group id="13" name="OUT_OF_PLAY_AREA">
   <group id="16" name="HUDs"/>

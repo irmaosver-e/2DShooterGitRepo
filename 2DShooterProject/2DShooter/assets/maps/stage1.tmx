@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<map version="1.4" tiledversion="1.4.2" orientation="orthogonal" renderorder="right-down" width="200" height="15" tilewidth="32" tileheight="32" infinite="0" nextlayerid="19" nextobjectid="40">
+<map version="1.4" tiledversion="1.4.2" orientation="orthogonal" renderorder="right-down" width="200" height="15" tilewidth="32" tileheight="32" infinite="0" nextlayerid="20" nextobjectid="41">
  <tileset firstgid="1" source="../tilesets/s1TerrainTest.tsx"/>
  <tileset firstgid="199" source="../tilesets/PlayerMecha.tsx"/>
  <tileset firstgid="208" source="../tilesets/Bullet.tsx"/>
@@ -50,14 +50,6 @@
      <property name="VsCollision" value="bulletPlayer"/>
     </properties>
    </object>
-   <object id="1" name="Player" type="playermecha" gid="199" x="80" y="260" width="64" height="64">
-    <properties>
-     <property name="AnimationList" value="idle, attackIdle, damageIdle"/>
-     <property name="Lives" type="int" value="4"/>
-     <property name="VsCollision" value="enemyTest3 , bulletEnemy"/>
-     <property name="VsLayerCollision" value="Collidables"/>
-    </properties>
-   </object>
    <object id="37" name="Eskeletor" type="enemyTest3" gid="210" x="888" y="144" width="32" height="32">
     <properties>
      <property name="AnimationList" value="bug, enemyExplosion"/>
@@ -69,6 +61,16 @@
     <properties>
      <property name="AnimationList" value="bug, enemyExplosion"/>
      <property name="VsCollision" value="bulletPlayer"/>
+     <property name="VsLayerCollision" value="Collidables"/>
+    </properties>
+   </object>
+  </objectgroup>
+  <objectgroup id="19" name="PlayerLayer">
+   <object id="40" name="Player" type="playermecha" gid="199" x="92" y="273.333" width="64" height="64">
+    <properties>
+     <property name="AnimationList" value="idle, attackIdle, damageIdle"/>
+     <property name="Lives" type="int" value="4"/>
+     <property name="VsCollision" value="enemyTest3 , bulletEnemy"/>
      <property name="VsLayerCollision" value="Collidables"/>
     </properties>
    </object>

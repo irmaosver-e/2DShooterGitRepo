@@ -19,51 +19,73 @@ bool StateParser::parseState(GameState* pState)
 	{
 		if (e->Value() == pState->getStateID())
 		{
+
+			//accounts for multiple level map parsing
+			static int stageID = 1;
+			if (pState->getStateID() == "PLAY")
+			{
+				int playStageID = 0;
+				e->Attribute("stageID", &playStageID);
+				if (playStageID != stageID)
+				{
+					continue;
+				}
+				stageID++;
+			}
+
 			pStateRoot = e;
 			break;
 		}
 	}
 
-	//get pStageElem and pAudioElem from the root node
-	TiXmlElement* pStageElem = nullptr;
-	TiXmlElement * pAudioElem = nullptr;
-	for (TiXmlElement* e = pStateRoot->FirstChildElement(); e != nullptr; e = e->NextSiblingElement())
+	if (pStateRoot)
 	{
-		if (e->Value() == std::string("STAGE"))
+		//get pStageElem and pAudioElem from the root node
+		TiXmlElement* pStageElem = nullptr;
+		TiXmlElement* pAudioElem = nullptr;
+		for (TiXmlElement* e = pStateRoot->FirstChildElement(); e != nullptr; e = e->NextSiblingElement())
 		{
-			pStageElem = e;
-		}
-		else if (e->Value() == std::string("SOUND"))
-		{
-			pAudioElem = e;
-		}
-		else
-		{
-			std::cout << "no TiXmlElement* for " << e->Value() << " in StateParser::parseState \n";
-			if (pStageElem && pAudioElem)
+			if (e->Value() == std::string("STAGE"))
 			{
-				break;
+				pStageElem = e;
+			}
+			else if (e->Value() == std::string("SOUND"))
+			{
+				pAudioElem = e;
+			}
+			else
+			{
+				std::cout << "no TiXmlElement* for " << e->Value() << " in StateParser::parseState \n";
+				if (pStageElem && pAudioElem)
+				{
+					break;
+				}
 			}
 		}
+
+		parseStage(pStageElem);
+
+		parseAudio(pAudioElem);
+
+		return true;
 	}
 
+	return false;
+}
+
+void StateParser::parseStage(TiXmlElement* pStageElem)
+{
 	//parse a subpath if present 
-	//std::string path = TheParserManager::Instance().m_rootPath;
 	std::string subpath = "";
-	if (pStageElem->FirstChildElement()->Attribute("subpath"))
+	if (pStageElem->Attribute("subpath"))
 	{
-		subpath += pStageElem->FirstChildElement()->Attribute("subpath");
+		subpath += pStageElem->Attribute("subpath");
 	}
 
 	subpath += pStageElem->FirstChildElement()->Attribute("filename");
-	//pState->stageAssetsPath() = path;
-	//pState->stageMapFileName() = pStageElem->FirstChildElement()->Attribute("filename");
+
 
 	TheParserManager::Instance().m_levelParser.setLevelFile(subpath);
-
-	parseAudio(pAudioElem);
-
-	return true;
 }
 
 void StateParser::parseAudio(TiXmlElement* pAudioElem)

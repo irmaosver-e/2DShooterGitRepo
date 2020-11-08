@@ -3,6 +3,7 @@
 
 #include "SDLGameObject.h"
 #include "HUD.h"
+#include "ObjectLayer.h"
 
 class Player : public SDLGameObject
 {
@@ -24,6 +25,11 @@ public:
 	//player does not scroll empty function
 	virtual void scroll(float scrollSpeed) {}
 
+	void initPlayFieldVariables(ObjectLayer* pPlayFieldObjLayer);
+	void enterPlayField();
+	
+	//void setPlayerMarkerPtr(ObjectMarker* pPlayerMarker) { m_pPlayerMarker = pPlayerMarker; }
+	ObjectLayer* getPlayFieldObjLayerPtr() { return m_pPlayFieldObjLayer; }
 	int* getLivesPtr() { return &m_lives; }
 	int checkLives() const { return m_lives; }
 	bool outOfLives() { return (m_lives > 0) ? false : true; }
@@ -40,7 +46,11 @@ private:
 	void handleInput();
 	virtual void handleAnimation();
 
+
+
 	HUD* m_playerHUD;
+	ObjectLayer* m_pPlayFieldObjLayer;
+	ObjectMarker* m_pPlayerMarker;
 
 	int m_lives;
 

@@ -27,8 +27,7 @@ void GameStateMachine::init()
 		}
 
 		//initialize all states for use
-		m_pCurrentState->onEnter();
-		m_pCurrentState->onExit();
+		m_pCurrentState->init();
 	}
 
 	changeState(MAIN);
@@ -59,32 +58,59 @@ void GameStateMachine::changeState(States state)
 
 void GameStateMachine::pushState(States state)
 {
-	// if only pushing the state store the previous state for poping
-	if (m_pCurrentState)
+	//store the previous state if only pushing for poping 
+	//or changing to new level for player transfer
+	if (!m_bChangingState)
 	{
-		//store the previous state if only pushing for poping 
-		//or changing to new level for player transfer
-		if (!m_bChangingState || (state == NEXT_LEVEL))
-		{
-			m_pPreviousState = m_pCurrentState;
-		}
+		m_pPreviousState = m_pCurrentState;
 	}
 
-	if (state == PLAY || state == NEXT_LEVEL)
+	static int stageNumber = 0;
+
+	//parse the new level
+	if (state == NEXT_LEVEL)
 	{
-		for (GameState* pGameState : m_playStates)
+		stageNumber++;
+
+		//needs to be deleted if parsing failed
+		state = PLAY;
+		GameState* pState = createState(state);
+
+		//parse the new state
+		if (TheParserManager::Instance().getStateParserRef().parseState(pState))
 		{
-			if (pGameState->getStateID() == getStateID(state))
+			pState->init();
+
+			//transfer player to new playstate
+			pState->getLevel()->getPlayerLayerPtr()->addObjectToLayer(m_pCurrentState->getLevel()->getPlayerLayerPtr()->getGameObjects()->back());
+			//copy player Layer Markers
+			pState->getLevel()->getPlayerLayerPtr()->getObjMarkersRef() = m_pCurrentState->getLevel()->getPlayerLayerPtr()->getObjMarkersRef();
+
+			//removes the player from the old state level
+			m_pCurrentState->getLevel()->getPlayerLayerPtr()->getGameObjects()->pop_back();
+
+			m_playStates.push_back(pState);
+		}
+		else
+		{
+			if (stageNumber == m_playStates.size())
 			{
-				//the state exists already use it instead
-				m_pCurrentState = pGameState;
+				stageNumber = 0;
 
-				//probably not enter but restart needs checking!!!!!!!!!!!!!1
-				m_pCurrentState->onEnter();
+				// need to transfer playe to the first play state
 
+				changeState(GAME_OVER);
 				return;
 			}
 		}
+
+	}
+
+	if (state == PLAY)
+	{
+		m_pCurrentState = m_playStates[stageNumber];
+
+		m_pCurrentState->onEnter();
 	}
 	else
 	{
@@ -98,54 +124,32 @@ void GameStateMachine::pushState(States state)
 				//probably not enter but restart needs checking!!!!!!!!!!!!!1
 				m_pCurrentState->onEnter();
 
-				return;
+				break;
 			}
 		}
 	}
-	
-	//parse state if non existent
-	GameState* pState = createState(state);
-	TheParserManager::Instance().getStateParserRef().parseState(pState);
 
-	if (state == PLAY || state == NEXT_LEVEL)
-	{
-		m_playStates.push_back(pState);
-		m_pCurrentState = m_playStates.back();
-	}
-	else
-	{
-		m_menuStates.push_back(pState);
-		m_pCurrentState = m_menuStates.back();
-	}
-
-	//m_gameStates.push_back(pState);
-
-	//m_pCurrentState = m_gameStates.back();
-
-	m_pCurrentState->onEnter();
+	return;
 }
 
 void GameStateMachine::popState()
 {
-	if (m_pCurrentState)
+	m_pCurrentState->onExit();
+
+	if (m_bChangingState)
 	{
-		m_pCurrentState->onExit();
-
-		if (m_bChangingState)
+		if (m_pPreviousState)
 		{
-			if (m_pPreviousState)
-			{
-				m_pPreviousState->onExit();
-			}
+			m_pPreviousState->onExit();
 		}
-		else
-		{
-			m_pCurrentState = m_pPreviousState;
-			m_pCurrentState->resume();
-		}
-
-		m_pPreviousState = nullptr;
 	}
+	else
+	{
+		m_pCurrentState = m_pPreviousState;
+		m_pCurrentState->resume();
+	}
+
+	m_pPreviousState = nullptr;
 }
 
 void GameStateMachine::reloadState()
@@ -223,8 +227,6 @@ std::string GameStateMachine::getStateID(States& state)
 		return "PAUSE";
 	case GAME_OVER:
 		return "GAMEOVER";
-	case NEXT_LEVEL:
-		return "NEXT_LEVEL";
 	}
 
 	return "NO_STATE_FOUND";

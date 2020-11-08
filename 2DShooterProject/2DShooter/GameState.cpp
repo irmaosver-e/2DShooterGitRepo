@@ -4,6 +4,14 @@
 #include "ParserManager.h"
 #include "CollisionManager.h"
 
+void GameState::init()
+{	
+	//only parse once
+	if (!m_pLevel)
+	{
+		m_pLevel = TheParserManager::Instance().getLevelParserRef().parseLevel();
+	}
+}
 
 bool GameState::update()
 {
@@ -38,24 +46,18 @@ bool GameState::onEnter()
 	std::cout << "Entering " << getStateID() << " State\n";
 	
 	//only parse once
-	if (!m_pLevel)
+	if (m_pLevel)
 	{
-		m_pLevel = TheParserManager::Instance().getLevelParserRef().parseLevel();
+		m_pLevel->onEnter();
+		//needs to be moved to Level onExit
+		//m_pLevel->reset();
 	}
-	else
-	{
-		m_pLevel->reset();
-		//finds the markers on the objectLayersand reset them to initial Pos;
-		//resets the 
-	}
-	
-	//LevelParser levelParser;
-	//m_pLevel = levelParser.parseLevel(m_stageAssetsPath, m_stageMapFile);
+
+
 
 	TheCollisionManager::Instance().setCurrentLevel(m_pLevel);
 
 	m_exiting = false;
-
 
 	return true;
 }
@@ -82,6 +84,8 @@ bool GameState::onExit()
 		// pop m_callbacks????
 
 	m_exiting = true;
+
+	m_pLevel->onExit();
 
 	TheInputHandler::Instance().reset();
 

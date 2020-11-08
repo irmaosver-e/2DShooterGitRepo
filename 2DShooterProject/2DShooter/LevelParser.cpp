@@ -4,7 +4,6 @@
 #include "ParserManager.h"
 #include "TextureManager.h"
 #include "SDLSystem.h"
-#include "SoundManager.h"
 #include "TextManager.h"
 #include "CollisionManager.h"
 #include "BulletHandler.h"
@@ -47,8 +46,8 @@ Level* LevelParser::parseLevel()
 			{
 				loop = -1;
 			}
-
-			TheSoundManager::Instance().playMusic(e->FirstChildElement()->Attribute("name"), loop);
+			std::string levelMusic = e->FirstChildElement()->Attribute("name");
+			m_pLevel->setLevelMusic(levelMusic, loop);
 		}
 		else if (e->Value() == std::string("tileset"))
 		{
@@ -335,7 +334,7 @@ Layer* LevelParser::parseTileLayer(TiXmlElement* pTileElement)
 Layer* LevelParser::parseObjectLayer(TiXmlElement* pObjectElement)
 {
 	ObjectLayer* pObjectLayer = new ObjectLayer();
-	bool hasKeyObjects = false;
+
 	//sets the name of the object layer
 	pObjectLayer->getLayerNameRef() = pObjectElement->Attribute("name");
 
@@ -438,13 +437,34 @@ Layer* LevelParser::parseObjectLayer(TiXmlElement* pObjectElement)
 			//spawns the objects on screen
 			TheObjectSpawner::Instance().spawnObject(*pObjectLayer, pObjectLayer->getObjMarkersRef().back());
 
-			//looks for the player and sets it to the map
-			if (e->Attribute("name") == std::string("Player"))
+			/*
+			//looks for the playerLayer and sets it to the Level
+			if (pObjectLayer->getLayerNameRef() == "PlayerLayer")
 			{
-				m_pLevel->setPlayer(dynamic_cast<Player*>(pObjectLayer->getGameObjects()->back()));
-			}
+				//looks for the player and sets it to the map
+				if (e->Attribute("name") == std::string("Player"))
+				{
+					m_pLevel->setPlayer(dynamic_cast<Player*>(pObjectLayer->getGameObjects()->back()));
+				}
+				
+				m_pLevel->setPlayerLayerPtr(pObjectLayer);
 
+			}
+			*/
 		}
+	}
+
+	//looks for the playerLayer and sets it to the Level
+	if (pObjectLayer->getLayerNameRef() == "PlayerLayer")
+	{
+		//checks if playerLayer has a player (stage 1)
+		if (!pObjectLayer->getGameObjects()->empty())
+		{
+			m_pLevel->setPlayer(dynamic_cast<Player*>(pObjectLayer->getGameObjects()->back()));
+		}
+
+		m_pLevel->setPlayerLayerPtr(pObjectLayer);
+
 	}
 
 	m_pLevel->getObjectLayers()->push_back(pObjectLayer);

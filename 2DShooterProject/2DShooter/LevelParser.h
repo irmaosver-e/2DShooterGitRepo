@@ -13,7 +13,9 @@ public:
 		m_levelMapFile(""){}
 
 	Level* parseLevel();
-	Level* parseLevel(std::string assetsLocation, std::string levelFile) {}
+
+	//redundant
+	//Level* parseLevel(std::string assetsLocation, std::string levelFile) {}
 	
 	void setLevelFile(std::string& fileName) { m_levelMapFile = fileName; }
 
