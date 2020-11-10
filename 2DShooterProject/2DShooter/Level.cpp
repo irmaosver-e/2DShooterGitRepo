@@ -85,6 +85,16 @@ void Level::onEnter()
 	{
 		m_pPlayer = dynamic_cast<Player*>(m_pPlayerLayer->getGameObjects()->back());
 	}
+
+	//for testing
+	if (m_pPlayer)
+	{
+		std::cout << "Player test code in Level::onEnter()\n";
+		m_pPlayer->turnObjOn();
+		m_pPlayer->flyIntoScreen();
+
+		m_pPlayer->getPosition() = m_pPlayerLayer->getObjMarkersPtr()->back().objStartPosition;
+	}
 }
 
 void Level::onExit()

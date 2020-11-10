@@ -5,7 +5,7 @@
 #include "SoundManager.h"
 
 
-bool StateParser::parseState(GameState* pState)
+bool StateParser::parseState(GameState* pState, int stageID)
 {
 	//create XML doc
 	TiXmlDocument xmlDoc;
@@ -19,9 +19,7 @@ bool StateParser::parseState(GameState* pState)
 	{
 		if (e->Value() == pState->getStateID())
 		{
-
 			//accounts for multiple level map parsing
-			static int stageID = 1;
 			if (pState->getStateID() == "PLAY")
 			{
 				int playStageID = 0;
@@ -30,7 +28,6 @@ bool StateParser::parseState(GameState* pState)
 				{
 					continue;
 				}
-				stageID++;
 			}
 
 			pStateRoot = e;
@@ -112,5 +109,25 @@ void StateParser::parseAudio(TiXmlElement* pAudioElem)
 			std::cout << "invalid value: " << e->Value() << " in STATES XML file \n";
 		}
 	}
+}
+
+int StateParser::countPlayStates()
+{
+	//create XML doc
+	TiXmlDocument xmlDoc;
+
+	//get the root element
+	TiXmlElement* pRoot = loadDocument(xmlDoc, TheParserManager::Instance().m_rootPath, m_stateFile);
+
+	int playStateCount = 0;
+	for (TiXmlElement* e = pRoot->FirstChildElement(); e != nullptr; e = e->NextSiblingElement())
+	{
+		if (e->Value() == std::string("PLAY"))
+		{
+			playStateCount++;
+		}
+	}
+
+	return playStateCount;
 }
 

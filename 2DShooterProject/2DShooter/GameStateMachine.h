@@ -14,7 +14,9 @@ public:
 		m_pCurrentState(nullptr),
 		m_pPreviousState(nullptr),
 		m_bQuitStates(false),
-		m_bChangingState(false) {}
+		m_bChangingState(false),
+		m_numberOfStages(0),
+		m_stageNumber(1){}
 
 	~GameStateMachine() {}
 
@@ -36,6 +38,8 @@ public:
 	//std::vector<GameState*>& getGameStates() { return m_gameStates; }
 
 private:
+	void manageNextPlayState();
+
 	GameState* createState(States& state);
 	std::string getStateID(States& state);
 
@@ -45,6 +49,10 @@ private:
 	GameState* m_pPreviousState;
 	bool m_bChangingState;
 	bool m_bQuitStates;
+
+	//in progress
+	int m_numberOfStages;
+	int m_stageNumber;
 
 };
 

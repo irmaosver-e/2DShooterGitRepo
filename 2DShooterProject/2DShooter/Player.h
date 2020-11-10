@@ -21,6 +21,7 @@ public:
 	virtual void collisionWithLayer();
 
 	void flyOffScreen();
+	void flyIntoScreen();
 
 	//player does not scroll empty function
 	virtual void scroll(float scrollSpeed) {}

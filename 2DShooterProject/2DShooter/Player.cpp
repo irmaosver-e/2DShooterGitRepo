@@ -129,6 +129,14 @@ void Player::flyOffScreen()
 	m_velocity.getXRef() = (float)m_moveSpeed;
 }
 
+void Player::flyIntoScreen()
+{
+	m_dyingCounter = 0;
+	m_invulnerable = false;
+	m_bDying = false;
+	m_bFlyingOffScreen = false;
+}
+
 void Player::initPlayFieldVariables(ObjectLayer* pPlayFieldObjLayer)
 {
 	m_pPlayFieldObjLayer = pPlayFieldObjLayer;

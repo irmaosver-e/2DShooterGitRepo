@@ -25,7 +25,9 @@ public:
 	void parseObjects(TiXmlElement* pObjectRoot, std::vector<GameObject*> *pObjects);
 	*/
 
-	bool parseState(GameState* pState);
+	bool parseState(GameState* pState, int stageID = 1);
+
+	int countPlayStates();
 
 	void setStateFile(std::string& fileName) { m_stateFile = fileName; }
 
