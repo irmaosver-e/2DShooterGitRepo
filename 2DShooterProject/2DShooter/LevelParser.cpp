@@ -161,6 +161,7 @@ void LevelParser::parseObjTile(TiXmlElement* pTileElement, ObjectTile& objectTil
 		}
 		else if (e->Value() == std::string("objectgroup"))
 		{
+			std::vector<FiringPoint> objFiringPoints;
 			for (TiXmlElement* object = e->FirstChildElement(); object != NULL; object = object->NextSiblingElement())
 			{
 				//parse the colision shape boxes
@@ -176,7 +177,7 @@ void LevelParser::parseObjTile(TiXmlElement* pTileElement, ObjectTile& objectTil
 					objectTile.collisionShape.push_back(collisionBox);
 				}
 				
-				//parse the firingPoints to bulletHandler
+				//parse the firingPoints to the container
 				if (object->Attribute("name") == std::string("firingPoint"))
 				{
 					FiringPoint firingPoint;
@@ -184,7 +185,8 @@ void LevelParser::parseObjTile(TiXmlElement* pTileElement, ObjectTile& objectTil
 					object->QueryFloatAttribute("y", firingPoint.position.getYPtr());
 					firingPoint.bulletType = object->Attribute("type");
 
-					TheBulletHandler::Instance().registerFiringPoint(objectTile.owner, firingPoint);
+					objFiringPoints.push_back(firingPoint);
+					//TheBulletHandler::Instance().registerFiringPoint(objectTile.owner, firingPoint);
 				}
 				if (object->Attribute("name") == std::string("anchor"))
 				{
@@ -199,6 +201,12 @@ void LevelParser::parseObjTile(TiXmlElement* pTileElement, ObjectTile& objectTil
 
 			}
 			
+			//parse the firing points to the bulletHandler if the container not empty
+			if (!objFiringPoints.empty())
+			{
+				TheBulletHandler::Instance().registerFiringPoint(objectTile.owner, objFiringPoints);
+			}
+
 			pObjColType->tileCollisionShape[objectTile.type] = objectTile.collisionShape;
 		}
 		else if (e->Value() == std::string("animation"))
@@ -580,7 +588,10 @@ void LevelParser::parseOutOfPlayLayers(TiXmlElement* pOutElement)
 			//if the object layer is the Bullets Layer, poppulate the bulletHandler 
 			if (e->Attribute("name") == std::string("Bullets"))
 			{
-				TheBulletHandler::Instance().registerBulletLayer(pObjectLayer);
+				m_pLevel->setBulletLayerPtr(pObjectLayer);
+				
+				//redundant done in level onEnter()
+				//TheBulletHandler::Instance().registerBulletLayer(pObjectLayer);
 
 				//goes through every object in the layer
 				for (TiXmlElement* pObjElement = e->FirstChildElement(); pObjElement != NULL; pObjElement = pObjElement->NextSiblingElement())

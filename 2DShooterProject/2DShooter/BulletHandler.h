@@ -21,7 +21,7 @@ public:
 
     void registerBulletLayer(ObjectLayer* pBulletLayer) { m_bulletLayer = pBulletLayer; }
     void registerBulletType(std::string bulletType, LoaderParams& params);
-    void registerFiringPoint(std::string firingObj, FiringPoint& firingPoint);
+    void registerFiringPoint(std::string firingObj, std::vector<FiringPoint>& firingPoints);
 
     LoaderParams* getBulletTypeParam(std::string bulletType);
 

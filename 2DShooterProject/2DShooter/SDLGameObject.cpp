@@ -24,9 +24,6 @@ void SDLGameObject::load(const LoaderParams& rParams)
 	m_width = rParams.getWidth();
 	m_height = rParams.getHeight();
 	m_subTypeID = rParams.getSubTypeID();
-	
-	//m_numFrames = rParams.getNumFrames();
-	//m_animSpeed = rParams.getAnimSpeed();
 
 	m_animations = rParams.getAnimationList();
 	if (m_animations.empty())
@@ -49,6 +46,7 @@ void SDLGameObject::reset(const LoaderParams& rParams)
 	m_bDying = false;
 	m_bDead = false;
 	m_bColliding = false;
+	m_bulletCounter = 0;
 }
 
 void SDLGameObject::draw()

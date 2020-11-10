@@ -6,25 +6,20 @@
 void BulletHandler::registerBulletType(std::string bulletType, LoaderParams& params)
 {
     //checks if the bulletType already exist before creating
-    std::map<std::string, LoaderParams>::iterator it = m_bulletTypes.find(bulletType);
-    if (it == m_bulletTypes.end())
+    if (m_bulletTypes.find(bulletType) == m_bulletTypes.end())
     {
         m_bulletTypes[bulletType] = params;
     }
 }
 
-void BulletHandler::registerFiringPoint(std::string firingObj, FiringPoint& firingPoint)
+void BulletHandler::registerFiringPoint(std::string firingObj, std::vector<FiringPoint>& firingPoints)
 {
-    m_objFirePoint[firingObj].push_back(firingPoint);
 
-    /*
     //checks if the firingObj already exist before creating
-    std::map<std::string, FiringPoint>::iterator it = m_objFirePoint.find(firingObj);
-    if (it == m_objFirePoint.end())
+    if (m_objFirePoint.find(firingObj) == m_objFirePoint.end())
     {
-        m_objFirePoint[firingObj] = firingPoint;
+        m_objFirePoint[firingObj] = firingPoints;
     }
-    */
 }
 
 LoaderParams* BulletHandler::getBulletTypeParam(std::string bulletType)
@@ -55,7 +50,7 @@ void BulletHandler::fireBullet(std::string& firingObj, Vector2Df firingObjPos, V
     }
     else
     {
-        for (FiringPoint& firingPoint : m_objFirePoint[firingObj])
+         for (FiringPoint& firingPoint : m_objFirePoint[firingObj])
         {
             firingPoints.push_back(&firingPoint);
         }

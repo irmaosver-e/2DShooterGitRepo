@@ -2,20 +2,17 @@
 
 Bullet::Bullet() : SDLGameObject()
 {
-    m_dyingTime = 5;
 }
 
 
+void Bullet::reset(const LoaderParams& rParams)
+{
+    outOfView();
+}
+
 void Bullet::update()
 {
-    if (!m_bDying && m_bUpdating)
-    {
-        SDLGameObject::update();
-    }
-    else
-    {
-        //doDyingAnimation();
-    }
+    SDLGameObject::update();
 }
 
 void Bullet::outOfView()
@@ -25,12 +22,12 @@ void Bullet::outOfView()
 
 void Bullet::collision()
 {
-    m_textureID = "smallexplosion";
-    m_currentFrame = 0;
-    m_numFrames = 2;
-    m_width = 20;
-    m_height = 20;
-    m_bDying = true;
+   // m_textureID = "smallexplosion";
+   // m_currentFrame = 0;
+   // m_numFrames = 2;
+   // m_width = 20;
+   // m_height = 20;
+    //m_bDying = true;
 }
 
 void Bullet::collisionPassive()

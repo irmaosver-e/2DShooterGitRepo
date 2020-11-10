@@ -48,6 +48,7 @@ void Eskeletor::update()
 
         if (m_bulletCounter == m_bulletFiringSpeed)
         {
+           TheSoundManager::Instance().playSound("shoot", 0);
            TheBulletHandler::Instance().fireBullet(m_subTypeID, m_position, Vector2Df(-10, 0));
 
             m_bulletCounter = 0;
@@ -67,7 +68,5 @@ void Eskeletor::reset(const LoaderParams& rParams)
     m_textureID = m_animations[ALIVE];
     SDLGameObject::reset(rParams);
 
-    //m_dyingTime = 50;
-    m_health = 2;
-    
+    m_health = 2;   
 }

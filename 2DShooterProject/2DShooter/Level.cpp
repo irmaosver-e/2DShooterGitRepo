@@ -2,6 +2,7 @@
 
 #include "SoundManager.h"
 #include "ObjectLayer.h"
+#include "BulletHandler.h"
 
 
 Level::~Level()
@@ -83,17 +84,28 @@ void Level::onEnter()
 	
 	if (m_bPlayLevel && !m_pPlayer)
 	{
+		//its a playLevel need to register the layer to the bulletHandler
+		TheBulletHandler::Instance().registerBulletLayer(m_pBulletLayer);
+
 		m_pPlayer = dynamic_cast<Player*>(m_pPlayerLayer->getGameObjects()->back());
 	}
-
+	if (m_pBulletLayer)
+	{
+		//its a playLevel need to register the layer to the bulletHandler
+		TheBulletHandler::Instance().registerBulletLayer(m_pBulletLayer);
+	}
 	//for testing
 	if (m_pPlayer)
 	{
 		std::cout << "Player test code in Level::onEnter()\n";
-		m_pPlayer->turnObjOn();
-		m_pPlayer->flyIntoScreen();
+		//m_pPlayer->turnObjOn();
+		//m_pPlayer->flyIntoScreen();
 
-		m_pPlayer->getPosition() = m_pPlayerLayer->getObjMarkersPtr()->back().objStartPosition;
+		//needed to spawn the player
+		m_pPlayerLayer->resetMarkers();
+
+		//possibly not needed as player should be off already from going off screen at the end of level
+		m_pPlayerLayer->turnObjectsOff();
 	}
 }
 

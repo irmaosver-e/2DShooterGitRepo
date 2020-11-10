@@ -25,7 +25,6 @@ public:
 	void changeState(States state);
 	void pushState(States state);
 	void popState();
-	void reloadState();
 
 	void update();
 	void render();
@@ -38,7 +37,7 @@ public:
 	//std::vector<GameState*>& getGameStates() { return m_gameStates; }
 
 private:
-	void manageNextPlayState();
+	void manageNextPlayState(States& state);
 
 	GameState* createState(States& state);
 	std::string getStateID(States& state);

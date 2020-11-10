@@ -137,21 +137,6 @@ void Player::flyIntoScreen()
 	m_bFlyingOffScreen = false;
 }
 
-void Player::initPlayFieldVariables(ObjectLayer* pPlayFieldObjLayer)
-{
-	m_pPlayFieldObjLayer = pPlayFieldObjLayer;
-	m_pPlayerMarker = &pPlayFieldObjLayer->getObjMarkersRef().back();
-	m_pPlayerMarker->isActive = false;
-}
-
-void Player::enterPlayField()
-{
-	std::cout << "in progress Player::enterPlayField() \n";
-	//the spawner will add extra objects on top of the play field
-	m_pPlayFieldObjLayer->getGameObjectsRef().push_back(this);
-}
-
-
 void Player::ressurect()
 {
 	m_lives -= 1;

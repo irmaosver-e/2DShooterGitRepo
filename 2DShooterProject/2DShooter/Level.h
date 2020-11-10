@@ -27,6 +27,8 @@ public:
 	void setPlayer(Player* pPlayer) { m_pPlayer = pPlayer; }
 	void setPlayerLayerPtr(ObjectLayer* pPlayerLayer) { m_pPlayerLayer = pPlayerLayer; }
 	ObjectLayer* getPlayerLayerPtr() { return  m_pPlayerLayer; }
+	
+	void setBulletLayerPtr(ObjectLayer* pBulletLayer) { m_pBulletLayer = pBulletLayer; }
 
 	std::vector<TileLayer*>* getTileLayers() { return &m_tileLayers; }
 	TileLayer* getTileLayerByName(std::string tileLayer);
@@ -52,24 +54,22 @@ private:
 
 	Level() : 
 		m_bPlayLevel(false),
-		m_bLevelComplete(false)
+		m_bLevelComplete(false),
+		m_pPlayerLayer(nullptr),
+		m_pBulletLayer(nullptr)
 	{}
 
 	void resetLevel();
 
 	Player* m_pPlayer;
 	ObjectLayer* m_pPlayerLayer;
+	ObjectLayer* m_pBulletLayer;
 	Level1Boss* m_pLevelBoss;
 
 	std::vector<Layer*> m_layers;
 	std::vector<ObjectLayer*> m_objectLayers;
 	std::vector<TileLayer*> m_tileLayers;
 	std::vector<ImageLayer*> m_imageLayers;
-
-	//possibly redundant
-	//Level(std::string location, std::string file) : m_assetsLocation(location), m_mapFile(file) {}
-	//std::string m_assetsLocation;
-	//std::string m_mapFile;
 
 	bool m_bPlayLevel;
 	bool m_bLevelComplete;

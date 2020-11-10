@@ -40,10 +40,10 @@ void ObjectLayer::update()
      // iterate through the objects
      for (GameObject* pGameObj : m_gameObjects)
     {
-        pGameObj->update();
-
         if (pGameObj->isOn())
         {
+            pGameObj->update();
+
             pGameObj->scroll(m_scrollSpeed);
             pGameObj->inViewCheck();
 
