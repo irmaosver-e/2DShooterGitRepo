@@ -16,7 +16,8 @@ public:
 		m_bQuitStates(false),
 		m_bChangingState(false),
 		m_numberOfStages(0),
-		m_stageNumber(1){}
+		m_stageNumber(1),
+		m_stageNumberIndex(0) {}
 
 	~GameStateMachine() {}
 
@@ -52,6 +53,7 @@ private:
 	//in progress
 	int m_numberOfStages;
 	int m_stageNumber;
+	int m_stageNumberIndex;
 
 };
 

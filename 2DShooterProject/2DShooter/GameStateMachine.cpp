@@ -21,6 +21,7 @@ void GameStateMachine::init()
 		{
 			m_playStates.push_back(pState);
 			m_pCurrentState = m_playStates.back();
+			m_stageNumberIndex = 0;
 		}
 		else
 		{
@@ -37,26 +38,12 @@ void GameStateMachine::init()
 
 void GameStateMachine::changeState(States state)
 {
-	//test  code
 	if (state == NEXT_LEVEL)
 	{
 		manageNextPlayState(state);
 	}
 
 	m_bChangingState = true;
-
-	/* redundant check
-	if (m_pCurrentState)
-	{
-		// trying to change to same state - do nothing
-		if (m_pCurrentState->getStateID() == getStateID(state))
-		{
-			std::cout << " in GameStateMachine::changeState - changing to same state as current \n";
-			std::cout << "change state: " << getStateID(state) << "\n";
-			return;
-		}
-	}
-	*/
 
 	popState();
 
@@ -76,7 +63,8 @@ void GameStateMachine::pushState(States state)
 
 	if (state == PLAY)
 	{
-		m_pCurrentState = m_playStates[m_stageNumber - 1];
+		//m_pCurrentState = m_playStates[m_stageNumber - 1];
+		m_pCurrentState = m_playStates[m_stageNumberIndex];
 	}
 	else
 	{
@@ -106,13 +94,16 @@ void GameStateMachine::popState()
 	{
 		if (m_pPreviousState)
 		{
+			//going to MENU fom PAUSE
+			m_stageNumberIndex = 0;
+
 			//transfer player to first play stage
-			m_playStates[0]->getLevel()->getPlayerLayerPtr()->addObjectToLayer(m_pPreviousState->getLevel()->getPlayerLayerPtr()->getGameObjects()->back());
+			m_playStates[m_stageNumberIndex]->getLevel()->getPlayerLayerPtr()->addObjectToLayer(m_pPreviousState->getLevel()->getPlayerLayerPtr()->getGameObjects()->back());
 
 			//removes the player from the old state level
 			m_pPreviousState->getLevel()->getPlayerLayerPtr()->getGameObjects()->pop_back();
 
-			//going back to MENU from PAUSE
+
 			m_pPreviousState->onExit();
 			m_stageNumber = 1;
 		}
@@ -130,25 +121,20 @@ void GameStateMachine::popState()
 
 void GameStateMachine::manageNextPlayState(States& state)
 {
-	//finds the next stage number as index of m_playstates
-	int nextStage = 0;
-	for (int playStatesIndex = 0; playStatesIndex < m_playStates.size(); playStatesIndex++)
-	{
-		if (m_pCurrentState == m_playStates[playStatesIndex])
-		{
-			nextStage = playStatesIndex + 2;
-			m_stageNumber = playStatesIndex + 2;
-			break;
-		}
-	}
+	//the next state will be a play state unless levels are finished
+	state = PLAY;
 
+	m_stageNumberIndex++;
+	//finds the next stage number as index of m_playstates
+	int nextStage = m_stageNumberIndex + 1;
+
+	//if the next stage is greater, next stage hasn't been loaded yet
 	if (nextStage > m_playStates.size())
 	{
+		//if the playstates size is smaller than the total stages there are still stages to load
 		if (m_playStates.size() < m_numberOfStages)
 		{
 			//create a new stage and set the play state to the new stage
-
-			state = PLAY;
 			GameState* pState = createState(state);
 
 			TheParserManager::Instance().getStateParserRef().parseState(pState, nextStage);
@@ -163,11 +149,13 @@ void GameStateMachine::manageNextPlayState(States& state)
 		{
 			//end of game transfer the play state back to the first stage
 			m_stageNumber = 1;
+			m_stageNumberIndex = 0;
 			state = GAME_OVER;
 		}
 	}
 	//transfer player to new playstate
-	m_playStates[m_stageNumber - 1]->getLevel()->getPlayerLayerPtr()->addObjectToLayer(m_pCurrentState->getLevel()->getPlayerLayerPtr()->getGameObjects()->back());
+	//m_playStates[m_stageNumber - 1]->getLevel()->getPlayerLayerPtr()->addObjectToLayer(m_pCurrentState->getLevel()->getPlayerLayerPtr()->getGameObjects()->back());
+	m_playStates[m_stageNumberIndex]->getLevel()->getPlayerLayerPtr()->addObjectToLayer(m_pCurrentState->getLevel()->getPlayerLayerPtr()->getGameObjects()->back());
 
 	//removes the player from the old state level
 	m_pCurrentState->getLevel()->getPlayerLayerPtr()->getGameObjects()->pop_back();

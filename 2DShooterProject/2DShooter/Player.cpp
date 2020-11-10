@@ -45,7 +45,13 @@ void Player::load(const LoaderParams& rParams)
 void Player::reset(const LoaderParams& rParams)
 {
 	m_position = Vector2Df(rParams.getX(), rParams.getY());
-	m_lives = rParams.getLives();
+	
+	//it hasnt finished the last stage stage, it must be restarting the game
+	if (!m_bFlyingOffScreen)
+	{
+		m_lives = rParams.getLives();
+	}
+	
 	m_dyingCounter = 0;
 	m_invulnerable = false;
 	m_bDying = false;

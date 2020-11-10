@@ -45,6 +45,8 @@ public:
 	//std::string getlevelAssetsLocation() { return m_assetsLocation; }
 
 	void setAsPlayLevel() { m_bPlayLevel = true; }
+	void setLevelNumber(int levelNumber) { m_playLevelNumber = levelNumber; }
+	int getLevelNumber() { return m_playLevelNumber; } const
 	bool IsLevelComplete() { return m_bLevelComplete; }
 
 	void setLevelMusic(std::string& musicID, int& loop);
@@ -56,7 +58,8 @@ private:
 		m_bPlayLevel(false),
 		m_bLevelComplete(false),
 		m_pPlayerLayer(nullptr),
-		m_pBulletLayer(nullptr)
+		m_pBulletLayer(nullptr),
+		m_playLevelNumber(0)
 	{}
 
 	void resetLevel();
@@ -72,6 +75,7 @@ private:
 	std::vector<ImageLayer*> m_imageLayers;
 
 	bool m_bPlayLevel;
+	int m_playLevelNumber;
 	bool m_bLevelComplete;
 
 	//sound variable
