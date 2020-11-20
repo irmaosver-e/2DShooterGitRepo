@@ -132,7 +132,7 @@ void Player::flyOffScreen()
 		m_invulnerable = true;
 	}
 
-	m_velocity.getXRef() = (float)m_moveSpeed;
+	m_velocity.getXRef() = (float)m_moveSpeed * 2;
 }
 
 void Player::flyIntoScreen()

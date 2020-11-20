@@ -1,10 +1,5 @@
 #include "SoundManager.h"
 
-SoundManager::~SoundManager()
-{
-	Mix_CloseAudio();
-}
-
 bool SoundManager::init(int frequency, int format, int channnels, int chunksize)
 {
 	Uint16 sdlAudioFormat = AUDIO_S16;
@@ -27,27 +22,37 @@ bool SoundManager::load(std::string fileName, std::string id, sound_type soundTy
 {
 	if (soundType == SOUND_MUSIC)
 	{
-		Mix_Music* pMusic = Mix_LoadMUS(fileName.c_str());
-		
-		if (!pMusic)
+		//only add the music to the map once
+		if (m_music.find(id) == m_music.end())
 		{
-			std::cout << "Could not load music: ERROR - " << Mix_GetError() << "\n";
-			return false;
+			Mix_Music* pMusic = Mix_LoadMUS(fileName.c_str());
+
+			if (!pMusic)
+			{
+				std::cout << "Could not load music: ERROR - " << Mix_GetError() << "\n";
+				return false;
+			}
+
+			m_music[id] = pMusic;
+			return true;
 		}
-		m_music[id] = pMusic;
-		return true;
 	}
 	else if (soundType == SOUND_SFX)
 	{
-		Mix_Chunk* pChunk = Mix_LoadWAV(fileName.c_str());
-
-		if (!pChunk)
+		//only add the fx to the map once
+		if (m_sfxs.find(id) == m_sfxs.end())
 		{
-			std::cout << "Could not load SFX: ERROR - " << Mix_GetError() << "\n";
-			return false;
+			Mix_Chunk* pChunk = Mix_LoadWAV(fileName.c_str());
+
+			if (!pChunk)
+			{
+				std::cout << "Could not load SFX: ERROR - " << Mix_GetError() << "\n";
+				return false;
+			}
+
+			m_sfxs[id] = pChunk;
+			return true;
 		}
-		m_sfxs[id] = pChunk;
-		return true;
 	}
 	else
 	{
@@ -55,6 +60,30 @@ bool SoundManager::load(std::string fileName, std::string id, sound_type soundTy
 	}
 
 	return false;
+}
+
+void SoundManager::quit()
+{
+	clearSoundSnippets();
+	Mix_CloseAudio();
+}
+
+void SoundManager::clearSoundSnippets()
+{
+	for (std::map<std::string, Mix_Chunk*>::iterator itFX = m_sfxs.begin(); itFX != m_sfxs.end(); itFX++)
+	{
+		Mix_FreeChunk(itFX->second);
+		itFX->second = nullptr;
+	}
+
+	for (std::map<std::string, Mix_Music*>::iterator itMusic = m_music.begin(); itMusic != m_music.end(); itMusic++)
+	{
+		Mix_FreeMusic(itMusic->second);
+		itMusic->second = nullptr;
+	}
+
+	m_sfxs.clear();
+	m_music.clear();
 }
 
 bool SoundManager::playSoundOnce(std::string sfxID, int sourceID)

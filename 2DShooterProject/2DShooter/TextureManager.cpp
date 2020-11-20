@@ -4,25 +4,29 @@
 
 bool TextureManager::loadTextureFromFile(std::string fileName, std::string id)
 {
-	SDL_Surface* pTempSurface = IMG_Load(fileName.c_str()); //loads image file to a SDL surface
-	if (!pTempSurface)
+	//checks if the texture already exists
+	if (m_textureMap.find(id) == m_textureMap.end())
 	{
-		std::cout << "in TextureManager::load \n";
-		std::cout << "couldn't find image " << fileName << " - error: "<< IMG_GetError() << "\n";
-		return false;
-	}
-	
-	SDL_Texture* pTexture = SDL_CreateTextureFromSurface(TheSDLSystem::Instance().getRenderer(), pTempSurface); //Converts the surface to a texture
-	SDL_FreeSurface(pTempSurface); //clears the SDL surface
+		SDL_Surface* pTempSurface = IMG_Load(fileName.c_str()); //loads image file to a SDL surface
+		if (!pTempSurface)
+		{
+			std::cout << "in TextureManager::load \n";
+			std::cout << "couldn't find image " << fileName << " - error: " << IMG_GetError() << "\n";
+			return false;
+		}
 
-	//add texture to map
-	if (pTexture)
-	{
-		m_textureMap[id] = pTexture;
-		return true;
+		SDL_Texture* pTexture = SDL_CreateTextureFromSurface(TheSDLSystem::Instance().getRenderer(), pTempSurface); //Converts the surface to a texture
+		SDL_FreeSurface(pTempSurface); //clears the SDL surface
+
+		//add texture to map
+		if (pTexture)
+		{
+			m_textureMap[id] = pTexture;
+			return true;
+		}
 	}
 
-	//something went wrong
+	//something went wrong or the texture is duplicate
 	return false;
 }
 
@@ -30,7 +34,9 @@ void TextureManager::drawFromSurface(SDL_Surface* pSurface, Vector2Df& position,
 {
 	SDL_Texture* pTexture = SDL_CreateTextureFromSurface(TheSDLSystem::Instance().getRenderer(), pSurface);
 	SDL_FreeSurface(pSurface);
+	
 	drawFromTexture(pTexture, position, width, height, flip);
+	SDL_DestroyTexture(pTexture);
 }
 
 void TextureManager::draw(std::string id, int x, int y, int width, int height, SDL_RendererFlip flip)
@@ -95,6 +101,8 @@ void TextureManager::drawTile(std::string id, int margin, int spacing, int x, in
 
 void TextureManager::drawFromTexture(SDL_Texture* pTexture, Vector2Df& position, int width, int height, SDL_RendererFlip flip)
 {
+	//SDL_RenderClear(TheSDLSystem::Instance().getRenderer());
+
 	SDL_Rect m_srcRect;
 	SDL_Rect m_destRect;
 
@@ -111,12 +119,22 @@ void TextureManager::drawFromTexture(SDL_Texture* pTexture, Vector2Df& position,
 
 void TextureManager::clearTextureMap()
 {
+	//destroy all textures in the map
+	for (std::map<std::string, SDL_Texture*>::iterator it = m_textureMap.begin(); it != m_textureMap.end(); it++)
+	{
+		SDL_DestroyTexture(it->second);
+		it->second = nullptr;
+	}
+	
 	m_textureMap.clear();
 }
 
+/*
+//possible implementation
 void TextureManager::clearFromTextureMap(std::string id)
 {
 	m_textureMap.erase(id);
 }
+*/
 
 

@@ -365,7 +365,7 @@ Layer* LevelParser::parseObjectLayer(TiXmlElement* pObjectElement)
 			//creates the object marker
 			ObjectMarker objMarker;
 
-			//sets the object type/subtype and position to the marker
+			//sets the object type/subtype and position to the markernew
 			objMarker.objectType = e->Attribute("name");
 			objMarker.objSubType = e->Attribute("type");
 			e->QueryFloatAttribute("x", objMarker.objPositionMarker.getXPtr());
@@ -625,8 +625,6 @@ void LevelParser::parseOutOfPlayLayers(TiXmlElement* pOutElement)
 							}
 						}
 					}
-
-					TheBulletHandler::Instance().getBulletTypeParam(pObjElement->Attribute("name"));
 				}
 			}
 			if (pOutElement->Attribute("name") == std::string("HUDs"))

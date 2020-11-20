@@ -94,6 +94,7 @@ void Level::onEnter()
 		//its a playLevel need to register the layer to the bulletHandler
 		TheBulletHandler::Instance().registerBulletLayer(m_pBulletLayer);
 	}
+
 	//for testing
 	if (m_pPlayer)
 	{

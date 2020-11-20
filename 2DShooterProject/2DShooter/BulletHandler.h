@@ -17,7 +17,6 @@ class BulletHandler : public Singleton<BulletHandler>
 {
 public:
     BulletHandler(token) {}
-    ~BulletHandler() {}
 
     void registerBulletLayer(ObjectLayer* pBulletLayer) { m_bulletLayer = pBulletLayer; }
     void registerBulletType(std::string bulletType, LoaderParams& params);

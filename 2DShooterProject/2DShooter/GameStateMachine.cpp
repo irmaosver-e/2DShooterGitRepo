@@ -180,16 +180,16 @@ void GameStateMachine::render()
 
 void GameStateMachine::quit()
 {
-	m_bQuitStates = true;
-}
-
-void GameStateMachine::clean()
-{
 	m_bChangingState = true;
 	popState();
 
 	m_pCurrentState = nullptr;
 
+	m_bQuitStates = true;
+}
+
+void GameStateMachine::clean()
+{
 	for (GameState* menuState : m_menuStates)
 	{
 		delete menuState;

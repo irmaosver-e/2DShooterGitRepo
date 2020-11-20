@@ -251,9 +251,6 @@
     <ClInclude Include="Callback.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="Collision.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="CollisionManager.h">
       <Filter>Header Files\Managers</Filter>
     </ClInclude>
@@ -386,17 +383,17 @@
     <ClInclude Include="HUD.h">
       <Filter>Header Files\GameObjects\GraphicObjs</Filter>
     </ClInclude>
-    <ClInclude Include="TextManager.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="SDL_Font.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="TextBox.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="ParserManager.h">
       <Filter>Header Files\Managers</Filter>
+    </ClInclude>
+    <ClInclude Include="TextManager.h">
+      <Filter>Header Files\Managers</Filter>
+    </ClInclude>
+    <ClInclude Include="TextBox.h">
+      <Filter>Header Files\GameObjects\GraphicObjs</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

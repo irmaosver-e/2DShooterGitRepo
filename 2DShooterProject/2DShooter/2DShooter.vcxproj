@@ -75,7 +75,6 @@
     <ClInclude Include="Bullet.h" />
     <ClInclude Include="BulletHandler.h" />
     <ClInclude Include="Callback.h" />
-    <ClInclude Include="Collision.h" />
     <ClInclude Include="CollisionManager.h" />
     <ClInclude Include="Cursor.h" />
     <ClInclude Include="Enemy.h" />

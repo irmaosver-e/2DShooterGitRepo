@@ -8,7 +8,6 @@ class SDLSystem : public Singleton<SDLSystem>
 {
 public:
 	SDLSystem(token);
-	~SDLSystem();
 
 	bool init(const char* title, const char* iconPath, int windowXpos, int windowYpos, int screenWidth, int screenHeight, int fps, bool fullScreen,
 				int drawColour_R, int drawColour_G, int drawColour_B, int drawColour_A);

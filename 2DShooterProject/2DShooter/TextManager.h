@@ -9,7 +9,7 @@ class TextManager : public Singleton<TextManager>
 {
 public:
 	TextManager(token) {}
-	~TextManager() {};
+	~TextManager() {}
 
 	bool init();
 	void quit();

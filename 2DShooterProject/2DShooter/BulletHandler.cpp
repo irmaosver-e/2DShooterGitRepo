@@ -24,9 +24,8 @@ void BulletHandler::registerFiringPoint(std::string firingObj, std::vector<Firin
 
 LoaderParams* BulletHandler::getBulletTypeParam(std::string bulletType)
 {
-    //checks if the firingObj already exist before creating
-    std::map<std::string, LoaderParams>::iterator it = m_bulletTypes.find(bulletType);
-    if (it != m_bulletTypes.end())
+    //checks if the firingObj exist before creating in order to return
+    if (m_bulletTypes.find(bulletType) != m_bulletTypes.end())
     {
        return &m_bulletTypes[bulletType];
     }

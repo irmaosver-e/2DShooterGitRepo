@@ -12,7 +12,7 @@ class TextureManager : public Singleton<TextureManager>
 {
 public:
 	TextureManager(token) {}
-	~TextureManager() {};
+	~TextureManager() {}
 
 	bool loadTextureFromFile(std::string fileName, std::string id);
 
@@ -23,7 +23,9 @@ public:
 	void drawTile(std::string id, int margin, int spacing, int x, int y, int width, int height, int currentRow, int currentFrame);
 
 	void clearTextureMap();
-	void clearFromTextureMap(std::string id);
+	
+	//possible implementation
+	//void clearFromTextureMap(std::string id);
 
 	int getAnimationFrameCount(std::string& animName) { return m_animationMap[animName].tileIDs.size(); }
 

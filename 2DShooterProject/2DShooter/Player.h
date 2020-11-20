@@ -45,8 +45,8 @@ private:
 
 
 	HUD* m_playerHUD;
-	ObjectLayer* m_pPlayFieldObjLayer;
-	ObjectMarker* m_pPlayerMarker;
+	//ObjectLayer* m_pPlayFieldObjLayer;
+	//ObjectMarker* m_pPlayerMarker;
 
 	int m_lives;
 

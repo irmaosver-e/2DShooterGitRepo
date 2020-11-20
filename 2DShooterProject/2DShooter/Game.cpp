@@ -3,13 +3,15 @@
 #include <iostream>
 
 #include "SDLSystem.h"
-#include "SystemParser.h"
 #include "TextureManager.h"
 #include "TextManager.h"
+#include "SoundManager.h"
 #include "ParserManager.h"
 #include "InputHandler.h"
 #include "GameObjectFactory.h"
 #include "GameStateMachine.h"
+
+//objects
 #include "TextBox.h"
 #include "AnimatedGraphic.h"
 #include "ScrollingBackground.h"
@@ -100,7 +102,7 @@ void Game::clean()
 {
 	std::cout << "cleaning game\n";
 
-	TheInputHandler::Instance().clean();
+	TheInputHandler::Instance().quit();
 
 	TheGameStateMachine::Instance().clean();
 
@@ -110,7 +112,7 @@ void Game::clean()
 
 	TheTextManager::Instance().quit();
 
-	//thesoundMAnager.quit ??
+	TheSoundManager::Instance().quit();
 
 	TheSDLSystem::Instance().quit();
 }

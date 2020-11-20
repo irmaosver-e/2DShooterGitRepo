@@ -12,7 +12,7 @@ void SDL_Font::addFontSize(int size)
 void SDL_Font::clearFontSizes()
 {
 	//Close the fonts stored
-	for (std::map<int, TTF_Font*>::iterator itSizedFont = m_sizedFonts.begin(); itSizedFont != m_sizedFonts.end(); ++itSizedFont)
+	for (std::map<int, TTF_Font*>::iterator itSizedFont = m_sizedFonts.begin(); itSizedFont != m_sizedFonts.end(); itSizedFont++)
 	{
 		TTF_CloseFont(itSizedFont->second);
 	}

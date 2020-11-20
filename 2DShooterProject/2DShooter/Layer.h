@@ -27,7 +27,7 @@ class Layer
 public:
 	Layer() : m_scrollSpeed(0) {}
 
-	virtual ~Layer(){}
+	virtual ~Layer() {}
 
 	virtual void render() = 0;
 	virtual void update() = 0;

@@ -14,12 +14,11 @@ class InputHandler : public Singleton<InputHandler>
 {
 public:
 	InputHandler(token);
-	~InputHandler();
 
 	void init(int joystickDeadZone);
 	
 	void update();
-	void clean();
+	void quit();
 
 	bool getJoystickInitialised() { return m_bJoystickInitialised; }
 
@@ -48,6 +47,7 @@ private:
 	void onJoystickAxisMove(SDL_Event& event);
 	void onJoystickButtonDown(SDL_Event& event);
 	void onJoystickButtonUp(SDL_Event& event);
+	void clearJoysticks();
 	
 	// member variables
 

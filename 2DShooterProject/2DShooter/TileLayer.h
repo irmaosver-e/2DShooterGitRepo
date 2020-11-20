@@ -13,6 +13,7 @@ public:
 	TileLayer(const std::vector<Tileset>& tilesets);
 	virtual ~TileLayer() {}
 
+
 	virtual void update();
 	virtual void render();
 	

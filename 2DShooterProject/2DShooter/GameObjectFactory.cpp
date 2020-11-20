@@ -32,6 +32,7 @@ void GameObjectFactory::clearCreators()
 	for (std::map<std::string, BaseCreator*>::iterator it = m_creators.begin(); it != m_creators.end(); it++)
 	{
 		delete it->second;
+		it->second = nullptr;
 	}
 
 	m_creators.clear();

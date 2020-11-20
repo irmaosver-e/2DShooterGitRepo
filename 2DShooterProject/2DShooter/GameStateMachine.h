@@ -19,8 +19,6 @@ public:
 		m_stageNumber(1),
 		m_stageNumberIndex(0) {}
 
-	~GameStateMachine() {}
-
 	void init();
 
 	void changeState(States state);

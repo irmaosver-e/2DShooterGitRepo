@@ -4,6 +4,8 @@
 class Callback
 {
 public:
+    virtual ~Callback() {}
+
 	virtual void call() = 0;
 };
 

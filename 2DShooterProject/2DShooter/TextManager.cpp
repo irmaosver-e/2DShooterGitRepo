@@ -94,4 +94,6 @@ void TextManager::writeToScreen(const std::string& message, Vector2Df& position,
 	
 	//Draw the text
 	TheTextureManager::Instance().drawFromSurface(pMsgSurface, position, pMsgSurface->w, pMsgSurface->h);
+
+	//surface freed in drawFromSurface()
 }

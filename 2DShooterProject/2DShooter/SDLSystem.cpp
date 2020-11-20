@@ -9,13 +9,6 @@ SDLSystem::SDLSystem(token) : m_pWindow(nullptr), m_pRenderer(nullptr), m_frameT
 {
 }
 
-SDLSystem::~SDLSystem()
-{
-	// we must clean up after ourselves to prevent memory leaks
-	m_pRenderer = nullptr;
-	m_pWindow = nullptr;
-}
-
 bool SDLSystem::init(const char* title, const char* iconPath, int windowXpos, int windowYpos, int screenWidth, int screenHeight, int fps, bool fullScreen,
 						int drawColour_R, int drawColour_G, int drawColour_B, int drawColour_A)
 {
@@ -43,6 +36,8 @@ bool SDLSystem::init(const char* title, const char* iconPath, int windowXpos, in
 			if (pIconSurface)
 			{
 				SDL_SetWindowIcon(m_pWindow, pIconSurface);
+				SDL_FreeSurface(pIconSurface);
+
 			}
 			else 
 			{
@@ -107,7 +102,13 @@ void SDLSystem::countFrame()
 
 void SDLSystem::quit()
 {
-	SDL_DestroyWindow(m_pWindow);
 	SDL_DestroyRenderer(m_pRenderer);
+	m_pRenderer = nullptr;
+
+	SDL_DestroyWindow(m_pWindow);
+	m_pWindow = nullptr;
+
+	IMG_Quit();
+
 	SDL_Quit();
 }

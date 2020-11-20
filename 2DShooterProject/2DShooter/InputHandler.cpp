@@ -13,19 +13,6 @@ m_mousePosition(new Vector2Df(0, 0))
 	}
 }
 
-InputHandler::~InputHandler()
-{
-	// delete anything we created dynamically
-	delete m_keyboardState;
-	delete m_mousePosition;
-
-	// clear our arrays
-	m_jostickAxisValues.clear();
-	m_joysticks.clear();
-	m_buttonStates.clear();
-	m_mouseButtonStates.clear();
-}
-
 void InputHandler::init(int joystickDeadZone)
 {
 	m_joystickDeadZone = joystickDeadZone;
@@ -245,14 +232,36 @@ void InputHandler::update()
 	}
 }
 
-void InputHandler::clean()
+void InputHandler::quit()
+{
+	clearJoysticks();
+
+	// delete anything we created dynamically
+	delete m_keyboardState;
+	delete m_mousePosition;
+
+	// clear our arrays
+	m_mouseButtonStates.clear();
+}
+
+void InputHandler::clearJoysticks()
 {
 	if(m_bJoystickInitialised)
 	{
 		for (int i = 0; i < SDL_NumJoysticks(); i++)
 		{
 			SDL_JoystickClose(m_joysticks[i]);
+			
+			delete m_jostickAxisValues[i].first;
+			delete m_jostickAxisValues[i].second;
+
+			m_jostickAxisValues[i].first = nullptr;
+			m_jostickAxisValues[i].second = nullptr;
 		}
+
+		m_jostickAxisValues.clear();
+		m_buttonStates.clear();
+		m_joysticks.clear();
 	}
 }
 
