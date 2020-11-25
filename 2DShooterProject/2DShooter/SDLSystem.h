@@ -20,7 +20,7 @@ public:
 	int getScreenWidth() const { return SDL_GetWindowSurface(m_pWindow)->w; }
 	int getScreenHeight() const { return SDL_GetWindowSurface(m_pWindow)->h; }
 
-	int getRunningTime(){ return SDL_GetTicks(); }
+	float getFrameTime() { return 1000.f / m_fps; }
 	const int& getFrameCount() { return m_frameCount; }
 	
 	bool capFrameRate();
@@ -37,6 +37,8 @@ private:
 	int m_fps;
 	float m_frameTime;
 	int m_frameCount;
+
+	float m_cronometer;
 };
 
 typedef SDLSystem TheSDLSystem;

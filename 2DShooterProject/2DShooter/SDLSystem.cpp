@@ -77,7 +77,7 @@ bool SDLSystem::capFrameRate()
 	int thisTime = SDL_GetTicks();
 	m_frameTime += (float)(thisTime - lastTime);
 
-	if (m_frameTime >= (1000.f / m_fps))
+	if (m_frameTime >= getFrameTime())
 	{
 		//std::cout << "ALLOWED frame - FPS: " << (1000 / m_frameTime) << "\n";
 		countFrame();

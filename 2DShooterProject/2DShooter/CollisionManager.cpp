@@ -34,7 +34,6 @@ void CollisionManager::calculateObjColShape(GameObject& focusedObj, ObjectCollis
 {
     //adds the object position to object collision box and stores in focusedObjColShape
     //for (SDL_Rect colBox : objColType.collisionShape)
-    
     for (SDL_Rect colBox : objColType.tileCollisionShape[focusedObj.getTextureID()])
     {
         targetShape.push_back(colBox);

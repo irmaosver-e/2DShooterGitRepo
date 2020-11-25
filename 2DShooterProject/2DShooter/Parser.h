@@ -8,6 +8,8 @@
 class Parser
 {
 public:
+	virtual ~Parser() {}
+
 	TiXmlElement* loadDocument(TiXmlDocument& xmlDoc, std::string& assetsLocation, std::string& file);
 	
 protected:

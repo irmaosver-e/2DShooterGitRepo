@@ -249,14 +249,16 @@ void InputHandler::clearJoysticks()
 	if(m_bJoystickInitialised)
 	{
 		for (int i = 0; i < SDL_NumJoysticks(); i++)
-		{
-			SDL_JoystickClose(m_joysticks[i]);
-			
+		{		
+			//clears left and right stick vectors
 			delete m_jostickAxisValues[i].first;
 			delete m_jostickAxisValues[i].second;
 
 			m_jostickAxisValues[i].first = nullptr;
 			m_jostickAxisValues[i].second = nullptr;
+
+			//closes the joystick
+			SDL_JoystickClose(m_joysticks[i]);
 		}
 
 		m_jostickAxisValues.clear();

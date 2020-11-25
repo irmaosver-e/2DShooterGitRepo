@@ -64,9 +64,7 @@ void ObjectSpawner::spawnObject(ObjectLayer& objLayer, ObjectMarker& objMarker)
 void ObjectSpawner::registerObjParams(std::string& objSubType, LoaderParams& params)
 {
 	//checks if the subtype already exist to avoid duplicate
-	std::map<std::string, LoaderParams>::iterator itParam = m_objParams.find(objSubType);
-
-	if (itParam == m_objParams.end())
+	if (m_objParams.find(objSubType) == m_objParams.end())
 	{
 		m_objParams[objSubType] = params;
 	}
@@ -75,9 +73,7 @@ void ObjectSpawner::registerObjParams(std::string& objSubType, LoaderParams& par
 bool ObjectSpawner::checkObjParamsMap(std::string& objSubType)
 {
 	//checks if the subtype exist
-	std::map<std::string, LoaderParams>::iterator itParam = m_objParams.find(objSubType);
-
-	if (itParam != m_objParams.end())
+	if (m_objParams.find(objSubType) != m_objParams.end())
 	{
 		return true;
 	}

@@ -91,17 +91,6 @@ void BulletHandler::fireBullet(std::string& firingObj, Vector2Df firingObjPos, V
             m_bulletLayer->getGameObjects()->at(availableBulletIndex)->getPosition() = firingObjPos + (firingPointCoord - bulletAnchorPoint);
             m_bulletLayer->getGameObjects()->at(availableBulletIndex)->getVelocity() = heading;
     }
-
-    /*
-    m_bulletLayer->getGameObjects()->at(availableBulletIndex)->turnObjOn();
-    m_bulletLayer->getGameObjects()->at(availableBulletIndex)->setUpdating(true);
-    m_bulletLayer->getGameObjects()->at(availableBulletIndex)->setInView(true);
-
-    Vector2Df firingPointCoord(m_objFirePoint[firingObj].position.getX() , m_objFirePoint[firingObj].position.getY());
-    Vector2Df bulletAnchorPoint = *m_bulletTypes[m_objFirePoint[firingObj].bulletType].getAnchorPointPtr();
-    m_bulletLayer->getGameObjects()->at(availableBulletIndex)->getPosition() = firingObjPos + (firingPointCoord - bulletAnchorPoint);
-    m_bulletLayer->getGameObjects()->at(availableBulletIndex)->getVelocity() = heading;
-    */
     
     //for debugguing
     //std::cout << "bullets in pool: " << m_bulletLayer->getGameObjects()->size() << " / using bullet: " << availableBulletIndex << " / type asked: " << bulletType << " / type used: " << m_bulletLayer->getGameObjects()->at(availableBulletIndex)->getTextureID() << "\n";

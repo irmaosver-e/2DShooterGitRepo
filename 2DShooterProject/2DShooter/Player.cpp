@@ -16,6 +16,11 @@ Player::Player() : SDLGameObject()
 	m_invulnerableCounter = 0;
 	m_lives = 1;
 	m_playerHUD = nullptr;
+	m_currentForm = MECHA;
+	m_previousForm = MECHA;
+
+	m_bIsShip = false;
+	m_bMorphing = false;
 }
 
 Player::~Player()
@@ -74,15 +79,16 @@ void Player::update()
 				m_velocity.getXRef() = 0;
 				m_velocity.getYRef() = 0;
 
-				handleInput();
+				if (m_currentForm != MORPHING)
+				{
+					handleInput();
+				}
 			}
 
 			SDLGameObject::update();
-			//handleAnimation();
 		}
 		else //in death animation
 		{
-
 			//if death animation finished
 			if (m_dyingCounter == m_dyingTime)
 			{
@@ -90,7 +96,8 @@ void Player::update()
 			}
 			m_dyingCounter++;
 		}
-	
+
+		handleAnimation();
 }
 
 void Player::collision()
@@ -161,10 +168,19 @@ void Player::handleInput()
 	if (!m_bDead)
 	{
 		//no key pressed
-		if (!m_bDying)
+		if (!m_bDying && !m_bMorphing)
 		{
-			m_currentFrame = IDLE;
-			m_textureID = m_animations[STAND];
+			if (!m_bIsShip) //m_currentForm == MECHA)
+			{
+				m_textureID = m_animations[STAND];
+				m_currentFrame = IDLE;
+			}
+			else
+			{
+				//ship texture
+				m_textureID = m_animations[4];
+				m_currentFrame = 0;
+			}
 		}
 
 		// handle keys
@@ -181,6 +197,7 @@ void Player::handleInput()
 		if (TheInputHandler::Instance().isKeyDown(SDL_SCANCODE_LEFT) && m_position.getX() > 0)
 		{
 			m_velocity.getXRef() = (float)-m_moveSpeed;
+
 			m_currentFrame = BACK;
 		}
 		else if (TheInputHandler::Instance().isKeyDown(SDL_SCANCODE_RIGHT) && (m_position.getX() + m_width) < TheSDLSystem::Instance().getScreenWidth())
@@ -189,13 +206,19 @@ void Player::handleInput()
 			m_currentFrame = FORWARD;
 		}
 
+		if (TheInputHandler::Instance().isKeyDown(SDL_SCANCODE_LALT))
+		{
+			//m_previousForm = m_currentForm;
+			//m_currentForm = MORPHING;
+			m_bMorphing = true;
+		}
+
 		if (TheInputHandler::Instance().isKeyDown(SDL_SCANCODE_SPACE))
 		{
 			m_textureID = m_animations[ATTACK];
 			if (m_bulletCounter == m_bulletFiringSpeed)
 			{
 				TheSoundManager::Instance().playSound("shoot", 0);
-				//TheBulletHandler::Instance().addPlayerBullet((int)m_position.getX() + 90, (int)m_position.getY() + 12, 32, 32, "bulletSmall", 1, Vector2D(10, 0));
 
 				TheBulletHandler::Instance().fireBullet(m_subTypeID, m_position, Vector2Df(10, 0));
 				m_bulletCounter = 0;
@@ -271,5 +294,49 @@ void Player::handleAnimation()
 
 	refreshTextureVariables();
 
-	//m_currentFrame = (TheSDLSystem::Instance().getRunningTime() / m_animSpeed) % m_numFrames;
+	if (m_bMorphing)
+	{
+		static float nextFrameTime = 0;
+
+		if (m_textureID != m_animations[3])
+		{
+			//morph anim
+			m_textureID = m_animations[3];
+			m_currentFrame = 0;
+		}
+		else
+		{
+			if (nextFrameTime >= m_animSpeed)
+			{
+				if (m_currentFrame < (m_numFrames - 1))
+				{
+					m_currentFrame++;
+				}
+				else
+				{
+					if (m_bIsShip) // m_previousForm == MECHA)
+					{
+						m_textureID = m_animations[0];
+					}
+					else
+					{
+						m_textureID = m_animations[4];
+					}
+
+					m_bIsShip = !m_bIsShip;
+					m_bMorphing = false;
+					m_currentFrame = 0;
+
+				}
+
+				nextFrameTime = 0;
+			}
+			else
+			{
+				nextFrameTime += TheSDLSystem::Instance().getFrameTime();
+			}
+		}
+
+		//m_currentFrame = (SDL_GetTicks() / m_animSpeed) % m_numFrames;
+	}
 }

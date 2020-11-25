@@ -11,12 +11,23 @@
 
 struct ObjectCollisionType
 {
+public:
     std::string name;
     std::vector<SDL_Rect> collisionShape;
     std::map<std::string, std::vector<SDL_Rect>> tileCollisionShape;
     std::vector<std::string> collidesAgainst;
     
     std::vector<std::string> collidesAgainstLayer;
+
+    void registerTileCollisionShape(std::string& id, std::vector<SDL_Rect>& collisionShape)
+    {
+        //adds if not existent
+        if (tileCollisionShape.find(id) == tileCollisionShape.end())
+        {
+            tileCollisionShape[id] = collisionShape;
+        }
+    }
+
 };
 
 class CollisionManager : public Singleton<CollisionManager>

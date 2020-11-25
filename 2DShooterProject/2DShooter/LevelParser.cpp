@@ -186,7 +186,6 @@ void LevelParser::parseObjTile(TiXmlElement* pTileElement, ObjectTile& objectTil
 					firingPoint.bulletType = object->Attribute("type");
 
 					objFiringPoints.push_back(firingPoint);
-					//TheBulletHandler::Instance().registerFiringPoint(objectTile.owner, firingPoint);
 				}
 				if (object->Attribute("name") == std::string("anchor"))
 				{
@@ -207,7 +206,8 @@ void LevelParser::parseObjTile(TiXmlElement* pTileElement, ObjectTile& objectTil
 				TheBulletHandler::Instance().registerFiringPoint(objectTile.owner, objFiringPoints);
 			}
 
-			pObjColType->tileCollisionShape[objectTile.type] = objectTile.collisionShape;
+			pObjColType->registerTileCollisionShape(objectTile.type, objectTile.collisionShape);
+			//pObjColType->tileCollisionShape[objectTile.type] = objectTile.collisionShape;
 		}
 		else if (e->Value() == std::string("animation"))
 		{
@@ -700,7 +700,8 @@ void LevelParser::parseOutOfPlayLayers(TiXmlElement* pOutElement)
 
 						pAnimGraphix->load(animGraphixParam);
 
-						pHUD->addTextBox(pAnimGraphix);
+						pHUD->addAnimGraphix(pAnimGraphix);
+						//pHUD->addTextBox(pAnimGraphix);
 					}
 				}
 
@@ -742,5 +743,6 @@ void LevelParser::resetParser()
 	m_mapRoot = nullptr;
 	m_pLevel = nullptr;
 	m_tilesets.clear();
+
 	m_objectTileOwners.clear();
 }

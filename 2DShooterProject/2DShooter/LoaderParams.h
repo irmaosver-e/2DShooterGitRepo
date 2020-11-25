@@ -50,7 +50,7 @@ public:
 		m_valueToWatch = nullptr;
 	}
 
-	
+	/*
 	LoaderParams(float x, float y, int width, int height, float anchorX, float anchorY, int numFrames, int lives, int callbackID, float animSpeed, std::string textureID, std::string soundFX) :
 		m_textureID(textureID),
 		m_numFrames(numFrames),
@@ -61,7 +61,7 @@ public:
 		m_initialPos(Vector2Df(x, y)),
 		m_anchorPoint(Vector2Df(anchorX, anchorY)),
 		m_dimentions(Dimention2Di(width, height)) {}
-
+		*/
 
 	float getX() const { return m_initialPos.getX(); }
  	float getY() const { return m_initialPos.getY(); }

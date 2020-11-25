@@ -30,6 +30,8 @@ protected:
 				}
 			}
 		}
+
+		//pObjectsContainer.clear();
 	}
 
 	std::vector<Callback> m_callbacks;

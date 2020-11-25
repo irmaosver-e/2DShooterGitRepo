@@ -10,6 +10,8 @@ public:
 	Singleton(const Singleton&) = delete;
 	Singleton& operator= (const Singleton) = delete;
 
+	virtual ~Singleton() {}
+
 protected:
 	struct token {};
 	Singleton() {};
