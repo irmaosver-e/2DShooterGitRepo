@@ -49,7 +49,7 @@ void Eskeletor::update()
         if (m_bulletCounter == m_bulletFiringSpeed)
         {
            TheSoundManager::Instance().playSound("shoot", 0);
-           TheBulletHandler::Instance().fireBullet(m_subTypeID, m_position, Vector2Df(-10, 0));
+           TheBulletHandler::Instance().fireBullet(m_subTypeID, m_textureID, m_position, Vector2Df(-10, 0));
 
             m_bulletCounter = 0;
         }

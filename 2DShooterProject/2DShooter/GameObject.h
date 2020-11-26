@@ -60,7 +60,6 @@ protected:
 		m_height(0),
 		m_currentRow(0),
 		m_frameTime(0),
-		m_lastFrame(0),
 		m_currentFrame(0),
 		m_bIsOn(false),
 		m_bInView(false),
@@ -88,7 +87,6 @@ protected:
 
 	//animation variables
 	int m_currentRow;
-	int m_lastFrame;
 	int m_currentFrame;
 	float m_frameTime;
 	int m_numFrames;

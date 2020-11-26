@@ -30,6 +30,9 @@ protected:
 
 	void refreshTextureVariables();
 
+	//returns true when finished
+	bool playAnimation(int animationID, bool playReverse = false);
+
 	virtual void handleAnimation();
 	virtual void handleDying();
 

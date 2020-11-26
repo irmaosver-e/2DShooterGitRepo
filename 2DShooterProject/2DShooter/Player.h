@@ -35,13 +35,17 @@ public:
 	virtual std::string objType() { return "Player"; }
 
 private:
-	enum player_form { MECHA, MORPHING, SHIP };
-	enum player_move { BACK, IDLE, FORWARD };
-	enum player_stance { STAND, ATTACK, DAMAGE };
+	enum player_form { MECHA, SHIP };
+	enum player_stance { IDLE, ATTACK, DAMAGE };
+
+	enum player_x_direction { HORIZ_REST, BACK, FORWARD };
+	enum player_y_direction { VERT_REST, UP, DOWN };
 
 	void ressurect();
 	void handleInput();
 	virtual void handleAnimation();
+	void handleMechaAnim();
+	void handleShipAnim();
 
 
 
@@ -49,11 +53,14 @@ private:
 	//ObjectLayer* m_pPlayFieldObjLayer;
 	//ObjectMarker* m_pPlayerMarker;
 
-	bool m_bIsShip;
 	bool m_bMorphing;
 
+	int m_currentStance;
 	int m_currentForm;
-	int m_previousForm;
+
+	int m_horiz_direct;
+	int m_vert_direct;
+
 	int m_lives;
 
 	bool m_invulnerable;

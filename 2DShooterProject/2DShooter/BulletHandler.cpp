@@ -12,13 +12,13 @@ void BulletHandler::registerBulletType(std::string bulletType, LoaderParams& par
     }
 }
 
-void BulletHandler::registerFiringPoint(std::string firingObj, std::vector<FiringPoint>& firingPoints)
+void BulletHandler::registerFiringPoint(std::string firingObj, std::string ownerTile, std::vector<FiringPoint>& firingPoints)
 {
 
-    //checks if the firingObj already exist before creating
-    if (m_objFirePoint.find(firingObj) == m_objFirePoint.end())
+    //checks if the firingObj or ownerTile is new
+    if (m_objFirePoints.find(firingObj) == m_objFirePoints.end() || m_objFirePoints[firingObj].find(ownerTile) == m_objFirePoints[firingObj].end())
     {
-        m_objFirePoint[firingObj] = firingPoints;
+        m_objFirePoints[firingObj][ownerTile] = firingPoints;
     }
 }
 
@@ -33,13 +33,14 @@ LoaderParams* BulletHandler::getBulletTypeParam(std::string bulletType)
     return nullptr;
 }
 
-void BulletHandler::fireBullet(std::string& firingObj, Vector2Df firingObjPos, Vector2Df heading, std::string bulletType)
+void BulletHandler::fireBullet(std::string& firingObj, std::string& currentAnimation, Vector2Df firingObjPos, Vector2Df heading, std::string bulletType)
 {
     std::vector<FiringPoint*> firingPoints;
+    
     //fire from all firing points
     if (bulletType != "all")
     {
-        for (FiringPoint& firingPoint : m_objFirePoint[firingObj])
+        for (FiringPoint& firingPoint : m_objFirePoints[firingObj][currentAnimation])
         {
             if (firingPoint.bulletType == bulletType)
             {
@@ -49,7 +50,7 @@ void BulletHandler::fireBullet(std::string& firingObj, Vector2Df firingObjPos, V
     }
     else
     {
-         for (FiringPoint& firingPoint : m_objFirePoint[firingObj])
+         for (FiringPoint& firingPoint : m_objFirePoints[firingObj][currentAnimation])
         {
             firingPoints.push_back(&firingPoint);
         }

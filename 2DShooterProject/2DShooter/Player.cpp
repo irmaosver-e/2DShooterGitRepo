@@ -17,9 +17,10 @@ Player::Player() : SDLGameObject()
 	m_lives = 1;
 	m_playerHUD = nullptr;
 	m_currentForm = MECHA;
-	m_previousForm = MECHA;
+	m_currentStance = IDLE;
+	m_horiz_direct = HORIZ_REST;
+	m_vert_direct = VERT_REST;
 
-	m_bIsShip = false;
 	m_bMorphing = false;
 }
 
@@ -79,7 +80,7 @@ void Player::update()
 				m_velocity.getXRef() = 0;
 				m_velocity.getYRef() = 0;
 
-				if (m_currentForm != MORPHING)
+				if (!m_bMorphing)
 				{
 					handleInput();
 				}
@@ -130,7 +131,7 @@ void Player::flyOffScreen()
 {
 	if (!m_bFlyingOffScreen)
 	{
-		m_textureID = m_animations[STAND];
+		m_textureID = m_animations[IDLE];
 		m_currentFrame = FORWARD;
 		m_velocity.getXRef() = 0;
 		m_velocity.getYRef() = 0;
@@ -170,57 +171,56 @@ void Player::handleInput()
 		//no key pressed
 		if (!m_bDying && !m_bMorphing)
 		{
-			if (!m_bIsShip) //m_currentForm == MECHA)
-			{
-				m_textureID = m_animations[STAND];
-				m_currentFrame = IDLE;
-			}
-			else
-			{
-				//ship texture
-				m_textureID = m_animations[4];
-				m_currentFrame = 0;
-			}
+			m_currentStance = IDLE;
 		}
 
 		// handle keys
 		if (TheInputHandler::Instance().isKeyDown(SDL_SCANCODE_UP) && m_position.getY() > 0)
 		{
 			m_velocity.getYRef() = (float)-m_moveSpeed;
+			m_vert_direct = UP;
 		}
 		else if (TheInputHandler::Instance().isKeyDown(SDL_SCANCODE_DOWN) && (m_position.getY() + m_height) < TheSDLSystem::Instance().getScreenHeight() - 10)
 		{
 			m_velocity.getYRef() =(float)m_moveSpeed;
+			m_vert_direct = DOWN;
+		}
+		else
+		{
+			m_vert_direct = VERT_REST;
 		}
 
 		
 		if (TheInputHandler::Instance().isKeyDown(SDL_SCANCODE_LEFT) && m_position.getX() > 0)
 		{
 			m_velocity.getXRef() = (float)-m_moveSpeed;
-
-			m_currentFrame = BACK;
+			m_horiz_direct = BACK;
 		}
 		else if (TheInputHandler::Instance().isKeyDown(SDL_SCANCODE_RIGHT) && (m_position.getX() + m_width) < TheSDLSystem::Instance().getScreenWidth())
 		{
 			m_velocity.getXRef() = (float)m_moveSpeed;
-			m_currentFrame = FORWARD;
+
+			m_horiz_direct = FORWARD;
+		}
+		else
+		{
+			m_horiz_direct = HORIZ_REST;
 		}
 
 		if (TheInputHandler::Instance().isKeyDown(SDL_SCANCODE_LALT))
 		{
-			//m_previousForm = m_currentForm;
-			//m_currentForm = MORPHING;
 			m_bMorphing = true;
 		}
 
 		if (TheInputHandler::Instance().isKeyDown(SDL_SCANCODE_SPACE))
 		{
-			m_textureID = m_animations[ATTACK];
+			m_currentStance = ATTACK;
+		
 			if (m_bulletCounter == m_bulletFiringSpeed)
 			{
 				TheSoundManager::Instance().playSound("shoot", 0);
 
-				TheBulletHandler::Instance().fireBullet(m_subTypeID, m_position, Vector2Df(10, 0));
+				TheBulletHandler::Instance().fireBullet(m_subTypeID, m_textureID, m_position, Vector2Df(10, 0));
 				m_bulletCounter = 0;
 			}
 
@@ -292,51 +292,154 @@ void Player::handleAnimation()
 		m_invulnerableCounter++;
 	}
 
-	refreshTextureVariables();
+	switch (m_currentForm)
+	{
+	case MECHA:
+		handleMechaAnim();
+		break;
 
+	case SHIP:
+		handleShipAnim();
+		break;
+	}
+}
+
+void Player::handleMechaAnim()
+{
 	if (m_bMorphing)
 	{
-		static float nextFrameTime = 0;
+		if (playAnimation(3)) //morph anim Index
+		{
+			//here when the animation finished
+			
+			m_bMorphing = false;
 
-		if (m_textureID != m_animations[3])
+			m_currentForm = SHIP;
+			m_textureID = m_animations[4]; //ship texture
+
+			refreshTextureVariables();
+			m_currentFrame = 0;
+		}
+
+		/*
+		//needs to change to first frame before counting time
+		if (m_textureID != m_animations[3]) // morph texture
 		{
 			//morph anim
 			m_textureID = m_animations[3];
+			refreshTextureVariables();
+
 			m_currentFrame = 0;
+			m_frameTime = 0;
 		}
 		else
 		{
-			if (nextFrameTime >= m_animSpeed)
-			{
-				if (m_currentFrame < (m_numFrames - 1))
-				{
-					m_currentFrame++;
-				}
-				else
-				{
-					if (m_bIsShip) // m_previousForm == MECHA)
-					{
-						m_textureID = m_animations[0];
-					}
-					else
-					{
-						m_textureID = m_animations[4];
-					}
+			m_frameTime += TheSDLSystem::Instance().getFrameTime();
 
-					m_bIsShip = !m_bIsShip;
+			if (m_frameTime >= m_animSpeed)
+			{
+				m_frameTime = 0;
+				m_currentFrame++;
+
+				//if frame has gone out range the animation ended
+				if (m_currentFrame >= m_numFrames)
+				{
 					m_bMorphing = false;
+				
+					m_currentForm = SHIP;
+					m_textureID = m_animations[4]; //ship texture
+
+					refreshTextureVariables();
 					m_currentFrame = 0;
-
 				}
-
-				nextFrameTime = 0;
-			}
-			else
-			{
-				nextFrameTime += TheSDLSystem::Instance().getFrameTime();
 			}
 		}
+		*/
+	}
+	else
+	{
+		if (m_currentStance == IDLE)
+		{
+				m_textureID = m_animations[IDLE]; //mecha texture
+		}
+		else if (m_currentStance == ATTACK)
+		{
+			m_textureID = m_animations[ATTACK];
+		}
 
-		//m_currentFrame = (SDL_GetTicks() / m_animSpeed) % m_numFrames;
+		switch (m_horiz_direct)
+		{
+		case BACK:
+			m_currentFrame = BACK;
+			break;
+
+		case FORWARD:
+			m_currentFrame = FORWARD;
+			break;
+
+		default:
+			m_currentFrame = HORIZ_REST;
+		}
+	}
+}
+
+void Player::handleShipAnim()
+{
+	if (m_bMorphing)
+	{
+		if (playAnimation(3, true)) //morph anim Index
+		{
+			//here when the animation finished
+			m_bMorphing = false;
+
+			m_currentForm = MECHA;
+			m_textureID = m_animations[0];
+
+			refreshTextureVariables();
+			m_currentFrame = 0;
+		}
+
+		/*
+		//needs to change to first frame before counting time
+		if (m_textureID != m_animations[3]) // morph texture
+		{
+			//morph anim
+			m_textureID = m_animations[3];
+			refreshTextureVariables();
+
+			m_currentFrame = (m_numFrames - 1);
+			m_frameTime = 0;
+		}
+		else
+		{
+			m_frameTime += TheSDLSystem::Instance().getFrameTime();
+
+			if (m_frameTime >= m_animSpeed)
+			{
+				m_frameTime = 0;
+				m_currentFrame--;
+
+				//if frame has gone out range the animation ended
+				if (m_currentFrame < 0)
+				{
+					m_bMorphing = false;
+				
+					m_currentForm = MECHA;
+					m_textureID = m_animations[0];
+				
+					refreshTextureVariables();
+					m_currentFrame = 0;
+				}
+			}
+		}
+		*/
+	}
+	else
+	{
+		if (m_currentStance == IDLE)
+		{
+			m_textureID = m_animations[4]; //ship texture
+			m_currentFrame = 0;
+		}
 	}
 }

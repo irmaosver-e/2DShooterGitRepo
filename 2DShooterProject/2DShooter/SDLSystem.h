@@ -20,7 +20,7 @@ public:
 	int getScreenWidth() const { return SDL_GetWindowSurface(m_pWindow)->w; }
 	int getScreenHeight() const { return SDL_GetWindowSurface(m_pWindow)->h; }
 
-	float getFrameTime() { return 1000.f / m_fps; }
+	float getFrameTime() { return m_frameTime; }
 	const int& getFrameCount() { return m_frameCount; }
 	
 	bool capFrameRate();

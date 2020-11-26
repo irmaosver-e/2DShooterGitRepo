@@ -20,11 +20,11 @@ public:
 
     void registerBulletLayer(ObjectLayer* pBulletLayer) { m_bulletLayer = pBulletLayer; }
     void registerBulletType(std::string bulletType, LoaderParams& params);
-    void registerFiringPoint(std::string firingObj, std::vector<FiringPoint>& firingPoints);
+    void registerFiringPoint(std::string firingObj, std::string ownerTile, std::vector<FiringPoint>& firingPoints);
 
     LoaderParams* getBulletTypeParam(std::string bulletType);
 
-    void fireBullet(std::string& firingObj, Vector2Df firingObjPos, Vector2Df heading, std::string bulletType = "all");
+    void fireBullet(std::string& firingObj, std::string& currentAnimation, Vector2Df firingObjPos, Vector2Df heading, std::string bulletType = "all");
 
 private:
     void addBullet(std::string bulletType);
@@ -32,7 +32,7 @@ private:
     ObjectLayer* m_bulletLayer;
 
     std::map<std::string, LoaderParams> m_bulletTypes;
-    std::map<std::string, std::vector<FiringPoint>> m_objFirePoint;
+    std::map<std::string, std::map<std::string, std::vector<FiringPoint>>> m_objFirePoints;
 
 };
 

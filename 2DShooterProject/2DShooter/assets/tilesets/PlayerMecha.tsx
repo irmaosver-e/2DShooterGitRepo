@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<tileset version="1.4" tiledversion="1.4.2" name="Player" tilewidth="64" tileheight="64" spacing="2" margin="2" tilecount="24" columns="3">
- <image source="../images/PlayerMecha.png" width="200" height="530"/>
+<tileset version="1.4" tiledversion="1.4.2" name="Player" tilewidth="64" tileheight="64" spacing="2" margin="2" tilecount="27" columns="3">
+ <image source="../images/PlayerMecha.png" width="200" height="596"/>
  <tile id="0" type="idle">
   <properties>
    <property name="OwnerSubType" value="playermecha"/>
@@ -9,9 +9,9 @@
    <object id="1" name="collisionBox" x="14" y="9" width="20" height="35"/>
   </objectgroup>
   <animation>
-   <frame tileid="2" duration="400"/>
    <frame tileid="0" duration="400"/>
-   <frame tileid="1" duration="400"/>
+   <frame tileid="2" duration="100"/>
+   <frame tileid="1" duration="100"/>
   </animation>
  </tile>
  <tile id="1" type="idleForward"/>
@@ -19,6 +19,9 @@
   <properties>
    <property name="OwnerSubType" value="playermecha"/>
   </properties>
+  <objectgroup draworder="index" id="2">
+   <object id="1" name="collisionBox" x="19" y="9" width="20" height="35"/>
+  </objectgroup>
   <animation>
    <frame tileid="2" duration="400"/>
   </animation>
@@ -49,9 +52,9 @@
    </object>
   </objectgroup>
   <animation>
-   <frame tileid="8" duration="400"/>
    <frame tileid="6" duration="400"/>
-   <frame tileid="7" duration="400"/>
+   <frame tileid="8" duration="100"/>
+   <frame tileid="7" duration="100"/>
   </animation>
  </tile>
  <tile id="7" type="attackForward"/>
@@ -115,6 +118,19 @@
   <animation>
    <frame tileid="21" duration="100"/>
    <frame tileid="22" duration="100"/>
+  </animation>
+ </tile>
+ <tile id="24" type="firingTest">
+  <properties>
+   <property name="OwnerSubType" value="playermecha"/>
+  </properties>
+  <objectgroup draworder="index" id="2">
+   <object id="1" name="collisionBox" x="14" y="9" width="20" height="35"/>
+  </objectgroup>
+  <animation>
+   <frame tileid="24" duration="600"/>
+   <frame tileid="25" duration="100"/>
+   <frame tileid="26" duration="600"/>
   </animation>
  </tile>
 </tileset>

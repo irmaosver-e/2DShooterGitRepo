@@ -161,7 +161,7 @@ void LevelParser::parseObjTile(TiXmlElement* pTileElement, ObjectTile& objectTil
 		}
 		else if (e->Value() == std::string("objectgroup"))
 		{
-			std::vector<FiringPoint> objFiringPoints;
+			std::vector<FiringPoint> tileFiringPoints;
 			for (TiXmlElement* object = e->FirstChildElement(); object != NULL; object = object->NextSiblingElement())
 			{
 				//parse the colision shape boxes
@@ -185,7 +185,7 @@ void LevelParser::parseObjTile(TiXmlElement* pTileElement, ObjectTile& objectTil
 					object->QueryFloatAttribute("y", firingPoint.position.getYPtr());
 					firingPoint.bulletType = object->Attribute("type");
 
-					objFiringPoints.push_back(firingPoint);
+					tileFiringPoints.push_back(firingPoint);
 				}
 				if (object->Attribute("name") == std::string("anchor"))
 				{
@@ -201,9 +201,9 @@ void LevelParser::parseObjTile(TiXmlElement* pTileElement, ObjectTile& objectTil
 			}
 			
 			//parse the firing points to the bulletHandler if the container not empty
-			if (!objFiringPoints.empty())
+			if (!tileFiringPoints.empty())
 			{
-				TheBulletHandler::Instance().registerFiringPoint(objectTile.owner, objFiringPoints);
+				TheBulletHandler::Instance().registerFiringPoint(objectTile.owner, objectTile.type, tileFiringPoints);
 			}
 
 			pObjColType->registerTileCollisionShape(objectTile.type, objectTile.collisionShape);

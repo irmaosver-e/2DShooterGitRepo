@@ -103,6 +103,57 @@ void SDLGameObject::refreshTextureVariables()
 	}
 }
 
+bool SDLGameObject::playAnimation(int animationID, bool playReverse)
+{
+	bool animmationFinished = false;
+	int frameStepper = 1;
+
+	if(playReverse)
+	{
+		frameStepper = -1;
+	}
+
+	//needs to change to first frame before counting time
+	if (m_textureID != m_animations[animationID])
+	{
+		m_textureID = m_animations[animationID];
+		refreshTextureVariables();
+
+		m_currentFrame = 0;
+		
+		if (playReverse)
+		{
+			m_currentFrame = (m_numFrames - 1);
+		}
+
+		m_frameTime = 0;
+
+	}
+	else
+	{
+		m_frameTime += TheSDLSystem::Instance().getFrameTime();
+
+		if (m_frameTime >= m_animSpeed)
+		{
+			m_frameTime = 0;
+			m_currentFrame += frameStepper;
+
+			//if frame has gone out range the animation ended
+			
+			if (!playReverse)
+			{
+				animmationFinished = m_currentFrame >= m_numFrames;
+			}
+			else
+			{
+				animmationFinished =  m_currentFrame < 0;
+			}
+		}
+	}
+
+	return animmationFinished;
+}
+
 void SDLGameObject::handleDying()
 {
 	//checks if the dying animation has finished

@@ -73,15 +73,18 @@ bool SDLSystem::init(const char* title, const char* iconPath, int windowXpos, in
 
 bool SDLSystem::capFrameRate()
 {	
-	static int lastTime = SDL_GetTicks();
-	int thisTime = SDL_GetTicks();
-	m_frameTime += (float)(thisTime - lastTime);
+	static float frameTime = 0;
 
-	if (m_frameTime >= getFrameTime())
+	static float lastTime = SDL_GetTicks();
+	float thisTime = SDL_GetTicks();
+	frameTime += thisTime - lastTime;
+
+	if (frameTime >= 1000.f / m_fps)
 	{
 		//std::cout << "ALLOWED frame - FPS: " << (1000 / m_frameTime) << "\n";
 		countFrame();
-		m_frameTime = 0.0f;
+		m_frameTime = frameTime;
+		frameTime = 0.0f;
 		lastTime = thisTime;
 		return true;
 	}
