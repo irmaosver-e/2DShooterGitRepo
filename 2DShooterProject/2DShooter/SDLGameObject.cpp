@@ -78,14 +78,6 @@ void SDLGameObject::inView()
 	m_bUpdating = true;
 }
 
-/*
-int SDLGameObject::getAnimatedFrame(float speedModifier)
-{
-	return int(TheSDLSystem::Instance().getRunningTime() / (m_animSpeed / speedModifier)) % m_numFrames;
-}
-*/
-
-
 void SDLGameObject::handleAnimation()
 {
 	refreshTextureVariables();
@@ -152,6 +144,32 @@ bool SDLGameObject::playAnimation(int animationID, bool playReverse)
 	}
 
 	return animmationFinished;
+}
+
+bool SDLGameObject::playTransitionTexture(int animationID)
+{
+	//needs to change to first frame before counting time
+	if (m_textureID != m_animations[animationID])
+	{
+		m_textureID = m_animations[animationID];
+		refreshTextureVariables();
+
+		m_frameTime = 0;
+
+	}
+	else
+	{
+		m_frameTime += TheSDLSystem::Instance().getFrameTime();
+
+		if (m_frameTime >= m_animSpeed)
+		{
+			m_frameTime = 0;
+
+			return true;
+		}
+	}
+
+	return false;
 }
 
 void SDLGameObject::handleDying()

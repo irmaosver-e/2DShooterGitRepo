@@ -16,7 +16,9 @@ Player::Player() : SDLGameObject()
 	m_invulnerableCounter = 0;
 	m_lives = 1;
 	m_playerHUD = nullptr;
+	m_desiredAction = -1;
 	m_currentForm = MECHA;
+	m_requestedStance = IDLE;
 	m_currentStance = IDLE;
 	m_horiz_direct = HORIZ_REST;
 	m_vert_direct = VERT_REST;
@@ -99,20 +101,22 @@ void Player::update()
 		}
 
 		handleAnimation();
+
+		handleBulletFiring();
 }
 
 void Player::collision()
 {		
-	/*  //godmode for debuging
+	  //godmode for debuging
 	std::cout << "GOD MODE ON in Player::collision() \n";
 	m_invulnerable = true;
 	
-	*/  //-----------------------
+	  //-----------------------
 		
 	if (!m_invulnerable)
 	{
 		m_currentFrame = BACK;
-		m_textureID = m_animations[DAMAGE];
+		m_textureID = m_animations[DEAD];
 		//m_textureID = "largeexplosion";
 		//m_currentFrame = 0;
 		//m_numFrames = 9;
@@ -169,11 +173,8 @@ void Player::handleInput()
 	if (!m_bDead)
 	{
 		//no key pressed
-		if (!m_bDying && !m_bMorphing)
-		{
-			m_currentStance = IDLE;
-		}
-
+		m_requestedStance = IDLE;
+		
 		// handle keys
 		if (TheInputHandler::Instance().isKeyDown(SDL_SCANCODE_UP) && m_position.getY() > 0)
 		{
@@ -209,27 +210,14 @@ void Player::handleInput()
 
 		if (TheInputHandler::Instance().isKeyDown(SDL_SCANCODE_LALT))
 		{
-			m_bMorphing = true;
+			m_requestedStance = TRANSFORM;
 		}
 
 		if (TheInputHandler::Instance().isKeyDown(SDL_SCANCODE_SPACE))
 		{
-			m_currentStance = ATTACK;
-		
-			if (m_bulletCounter == m_bulletFiringSpeed)
-			{
-				TheSoundManager::Instance().playSound("shoot", 0);
-
-				TheBulletHandler::Instance().fireBullet(m_subTypeID, m_textureID, m_position, Vector2Df(10, 0));
-				m_bulletCounter = 0;
-			}
-
-			m_bulletCounter++;
+			m_requestedStance = ATTACK;
 		}
-		else
-		{
-			m_bulletCounter = m_bulletFiringSpeed;
-		}
+
 		// */
 
 		/* handle joysticks /
@@ -268,28 +256,26 @@ void Player::handleInput()
 
 void Player::handleAnimation()
 {
-	//flash alpha if invulnerable
-	if (m_invulnerable)
+	static int lastRequest = -1;
+
+	if (m_requestedStance != lastRequest && m_desiredAction == -1) //(m_desiredAction == -1) no Action being performed
 	{
-		//finish invulnerability
-		if (m_invulnerableCounter == m_invulnerableTime)
+		lastRequest = m_requestedStance;
+
+		switch (m_requestedStance)
 		{
-			m_invulnerable = false;
-			m_invulnerableCounter = 0;
-			m_alpha = 255;
+		case TRANSFORM:
+			m_desiredAction = TRANSFORM;
+			break;
+		case ATTACK:
+			m_desiredAction = ATTACK;
+			break;
+		case DEAD:
+			m_desiredAction = DEAD;
+			break;
+		default:
+			m_desiredAction = IDLE;
 		}
-		else
-		{
-			if (m_alpha == 255)
-			{
-				m_alpha = 0;
-			}
-			else
-			{
-				m_alpha = 255;
-			}
-		}
-		m_invulnerableCounter++;
 	}
 
 	switch (m_currentForm)
@@ -302,69 +288,73 @@ void Player::handleAnimation()
 		handleShipAnim();
 		break;
 	}
+
+	/*
+//flash alpha if invulnerable
+if (m_invulnerable)
+{
+	//finish invulnerability
+	if (m_invulnerableCounter == m_invulnerableTime)
+	{
+		m_invulnerable = false;
+		m_invulnerableCounter = 0;
+		m_alpha = 255;
+	}
+	else
+	{
+		if (m_alpha == 255)
+		{
+			m_alpha = 0;
+		}
+		else
+		{
+			m_alpha = 255;
+		}
+	}
+	m_invulnerableCounter++;
+}
+*/
 }
 
 void Player::handleMechaAnim()
 {
-	if (m_bMorphing)
+	if (m_desiredAction == TRANSFORM)
 	{
-		if (playAnimation(3)) //morph anim Index
+		if (playAnimation(3)) //TRANSFORM anim Index
 		{
-			//here when the animation finished
-			
-			m_bMorphing = false;
+			m_desiredAction = -1; //action compleated no desired Action
 
 			m_currentForm = SHIP;
+			m_currentStance = IDLE;
+
 			m_textureID = m_animations[4]; //ship texture
-
 			refreshTextureVariables();
+			
 			m_currentFrame = 0;
 		}
-
-		/*
-		//needs to change to first frame before counting time
-		if (m_textureID != m_animations[3]) // morph texture
-		{
-			//morph anim
-			m_textureID = m_animations[3];
-			refreshTextureVariables();
-
-			m_currentFrame = 0;
-			m_frameTime = 0;
-		}
-		else
-		{
-			m_frameTime += TheSDLSystem::Instance().getFrameTime();
-
-			if (m_frameTime >= m_animSpeed)
-			{
-				m_frameTime = 0;
-				m_currentFrame++;
-
-				//if frame has gone out range the animation ended
-				if (m_currentFrame >= m_numFrames)
-				{
-					m_bMorphing = false;
-				
-					m_currentForm = SHIP;
-					m_textureID = m_animations[4]; //ship texture
-
-					refreshTextureVariables();
-					m_currentFrame = 0;
-				}
-			}
-		}
-		*/
 	}
 	else
 	{
-		if (m_currentStance == IDLE)
+		if (m_desiredAction == IDLE)
 		{
-				m_textureID = m_animations[IDLE]; //mecha texture
+			if (playTransitionTexture(7))
+			{
+				m_desiredAction = -1;
+				m_currentStance = IDLE;
+				m_textureID = m_animations[IDLE];
+				refreshTextureVariables();
+			}
 		}
-		else if (m_currentStance == ATTACK)
+		else if (m_desiredAction == ATTACK)
 		{
-			m_textureID = m_animations[ATTACK];
+			if (playTransitionTexture(7)) // (m_currentStance != ATTACK) checks if it is in not already compleated the request
+			{
+				//only here when the transition texture finished playing
+				m_desiredAction = -1;
+				m_currentStance = ATTACK;
+				m_textureID = m_animations[ATTACK];
+				refreshTextureVariables();
+			}
 		}
 
 		switch (m_horiz_direct)
@@ -385,61 +375,53 @@ void Player::handleMechaAnim()
 
 void Player::handleShipAnim()
 {
-	if (m_bMorphing)
+	if (m_desiredAction == TRANSFORM)
 	{
 		if (playAnimation(3, true)) //morph anim Index
 		{
 			//here when the animation finished
-			m_bMorphing = false;
+			m_desiredAction = -1; //action compleated no desired Action
 
+			m_currentStance = IDLE;
 			m_currentForm = MECHA;
 			m_textureID = m_animations[0];
 
 			refreshTextureVariables();
 			m_currentFrame = 0;
 		}
-
-		/*
-		//needs to change to first frame before counting time
-		if (m_textureID != m_animations[3]) // morph texture
-		{
-			//morph anim
-			m_textureID = m_animations[3];
-			refreshTextureVariables();
-
-			m_currentFrame = (m_numFrames - 1);
-			m_frameTime = 0;
-		}
-		else
-		{
-			m_frameTime += TheSDLSystem::Instance().getFrameTime();
-
-			if (m_frameTime >= m_animSpeed)
-			{
-				m_frameTime = 0;
-				m_currentFrame--;
-
-				//if frame has gone out range the animation ended
-				if (m_currentFrame < 0)
-				{
-					m_bMorphing = false;
-				
-					m_currentForm = MECHA;
-					m_textureID = m_animations[0];
-				
-					refreshTextureVariables();
-					m_currentFrame = 0;
-				}
-			}
-		}
-		*/
 	}
 	else
 	{
-		if (m_currentStance == IDLE)
+		if (m_desiredAction == IDLE)
 		{
+			m_desiredAction = -1;
 			m_textureID = m_animations[4]; //ship texture
 			m_currentFrame = 0;
 		}
+		else if (m_desiredAction == ATTACK)
+		{
+			m_desiredAction = -1;
+			m_currentStance = ATTACK;
+		}
+	}
+}
+
+void Player::handleBulletFiring()
+{
+	if(m_currentStance == ATTACK)
+	{
+		if (m_bulletCounter == m_bulletFiringSpeed)
+		{
+			TheSoundManager::Instance().playSound("shoot", 0);
+
+			TheBulletHandler::Instance().fireBullet(m_subTypeID, m_textureID, m_position, Vector2Df(10, 0));
+			m_bulletCounter = 0;
+		}
+
+		m_bulletCounter++;
+	}
+	else
+	{
+		m_bulletCounter = m_bulletFiringSpeed;
 	}
 }

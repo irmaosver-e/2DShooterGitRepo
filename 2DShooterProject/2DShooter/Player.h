@@ -36,7 +36,7 @@ public:
 
 private:
 	enum player_form { MECHA, SHIP };
-	enum player_stance { IDLE, ATTACK, DAMAGE };
+	enum player_stance { IDLE, ATTACK, DEAD, TRANSFORM };
 
 	enum player_x_direction { HORIZ_REST, BACK, FORWARD };
 	enum player_y_direction { VERT_REST, UP, DOWN };
@@ -47,6 +47,8 @@ private:
 	void handleMechaAnim();
 	void handleShipAnim();
 
+	void handleBulletFiring();
+
 
 
 	HUD* m_playerHUD;
@@ -55,6 +57,8 @@ private:
 
 	bool m_bMorphing;
 
+	int m_requestedStance;
+	int m_desiredAction;
 	int m_currentStance;
 	int m_currentForm;
 

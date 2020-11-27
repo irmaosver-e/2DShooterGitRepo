@@ -120,17 +120,20 @@
    <frame tileid="22" duration="100"/>
   </animation>
  </tile>
- <tile id="24" type="firingTest">
+ <tile id="24" type="attackTransition">
   <properties>
    <property name="OwnerSubType" value="playermecha"/>
   </properties>
   <objectgroup draworder="index" id="2">
-   <object id="1" name="collisionBox" x="14" y="9" width="20" height="35"/>
+   <object id="1" name="collisionBox" x="12.3636" y="9.02275" width="20" height="41.9545"/>
+   <object id="2" name="firingPoint" type="PlayerBullet" x="65.6364" y="18.7273">
+    <point/>
+   </object>
   </objectgroup>
   <animation>
-   <frame tileid="24" duration="600"/>
+   <frame tileid="24" duration="100"/>
+   <frame tileid="26" duration="100"/>
    <frame tileid="25" duration="100"/>
-   <frame tileid="26" duration="600"/>
   </animation>
  </tile>
 </tileset>

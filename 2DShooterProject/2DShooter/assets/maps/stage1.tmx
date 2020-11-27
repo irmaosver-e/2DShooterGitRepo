@@ -2,10 +2,10 @@
 <map version="1.4" tiledversion="1.4.2" orientation="orthogonal" renderorder="right-down" width="200" height="15" tilewidth="32" tileheight="32" infinite="0" nextlayerid="22" nextobjectid="41">
  <tileset firstgid="1" source="../tilesets/s1TerrainTest.tsx"/>
  <tileset firstgid="199" source="../tilesets/PlayerMecha.tsx"/>
- <tileset firstgid="223" source="../tilesets/Bullet.tsx"/>
- <tileset firstgid="225" source="../tilesets/enemy3.tsx"/>
- <tileset firstgid="228" source="../tilesets/Boss1.tsx"/>
- <tileset firstgid="229" source="../tilesets/Explosions.tsx"/>
+ <tileset firstgid="226" source="../tilesets/Bullet.tsx"/>
+ <tileset firstgid="228" source="../tilesets/enemy3.tsx"/>
+ <tileset firstgid="231" source="../tilesets/Boss1.tsx"/>
+ <tileset firstgid="232" source="../tilesets/Explosions.tsx"/>
  <group id="2" name="BackGround" locked="1">
   <imagelayer id="3" name="StarsBG" locked="1">
    <image source="../images/StarryBG.png" width="490" height="480"/>
@@ -51,20 +51,20 @@
    <properties>
     <property name="ScrollSpeed" type="float" value="1.8"/>
    </properties>
-   <object id="23" name="Level1Boss" type="bossPlane" gid="228" x="1238.61" y="378.333" width="192" height="256">
+   <object id="23" name="Level1Boss" type="bossPlane" gid="231" x="1238.61" y="378.333" width="192" height="256">
     <properties>
      <property name="AnimationList" value="bossIdle"/>
      <property name="VsCollision" value="bulletPlayer"/>
     </properties>
    </object>
-   <object id="37" name="Eskeletor" type="enemyTest3" gid="225" x="888" y="144" width="32" height="32">
+   <object id="37" name="Eskeletor" type="enemyTest3" gid="228" x="888" y="144" width="32" height="32">
     <properties>
      <property name="AnimationList" value="bug, enemyExplosion"/>
      <property name="VsCollision" value="bulletPlayer"/>
      <property name="VsLayerCollision" value="Collidables"/>
     </properties>
    </object>
-   <object id="38" name="Eskeletor" type="enemyTest3" gid="225" x="964" y="104" width="32" height="32">
+   <object id="38" name="Eskeletor" type="enemyTest3" gid="228" x="964" y="104" width="32" height="32">
     <properties>
      <property name="AnimationList" value="bug, enemyExplosion"/>
      <property name="VsCollision" value="bulletPlayer"/>
@@ -75,7 +75,7 @@
   <objectgroup id="19" name="PlayerLayer">
    <object id="40" name="Player" type="playermecha" gid="199" x="174" y="442" width="64" height="64">
     <properties>
-     <property name="AnimationList" value="idle, attackIdle, damageIdle, morph, shipIdle, shipUp, shipDown"/>
+     <property name="AnimationList" value="idle, attackIdle, damageIdle, morph, shipIdle, shipUp, shipDown, attackTransition"/>
      <property name="Lives" type="int" value="4"/>
      <property name="VsCollision" value="enemyTest3 , bulletEnemy"/>
      <property name="VsLayerCollision" value="Collidables"/>
@@ -96,13 +96,13 @@
    </objectgroup>
   </group>
   <objectgroup id="14" name="Bullets">
-   <object id="13" name="PlayerBullet" type="bulletPlayer" gid="223" x="89" y="-51.3333" width="32" height="32">
+   <object id="13" name="PlayerBullet" type="bulletPlayer" gid="226" x="89" y="-51.3333" width="32" height="32">
     <properties>
      <property name="AnimationList" value="yellow"/>
      <property name="VsLayerCollision" value="Collidables"/>
     </properties>
    </object>
-   <object id="14" name="EnemyBullet" type="bulletEnemy" gid="224" x="4.33333" y="-49" width="32" height="32">
+   <object id="14" name="EnemyBullet" type="bulletEnemy" gid="227" x="4.33333" y="-49" width="32" height="32">
     <properties>
      <property name="AnimationList" value="pink"/>
      <property name="VsLayerCollision" value="Collidables"/>
@@ -110,7 +110,7 @@
    </object>
   </objectgroup>
   <objectgroup id="18" name="Explosions">
-   <object id="39" name="Texture" gid="229" x="0" y="-182" width="32" height="32"/>
+   <object id="39" name="Texture" gid="232" x="0" y="-182" width="32" height="32"/>
   </objectgroup>
   <objectgroup id="15" name="ViewPort" locked="1">
    <object id="20" name="ViewPort" x="0" y="0" width="640" height="480"/>

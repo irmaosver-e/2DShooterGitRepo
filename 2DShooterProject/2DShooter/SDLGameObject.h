@@ -33,6 +33,9 @@ protected:
 	//returns true when finished
 	bool playAnimation(int animationID, bool playReverse = false);
 
+	//returns true when finished
+	bool playTransitionTexture(int animationID);
+
 	virtual void handleAnimation();
 	virtual void handleDying();
 
