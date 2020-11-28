@@ -67,6 +67,8 @@ protected:
 		m_bColliding(false),
 		m_bDead(false),
 		m_bDying(false),
+		m_bAnimationChanged(false),
+		m_bNextFrameOK(false),
 		m_angle(0),
 		m_alpha(255),
 		m_sfx(""),
@@ -93,6 +95,8 @@ protected:
 	int m_animSpeed;
 	std::string m_textureID;
 	std::string m_lastTextureID;
+	bool m_bAnimationChanged;
+	bool m_bNextFrameOK;
 
 	//common boolean variables
 	bool m_bIsOn;

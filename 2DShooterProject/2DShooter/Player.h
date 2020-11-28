@@ -55,7 +55,7 @@ private:
 	//ObjectLayer* m_pPlayFieldObjLayer;
 	//ObjectMarker* m_pPlayerMarker;
 
-	bool m_bMorphing;
+	bool m_bFiringBullet;
 
 	int m_requestedStance;
 	int m_desiredAction;

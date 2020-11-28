@@ -36,6 +36,14 @@ protected:
 	//returns true when finished
 	bool playTransitionTexture(int animationID);
 
+	//returns true when is new animation and resets the frametimer
+	bool switchAnimation(int animationID);
+
+	//returns true when ready to move a frame
+	//bool moveAnimFrame();
+	
+	void trackFrameTime();
+
 	virtual void handleAnimation();
 	virtual void handleDying();
 

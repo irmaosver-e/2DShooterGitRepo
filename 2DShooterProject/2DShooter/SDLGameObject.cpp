@@ -65,6 +65,7 @@ void SDLGameObject::update()
 	{
 		m_position += m_velocity;
 	}
+	trackFrameTime();
 	handleAnimation();
 }
 
@@ -105,6 +106,34 @@ bool SDLGameObject::playAnimation(int animationID, bool playReverse)
 		frameStepper = -1;
 	}
 
+	if (switchAnimation(animationID))
+	{
+		if (playReverse)
+		{
+			m_currentFrame = (m_numFrames - 1);
+		}
+	}
+	else
+	{
+		if (m_bNextFrameOK)
+		{
+			m_frameTime = 0;
+			m_bNextFrameOK = false;
+			m_currentFrame += frameStepper;
+
+			//if frame has gone out range the animation ended
+			if (!playReverse)
+			{
+				animmationFinished = m_currentFrame >= m_numFrames;
+			}
+			else
+			{
+				animmationFinished = m_currentFrame < 0;
+			}
+		}
+	}
+
+	/*
 	//needs to change to first frame before counting time
 	if (m_textureID != m_animations[animationID])
 	{
@@ -142,7 +171,7 @@ bool SDLGameObject::playAnimation(int animationID, bool playReverse)
 			}
 		}
 	}
-
+	*/
 	return animmationFinished;
 }
 
@@ -170,6 +199,37 @@ bool SDLGameObject::playTransitionTexture(int animationID)
 	}
 
 	return false;
+}
+
+bool SDLGameObject::switchAnimation(int animationID)
+{
+	m_bAnimationChanged = false;
+
+	//needs to change to first frame before counting time
+	if (m_textureID != m_animations[animationID])
+	{
+		m_textureID = m_animations[animationID];
+		refreshTextureVariables();
+
+		m_frameTime = 0;
+		m_bNextFrameOK = false;
+		m_bAnimationChanged = true;
+	}
+
+	return m_bAnimationChanged;
+}
+
+void SDLGameObject::trackFrameTime()
+{
+	if (!m_bAnimationChanged)
+	{
+		m_frameTime += TheSDLSystem::Instance().getFrameTime();
+	}
+
+	if (m_frameTime >= m_animSpeed)
+	{
+		m_bNextFrameOK = true;
+	}
 }
 
 void SDLGameObject::handleDying()

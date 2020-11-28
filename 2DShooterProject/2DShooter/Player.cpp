@@ -23,7 +23,7 @@ Player::Player() : SDLGameObject()
 	m_horiz_direct = HORIZ_REST;
 	m_vert_direct = VERT_REST;
 
-	m_bMorphing = false;
+	m_bFiringBullet = false;
 }
 
 Player::~Player()
@@ -82,7 +82,7 @@ void Player::update()
 				m_velocity.getXRef() = 0;
 				m_velocity.getYRef() = 0;
 
-				if (!m_bMorphing)
+				if (m_currentStance != TRANSFORM)
 				{
 					handleInput();
 				}
@@ -100,6 +100,7 @@ void Player::update()
 			m_dyingCounter++;
 		}
 
+		trackFrameTime();
 		handleAnimation();
 
 		handleBulletFiring();
@@ -265,6 +266,7 @@ void Player::handleAnimation()
 		switch (m_requestedStance)
 		{
 		case TRANSFORM:
+			m_currentStance = TRANSFORM;
 			m_desiredAction = TRANSFORM;
 			break;
 		case ATTACK:
@@ -289,6 +291,10 @@ void Player::handleAnimation()
 		break;
 	}
 
+	if (m_currentStance == ATTACK && m_desiredAction == -1)
+	{
+		m_bFiringBullet = true;
+	}
 	/*
 //flash alpha if invulnerable
 if (m_invulnerable)
@@ -326,9 +332,8 @@ void Player::handleMechaAnim()
 
 			m_currentForm = SHIP;
 			m_currentStance = IDLE;
-
-			m_textureID = m_animations[4]; //ship texture
-			refreshTextureVariables();
+			
+			switchAnimation(4);
 			
 			m_currentFrame = 0;
 		}
@@ -337,23 +342,40 @@ void Player::handleMechaAnim()
 	{
 		if (m_desiredAction == IDLE)
 		{
-			if (playTransitionTexture(7))
+			if (m_currentStance != IDLE)
 			{
-				m_desiredAction = -1;
-				m_currentStance = IDLE;
-				m_textureID = m_animations[IDLE];
-				refreshTextureVariables();
+				switchAnimation(7);
+				if (m_bNextFrameOK)
+				{
+					m_currentStance = IDLE;
+				}
+			}
+			else
+			{
+				switchAnimation(IDLE);
+				if (m_bNextFrameOK)
+				{
+					m_desiredAction = -1;
+				}
 			}
 		}
 		else if (m_desiredAction == ATTACK)
 		{
-			if (playTransitionTexture(7)) // (m_currentStance != ATTACK) checks if it is in not already compleated the request
+			if (m_currentStance != ATTACK)
 			{
-				//only here when the transition texture finished playing
-				m_desiredAction = -1;
-				m_currentStance = ATTACK;
-				m_textureID = m_animations[ATTACK];
-				refreshTextureVariables();
+				switchAnimation(7);
+				if (m_bNextFrameOK)
+				{
+					m_currentStance = ATTACK;
+				}
+			}
+			else
+			{
+				switchAnimation(ATTACK);
+				if (m_bNextFrameOK)
+				{
+					m_desiredAction = -1;
+				}
 			}
 		}
 
@@ -384,9 +406,9 @@ void Player::handleShipAnim()
 
 			m_currentStance = IDLE;
 			m_currentForm = MECHA;
-			m_textureID = m_animations[0];
 
-			refreshTextureVariables();
+			switchAnimation(0);
+			
 			m_currentFrame = 0;
 		}
 	}
@@ -408,7 +430,7 @@ void Player::handleShipAnim()
 
 void Player::handleBulletFiring()
 {
-	if(m_currentStance == ATTACK)
+	if(m_bFiringBullet)
 	{
 		if (m_bulletCounter == m_bulletFiringSpeed)
 		{
@@ -416,6 +438,7 @@ void Player::handleBulletFiring()
 
 			TheBulletHandler::Instance().fireBullet(m_subTypeID, m_textureID, m_position, Vector2Df(10, 0));
 			m_bulletCounter = 0;
+			m_bFiringBullet = false;
 		}
 
 		m_bulletCounter++;
