@@ -35,8 +35,9 @@ public:
 	virtual std::string objType() { return "Player"; }
 
 private:
+	enum desires {NONE = -1};
 	enum player_form { MECHA, SHIP };
-	enum player_stance { IDLE, ATTACK, DEAD, TRANSFORM };
+	enum player_stance { IDLE, ATTACK, DEAD, TRANSFORM, SHIP_IDLE, SHIP_MOVE_TRANSITION, MECHA_ATTACK_TRANSITION };
 
 	enum player_x_direction { HORIZ_REST, BACK, FORWARD };
 	enum player_y_direction { VERT_REST, UP, DOWN };
@@ -47,6 +48,7 @@ private:
 	void handleMechaAnim();
 	void handleShipAnim();
 
+	void handleActions();
 	void handleBulletFiring();
 
 
@@ -62,6 +64,8 @@ private:
 	int m_currentStance;
 	int m_currentForm;
 
+	int m_requested_H_direct;
+	int m_requested_V_direct;
 	int m_horiz_direct;
 	int m_vert_direct;
 

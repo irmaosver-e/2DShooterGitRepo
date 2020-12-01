@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <tileset version="1.4" tiledversion="1.4.2" name="Player" tilewidth="64" tileheight="64" spacing="2" margin="2" tilecount="27" columns="3">
  <image source="../images/PlayerMecha.png" width="200" height="596"/>
- <tile id="0" type="idle">
+ <tile id="0" type="mechaIdle">
   <properties>
    <property name="OwnerSubType" value="playermecha"/>
   </properties>
@@ -9,12 +9,11 @@
    <object id="1" name="collisionBox" x="14" y="9" width="20" height="35"/>
   </objectgroup>
   <animation>
-   <frame tileid="0" duration="400"/>
-   <frame tileid="2" duration="100"/>
-   <frame tileid="1" duration="100"/>
+   <frame tileid="0" duration="50"/>
+   <frame tileid="2" duration="50"/>
+   <frame tileid="1" duration="50"/>
   </animation>
  </tile>
- <tile id="1" type="idleForward"/>
  <tile id="2" type="idleBack">
   <properties>
    <property name="OwnerSubType" value="playermecha"/>
@@ -39,26 +38,22 @@
    <frame tileid="4" duration="400"/>
   </animation>
  </tile>
- <tile id="4" type="damageForward"/>
- <tile id="5" type="damageBack"/>
- <tile id="6" type="attackIdle">
+ <tile id="6" type="mechaAttack">
   <properties>
    <property name="OwnerSubType" value="playermecha"/>
   </properties>
   <objectgroup draworder="index" id="2">
    <object id="1" name="collisionBox" x="14" y="7" width="20" height="41.9545"/>
-   <object id="2" name="firingPoint" type="PlayerBullet" x="64.1818" y="17.0909">
+   <object id="2" name="firingPoint" type="PlayerBullet" x="64.1818" y="13.0909">
     <point/>
    </object>
   </objectgroup>
   <animation>
-   <frame tileid="6" duration="400"/>
-   <frame tileid="8" duration="100"/>
-   <frame tileid="7" duration="100"/>
+   <frame tileid="6" duration="50"/>
+   <frame tileid="8" duration="50"/>
+   <frame tileid="7" duration="50"/>
   </animation>
  </tile>
- <tile id="7" type="attackForward"/>
- <tile id="8" type="attackBack"/>
  <tile id="9" type="morph">
   <properties>
    <property name="OwnerSubType" value="playermecha"/>
@@ -75,7 +70,7 @@
    <frame tileid="14" duration="100"/>
   </animation>
  </tile>
- <tile id="15" type="shipIdle">
+ <tile id="15" type="ship">
   <properties>
    <property name="OwnerSubType" value="playermecha"/>
   </properties>
@@ -88,9 +83,11 @@
   </objectgroup>
   <animation>
    <frame tileid="15" duration="200"/>
+   <frame tileid="16" duration="100"/>
+   <frame tileid="17" duration="100"/>
   </animation>
  </tile>
- <tile id="18" type="shipUp">
+ <tile id="18" type="shipMoveAnim">
   <properties>
    <property name="OwnerSubType" value="playermecha"/>
   </properties>
@@ -101,26 +98,12 @@
    </object>
   </objectgroup>
   <animation>
-   <frame tileid="18" duration="100"/>
+   <frame tileid="18" duration="200"/>
    <frame tileid="19" duration="100"/>
+   <frame tileid="20" duration="100"/>
   </animation>
  </tile>
- <tile id="21" type="shipDown">
-  <properties>
-   <property name="OwnerSubType" value="playermecha"/>
-  </properties>
-  <objectgroup draworder="index" id="2">
-   <object id="1" name="collisionBox" x="5" y="32.4" width="31.3" height="16.7"/>
-   <object id="2" name="firingPoint" type="PlayerBullet" x="62" y="44.5455">
-    <point/>
-   </object>
-  </objectgroup>
-  <animation>
-   <frame tileid="21" duration="100"/>
-   <frame tileid="22" duration="100"/>
-  </animation>
- </tile>
- <tile id="24" type="attackTransition">
+ <tile id="24" type="mechaAttackAnim">
   <properties>
    <property name="OwnerSubType" value="playermecha"/>
   </properties>
@@ -131,9 +114,9 @@
    </object>
   </objectgroup>
   <animation>
-   <frame tileid="24" duration="100"/>
-   <frame tileid="26" duration="100"/>
-   <frame tileid="25" duration="100"/>
+   <frame tileid="24" duration="50"/>
+   <frame tileid="26" duration="50"/>
+   <frame tileid="25" duration="50"/>
   </animation>
  </tile>
 </tileset>

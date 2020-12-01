@@ -16,10 +16,12 @@ Player::Player() : SDLGameObject()
 	m_invulnerableCounter = 0;
 	m_lives = 1;
 	m_playerHUD = nullptr;
-	m_desiredAction = -1;
+	m_desiredAction = NONE;
 	m_currentForm = MECHA;
 	m_requestedStance = IDLE;
 	m_currentStance = IDLE;
+	m_requested_H_direct = HORIZ_REST;
+	m_requested_V_direct = VERT_REST;
 	m_horiz_direct = HORIZ_REST;
 	m_vert_direct = VERT_REST;
 
@@ -88,7 +90,10 @@ void Player::update()
 				}
 			}
 
-			SDLGameObject::update();
+			if (m_bUpdating)
+			{
+				m_position += m_velocity;
+			}
 		}
 		else //in death animation
 		{
@@ -101,9 +106,9 @@ void Player::update()
 		}
 
 		trackFrameTime();
+		handleActions();
 		handleAnimation();
 
-		handleBulletFiring();
 }
 
 void Player::collision()
@@ -136,7 +141,7 @@ void Player::flyOffScreen()
 {
 	if (!m_bFlyingOffScreen)
 	{
-		m_textureID = m_animations[IDLE];
+		//m_textureID = m_animations[IDLE];
 		m_currentFrame = FORWARD;
 		m_velocity.getXRef() = 0;
 		m_velocity.getYRef() = 0;
@@ -181,6 +186,7 @@ void Player::handleInput()
 		{
 			m_velocity.getYRef() = (float)-m_moveSpeed;
 			m_vert_direct = UP;
+			m_requested_V_direct = UP;
 		}
 		else if (TheInputHandler::Instance().isKeyDown(SDL_SCANCODE_DOWN) && (m_position.getY() + m_height) < TheSDLSystem::Instance().getScreenHeight() - 10)
 		{
@@ -209,14 +215,14 @@ void Player::handleInput()
 			m_horiz_direct = HORIZ_REST;
 		}
 
-		if (TheInputHandler::Instance().isKeyDown(SDL_SCANCODE_LALT))
-		{
-			m_requestedStance = TRANSFORM;
-		}
-
 		if (TheInputHandler::Instance().isKeyDown(SDL_SCANCODE_SPACE))
 		{
 			m_requestedStance = ATTACK;
+		}
+
+		if (TheInputHandler::Instance().isKeyDown(SDL_SCANCODE_LALT))
+		{
+			m_requestedStance = TRANSFORM;
 		}
 
 		// */
@@ -257,16 +263,15 @@ void Player::handleInput()
 
 void Player::handleAnimation()
 {
-	static int lastRequest = -1;
+	static int lastRequest = NONE;
 
-	if (m_requestedStance != lastRequest && m_desiredAction == -1) //(m_desiredAction == -1) no Action being performed
+	if (m_requestedStance != lastRequest && m_desiredAction == NONE) //(m_desiredAction == -1) no Action being performed
 	{
 		lastRequest = m_requestedStance;
 
 		switch (m_requestedStance)
 		{
 		case TRANSFORM:
-			m_currentStance = TRANSFORM;
 			m_desiredAction = TRANSFORM;
 			break;
 		case ATTACK:
@@ -291,7 +296,7 @@ void Player::handleAnimation()
 		break;
 	}
 
-	if (m_currentStance == ATTACK && m_desiredAction == -1)
+	if (m_currentStance == ATTACK && m_desiredAction == NONE)
 	{
 		m_bFiringBullet = true;
 	}
@@ -326,16 +331,18 @@ void Player::handleMechaAnim()
 {
 	if (m_desiredAction == TRANSFORM)
 	{
-		if (playAnimation(3)) //TRANSFORM anim Index
+		m_currentStance = TRANSFORM;
+
+		if (playAnimation(TRANSFORM))
 		{
-			m_desiredAction = -1; //action compleated no desired Action
+			m_desiredAction = NONE; //action compleated no desired Action
 
 			m_currentForm = SHIP;
 			m_currentStance = IDLE;
 			
-			switchAnimation(4);
+			switchAnimation(SHIP_IDLE);
 			
-			m_currentFrame = 0;
+			m_currentFrame = IDLE;
 		}
 	}
 	else
@@ -344,7 +351,7 @@ void Player::handleMechaAnim()
 		{
 			if (m_currentStance != IDLE)
 			{
-				switchAnimation(7);
+				switchAnimation(MECHA_ATTACK_TRANSITION);
 				if (m_bNextFrameOK)
 				{
 					m_currentStance = IDLE;
@@ -363,7 +370,7 @@ void Player::handleMechaAnim()
 		{
 			if (m_currentStance != ATTACK)
 			{
-				switchAnimation(7);
+				switchAnimation(MECHA_ATTACK_TRANSITION);
 				if (m_bNextFrameOK)
 				{
 					m_currentStance = ATTACK;
@@ -374,7 +381,7 @@ void Player::handleMechaAnim()
 				switchAnimation(ATTACK);
 				if (m_bNextFrameOK)
 				{
-					m_desiredAction = -1;
+					m_desiredAction = NONE;
 				}
 			}
 		}
@@ -399,33 +406,89 @@ void Player::handleShipAnim()
 {
 	if (m_desiredAction == TRANSFORM)
 	{
-		if (playAnimation(3, true)) //morph anim Index
+		m_currentStance = TRANSFORM;
+
+		if (playAnimation(TRANSFORM, true)) //morph anim Index 
 		{
 			//here when the animation finished
-			m_desiredAction = -1; //action compleated no desired Action
+			m_desiredAction = NONE; //action compleated no desired Action
 
 			m_currentStance = IDLE;
 			m_currentForm = MECHA;
 
-			switchAnimation(0);
+			switchAnimation(MECHA);
 			
-			m_currentFrame = 0;
+			m_currentFrame = IDLE;
 		}
 	}
 	else
 	{
-		if (m_desiredAction == IDLE)
+		static int lastDirectionRequest = VERT_REST;
+		static int desiredDirectionAnim = NONE;
+		
+
+		if (m_vert_direct != lastDirectionRequest && desiredDirectionAnim == NONE)
 		{
-			m_desiredAction = -1;
-			m_textureID = m_animations[4]; //ship texture
-			m_currentFrame = 0;
+			desiredDirectionAnim = VERT_REST;
+
+			if (m_vert_direct != VERT_REST)
+			{
+				if (lastDirectionRequest == VERT_REST)
+				{
+					desiredDirectionAnim = m_vert_direct;
+				}
+			}
+
+			lastDirectionRequest = desiredDirectionAnim;
 		}
-		else if (m_desiredAction == ATTACK)
+
+
+		if (desiredDirectionAnim != m_currentFrame && desiredDirectionAnim != NONE)
 		{
-			m_desiredAction = -1;
+			if (switchAnimation(SHIP_MOVE_TRANSITION) && desiredDirectionAnim != VERT_REST)
+			{
+				m_currentFrame = desiredDirectionAnim;
+			}
+			else
+			{
+				if (m_bNextFrameOK)
+				{
+					m_currentFrame = VERT_REST;
+					//m_bNextFrameOK = false;
+				}
+			}
+		}
+		else
+		{
+			if (m_bNextFrameOK)
+			{
+				switchAnimation(SHIP_IDLE);
+				desiredDirectionAnim = NONE;
+			}
+		}
+
+		if (m_desiredAction == ATTACK)
+		{ 
 			m_currentStance = ATTACK;
+			if (m_bNextFrameOK)
+			{
+				m_desiredAction = NONE;
+			}
+		}
+		else if(m_desiredAction == IDLE)
+		{
+			m_currentStance = IDLE;
+			if (m_bNextFrameOK)
+			{
+				m_desiredAction = NONE;
+			}
 		}
 	}
+}
+
+void Player::handleActions()
+{
+	handleBulletFiring();
 }
 
 void Player::handleBulletFiring()
