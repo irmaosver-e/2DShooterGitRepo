@@ -10,7 +10,8 @@ m_bulletCounter(0),
 m_moveSpeed(0),
 m_dyingTime(0),
 m_dyingCounter(0),
-m_bPlayedDeathSound(false)
+m_bPlayedDeathSound(false),
+m_tbAnimationState(END)
 {
 	m_bIsOn = true;
 	m_bInView = true;
@@ -81,99 +82,60 @@ void SDLGameObject::inView()
 
 void SDLGameObject::handleAnimation()
 {
+	//needs checking, seems redundant, should use play animation instead
 	refreshTextureVariables();
 	m_currentFrame = (SDL_GetTicks() / m_animSpeed) % m_numFrames;
 }
 
 void SDLGameObject::refreshTextureVariables()
 {
-	if (m_lastTextureID != m_textureID)
-	{
-		m_numFrames = TheTextureManager::Instance().getAnimationFrameCount(m_textureID);
-		m_animSpeed = TheTextureManager::Instance().getAnimationRef(m_textureID).frameDuration;
-
-		m_lastTextureID = m_textureID;
-	}
+	m_numFrames = TheTextureManager::Instance().getAnimationFrameCount(m_textureID);
+	m_middleFrame = (m_numFrames > 1) ? (m_numFrames / 2) + (m_numFrames % 2) : 0;
+	m_animSpeed = TheTextureManager::Instance().getAnimationRef(m_textureID).frameDuration;
 }
 
-bool SDLGameObject::playAnimation(int animationID, bool playReverse)
+bool SDLGameObject::playAnimation(int startFrame, int endFrame)
 {
-	bool animmationFinished = false;
-	int frameStepper = 1;
-
-	if(playReverse)
+	if (m_tbAnimationState == BEGIN)
 	{
-		frameStepper = -1;
-	}
-
-	if (switchAnimation(animationID))
-	{
-		if (playReverse)
+		if (endFrame < 0)
 		{
-			m_currentFrame = (m_numFrames - 1);
+			endFrame = m_numFrames - 1;
 		}
+		m_currentFrame = startFrame;
+		m_tbAnimationState = MIDDLE;
 	}
-	else
+
+	if (m_tbAnimationState == MIDDLE)
 	{
+		int frameStepper = (startFrame - endFrame);
+		frameStepper = abs(frameStepper) / frameStepper;
+
 		if (m_bNextFrameOK)
 		{
-			m_currentFrame += frameStepper;
+			//test for out of range frame
+			int futureFrame = m_currentFrame + frameStepper;
 
-			//if frame has gone out range the animation ended
-			if (!playReverse)
+			if (futureFrame >= 0 && futureFrame < m_numFrames)
 			{
-				animmationFinished = m_currentFrame >= m_numFrames;
+				m_currentFrame = futureFrame;
+				
+				if(m_currentFrame == endFrame)
+				{
+					m_tbAnimationState = END;
+				}
 			}
 			else
 			{
-				animmationFinished = m_currentFrame < 0;
+				m_tbAnimationState = END;
 			}
 		}
 	}
-
-	/*
-	//needs to change to first frame before counting time
-	if (m_textureID != m_animations[animationID])
-	{
-		m_textureID = m_animations[animationID];
-		refreshTextureVariables();
-
-		m_currentFrame = 0;
-		
-		if (playReverse)
-		{
-			m_currentFrame = (m_numFrames - 1);
-		}
-
-		m_frameTime = 0;
-
-	}
-	else
-	{
-		m_frameTime += TheSDLSystem::Instance().getFrameTime();
-
-		if (m_frameTime >= m_animSpeed)
-		{
-			m_frameTime = 0;
-			m_currentFrame += frameStepper;
-
-			//if frame has gone out range the animation ended
-			
-			if (!playReverse)
-			{
-				animmationFinished = m_currentFrame >= m_numFrames;
-			}
-			else
-			{
-				animmationFinished =  m_currentFrame < 0;
-			}
-		}
-	}
-	*/
-	return animmationFinished;
+	
+	return (m_tbAnimationState == END);
 }
 
-bool SDLGameObject::switchAnimation(int animationID)
+bool SDLGameObject::switchAnimation(int animationID, bool resetFrameCount)
 {
 	bool animationChanged = false;
 
@@ -181,14 +143,21 @@ bool SDLGameObject::switchAnimation(int animationID)
 	if (m_textureID != m_animations[animationID])
 	{
 		m_textureID = m_animations[animationID];
+		
 		refreshTextureVariables();
+		resetAnimation(resetFrameCount);
 
-		m_frameTime = 0;
-		m_bNextFrameOK = false;
 		animationChanged = true;
 	}
 
 	return animationChanged;
+}
+
+void SDLGameObject::resetAnimation(bool resetFrameCount)
+{
+	m_frameTime = 0;
+	m_bNextFrameOK = false;
+	m_tbAnimationState = resetFrameCount ? BEGIN : MIDDLE;
 }
 
 void SDLGameObject::trackFrameTime()

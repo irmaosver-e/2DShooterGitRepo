@@ -26,18 +26,22 @@ public:
 	virtual std::string objType() { return "SDLGameObject"; }
 
 protected:
+	enum anim_direction { REWIND = -1, PAUSE, FORWARD };
+	enum anim_position { BEGIN = -1, MIDDLE, END };
+
+	anim_position m_tbAnimationState;
+
 	SDLGameObject();
 
 	void refreshTextureVariables();
 
-	//returns true when finished
-	bool playAnimation(int animationID, bool playReverse = false);
-
-	//returns true when finished
-	bool playTransitionTexture(int animationID);
+	//returns true when finished, if end frame not entered, will play whole animation
+	bool playAnimation(int startFrame = 0, int endFrame = -1);
 
 	//returns true when is new animation and resets the frametimer
-	bool switchAnimation(int animationID);
+	bool switchAnimation(int animationID, bool resetFrameCount = true);
+
+	void resetAnimation(bool resetFrameCount = true);
 
 	//returns true when ready to move a frame
 	//bool moveAnimFrame();

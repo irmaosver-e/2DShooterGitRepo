@@ -61,6 +61,8 @@ protected:
 		m_currentRow(0),
 		m_frameTime(0),
 		m_currentFrame(0),
+		m_numFrames(0),
+		m_middleFrame(0),
 		m_bIsOn(false),
 		m_bInView(false),
 		m_bUpdating(false),
@@ -71,8 +73,7 @@ protected:
 		m_bNextFrameOK(false),
 		m_angle(0),
 		m_alpha(255),
-		m_sfx(""),
-		m_lastTextureID("")
+		m_sfx("")
 	{
 	}
 
@@ -92,9 +93,9 @@ protected:
 	int m_currentFrame;
 	float m_frameTime;
 	int m_numFrames;
+	int m_middleFrame;
 	int m_animSpeed;
 	std::string m_textureID;
-	std::string m_lastTextureID;
 	bool m_bAnimationChanged;
 	bool m_bNextFrameOK;
 

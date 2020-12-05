@@ -22,8 +22,8 @@ void InputHandler::init(int joystickDeadZone)
 
 bool InputHandler::isKeyDown(SDL_Scancode key) const
 {
-	
-	if (m_keyboardState != 0) //key up
+
+	if (m_keyboardState != nullptr) 
 	{
 		if (m_keyboardState[key] == 1) // key down
 		{
@@ -47,6 +47,12 @@ void InputHandler::reset()
 	m_keyboardState = nullptr;
 }
 
+void InputHandler::onKeyEvent()
+{
+	m_keyboardState = SDL_GetKeyboardState(nullptr);
+}
+
+/*
 void InputHandler::onKeyDown()
 {
 	m_keyboardState = SDL_GetKeyboardState(0);
@@ -56,6 +62,7 @@ void InputHandler::onKeyUp()
 {
 	m_keyboardState = SDL_GetKeyboardState(0);
 }
+*/
 
 void InputHandler::onMouseMove(SDL_Event& event)
 {
@@ -219,17 +226,13 @@ void InputHandler::update()
 			break;
 
 		case SDL_KEYDOWN:
-			onKeyDown();
-			break;
-
 		case SDL_KEYUP:
-			onKeyUp();
+			//onKeyEvent();
 			break;
-
-			default:
-                break;
 		}
 	}
+
+	onKeyEvent();
 }
 
 void InputHandler::quit()
@@ -237,7 +240,7 @@ void InputHandler::quit()
 	clearJoysticks();
 
 	// delete anything we created dynamically
-	delete m_keyboardState;
+	//delete m_keyboardState;
 	delete m_mousePosition;
 
 	// clear our arrays

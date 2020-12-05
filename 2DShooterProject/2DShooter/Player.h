@@ -35,12 +35,28 @@ public:
 	virtual std::string objType() { return "Player"; }
 
 private:
-	enum desires {NONE = -1};
-	enum player_form { MECHA, SHIP };
-	enum player_stance { IDLE, ATTACK, DEAD, TRANSFORM, SHIP_IDLE, SHIP_MOVE_TRANSITION, MECHA_ATTACK_TRANSITION };
+	enum stances { SHIP = -1, MECHA = 1 };
+	enum animations { NO_ANIM = -1, SHIP_IDLE, MECHA_IDLE, MECHA_ATTACK_TRANSITION, MECHA_ATTACK, TRANSFORM, EXPLOSION };
+	enum actions { NONE = -1, IDLE_ACT, ATTACK_ACT, DEAD_ACT, TRANSFORM_ACT};
 
-	enum player_x_direction { HORIZ_REST, BACK, FORWARD };
-	enum player_y_direction { VERT_REST, UP, DOWN };
+	//enum player_x_direction { HORIZ_REST, BACK, PX_FORWARD };
+	//enum player_y_direction { VERT_REST, UP, DOWN };
+	
+	enum V_dir_tribool { TB_UP = -1, TB_V_REST, TB_DOWN };
+	enum H_dir_tribool { TB_LEFT = -1, TB_H_REST, TB_RIGHT };
+
+	struct direction_cross
+	{
+		V_dir_tribool V_direction;
+		H_dir_tribool H_direction;
+	};
+
+	struct player_input
+	{
+		direction_cross direction_hat;
+
+		actions action;
+	};
 
 	void ressurect();
 	void handleInput();
@@ -49,9 +65,12 @@ private:
 	void handleShipAnim();
 
 	void handleActions();
-	void handleBulletFiring();
+	void fireBulletAction();
 
+	void moveAction();
+	void transformAction();
 
+	void transformAnim();
 
 	HUD* m_playerHUD;
 	//ObjectLayer* m_pPlayFieldObjLayer;
@@ -59,13 +78,22 @@ private:
 
 	bool m_bFiringBullet;
 
-	int m_requestedStance;
+	int m_requestedAction;
+	int m_requestedAnimation;
+
+	player_input m_requested_inputs;
+	
+	actions m_desired_action;
+	animations m_desired_animation;
+	direction_cross m_desired_animation_direction;
+	bool m_desired_move_animation_finished;
+	
+	animations m_requestedStance;
+
 	int m_desiredAction;
 	int m_currentStance;
-	int m_currentForm;
+	stances m_currentForm;
 
-	int m_requested_H_direct;
-	int m_requested_V_direct;
 	int m_horiz_direct;
 	int m_vert_direct;
 

@@ -75,7 +75,7 @@
   <objectgroup id="19" name="PlayerLayer">
    <object id="40" name="Player" type="playermecha" gid="199" x="174" y="442" width="64" height="64">
     <properties>
-     <property name="AnimationList" value="mechaIdle, mechaAttack, damageIdle, morph, ship, shipMoveAnim, mechaAttackAnim"/>
+     <property name="AnimationList" value="mechaIdle, mechaAttack, playerExplosion, morph, ship, shipMoveAnim, mechaAttackAnim"/>
      <property name="Lives" type="int" value="4"/>
      <property name="VsCollision" value="enemyTest3 , bulletEnemy"/>
      <property name="VsLayerCollision" value="Collidables"/>

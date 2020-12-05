@@ -35,6 +35,7 @@ public:
 private:	
 	//functions to handle events
 	//keyboard events
+	void onKeyEvent();
 	void onKeyDown();
 	void onKeyUp();
 
