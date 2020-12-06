@@ -90,7 +90,7 @@ void SDLGameObject::handleAnimation()
 void SDLGameObject::refreshTextureVariables()
 {
 	m_numFrames = TheTextureManager::Instance().getAnimationFrameCount(m_textureID);
-	m_middleFrame = (m_numFrames > 1) ? (m_numFrames / 2) + (m_numFrames % 2) : 0;
+	m_middleFrame = (m_numFrames > 1) ? ((m_numFrames / 2) + (m_numFrames % 2)) - 1 : 0;
 	m_animSpeed = TheTextureManager::Instance().getAnimationRef(m_textureID).frameDuration;
 }
 
@@ -109,7 +109,11 @@ bool SDLGameObject::playAnimation(int startFrame, int endFrame)
 	if (m_tbAnimationState == MIDDLE)
 	{
 		int frameStepper = (startFrame - endFrame);
-		frameStepper = abs(frameStepper) / frameStepper;
+		
+		if (frameStepper != 0)
+		{
+			frameStepper = abs(frameStepper) / frameStepper;
+		}
 
 		if (m_bNextFrameOK)
 		{

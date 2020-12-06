@@ -36,8 +36,8 @@ public:
 
 private:
 	enum stances { SHIP = -1, MECHA = 1 };
-	enum animations { NO_ANIM = -1, SHIP_IDLE, MECHA_IDLE, MECHA_ATTACK_TRANSITION, MECHA_ATTACK, TRANSFORM, EXPLOSION };
-	enum actions { NONE = -1, IDLE_ACT, ATTACK_ACT, DEAD_ACT, TRANSFORM_ACT};
+	enum animations { NO_ANIM = -1, SHIP_IDLE, MECHA_IDLE, MECHA_ATTACK_TRANSITION, ATTACK_ANIM, TRANSFORM_ANIM, DEATH_ANIM };
+	enum actions { NO_ACT, ATTACK_ACT, DEAD_ACT, TRANSFORM_ACT};
 
 	//enum player_x_direction { HORIZ_REST, BACK, PX_FORWARD };
 	//enum player_y_direction { VERT_REST, UP, DOWN };
@@ -65,7 +65,7 @@ private:
 	void handleShipAnim();
 
 	void handleActions();
-	void fireBulletAction();
+	void attackAction();
 
 	void moveAction();
 	void transformAction();
@@ -78,9 +78,6 @@ private:
 
 	bool m_bFiringBullet;
 
-	int m_requestedAction;
-	int m_requestedAnimation;
-
 	player_input m_requested_inputs;
 	
 	actions m_desired_action;
@@ -88,14 +85,7 @@ private:
 	direction_cross m_desired_animation_direction;
 	bool m_desired_move_animation_finished;
 	
-	animations m_requestedStance;
-
-	int m_desiredAction;
-	int m_currentStance;
 	stances m_currentForm;
-
-	int m_horiz_direct;
-	int m_vert_direct;
 
 	int m_lives;
 

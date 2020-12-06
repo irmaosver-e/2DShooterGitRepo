@@ -16,21 +16,13 @@ Player::Player() : SDLGameObject()
 	m_invulnerableCounter = 0;
 	m_lives = 1;
 	m_playerHUD = nullptr;
-	m_desiredAction = NONE;
 	m_currentForm = MECHA;
-
-	m_requestedStance = MECHA_IDLE;
-	m_currentStance = MECHA_IDLE;
-
-	m_requestedAction = NONE;
-	m_requestedAnimation = NONE;
-
-
+	
 	m_requested_inputs.direction_hat.H_direction = TB_H_REST;
 	m_requested_inputs.direction_hat.V_direction = TB_V_REST;
-	m_requested_inputs.action = NONE;
+	m_requested_inputs.action = NO_ACT;
 
-	m_desired_action = NONE;
+	m_desired_action = NO_ACT;
 	m_desired_animation = NO_ANIM;
 
 	m_desired_animation_direction.H_direction = TB_H_REST;
@@ -49,6 +41,7 @@ void Player::load(const LoaderParams& rParams)
 {
 	// inherited load function
 	SDLGameObject::load(rParams);
+	refreshTextureVariables();
 
 	// can set up the players inherited values here
 	m_lives = rParams.getLives();
@@ -128,13 +121,9 @@ void Player::collision()
 		
 	if (!m_invulnerable)
 	{
-		m_currentFrame = BACK;
-		m_textureID = m_animations[DEAD];
-		//m_textureID = "largeexplosion";
-		//m_currentFrame = 0;
-		//m_numFrames = 9;
-		//m_width = 60;
-		//m_height = 60;
+		//m_currentFrame = BACK;
+		//m_textureID = m_animations[DEAD];
+		
 		m_bDying = true;
 	}
 }
@@ -188,8 +177,7 @@ void Player::handleInput()
 	{
 	*/
 
-
-	// handle Vertical move requests
+	//---------------------------handle Vertical move requests-------------------------------
 	if (TheInputHandler::Instance().isKeyDown(SDL_SCANCODE_UP) && m_requested_inputs.direction_hat.V_direction != TB_DOWN) //stops UP having priority
 	{
 		m_requested_inputs.direction_hat.V_direction = TB_UP;
@@ -203,8 +191,7 @@ void Player::handleInput()
 		m_requested_inputs.direction_hat.V_direction = TB_V_REST;
 	}
 	
-	//====================================
-	// handle Horizontal move requests
+	//-----------------------------handle Horizontal move requests-------------------------------
 	if (TheInputHandler::Instance().isKeyDown(SDL_SCANCODE_LEFT) && m_requested_inputs.direction_hat.H_direction != TB_RIGHT) //stops LEFT having priority
 	{
 		m_requested_inputs.direction_hat.H_direction = TB_LEFT;
@@ -218,22 +205,18 @@ void Player::handleInput()
 		m_requested_inputs.direction_hat.H_direction = TB_H_REST;
 	}
 
-	//===================================
-	// handle action request
+	//------------------------------handle action request----------------------------------------
 	if (TheInputHandler::Instance().isKeyDown(SDL_SCANCODE_S)) // transform requests prioritised
 	{
 		m_requested_inputs.action = TRANSFORM_ACT;
-		//m_requestedStance = TRANSFORM;
 	}
 	else if (TheInputHandler::Instance().isKeyDown(SDL_SCANCODE_A))
 	{
 		m_requested_inputs.action = ATTACK_ACT;
-		m_requestedStance = ATTACK;
 	}
 	else
 	{
-		m_requested_inputs.action = IDLE_ACT;
-		m_requestedStance = IDLE;
+		m_requested_inputs.action = NO_ACT;
 	}
 
 		// */
@@ -274,14 +257,13 @@ void Player::handleInput()
 
 void Player::handleAnimation()
 {
-
 	switch (m_desired_animation)
 	{
-	case TRANSFORM:
+	case TRANSFORM_ANIM:
 		transformAnim();
 
 		break;
-	case MECHA_ATTACK:
+	case ATTACK_ANIM:
 		//m_desired_action = ATTACK;
 		break;
 	default:
@@ -289,44 +271,25 @@ void Player::handleAnimation()
 		break;
 	}
 
-
-	static int lastRequest = NONE;
-	if (m_requestedStance != lastRequest && m_desiredAction == NONE) //(m_desiredAction == -1) no Action being performed
+	if (m_desired_animation != TRANSFORM_ANIM && m_desired_animation != DEATH_ANIM)
 	{
-		lastRequest = m_requestedStance;
-
-		switch (m_requestedStance)
+		switch (m_currentForm)
 		{
-		//case TRANSFORM:
-			//m_desiredAction = TRANSFORM;
-			//break;
-		case ATTACK:
-			m_desiredAction = ATTACK;
+		case MECHA:
+			handleMechaAnim();
 			break;
-		case DEAD:
-			m_desiredAction = DEAD;
+
+		case SHIP:
+			handleShipAnim();
 			break;
-		default:
-			m_desiredAction = IDLE;
 		}
 	}
-
-	switch (m_currentForm)
-	{
-	case MECHA:
-		handleMechaAnim();
-		break;
-
-	case SHIP:
-		handleShipAnim();
-		break;
-	}
-
+	/*
 	if (m_currentStance == ATTACK && m_desiredAction == NONE)
 	{
 		m_bFiringBullet = true;
 	}
-	/*
+
 //flash alpha if invulnerable
 if (m_invulnerable)
 {
@@ -355,84 +318,89 @@ if (m_invulnerable)
 
 void Player::handleMechaAnim()
 {
-	if (m_desiredAction == TRANSFORM)
+	//-------------------------------handles action animations--------------------
+
+	//checks if the coming from ATTACK_ANIM
+	if(m_desired_animation == NO_ANIM && (m_textureID == m_animations[ATTACK_ANIM]))
 	{
-		/*
-		m_currentStance = TRANSFORM;
-
-		if (playAnimation(TRANSFORM))
-		{
-			m_desiredAction = NONE; //action compleated no desired Action
-
-			m_currentForm = SHIP;
-			m_currentStance = IDLE;
-			
-			switchAnimation(SHIP_IDLE);
-			
-			m_currentFrame = IDLE;
-		}
-		*/
+		m_desired_animation = MECHA_IDLE;
 	}
-	else
+
+	//handles attack transition animations
+	if (m_desired_animation == ATTACK_ANIM || m_desired_animation == MECHA_IDLE)
 	{
-		if (m_desiredAction == IDLE)
+		animations nextAnim = m_desired_animation;
+
+		if (m_textureID != m_animations[MECHA_ATTACK_TRANSITION]) //must be either ATTACK_ANIM or MECHA_IDLE
 		{
-			if (m_currentStance != IDLE)
-			{
-				switchAnimation(MECHA_ATTACK_TRANSITION);
-				if (m_bNextFrameOK)
-				{
-					m_currentStance = IDLE;
-				}
-			}
-			else
-			{
-				switchAnimation(IDLE);
-				if (m_bNextFrameOK)
-				{
-					m_desiredAction = -1;
-				}
-			}
-		}
-		else if (m_desiredAction == ATTACK)
-		{
-			if (m_currentStance != ATTACK)
-			{
-				switchAnimation(MECHA_ATTACK_TRANSITION);
-				if (m_bNextFrameOK)
-				{
-					m_currentStance = ATTACK;
-				}
-			}
-			else
-			{
-				switchAnimation(ATTACK);
-				if (m_bNextFrameOK)
-				{
-					m_desiredAction = NONE;
-				}
-			}
+			//must be either ATTACK_ANIM or MECHA_IDLE
+			nextAnim = MECHA_ATTACK_TRANSITION;
 		}
 
-		switch (m_horiz_direct)
+		//waits for the frame to pass the switch animation, but dont reset the frame count
+		if (m_bNextFrameOK)
 		{
-		case BACK:
-			m_currentFrame = BACK;
-			break;
-
-		case FORWARD:
-			m_currentFrame = FORWARD;
-			break;
-
-		default:
-			m_currentFrame = HORIZ_REST;
+			switchAnimation(nextAnim, false);
 		}
+
+		//reached the desired animation 
+		if (m_textureID != m_animations[m_desired_animation])
+		{
+			m_desired_animation = NO_ANIM;
+		}
+
 	}
+
+	//--------------------------handles move animations-----------------------
+
+	static int startFrame, endFrame;
+	//sets the desired animation direction
+	if (m_desired_move_animation_finished &&
+		m_desired_animation_direction.H_direction != m_requested_inputs.direction_hat.H_direction)
+	{
+		if (m_desired_animation_direction.H_direction == -m_requested_inputs.direction_hat.H_direction)
+		{
+			//if the past desired anim is the inverse of the request needs to first go to rest position
+			m_desired_animation_direction.H_direction = TB_H_REST;
+		}
+		else
+		{
+			m_desired_animation_direction.H_direction = m_requested_inputs.direction_hat.H_direction;
+		}
+
+		switch (m_desired_animation_direction.H_direction)
+		{
+		case TB_RIGHT:
+			startFrame = m_middleFrame;
+			endFrame = m_numFrames - 1;
+			break;
+		case TB_LEFT:
+			startFrame = m_middleFrame;
+			endFrame = 0;
+			break;
+		default: // TB_V_REST
+			int frameHolder = startFrame;
+			startFrame = endFrame;
+			endFrame = frameHolder;
+
+		}
+
+		m_desired_move_animation_finished = false;
+
+		resetAnimation();
+	}
+
+	//deals with the desired animation direction
+	//checks if there is a animation to perform
+	if (!m_desired_move_animation_finished)
+	{
+		m_desired_move_animation_finished = playAnimation(startFrame, endFrame);
+	}	
 }
 
 void Player::handleShipAnim()
 {
-	static int startFrame = 0, endFrame = 0;
+	static int startFrame, endFrame;
 
 	//sets the desired animation direction
 	if (m_desired_move_animation_finished && 
@@ -448,6 +416,7 @@ void Player::handleShipAnim()
 			m_desired_animation_direction.V_direction = m_requested_inputs.direction_hat.V_direction;
 		}
 
+		//sets start and end frames
 		switch (m_desired_animation_direction.V_direction)
 		{
 		case TB_UP:
@@ -456,6 +425,7 @@ void Player::handleShipAnim()
 			break;
 		case TB_DOWN:
 			startFrame = m_middleFrame;
+			endFrame = 0;
 			break;
 		default: // TB_V_REST
 			int frameHolder = startFrame;
@@ -475,27 +445,28 @@ void Player::handleShipAnim()
 	{
 		m_desired_move_animation_finished = playAnimation(startFrame, endFrame);
 	}
+
+	//no attack animation for ship
+	if (m_desired_animation == ATTACK_ANIM)
+	{
+		m_desired_animation = NO_ANIM;
+	}
 }
 
 void Player::handleActions()
 {
-
 	//----- deals input action request
-
-	if (m_desired_action == NONE) //no action pending
+	if (m_desired_action == NO_ACT) //no action pending
 	{
 		switch (m_requested_inputs.action)
 		{
 		case TRANSFORM_ACT:
 			m_desired_action = TRANSFORM_ACT;
-			m_desired_animation = TRANSFORM;
-
+			m_desired_animation = TRANSFORM_ANIM;
 			break;
 		case ATTACK_ACT:
 			m_desired_action = ATTACK_ACT;
-			break;
-		default:
-			m_desired_action = IDLE_ACT;
+			m_desired_animation = ATTACK_ANIM;
 			break;
 		}
 	}
@@ -508,11 +479,16 @@ void Player::handleActions()
 	if (m_desired_action != TRANSFORM_ACT && m_desired_action != DEAD_ACT)
 	{
 		moveAction();
-		fireBulletAction();
+
+		if (m_desired_action == ATTACK_ACT && m_desired_animation == NO_ANIM)
+		{
+			attackAction();
+		}
+		
 	}
 }
 
-void Player::fireBulletAction()
+void Player::attackAction()
 {
 	if(m_bFiringBullet)
 	{
@@ -531,6 +507,8 @@ void Player::fireBulletAction()
 	{
 		m_bulletCounter = m_bulletFiringSpeed;
 	}
+
+	m_desired_action = NO_ACT;
 }
 
 void Player::moveAction()
@@ -541,17 +519,11 @@ void Player::moveAction()
 	{
 	case TB_UP:
 		addVel = (m_position.getY() > 0);
-		//m_vert_direct = UP;
 		break;
 
 	case TB_DOWN:
 		addVel = (m_position.getY() + m_height) < TheSDLSystem::Instance().getScreenHeight();
-		//m_vert_direct = DOWN;
-
 		break;
-
-	default:
-		//m_vert_direct = VERT_REST;
 	}
 
 	if (addVel)
@@ -565,17 +537,11 @@ void Player::moveAction()
 	{
 	case TB_LEFT:
 		addVel = (m_position.getX() > 0);
-		//m_horiz_direct = BACK;
 		break;
 
 	case TB_RIGHT:
 		addVel = (m_position.getX() + m_width) < TheSDLSystem::Instance().getScreenWidth();
-		//m_horiz_direct = FORWARD;
-
 		break;
-
-	default:
-		//m_horiz_direct = HORIZ_REST;
 	}
 
 	if (addVel)
@@ -592,12 +558,12 @@ void Player::moveAction()
 void Player::transformAction()
 {
 	m_currentForm = (stances)(m_currentForm * -1); //inverts form
-	m_desired_action = NONE;
+	m_desired_action = NO_ACT;
 }
 
 void Player::transformAnim()
 {
-	switchAnimation(TRANSFORM);
+	switchAnimation(TRANSFORM_ANIM);
 
 	int startFrame = 0, endFrame = 0;
 	animations nextAnim;
@@ -614,11 +580,15 @@ void Player::transformAnim()
 		break;
 	}
 	
-	if (playAnimation(TRANSFORM, startFrame, endFrame))
+	if (playAnimation(startFrame, endFrame))
 	{
 		switchAnimation(nextAnim);
 
-		m_currentFrame = 0;
+		m_currentFrame = m_middleFrame;
 		m_desired_animation = NO_ANIM;
+
+		m_desired_move_animation_finished = true;
+		m_desired_animation_direction.V_direction = TB_V_REST;
+		m_desired_animation_direction.H_direction = TB_H_REST;
 	}
 }
