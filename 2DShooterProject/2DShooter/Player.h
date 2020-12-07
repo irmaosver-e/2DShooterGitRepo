@@ -76,14 +76,15 @@ private:
 	//ObjectLayer* m_pPlayFieldObjLayer;
 	//ObjectMarker* m_pPlayerMarker;
 
-	bool m_bFiringBullet;
-
 	player_input m_requested_inputs;
 	
-	actions m_desired_action;
-	animations m_desired_animation;
-	direction_cross m_desired_animation_direction;
+	actions m_desiredAction;
+	animations m_desiredAnimation;
+	direction_cross m_desiredAnimation_direction;
 	bool m_desired_move_animation_finished;
+
+	actions m_lastAction;
+
 	
 	stances m_currentForm;
 

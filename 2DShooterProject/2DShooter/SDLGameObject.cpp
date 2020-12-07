@@ -108,7 +108,7 @@ bool SDLGameObject::playAnimation(int startFrame, int endFrame)
 
 	if (m_tbAnimationState == MIDDLE)
 	{
-		int frameStepper = (startFrame - endFrame);
+		int frameStepper = (endFrame - startFrame);
 		
 		if (frameStepper != 0)
 		{
