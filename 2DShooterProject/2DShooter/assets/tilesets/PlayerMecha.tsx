@@ -57,9 +57,9 @@
    <frame tileid="18" duration="50"/>
    <frame tileid="19" duration="50"/>
    <frame tileid="20" duration="50"/>
-   <frame tileid="24" duration="50"/>
-   <frame tileid="25" duration="50"/>
-   <frame tileid="26" duration="50"/>
+   <frame tileid="21" duration="50"/>
+   <frame tileid="22" duration="50"/>
+   <frame tileid="23" duration="50"/>
   </animation>
  </tile>
  <tile id="26" type="ship">

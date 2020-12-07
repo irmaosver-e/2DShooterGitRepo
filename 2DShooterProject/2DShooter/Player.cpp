@@ -16,11 +16,12 @@ Player::Player() : SDLGameObject()
 	m_invulnerableCounter = 0;
 	m_lives = 1;
 	m_playerHUD = nullptr;
-	m_currentForm = MECHA;
+	m_currentForm = SHIP;
 	
-	m_requested_inputs.direction_hat.H_direction = TB_H_REST;
-	m_requested_inputs.direction_hat.V_direction = TB_V_REST;
-	m_requested_inputs.action = NO_ACT;
+	m_requestedInputs.direction_hat.H_direction = TB_H_REST;
+	m_requestedInputs.direction_hat.V_direction = TB_V_REST;
+	m_requestedInputs.action = NO_ACT;
+	m_requestedDirectAction = NO_ACT;
 
 	m_desiredAction = NO_ACT;
 	m_lastAction = NO_ACT;
@@ -40,14 +41,15 @@ void Player::load(const LoaderParams& rParams)
 {
 	// inherited load function
 	SDLGameObject::load(rParams);
-	switchAnimation(MECHA_IDLE);
+	refreshTextureVariables();
+	resetAnimation();
 	m_currentFrame = m_middleFrame;
 
 	// can set up the players inherited values here
 	m_lives = rParams.getLives();
 
 	// set up bullets
-	m_bulletFiringSpeed = 250;
+	m_bulletFiringSpeed = 3;
 	m_moveSpeed = 3;
 
 	// we want to be able to fire instantly
@@ -62,7 +64,7 @@ void Player::reset(const LoaderParams& rParams)
 	m_position = Vector2Df(rParams.getX(), rParams.getY());
 	
 	//it hasnt finished the last stage stage, it must be restarting the game
-	if (!m_bFlyingOffScreen)
+	if (m_requestedDirectAction != FLY_OFF_ACT)
 	{
 		m_lives = rParams.getLives();
 	}
@@ -70,7 +72,10 @@ void Player::reset(const LoaderParams& rParams)
 	m_dyingCounter = 0;
 	m_invulnerable = false;
 	m_bDying = false;
-	m_bFlyingOffScreen = false;
+
+	m_requestedDirectAction = NO_ACT;
+	m_desiredAction = NO_ACT;
+	
 }
 
 void Player::draw()
@@ -81,18 +86,13 @@ void Player::draw()
 
 void Player::update()
 {
+	m_velocity.getXRef() = 0;
+	m_velocity.getYRef() = 0;
+
 		//if player NOT in death animation
 		if (!m_bDying)
 		{	
-			if (!m_bFlyingOffScreen)
-			{
-				m_velocity.getXRef() = 0;
-				m_velocity.getYRef() = 0;
-
-
-				handleInput();
-
-			}
+			handleInput();
 		}
 		else //in death animation
 		{
@@ -108,6 +108,10 @@ void Player::update()
 		handleActions();
 		handleAnimation();
 
+		if (m_bUpdating)
+		{
+			m_position += m_velocity;
+		}
 }
 
 void Player::collision()
@@ -135,18 +139,7 @@ void Player::collisionWithLayer()
 
 void Player::flyOffScreen()
 {
-	if (!m_bFlyingOffScreen)
-	{
-		//m_textureID = m_animations[IDLE];
-		m_currentFrame = FORWARD;
-		m_velocity.getXRef() = 0;
-		m_velocity.getYRef() = 0;
-
-		m_bFlyingOffScreen = true;
-		m_invulnerable = true;
-	}
-
-	m_velocity.getXRef() = (float)m_moveSpeed * 2;
+	m_requestedDirectAction = FLY_OFF_ACT;
 }
 
 void Player::flyIntoScreen()
@@ -178,45 +171,45 @@ void Player::handleInput()
 	*/
 
 	//---------------------------handle Vertical move requests-------------------------------
-	if (TheInputHandler::Instance().isKeyDown(SDL_SCANCODE_UP) && m_requested_inputs.direction_hat.V_direction != TB_DOWN) //stops UP having priority
+	if (TheInputHandler::Instance().isKeyDown(SDL_SCANCODE_UP) && m_requestedInputs.direction_hat.V_direction != TB_DOWN) //stops UP having priority
 	{
-		m_requested_inputs.direction_hat.V_direction = TB_UP;
+		m_requestedInputs.direction_hat.V_direction = TB_UP;
 	}
 	else if (TheInputHandler::Instance().isKeyDown(SDL_SCANCODE_DOWN))
 	{
-		m_requested_inputs.direction_hat.V_direction = TB_DOWN;
+		m_requestedInputs.direction_hat.V_direction = TB_DOWN;
 	}
 	else
 	{
-		m_requested_inputs.direction_hat.V_direction = TB_V_REST;
+		m_requestedInputs.direction_hat.V_direction = TB_V_REST;
 	}
 	
 	//-----------------------------handle Horizontal move requests-------------------------------
-	if (TheInputHandler::Instance().isKeyDown(SDL_SCANCODE_LEFT) && m_requested_inputs.direction_hat.H_direction != TB_RIGHT) //stops LEFT having priority
+	if (TheInputHandler::Instance().isKeyDown(SDL_SCANCODE_LEFT) && m_requestedInputs.direction_hat.H_direction != TB_RIGHT) //stops LEFT having priority
 	{
-		m_requested_inputs.direction_hat.H_direction = TB_LEFT;
+		m_requestedInputs.direction_hat.H_direction = TB_LEFT;
 	}
 	else if (TheInputHandler::Instance().isKeyDown(SDL_SCANCODE_RIGHT))
 	{
-		m_requested_inputs.direction_hat.H_direction = TB_RIGHT;
+		m_requestedInputs.direction_hat.H_direction = TB_RIGHT;
 	}
 	else
 	{
-		m_requested_inputs.direction_hat.H_direction = TB_H_REST;
+		m_requestedInputs.direction_hat.H_direction = TB_H_REST;
 	}
 
 	//------------------------------handle action request----------------------------------------
 	if (TheInputHandler::Instance().isKeyDown(SDL_SCANCODE_S)) // transform requests prioritised
 	{
-		m_requested_inputs.action = TRANSFORM_ACT;
+		m_requestedInputs.action = TRANSFORM_ACT;
 	}
 	else if (TheInputHandler::Instance().isKeyDown(SDL_SCANCODE_A))
 	{
-		m_requested_inputs.action = ATTACK_ACT;
+		m_requestedInputs.action = ATTACK_ACT;
 	}
 	else
 	{
-		m_requested_inputs.action = NO_ACT;
+		m_requestedInputs.action = NO_ACT;
 	}
 
 		// */
@@ -253,6 +246,72 @@ void Player::handleInput()
 		//*/
 
 	//}
+}
+
+void Player::handleActions()
+{
+	//----- deals input action request
+	if (m_desiredAction == NO_ACT) //no action pending, animations should be finished
+	{
+		if (m_requestedDirectAction != NO_ACT) //direct actions have priority over input actions
+		{
+			switch (m_requestedDirectAction)
+			{
+			case FLY_OFF_ACT:
+				m_desiredAction = FLY_OFF_ACT;
+				m_lastAction = FLY_OFF_ACT;
+			}
+		}
+		else
+		{
+			switch (m_requestedInputs.action)
+			{
+			case TRANSFORM_ACT:
+				if (m_lastAction != TRANSFORM_ACT) //prevents actions from spamming if button down
+				{
+					transformRequest(); //sets the desired action, last action and animation
+				}
+				break;
+			case ATTACK_ACT:
+				m_desiredAction = ATTACK_ACT;
+				m_lastAction = ATTACK_ACT;
+				m_desiredAnimation = ATTACK_ANIM;
+				break;
+
+			default:
+				if (m_lastAction != ATTACK_ACT && m_currentForm == MECHA)
+				{
+					// handles returning to mecha idle anim when fire button released
+					m_desiredAnimation = MECHA_IDLE;
+				}
+				m_lastAction = NO_ACT;
+				m_bulletCounter = m_bulletFiringSpeed;
+			}
+		}
+	}
+
+	if (m_desiredAction == TRANSFORM_ACT && m_desiredAnimation == NO_ANIM)
+	{
+		transformAction();
+	}
+
+	if (m_desiredAction == FLY_OFF_ACT && m_desiredAnimation == NO_ANIM)
+	{
+		flyOffAction();
+	}
+
+	if (m_desiredAction != TRANSFORM_ACT 
+		&& m_desiredAction != DEAD_ACT
+		&& m_desiredAction != FLY_OFF_ACT)
+	{
+		moveAction();
+
+		if (m_desiredAction == ATTACK_ACT && m_desiredAnimation == NO_ANIM)
+		{
+			attackAction();
+		}
+
+	}
 }
 
 void Player::handleAnimation()
@@ -358,16 +417,16 @@ void Player::handleMechaAnim()
 	static int startFrame, endFrame;
 	//sets the desired animation direction
 	if (m_desired_move_animation_finished &&
-		m_desiredAnimation_direction.H_direction != m_requested_inputs.direction_hat.H_direction)
+		m_desiredAnimation_direction.H_direction != m_requestedInputs.direction_hat.H_direction)
 	{
-		if (m_desiredAnimation_direction.H_direction == -m_requested_inputs.direction_hat.H_direction)
+		if (m_desiredAnimation_direction.H_direction == -m_requestedInputs.direction_hat.H_direction)
 		{
 			//if the past desired anim is the inverse of the request needs to first go to rest position
 			m_desiredAnimation_direction.H_direction = TB_H_REST;
 		}
 		else
 		{
-			m_desiredAnimation_direction.H_direction = m_requested_inputs.direction_hat.H_direction;
+			m_desiredAnimation_direction.H_direction = m_requestedInputs.direction_hat.H_direction;
 		}
 
 		switch (m_desiredAnimation_direction.H_direction)
@@ -406,16 +465,16 @@ void Player::handleShipAnim()
 
 	//sets the desired animation direction
 	if (m_desired_move_animation_finished && 
-		m_desiredAnimation_direction.V_direction != m_requested_inputs.direction_hat.V_direction)
+		m_desiredAnimation_direction.V_direction != m_requestedInputs.direction_hat.V_direction)
 	{
-		if (m_desiredAnimation_direction.V_direction == -m_requested_inputs.direction_hat.V_direction)
+		if (m_desiredAnimation_direction.V_direction == -m_requestedInputs.direction_hat.V_direction)
 		{
 			//if the past desired anim is the inverse of the request needs to first go to rest position
 			m_desiredAnimation_direction.V_direction = TB_V_REST;
 		}
 		else
 		{
-			m_desiredAnimation_direction.V_direction = m_requested_inputs.direction_hat.V_direction;
+			m_desiredAnimation_direction.V_direction = m_requestedInputs.direction_hat.V_direction;
 		}
 
 		//sets start and end frames
@@ -455,71 +514,18 @@ void Player::handleShipAnim()
 	}
 }
 
-void Player::handleActions()
-{
-	//----- deals input action request
-	if (m_desiredAction == NO_ACT) //no action pending, animations should be finished
-	{
-		switch (m_requested_inputs.action)
-		{
-		case TRANSFORM_ACT:
-			if (m_lastAction != TRANSFORM_ACT) //prevents actions from spamming if button down
-			{
-				m_desiredAction = TRANSFORM_ACT;
-				m_lastAction = TRANSFORM_ACT;
-				m_desiredAnimation = TRANSFORM_ANIM;
-			}
-			break;
-		case ATTACK_ACT:
-			m_desiredAction = ATTACK_ACT;
-			m_lastAction = ATTACK_ACT;
-			m_desiredAnimation = ATTACK_ANIM;
-			break;
-
-		default:
-			if (m_lastAction != ATTACK_ACT && m_currentForm == MECHA) 
-			{
-				// handles returning to mecha idle anim when fire button released
-				m_desiredAnimation = MECHA_IDLE;
-			}
-			m_lastAction = NO_ACT;
-		}
-	}
-
-	if (m_desiredAction == TRANSFORM_ACT && m_desiredAnimation == NO_ANIM)
-	{
-		transformAction();
-	}
-
-	if (m_desiredAction != TRANSFORM_ACT && m_desiredAction != DEAD_ACT)
-	{
-		moveAction();
-
-		if (m_desiredAction == ATTACK_ACT && m_desiredAnimation == NO_ANIM)
-		{
-			attackAction();
-		}
-		
-	}
-}
-
 void Player::attackAction()
 {
-	if(m_bulletCounter >= m_bulletFiringSpeed)
+	if (m_bulletCounter >= m_bulletFiringSpeed)
 	{
-		if (m_bulletCounter == m_bulletFiringSpeed)
-		{
-			TheSoundManager::Instance().playSound("shoot", 0);
+		TheSoundManager::Instance().playSound("shoot", 0);
 
-			TheBulletHandler::Instance().fireBullet(m_subTypeID, m_textureID, m_position, Vector2Df(10, 0));
-			m_bulletCounter = 0;
-		}
-
-		m_bulletCounter++;
+		TheBulletHandler::Instance().fireBullet(m_subTypeID, m_textureID, m_position, Vector2Df(10, 0));
+		m_bulletCounter = 0;
 	}
 	else
 	{
-		m_bulletCounter = m_bulletFiringSpeed;
+		m_bulletCounter++;
 	}
 
 	m_desiredAction = NO_ACT;
@@ -529,7 +535,7 @@ void Player::moveAction()
 {
 	//----- deals W vertical move request
 	bool addVel = true;
-	switch (m_requested_inputs.direction_hat.V_direction)
+	switch (m_requestedInputs.direction_hat.V_direction)
 	{
 	case TB_UP:
 		addVel = (m_position.getY() > 0);
@@ -542,12 +548,12 @@ void Player::moveAction()
 
 	if (addVel)
 	{
-		m_velocity.getYRef() = (float)m_moveSpeed * m_requested_inputs.direction_hat.V_direction;
+		m_velocity.getYRef() = (float)m_moveSpeed * m_requestedInputs.direction_hat.V_direction;
 	}
 
 	//----- deals W horizontal move request
 	addVel = true;
-	switch (m_requested_inputs.direction_hat.H_direction)
+	switch (m_requestedInputs.direction_hat.H_direction)
 	{
 	case TB_LEFT:
 		addVel = (m_position.getX() > 0);
@@ -560,12 +566,27 @@ void Player::moveAction()
 
 	if (addVel)
 	{
-		m_velocity.getXRef() = (float)m_moveSpeed * m_requested_inputs.direction_hat.H_direction;
+		m_velocity.getXRef() = (float)m_moveSpeed * m_requestedInputs.direction_hat.H_direction;
 	}
+}
 
-	if (m_bUpdating)
+void Player::transformRequest()
+{
+	m_desiredAction = TRANSFORM_ACT;
+	m_lastAction = TRANSFORM_ACT;
+	m_desiredAnimation = TRANSFORM_ANIM;
+}
+
+void Player::flyOffAction()
+{
+	m_invulnerable = true;
+	if (m_currentForm != SHIP)
 	{
-		m_position += m_velocity;
+		transformRequest();
+	}
+	else
+	{
+		m_velocity.getXRef() = (float)m_moveSpeed * 2;
 	}
 }
 
