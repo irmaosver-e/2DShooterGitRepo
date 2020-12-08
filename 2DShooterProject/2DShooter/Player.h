@@ -74,7 +74,6 @@ private:
 	void flyOffAction();
 	void deathAction();
 
-	void transformRequest();
 	void transformAction();
 	void transformAnim();
 

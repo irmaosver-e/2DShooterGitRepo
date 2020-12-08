@@ -49,7 +49,7 @@ void Player::load(const LoaderParams& rParams)
 	m_lives = rParams.getLives();
 
 	// set up bullets
-	m_bulletFiringSpeed = 10;
+	m_bulletFiringSpeed = 3;
 	m_moveSpeed = 3;
 
 	// we want to be able to fire instantly
@@ -64,14 +64,13 @@ void Player::reset(const LoaderParams& rParams)
 	m_position = Vector2Df(rParams.getX(), rParams.getY());
 	
 	//it hasnt finished the last stage stage, it must be restarting the game
-	if (m_requestedDirectAction != FLY_OFF_ACT)
+	if (m_desiredAction != FLY_OFF_ACT)
 	{
 		m_lives = rParams.getLives();
 	}
 	
 	m_dyingCounter = 0;
 	m_invulnerable = false;
-	m_bDying = false;
 
 	m_requestedDirectAction = NO_ACT;
 	m_desiredAction = NO_ACT;
@@ -96,8 +95,8 @@ void Player::update()
 		trackFrameTime();
 
 		handleRequests();
-		handleAnimation();
 		handleActions();
+		handleAnimation();
 
 		m_position += m_velocity;
 	}
@@ -272,17 +271,17 @@ void Player::handleRequests()
 			{
 			case FLY_OFF_ACT:
 				m_desiredAction = FLY_OFF_ACT;
-				if (m_currentForm == SHIP) // if mecha it will have to transform first
-				{
-					m_requestedDirectAction = NO_ACT;
-				}
-				//m_lastAction = FLY_OFF_ACT;
+				m_lastAction = FLY_OFF_ACT;
+				break;
+
 			case DEATH_ACT:
 				m_desiredAction = DEATH_ACT;
 				m_desiredAnimation = DEATH_ANIM;
-				m_requestedDirectAction = NO_ACT;
 				//m_lastAction = DEATH_ACT;
+				break;
 			}
+
+			m_requestedDirectAction = NO_ACT;
 		}
 		else
 		{
@@ -291,7 +290,9 @@ void Player::handleRequests()
 			case TRANSFORM_ACT:
 				if (m_lastAction != TRANSFORM_ACT) //prevents actions from spamming if button down
 				{
-					transformRequest(); //sets the desired action, last action and animation
+					m_desiredAction = TRANSFORM_ACT;
+					m_lastAction = TRANSFORM_ACT;
+					m_desiredAnimation = TRANSFORM_ANIM;
 				}
 				break;
 			case ATTACK_ACT:
@@ -356,9 +357,11 @@ void Player::handleAnimation()
 	case TRANSFORM_ANIM:
 		transformAnim();
 		break;
+
 	case DEATH_ANIM:
 		deathAnim();
 		break;
+	
 	default:
 		//m_desiredAction = IDLE;
 		break;
@@ -571,6 +574,11 @@ void Player::moveAction()
 void Player::transformAction()
 {
 	m_currentForm = (stances)(m_currentForm * -1); //inverts form
+	
+	if (m_lastAction == FLY_OFF_ACT)
+	{
+		m_desiredAction = m_lastAction;
+	}
 	m_desiredAction = NO_ACT;
 }
 
@@ -579,7 +587,8 @@ void Player::flyOffAction()
 	m_invulnerable = true;
 	if (m_currentForm != SHIP)
 	{
-		transformRequest();
+		m_desiredAction = TRANSFORM_ACT;
+		m_desiredAnimation = TRANSFORM_ANIM;
 	}
 	else
 	{
@@ -598,13 +607,6 @@ void Player::deathAction()
 	m_invulnerable = true;
 
 	m_desiredAction = NO_ACT;
-}
-
-void Player::transformRequest()
-{
-	m_desiredAction = TRANSFORM_ACT;
-	m_lastAction = TRANSFORM_ACT;
-	m_desiredAnimation = TRANSFORM_ANIM;
 }
 
 void Player::transformAnim()
@@ -654,7 +656,7 @@ void Player::deathAnim()
 		break;
 	}
 
-	if (playAnimation())//play full anim
+	if (playAnimation(0, m_numFrames - 1))//play full anim
 	{
 		switchAnimation(nextAnim);
 

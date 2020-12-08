@@ -86,7 +86,7 @@
  <group id="13" name="OUT_OF_PLAY_AREA">
   <group id="16" name="HUDs">
    <objectgroup id="11" name="Player">
-    <object id="6" name="AnimatedGraphic" type="idleBack" gid="201" x="37" y="75" width="64" height="64"/>
+    <object id="6" name="AnimatedGraphic" type="lifeCounter" gid="201" x="37" y="75" width="64" height="64"/>
     <object id="19" name="TextBox" type="Lives" x="96.8333" y="21.8333" width="55.3333" height="33.1667">
      <text fontfamily="Arial" pixelsize="24" color="#ffffff" bold="1">x (#)</text>
     </object>

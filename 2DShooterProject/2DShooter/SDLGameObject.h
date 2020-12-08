@@ -36,7 +36,7 @@ protected:
 	void refreshTextureVariables();
 
 	//returns true when finished, if end frame not entered, will play whole animation
-	bool playAnimation(int startFrame = 0, int endFrame = -1);
+	bool playAnimation(int startFrame, int endFrame);
 
 	//returns true when is new animation and resets the frametimer
 	bool switchAnimation(int animationID, bool resetFrameCount = true);

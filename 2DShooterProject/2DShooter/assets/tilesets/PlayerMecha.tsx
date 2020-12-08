@@ -16,6 +16,11 @@
    <frame tileid="4" duration="50"/>
   </animation>
  </tile>
+ <tile id="2" type="lifeCounter">
+  <animation>
+   <frame tileid="2" duration="200"/>
+  </animation>
+ </tile>
  <tile id="3" type="mechaAttackAnim"/>
  <tile id="6" type="mechaAttackTransition">
   <properties>

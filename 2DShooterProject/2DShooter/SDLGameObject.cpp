@@ -99,10 +99,6 @@ bool SDLGameObject::playAnimation(int startFrame, int endFrame)
 {
 	if (m_tbAnimationState == BEGIN)
 	{
-		if (endFrame < 0)
-		{
-			endFrame = m_numFrames - 1;
-		}
 		m_currentFrame = startFrame;
 		m_tbAnimationState = MIDDLE;
 	}
