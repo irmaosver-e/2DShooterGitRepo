@@ -62,12 +62,13 @@ void SDLGameObject::draw()
 
 void SDLGameObject::update()
 {
+	trackFrameTime();
+	handleAnimation();
+
 	if (m_bUpdating)
 	{
 		m_position += m_velocity;
 	}
-	trackFrameTime();
-	handleAnimation();
 }
 
 void SDLGameObject::outOfView()

@@ -49,7 +49,7 @@ void Player::load(const LoaderParams& rParams)
 	m_lives = rParams.getLives();
 
 	// set up bullets
-	m_bulletFiringSpeed = 3;
+	m_bulletFiringSpeed = 10;
 	m_moveSpeed = 3;
 
 	// we want to be able to fire instantly
@@ -86,49 +86,40 @@ void Player::draw()
 
 void Player::update()
 {
-	m_velocity.getXRef() = 0;
-	m_velocity.getYRef() = 0;
+	if (m_bUpdating)
+	{
+		m_velocity.getXRef() = 0;
+		m_velocity.getYRef() = 0;
 
-		//if player NOT in death animation
-		if (!m_bDying)
-		{	
-			handleInput();
-		}
-		else //in death animation
-		{
-			//if death animation finished
-			if (m_dyingCounter == m_dyingTime)
-			{
-				ressurect();
-			}
-			m_dyingCounter++;
-		}
-
+		handleInput();
+	
 		trackFrameTime();
-		handleActions();
-		handleAnimation();
 
-		if (m_bUpdating)
-		{
-			m_position += m_velocity;
-		}
+		handleRequests();
+		handleAnimation();
+		handleActions();
+
+		m_position += m_velocity;
+	}
 }
 
 void Player::collision()
-{		
-	///*
+{	
+	/*
 	  //godmode for debuging
 	std::cout << "GOD MODE ON in Player::collision() \n";
 	m_invulnerable = true;
 	//*/
-	  //-----------------------
+	  
+	//-----------------------
 		
 	if (!m_invulnerable)
 	{
 		//m_currentFrame = BACK;
 		//m_textureID = m_animations[DEAD];
 		
-		m_bDying = true;
+		//m_bDying = true;
+		m_requestedDirectAction = DEATH_ACT;
 	}
 }
 
@@ -154,22 +145,44 @@ void Player::ressurect()
 {
 	m_lives -= 1;
 
+	//needs to get reset pos from params
 	m_position.getXRef() = 10;
 	m_position.getYRef() = 200;
-	m_bDying = false;
 
+	m_bDying = false;
 
 	m_dyingCounter = 0;
 	m_invulnerable = true;
+
+	/* m_invulnerable anim
+	//flash alpha if invulnerable
+	if (m_invulnerable)
+	{
+		//finish invulnerability
+		if (m_invulnerableCounter == m_invulnerableTime)
+		{
+			m_invulnerable = false;
+			m_invulnerableCounter = 0;
+			m_alpha = 255;
+		}
+		else
+		{
+			if (m_alpha == 255)
+			{
+				m_alpha = 0;
+			}
+			else
+			{
+				m_alpha = 255;
+			}
+		}
+		m_invulnerableCounter++;
+	}
+	*/
 }
 
 void Player::handleInput()
 {
-	/*
-	if (!m_bDead)
-	{
-	*/
-
 	//---------------------------handle Vertical move requests-------------------------------
 	if (TheInputHandler::Instance().isKeyDown(SDL_SCANCODE_UP) && m_requestedInputs.direction_hat.V_direction != TB_DOWN) //stops UP having priority
 	{
@@ -248,9 +261,9 @@ void Player::handleInput()
 	//}
 }
 
-void Player::handleActions()
+void Player::handleRequests()
 {
-	//----- deals input action request
+	//----- handle requests
 	if (m_desiredAction == NO_ACT) //no action pending, animations should be finished
 	{
 		if (m_requestedDirectAction != NO_ACT) //direct actions have priority over input actions
@@ -259,7 +272,16 @@ void Player::handleActions()
 			{
 			case FLY_OFF_ACT:
 				m_desiredAction = FLY_OFF_ACT;
-				m_lastAction = FLY_OFF_ACT;
+				if (m_currentForm == SHIP) // if mecha it will have to transform first
+				{
+					m_requestedDirectAction = NO_ACT;
+				}
+				//m_lastAction = FLY_OFF_ACT;
+			case DEATH_ACT:
+				m_desiredAction = DEATH_ACT;
+				m_desiredAnimation = DEATH_ANIM;
+				m_requestedDirectAction = NO_ACT;
+				//m_lastAction = DEATH_ACT;
 			}
 		}
 		else
@@ -289,28 +311,41 @@ void Player::handleActions()
 			}
 		}
 	}
+}
 
-	if (m_desiredAction == TRANSFORM_ACT && m_desiredAnimation == NO_ANIM)
-	{
-		transformAction();
-	}
-
+void Player::handleActions()
+{
+	//direct actions
 	if (m_desiredAction == FLY_OFF_ACT && m_desiredAnimation == NO_ANIM)
 	{
 		flyOffAction();
 	}
 
-	if (m_desiredAction != TRANSFORM_ACT 
-		&& m_desiredAction != DEAD_ACT
+	if (m_desiredAction == DEATH_ACT && m_desiredAnimation == NO_ANIM)
+	{
+		deathAction();
+	}
+
+	// input actions only if no direct actions are on
+	if (m_desiredAction != DEATH_ACT
 		&& m_desiredAction != FLY_OFF_ACT)
 	{
-		moveAction();
-
-		if (m_desiredAction == ATTACK_ACT && m_desiredAnimation == NO_ANIM)
+		if (m_desiredAction == TRANSFORM_ACT && m_desiredAnimation == NO_ANIM)
 		{
-			attackAction();
+			transformAction();
 		}
 
+		//only move or attack if tranform action is off
+		if (m_desiredAction != TRANSFORM_ACT)
+		{
+			moveAction();
+
+			if (m_desiredAction == ATTACK_ACT && m_desiredAnimation == NO_ANIM)
+			{
+				attackAction();
+			}
+
+		}
 	}
 }
 
@@ -320,16 +355,16 @@ void Player::handleAnimation()
 	{
 	case TRANSFORM_ANIM:
 		transformAnim();
-
 		break;
 	case DEATH_ANIM:
-		//m_desiredAction = ATTACK;
+		deathAnim();
 		break;
 	default:
 		//m_desiredAction = IDLE;
 		break;
 	}
 
+	//handles move and attack anim
 	if (m_desiredAnimation != TRANSFORM_ANIM && m_desiredAnimation != DEATH_ANIM)
 	{
 		switch (m_currentForm)
@@ -343,48 +378,11 @@ void Player::handleAnimation()
 			break;
 		}
 	}
-	/*
-	if (m_currentStance == ATTACK && m_desiredAction == NONE)
-	{
-		m_bFiringBullet = true;
-	}
-
-//flash alpha if invulnerable
-if (m_invulnerable)
-{
-	//finish invulnerability
-	if (m_invulnerableCounter == m_invulnerableTime)
-	{
-		m_invulnerable = false;
-		m_invulnerableCounter = 0;
-		m_alpha = 255;
-	}
-	else
-	{
-		if (m_alpha == 255)
-		{
-			m_alpha = 0;
-		}
-		else
-		{
-			m_alpha = 255;
-		}
-	}
-	m_invulnerableCounter++;
-}
-*/
 }
 
 void Player::handleMechaAnim()
 {
 	//-------------------------------handles action animations--------------------
-	/*
-	//checks if the coming from ATTACK_ANIM
-	if(m_desiredAnimation == NO_ANIM && (m_textureID == m_animations[ATTACK_ANIM]))
-	{
-		m_desiredAnimation = MECHA_IDLE;
-	}
-	*/
 
 	//handles attack transition animations
 	if (m_desiredAnimation == ATTACK_ANIM || m_desiredAnimation == MECHA_IDLE)
@@ -570,11 +568,10 @@ void Player::moveAction()
 	}
 }
 
-void Player::transformRequest()
+void Player::transformAction()
 {
-	m_desiredAction = TRANSFORM_ACT;
-	m_lastAction = TRANSFORM_ACT;
-	m_desiredAnimation = TRANSFORM_ANIM;
+	m_currentForm = (stances)(m_currentForm * -1); //inverts form
+	m_desiredAction = NO_ACT;
 }
 
 void Player::flyOffAction()
@@ -590,10 +587,24 @@ void Player::flyOffAction()
 	}
 }
 
-void Player::transformAction()
+void Player::deathAction()
 {
-	m_currentForm = (stances)(m_currentForm * -1); //inverts form
+	m_lives -= 1;
+
+	//needs to get reset pos from params
+	m_position.getXRef() = 10;
+	m_position.getYRef() = 200;
+
+	m_invulnerable = true;
+
 	m_desiredAction = NO_ACT;
+}
+
+void Player::transformRequest()
+{
+	m_desiredAction = TRANSFORM_ACT;
+	m_lastAction = TRANSFORM_ACT;
+	m_desiredAnimation = TRANSFORM_ANIM;
 }
 
 void Player::transformAnim()
@@ -626,4 +637,28 @@ void Player::transformAnim()
 		m_desiredAnimation_direction.V_direction = TB_V_REST;
 		m_desiredAnimation_direction.H_direction = TB_H_REST;
 	}
+}
+
+void Player::deathAnim()
+{
+	switchAnimation(DEATH_ANIM);
+
+	animations nextAnim;
+	switch (m_currentForm)
+	{
+	case SHIP:
+		nextAnim = SHIP_IDLE;
+		break;
+	case MECHA:
+		nextAnim = MECHA_IDLE;
+		break;
+	}
+
+	if (playAnimation())//play full anim
+	{
+		switchAnimation(nextAnim);
+
+		m_currentFrame = m_middleFrame;
+		m_desiredAnimation = NO_ANIM;
+	}	
 }

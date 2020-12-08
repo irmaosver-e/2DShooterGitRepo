@@ -37,7 +37,7 @@ public:
 private:
 	enum stances { SHIP = -1, MECHA = 1 };
 	enum animations { NO_ANIM = -1, SHIP_IDLE, MECHA_IDLE, MECHA_ATTACK_TRANSITION, ATTACK_ANIM, TRANSFORM_ANIM, DEATH_ANIM };
-	enum actions { NO_ACT, ATTACK_ACT, DEAD_ACT, TRANSFORM_ACT, FLY_OFF_ACT};
+	enum actions { NO_ACT, ATTACK_ACT, DEATH_ACT, TRANSFORM_ACT, FLY_OFF_ACT};
 
 	//enum player_x_direction { HORIZ_REST, BACK, PX_FORWARD };
 	//enum player_y_direction { VERT_REST, UP, DOWN };
@@ -60,20 +60,25 @@ private:
 
 	void ressurect();
 	void handleInput();
+
+	void handleRequests();
+
+	void handleActions();
+
 	virtual void handleAnimation();
 	void handleMechaAnim();
 	void handleShipAnim();
-
-	void handleActions();
+	
 	void attackAction();
-
 	void moveAction();
-
 	void flyOffAction();
+	void deathAction();
 
 	void transformRequest();
 	void transformAction();
 	void transformAnim();
+
+	void deathAnim();
 
 	HUD* m_playerHUD;
 	//ObjectLayer* m_pPlayFieldObjLayer;

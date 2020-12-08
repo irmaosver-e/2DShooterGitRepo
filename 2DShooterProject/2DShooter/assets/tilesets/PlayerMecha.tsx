@@ -9,9 +9,11 @@
    <object id="1" name="collisionBox" x="14" y="9" width="20" height="35"/>
   </objectgroup>
   <animation>
-   <frame tileid="2" duration="50"/>
    <frame tileid="0" duration="50"/>
    <frame tileid="1" duration="50"/>
+   <frame tileid="2" duration="50"/>
+   <frame tileid="3" duration="50"/>
+   <frame tileid="4" duration="50"/>
   </animation>
  </tile>
  <tile id="3" type="mechaAttackAnim"/>
@@ -23,9 +25,11 @@
    <object id="1" name="collisionBox" x="15.8182" y="10.6818" width="20" height="35"/>
   </objectgroup>
   <animation>
-   <frame tileid="8" duration="50"/>
    <frame tileid="6" duration="50"/>
    <frame tileid="7" duration="50"/>
+   <frame tileid="8" duration="50"/>
+   <frame tileid="9" duration="50"/>
+   <frame tileid="10" duration="50"/>
   </animation>
  </tile>
  <tile id="9" type="morph"/>
@@ -40,9 +44,11 @@
    </object>
   </objectgroup>
   <animation>
-   <frame tileid="14" duration="50"/>
    <frame tileid="12" duration="50"/>
    <frame tileid="13" duration="50"/>
+   <frame tileid="14" duration="50"/>
+   <frame tileid="15" duration="50"/>
+   <frame tileid="16" duration="50"/>
   </animation>
  </tile>
  <tile id="15" type="ship"/>
