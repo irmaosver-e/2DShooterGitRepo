@@ -63,10 +63,10 @@ void Eskeletor::update()
     }
 }
 
-void Eskeletor::reset(const LoaderParams& rParams)
+void Eskeletor::reset(const LoaderParams& rParams, Vector2Df* position)
 {
     m_textureID = m_animations[ALIVE];
-    SDLGameObject::reset(rParams);
+    SDLGameObject::reset(rParams, position);
 
     m_health = 2;   
 }

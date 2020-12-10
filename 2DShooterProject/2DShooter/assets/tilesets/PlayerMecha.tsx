@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<tileset version="1.4" tiledversion="1.4.2" name="Player" tilewidth="64" tileheight="64" spacing="2" margin="2" tilecount="30" columns="6">
- <image source="../images/PlayerMecha.png" width="398" height="332"/>
+<tileset version="1.4" tiledversion="1.4.2" name="Player" tilewidth="64" tileheight="64" spacing="2" margin="2" tilecount="42" columns="6">
+ <image source="../images/PlayerMecha.png" width="398" height="464"/>
  <tile id="0" type="mechaIdle">
   <properties>
    <property name="OwnerSubType" value="playermecha"/>
@@ -89,6 +89,22 @@
    <frame tileid="26" duration="50"/>
    <frame tileid="27" duration="50"/>
    <frame tileid="28" duration="50"/>
+  </animation>
+ </tile>
+ <tile id="30" type="playerExplosion">
+  <properties>
+   <property name="OwnerSubType" value="playermecha"/>
+  </properties>
+  <animation>
+   <frame tileid="30" duration="50"/>
+   <frame tileid="31" duration="50"/>
+   <frame tileid="32" duration="50"/>
+   <frame tileid="33" duration="50"/>
+   <frame tileid="34" duration="50"/>
+   <frame tileid="36" duration="50"/>
+   <frame tileid="37" duration="50"/>
+   <frame tileid="38" duration="50"/>
+   <frame tileid="39" duration="50"/>
   </animation>
  </tile>
 </tileset>

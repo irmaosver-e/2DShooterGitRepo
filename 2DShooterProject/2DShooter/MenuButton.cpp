@@ -9,11 +9,16 @@ void MenuButton::load(const LoaderParams& rParams)
 	m_currentFrame = MOUSE_OUT; //STARTS AT FRAME 0
 }
 
-void MenuButton::reset(const LoaderParams& rParams)
+void MenuButton::reset(const LoaderParams& rParams, Vector2Df* position)
 {
 	m_currentFrame = MOUSE_OUT; //STARTS AT FRAME 0
 	m_bButtonPressed = false;
 	m_bColliding = false;
+
+	if (position)
+	{
+		m_position = *position;
+	}
 }
 
 void MenuButton::draw()

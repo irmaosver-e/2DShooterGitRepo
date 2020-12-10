@@ -9,7 +9,7 @@ public:
 	Bullet();
 	virtual ~Bullet() {}
 
-    virtual void reset(const LoaderParams& rParams);
+    virtual void reset(const LoaderParams& rParams, Vector2Df* position);
     virtual void update();
     
     virtual void outOfView();

@@ -5,9 +5,14 @@ Bullet::Bullet() : SDLGameObject()
 }
 
 
-void Bullet::reset(const LoaderParams& rParams)
+void Bullet::reset(const LoaderParams& rParams, Vector2Df* position)
 {
     outOfView();
+    
+    if (position)
+    {
+        m_position = *position;
+    }
 }
 
 void Bullet::update()

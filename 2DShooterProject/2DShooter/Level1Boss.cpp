@@ -107,9 +107,9 @@ void Level1Boss::scroll(float scrollSpeed)
 }
 
 //needs to make it boss
-void Level1Boss::reset(const LoaderParams& rParams)
+void Level1Boss::reset(const LoaderParams& rParams, Vector2Df* position)
 {
-    SDLGameObject::reset(rParams);
+    SDLGameObject::reset(rParams, position);
     m_entered = false;
 
     m_health = 20;

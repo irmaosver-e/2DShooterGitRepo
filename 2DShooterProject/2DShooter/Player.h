@@ -12,7 +12,7 @@ public:
 	virtual ~Player();
 
 	virtual void load(const LoaderParams& rParams);
-	virtual void reset(const LoaderParams& rParams);
+	virtual void reset(const LoaderParams& rParams, Vector2Df* position);
 
 	virtual void draw();
 	virtual void update();
@@ -20,8 +20,9 @@ public:
 	virtual void collision();
 	virtual void collisionWithLayer();
 
+	void outOfView();
+
 	void flyOffScreen();
-	void flyIntoScreen();
 
 	//player does not scroll empty function
 	virtual void scroll(float scrollSpeed) {}
@@ -37,13 +38,14 @@ public:
 private:
 	enum stances { SHIP = -1, MECHA = 1 };
 	enum animations { NO_ANIM = -1, SHIP_IDLE, MECHA_IDLE, MECHA_ATTACK_TRANSITION, ATTACK_ANIM, TRANSFORM_ANIM, DEATH_ANIM };
-	enum actions { NO_ACT, ATTACK_ACT, DEATH_ACT, RESSURECT_ACT, TRANSFORM_ACT, FLY_OFF_ACT};
+	enum actions { NO_ACT, ATTACK_ACT, DEATH_ACT, RESSURECT_ACT, TRANSFORM_ACT, FLY_OFF_ACT, FLY_IN_ACT };
 
 	//enum player_x_direction { HORIZ_REST, BACK, PX_FORWARD };
 	//enum player_y_direction { VERT_REST, UP, DOWN };
 	
 	enum V_dir_tribool { TB_UP = -1, TB_V_REST, TB_DOWN };
 	enum H_dir_tribool { TB_LEFT = -1, TB_H_REST, TB_RIGHT };
+	enum screen_destination {IN, NOWHERE, OUT};
 
 	struct direction_cross
 	{
@@ -70,7 +72,7 @@ private:
 	
 	void attackAction();
 	void moveAction();
-	void flyOffAction();
+	void flyInOffAction(actions inOutAction);
 	void deathAction();
 	void ressurectAction();
 	void transformAction();
@@ -99,7 +101,7 @@ private:
 	int m_lives;
 
 	bool m_invulnerable;
-	bool m_bFlyingOffScreen;
+	screen_destination m_bFlyingInOutScreen;
 	int m_invulnerableTime;
 	int m_invulnerableCounter;
 };

@@ -10,7 +10,7 @@ public:
 	virtual ~SDLGameObject() {}
 
 	virtual void load(const LoaderParams& rParams);
-	virtual void reset(const LoaderParams& rParams);
+	virtual void reset(const LoaderParams& rParams, Vector2Df* position);
 	virtual void draw();
 	virtual void update();
 	virtual void outOfView();

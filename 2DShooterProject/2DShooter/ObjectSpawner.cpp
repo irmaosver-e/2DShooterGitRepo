@@ -48,9 +48,9 @@ void ObjectSpawner::spawnObject(ObjectLayer& objLayer, ObjectMarker& objMarker)
 			objLayer.getGameObjectsRef().at(availableObjIndex)->turnObjOn();
 			objLayer.getGameObjectsRef().at(availableObjIndex)->setUpdating(true);
 			objLayer.getGameObjectsRef().at(availableObjIndex)->setInView(true);
-			objLayer.getGameObjectsRef().at(availableObjIndex)->reset(m_objParams[objMarker.objSubType]);
+			objLayer.getGameObjectsRef().at(availableObjIndex)->reset(m_objParams[objMarker.objSubType], &objMarker.objPositionMarker);
 
-			objLayer.getGameObjectsRef().at(availableObjIndex)->getPosition() = objMarker.objPositionMarker;
+			//objLayer.getGameObjectsRef().at(availableObjIndex)->getPosition() = objMarker.objPositionMarker;
 
 			//for debugguing
 			//std::cout << "object in pool: " << objLayer.getGameObjects()->size() << " / using object: " << availableObjIndex << " / type asked: " << objMarker.objectType << " / type used: " << objLayer.getGameObjects()->at(availableObjIndex)->getTextureID() << "\n";

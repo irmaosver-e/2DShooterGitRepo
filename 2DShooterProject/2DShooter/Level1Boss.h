@@ -10,7 +10,7 @@ public:
     virtual ~Level1Boss() {}
 
     virtual void load(const LoaderParams& rParams);
-    virtual void reset(const LoaderParams& rParams);
+    virtual void reset(const LoaderParams& rParams, Vector2Df* position);
 
     virtual void collision();
     virtual void update();

@@ -10,7 +10,7 @@
  
 Player::Player() : SDLGameObject()
 {
-	m_bFlyingOffScreen = false;
+	m_bFlyingInOutScreen = NOWHERE;
 	m_invulnerable = false;
 	m_invulnerableTime = 200;
 	m_invulnerableCounter = 0;
@@ -59,22 +59,26 @@ void Player::load(const LoaderParams& rParams)
 	m_dyingTime = 100;
 }
 
-void Player::reset(const LoaderParams& rParams)
+void Player::reset(const LoaderParams& rParams, Vector2Df* position)
 {
-	m_position = Vector2Df(rParams.getX(), rParams.getY());
+	actions currentAction = m_desiredAction;	
+	ressurectAction(); //sets m_desiredAction to NO_ACT
 	
 	//it hasnt finished the last stage stage, it must be restarting the game
-	if (m_desiredAction != FLY_OFF_ACT)
+	if (currentAction != FLY_OFF_ACT)
 	{
 		m_lives = rParams.getLives();
+
+		if (position)
+		{
+			m_position = *position;
+		}
 	}
 	
-	m_dyingCounter = 0;
+	//m_dyingCounter = 0;
 	m_invulnerable = false;
 
-	m_requestedDirectAction = NO_ACT;
-	m_desiredAction = NO_ACT;
-	
+	m_requestedDirectAction = NO_ACT;	
 }
 
 void Player::draw()
@@ -87,11 +91,21 @@ void Player::update()
 {
 	if (m_bUpdating)
 	{
+		//set invulnerable when resurrected
+		if (m_invulnerable)
+		{
+			m_dyingCounter++;
+			if (m_dyingCounter > m_dyingTime)
+			{
+				m_invulnerable = false;
+			}
+		}
+
 		m_velocity.getXRef() = 0;
 		m_velocity.getYRef() = 0;
 
 		handleInput();
-	
+
 		trackFrameTime();
 
 		handleRequests();
@@ -114,10 +128,6 @@ void Player::collision()
 		
 	if (!m_invulnerable)
 	{
-		//m_currentFrame = BACK;
-		//m_textureID = m_animations[DEAD];
-		
-		//m_bDying = true;
 		m_requestedDirectAction = DEATH_ACT;
 	}
 }
@@ -127,17 +137,24 @@ void Player::collisionWithLayer()
 	collision();
 }
 
+void Player::outOfView()
+{
+	//it is somewhere to the right of the screen
+	if (m_position.getX() > 0)
+	{
+		m_bUpdating = false;
+	}
+	else
+	{
+		//player is to the left of the screen
+		m_requestedDirectAction = FLY_IN_ACT;
+	}
+
+}
+
 void Player::flyOffScreen()
 {
 	m_requestedDirectAction = FLY_OFF_ACT;
-}
-
-void Player::flyIntoScreen()
-{
-	m_dyingCounter = 0;
-	m_invulnerable = false;
-	m_bDying = false;
-	m_bFlyingOffScreen = false;
 }
 
 void Player::handleInput()
@@ -243,6 +260,11 @@ void Player::handleRequests()
 				lastAction = m_desiredAction;
 				break;
 
+			case FLY_IN_ACT:
+				m_desiredAction = FLY_IN_ACT;
+				lastAction = m_desiredAction;
+				break;
+
 			case DEATH_ACT:
 				if (lastAction != DEATH_ACT) //prevents death spamming
 				{
@@ -293,10 +315,11 @@ void Player::handleRequests()
 
 void Player::handleActions()
 {
+	actions desiredAct = m_desiredAction;
 	//direct actions
-	if (m_desiredAction == FLY_OFF_ACT && m_desiredAnimation == NO_ANIM)
+	if ((m_desiredAction == FLY_OFF_ACT || m_desiredAction == FLY_IN_ACT) && m_desiredAnimation == NO_ANIM)
 	{
-		flyOffAction();
+		flyInOffAction(m_desiredAction);
 	}
 
 	if (m_desiredAction == DEATH_ACT && m_desiredAnimation == NO_ANIM)
@@ -309,8 +332,9 @@ void Player::handleActions()
 	}
 
 	// input actions only if no direct actions are on
-	if (m_desiredAction != DEATH_ACT
-		&& m_desiredAction != FLY_OFF_ACT)
+	if (desiredAct != DEATH_ACT
+		&& desiredAct != FLY_OFF_ACT
+		&& desiredAct != FLY_IN_ACT)
 	{
 		if (m_desiredAction == TRANSFORM_ACT && m_desiredAnimation == NO_ANIM)
 		{
@@ -393,10 +417,21 @@ void Player::transformAction()
 	m_desiredAction = NO_ACT;
 }
 
-void Player::flyOffAction()
+void Player::flyInOffAction(actions inOutAction)
 {
 	m_invulnerable = true;
+	m_velocity.getYRef() = 0;
 	m_velocity.getXRef() = (float)m_moveSpeed * 2;
+
+	if(m_desiredAction == FLY_IN_ACT && m_position.getX() >= 150) //needs to get this from loaded params
+	{
+		//can start counting the invulnerable frames 
+		m_dyingCounter = 0; //should be renamed to invulnerable frames
+		
+		m_desiredAction = NO_ACT;
+	}
+
+	//m_bFlyingInOutScreen = inOut;
 }
 
 void Player::deathAction()
@@ -412,53 +447,18 @@ void Player::deathAction()
 void Player::ressurectAction()
 {
 	// ----------- ressurect action
-	animations nextAnim;
-	switch (m_currentForm)
-	{
-	case SHIP:
-		nextAnim = SHIP_IDLE;
-		break;
-	case MECHA:
-		nextAnim = MECHA_IDLE;
-		break;
-	}
 
 	//needs to get reset pos from params
-	m_position.getXRef() = 10;
-	m_position.getYRef() = 200;
+	m_position.getXRef() = 0 - (m_width + 10);
+	m_position.getYRef() = (TheSDLSystem::Instance().getScreenHeight() / 2) - (m_height / 2); //middle of the screen
 
-	switchAnimation(nextAnim);
-
+	m_currentForm = SHIP;
+	switchAnimation(SHIP_IDLE);
 	m_currentFrame = m_middleFrame;
 
-	m_desiredAction = NO_ACT;
+	m_invulnerable = true;
 
-	//------
-	/* m_invulnerable anim
-	//flash alpha if invulnerable
-	if (m_invulnerable)
-	{
-		//finish invulnerability
-		if (m_invulnerableCounter == m_invulnerableTime)
-		{
-			m_invulnerable = false;
-			m_invulnerableCounter = 0;
-			m_alpha = 255;
-		}
-		else
-		{
-			if (m_alpha == 255)
-			{
-				m_alpha = 0;
-			}
-			else
-			{
-				m_alpha = 255;
-			}
-		}
-		m_invulnerableCounter++;
-	}
-	*/
+	m_desiredAction = NO_ACT;
 }
 
 void Player::handleAnimation()
@@ -491,6 +491,23 @@ void Player::handleAnimation()
 			handleShipAnim();
 			break;
 		}
+	}
+
+	//flash when invulnerable
+	if (m_invulnerable)
+	{
+		if (m_alpha == 255)
+		{
+			m_alpha = 0;
+		}
+		else
+		{
+			m_alpha = 255;
+		}
+	}
+	else
+	{
+		m_alpha = 255;
 	}
 }
 

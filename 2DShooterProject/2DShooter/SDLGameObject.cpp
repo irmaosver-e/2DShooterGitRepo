@@ -39,7 +39,7 @@ void SDLGameObject::load(const LoaderParams& rParams)
 	m_sfx = rParams.getSFX();
 }
 
-void SDLGameObject::reset(const LoaderParams& rParams)
+void SDLGameObject::reset(const LoaderParams& rParams, Vector2Df* position)
 {
 	load(rParams);
 	refreshTextureVariables();
@@ -48,6 +48,11 @@ void SDLGameObject::reset(const LoaderParams& rParams)
 	m_bDead = false;
 	m_bColliding = false;
 	m_bulletCounter = 0;
+	
+	if (position)
+	{
+		m_position = *position;
+	}
 }
 
 void SDLGameObject::draw()
@@ -57,7 +62,7 @@ void SDLGameObject::draw()
 	
 	//if spacing, margin, width and height, are automatic if using animated tile
 	TheTextureManager::Instance().drawTile(m_textureID,0, 0, (int)m_position.getX(), (int)m_position.getY(),
-		m_width, m_height, m_currentRow, m_currentFrame);
+		m_width, m_height, m_currentRow, m_currentFrame, m_alpha);
 }
 
 void SDLGameObject::update()

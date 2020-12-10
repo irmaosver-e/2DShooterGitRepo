@@ -16,7 +16,7 @@
    <frame tileid="7" duration="100"/>
   </animation>
  </tile>
- <tile id="8" type="playerExplosion">
+ <tile id="8" type="enemyExplosion2">
   <properties>
    <property name="OwnerSubType" value="enemyTest3"/>
   </properties>

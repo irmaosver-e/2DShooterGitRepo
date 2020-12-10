@@ -64,7 +64,7 @@ void TextureManager::drawFrame(std::string id, int x, int y, int width, int heig
 	SDL_RenderCopyEx(TheSDLSystem::Instance().getRenderer(), m_textureMap[id], &m_srcRect, &m_destRect, angle, 0, flip);
 }
 
-void TextureManager::drawTile(std::string id, int margin, int spacing, int x, int y, int width, int height, int currentRow, int currentFrame)
+void TextureManager::drawTile(std::string id, int margin, int spacing, int x, int y, int width, int height, int currentRow, int currentFrame, int alpha)
 {
 	std::string textureID = id;
 	int textureColumn = currentFrame;
@@ -96,6 +96,8 @@ void TextureManager::drawTile(std::string id, int margin, int spacing, int x, in
 	m_destRect.x = x;
 	m_destRect.y = y;
 
+	//set alpha
+	SDL_SetTextureAlphaMod(m_textureMap[textureID], alpha);
 	SDL_RenderCopyEx(TheSDLSystem::Instance().getRenderer(), m_textureMap[textureID], &m_srcRect, &m_destRect, 0, 0, SDL_FLIP_NONE);
 }
 
