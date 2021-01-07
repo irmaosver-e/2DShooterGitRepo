@@ -1,5 +1,7 @@
 #include "SoundManager.h"
 
+#include <SDL_timer.h>
+
 bool SoundManager::init(int frequency, int format, int channnels, int chunksize)
 {
 	Uint16 sdlAudioFormat = AUDIO_S16;
@@ -60,6 +62,29 @@ bool SoundManager::load(std::string fileName, std::string id, sound_type soundTy
 	}
 
 	return false;
+}
+
+void SoundManager::update()
+{
+	if (Mix_PlayingMusic() == 0)
+	{
+		if (m_loops != 0)
+		{
+			if (m_loops > 0)
+			{
+				m_loops--;
+			}
+
+			m_musicStartTime = (SDL_GetTicks() / 1000);
+			Mix_PlayMusic(m_music[m_currentMusicID], 1);
+			
+			if (m_musicPauseTime > 0 && (m_currentMusicID == m_pausedMusicID))
+			{
+				Mix_SetMusicPosition(m_musicPauseTime);
+				m_musicPauseTime = 0;
+			}
+		}
+	}
 }
 
 void SoundManager::quit()
@@ -123,5 +148,27 @@ void SoundManager::playSound(std::string id, int loop)
 
 void SoundManager::playMusic(std::string id, int loop)
 {
-	Mix_PlayMusic(m_music[id], loop);
+	Mix_HaltMusic();
+
+	m_loops = loop;
+	m_currentMusicID = id;
+}
+
+void SoundManager::pauseMusic()
+{
+	m_musicPauseTime = (SDL_GetTicks()/1000) - m_musicStartTime;
+	m_pausedMusicID = m_currentMusicID;
+}
+
+void SoundManager::resumeMusic()
+{
+	Mix_HaltMusic();
+	m_currentMusicID = m_pausedMusicID;
+}
+
+void SoundManager::stopMusic()
+{
+
+	m_loops = 0;
+	Mix_HaltMusic(); 
 }

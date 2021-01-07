@@ -36,11 +36,12 @@ bool PauseState::onExit()
 	return false;
 }
 
+/*
 bool PauseState::update()
 {
 	if (GameState::update())
 	{
-		if (TheInputHandler::Instance().isKeyDown(SDL_SCANCODE_ESCAPE))
+		if (TheInputHandler::Instance().isKeyDown(SDL_SCANCODE_RETURN))
 		{
 			TheSoundManager::Instance().playSound("unPause", 0);
 			s_resumePlay();
@@ -50,6 +51,7 @@ bool PauseState::update()
 	}
 	return false;
 }
+*/
 
 void PauseState::s_pauseToMain()
 {

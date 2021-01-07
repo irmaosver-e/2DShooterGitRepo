@@ -5,7 +5,7 @@
 #include "Singleton.h"
 #include "GameState.h"
 
-enum States {MAIN, PLAY, PAUSE, GAME_OVER, NEXT_LEVEL};
+enum States {MAIN, PLAY, PAUSE, GAME_OVER, ENDING, NEXT_LEVEL};
 
 class GameStateMachine : public Singleton<GameStateMachine>
 {

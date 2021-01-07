@@ -105,13 +105,13 @@ void Level::onEnter()
 		//needed to spawn the player
 		m_pPlayerLayer->resetMarkers();
 
-		//possibly not needed as player should be off already from going off screen at the end of level
 		m_pPlayerLayer->turnObjectsOff();
 	}
 }
 
 void Level::onExit()
 {
+	//TheSoundManager::Instance().stopMusic();
 	resetLevel();
 	m_pPlayer = nullptr;
 }

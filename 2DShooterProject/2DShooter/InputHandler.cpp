@@ -22,20 +22,13 @@ void InputHandler::init(int joystickDeadZone)
 
 bool InputHandler::isKeyDown(SDL_Scancode key) const
 {
-
-	if (m_keyboardState != nullptr) 
+	bool keyDown = false;
+	if (m_keyboardState != nullptr && m_keyboardState[key] == 1)
 	{
-		if (m_keyboardState[key] == 1) // key down
-		{
-			return true;
-		}
-		else
-		{
-			return false;
-		}
-
+		keyDown = true;
 	}
-	return false;
+
+	return keyDown;
 }
 
 void InputHandler::reset()
@@ -227,12 +220,12 @@ void InputHandler::update()
 
 		case SDL_KEYDOWN:
 		case SDL_KEYUP:
-			//onKeyEvent();
+			onKeyEvent();
 			break;
 		}
 	}
 
-	onKeyEvent();
+	//onKeyEvent();
 }
 
 void InputHandler::quit()

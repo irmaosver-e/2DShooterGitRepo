@@ -9,7 +9,7 @@ public:
 	virtual bool onEnter();
 	virtual bool onExit();
 
-	virtual bool update();
+	//virtual bool update();
 
 	virtual std::string getStateID() const { return s_pauseID; }
 

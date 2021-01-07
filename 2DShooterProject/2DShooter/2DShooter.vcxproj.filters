@@ -231,6 +231,9 @@
     <ClCompile Include="GameObject.cpp">
       <Filter>Source Files\Objects</Filter>
     </ClCompile>
+    <ClCompile Include="EndingState.cpp">
+      <Filter>Source Files\States</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="AnimatedGraphic.h">
@@ -394,6 +397,9 @@
     </ClInclude>
     <ClInclude Include="TextBox.h">
       <Filter>Header Files\GameObjects\GraphicObjs</Filter>
+    </ClInclude>
+    <ClInclude Include="EndingState.h">
+      <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

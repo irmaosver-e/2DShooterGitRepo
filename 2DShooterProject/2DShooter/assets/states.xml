@@ -12,7 +12,7 @@ exitFromMenu / resumePlay / restartPlay = 2
 			<map filename="mainMenu.tmx"/>
 		</STAGE>
 		<SOUND>
-		    <music subpath="music/" filename="DST_ElectroRock.ogg" musicID= "music1"/>
+		    <music subpath="music/" filename="MainMenuMusic.ogg" musicID= "mainMenuMusic"/>
 			<sfx subpath="fx/" filename="ButtonSelect.wav" sfxID= "buttonSelect_SFX"/>
 			<!--
 			<sfx subpath="assets/" filename="fx.wav" sfxID= "sfx1"/>
@@ -25,7 +25,7 @@ exitFromMenu / resumePlay / restartPlay = 2
 			<map filename="stage1.tmx"/>
 		</STAGE>
 		<SOUND>
-		    <music subpath="music/" filename="DST_ElectroRock.ogg" musicID= "music1"/>
+		    <music subpath="music/" filename="Stage1Music.ogg" musicID= "stageMusic1"/>
 			<sfx filename="boom.wav" sfxID= "explode"/>
 			<sfx filename="phaser.wav" sfxID= "shoot"/>
 			<!--
@@ -39,7 +39,7 @@ exitFromMenu / resumePlay / restartPlay = 2
 			<map filename="stage2.tmx"/>
 		</STAGE>
 		<SOUND>
-		    <music subpath="music/" filename="DST_ElectroRock.ogg" musicID= "music1"/>
+		    <music subpath="music/" filename="Stage2Music.ogg" musicID= "stageMusic2"/>
 			<sfx filename="boom.wav" sfxID= "explode"/>
 			<sfx filename="phaser.wav" sfxID= "shoot"/>
 			<!--
@@ -53,7 +53,7 @@ exitFromMenu / resumePlay / restartPlay = 2
 			<map filename="pauseMenu.tmx"/>
 		</STAGE>
 		<SOUND>
-		    <music subpath="music/" filename="DST_ElectroRock.ogg" musicID= "music1"/>
+		    <music subpath="music/" filename="PauseMusic.ogg" musicID= "pauseMusic"/>
 			<sfx subpath="fx/" filename="ButtonSelect.wav" sfxID= "buttonSelect_SFX"/>
 			<sfx filename="pause.mp3" sfxID= "pause"/>
 			<sfx filename="unpause.mp3" sfxID= "unPause"/>
@@ -68,11 +68,24 @@ exitFromMenu / resumePlay / restartPlay = 2
 			<map filename="gameOverMenu.tmx" />
 		</STAGE>
 		<SOUND>
-		    <music subpath="music/" filename="DST_ElectroRock.ogg" musicID= "music1"/>
+		    <music subpath="music/" filename="GameOverMusic.ogg" musicID= "gameOverMusic"/>
 			<sfx subpath="fx/" filename="ButtonSelect.wav" sfxID= "buttonSelect_SFX"/>
 			<!--
 			<sfx subpath="assets/" filename="fx.wav" sfxID= "sfx1"/>
 			-->
 		</SOUND>	
     </GAMEOVER>
+
+    <ENDING>
+		<STAGE>
+			<map filename="ending.tmx" />
+		</STAGE>
+		<SOUND>
+		    <music subpath="music/" filename="EndingMusic.ogg" musicID= "endingMusic"/>
+			<sfx subpath="fx/" filename="ButtonSelect.wav" sfxID= "buttonSelect_SFX"/>
+			<!--
+			<sfx subpath="assets/" filename="fx.wav" sfxID= "sfx1"/>
+			-->
+		</SOUND>	
+    </ENDING>
 </STATES>

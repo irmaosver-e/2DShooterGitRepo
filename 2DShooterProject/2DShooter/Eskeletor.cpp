@@ -8,7 +8,7 @@ Eskeletor::Eskeletor() : Enemy()
     m_dyingTime = 50;
     m_health = 2;
     m_moveSpeed = 1;
-    m_bulletFiringSpeed = 50;
+    m_bulletFiringSpeed = 60;
 }
 
 void Eskeletor::collision()

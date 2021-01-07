@@ -49,8 +49,8 @@ void Player::load(const LoaderParams& rParams)
 	m_lives = rParams.getLives();
 
 	// set up bullets
-	m_bulletFiringSpeed = 3;
-	m_moveSpeed = 3;
+	m_bulletFiringSpeed = 7;
+	m_moveSpeed = 4;
 
 	// we want to be able to fire instantly
 	m_bulletCounter = m_bulletFiringSpeed;
@@ -75,7 +75,7 @@ void Player::reset(const LoaderParams& rParams, Vector2Df* position)
 		}
 	}
 	
-	//m_dyingCounter = 0;
+	m_dyingCounter = m_dyingTime;
 	m_invulnerable = false;
 
 	m_requestedDirectAction = NO_ACT;	
@@ -414,6 +414,18 @@ void Player::moveAction()
 void Player::transformAction()
 {
 	m_currentForm = (stances)(m_currentForm * -1); //inverts form
+
+	switch (m_currentForm)
+	{
+	case MECHA:
+		m_bulletFiringSpeed = 4;
+		m_moveSpeed = 2;
+		break;
+	case SHIP:
+		m_bulletFiringSpeed = 7;
+		m_moveSpeed = 4;
+		break;
+	}
 	m_desiredAction = NO_ACT;
 }
 
@@ -423,7 +435,7 @@ void Player::flyInOffAction(actions inOutAction)
 	m_velocity.getYRef() = 0;
 	m_velocity.getXRef() = (float)m_moveSpeed * 2;
 
-	if(m_desiredAction == FLY_IN_ACT && m_position.getX() >= 150) //needs to get this from loaded params
+	if(m_desiredAction == FLY_IN_ACT && m_position.getX() >= (TheSDLSystem::Instance().getScreenWidth() / 4))
 	{
 		//can start counting the invulnerable frames 
 		m_dyingCounter = 0; //should be renamed to invulnerable frames
@@ -455,6 +467,9 @@ void Player::ressurectAction()
 	m_currentForm = SHIP;
 	switchAnimation(SHIP_IDLE);
 	m_currentFrame = m_middleFrame;
+
+	m_bulletFiringSpeed = 7;
+	m_moveSpeed = 4;
 
 	m_invulnerable = true;
 
@@ -493,8 +508,8 @@ void Player::handleAnimation()
 		}
 	}
 
-	//flash when invulnerable
-	if (m_invulnerable)
+	//quick and dirty way offlash when invulnerable
+	if (m_invulnerable && (m_dyingCounter > 0 && m_dyingCounter < m_dyingTime))
 	{
 		if (m_alpha == 255)
 		{

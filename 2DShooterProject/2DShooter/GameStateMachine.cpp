@@ -6,6 +6,7 @@
 #include "PlayState.h"
 #include "PauseState.h"
 #include "GameOverState.h"
+#include "EndingState.h"
 
 void GameStateMachine::init()
 {
@@ -80,7 +81,6 @@ void GameStateMachine::pushState(States state)
 		}
 	}
 
-	//probably not enter but restart needs checking!!!!!!!!!!!!!1
 	m_pCurrentState->onEnter();
 
 	return;
@@ -147,14 +147,13 @@ void GameStateMachine::manageNextPlayState(States& state)
 		}
 		else
 		{
-			//end of game transfer the play state back to the first stage
+			//end of game transfer the play state back to the main menu
 			m_stageNumber = 1;
 			m_stageNumberIndex = 0;
-			state = GAME_OVER;
+			state = ENDING;
 		}
 	}
 	//transfer player to new playstate
-	//m_playStates[m_stageNumber - 1]->getLevel()->getPlayerLayerPtr()->addObjectToLayer(m_pCurrentState->getLevel()->getPlayerLayerPtr()->getGameObjects()->back());
 	m_playStates[m_stageNumberIndex]->getLevel()->getPlayerLayerPtr()->addObjectToLayer(m_pCurrentState->getLevel()->getPlayerLayerPtr()->getGameObjects()->back());
 
 	//removes the player from the old state level
@@ -215,6 +214,8 @@ GameState* GameStateMachine::createState(States& state)
 		return new PauseState();
 	case GAME_OVER:
 		return new GameOverState();
+	case ENDING:
+		return new EndingState();
 	}
 
 	return nullptr;
@@ -232,6 +233,8 @@ std::string GameStateMachine::getStateID(States& state)
 		return "PAUSE";
 	case GAME_OVER:
 		return "GAMEOVER";
+	case ENDING:
+		return "ENDING";
 	}
 
 	return "NO_STATE_FOUND";

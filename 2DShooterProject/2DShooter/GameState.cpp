@@ -3,6 +3,7 @@
 #include "InputHandler.h"
 #include "ParserManager.h"
 #include "CollisionManager.h"
+#include "SoundManager.h"
 
 void GameState::init()
 {	
@@ -95,6 +96,7 @@ bool GameState::onExit()
 
 bool GameState::resume()
 {
+	TheSoundManager::Instance().resumeMusic();
 	TheCollisionManager::Instance().setCurrentLevel(m_pLevel);
 
 	return true;

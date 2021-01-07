@@ -25,6 +25,7 @@
     <ClCompile Include="BulletHandler.cpp" />
     <ClCompile Include="CollisionManager.cpp" />
     <ClCompile Include="Cursor.cpp" />
+    <ClCompile Include="EndingState.cpp" />
     <ClCompile Include="Eskeletor.cpp" />
     <ClCompile Include="GameObject.cpp" />
     <ClCompile Include="GameState.cpp" />
@@ -77,6 +78,7 @@
     <ClInclude Include="Callback.h" />
     <ClInclude Include="CollisionManager.h" />
     <ClInclude Include="Cursor.h" />
+    <ClInclude Include="EndingState.h" />
     <ClInclude Include="Enemy.h" />
     <ClInclude Include="Eskeletor.h" />
     <ClInclude Include="Game.h" />

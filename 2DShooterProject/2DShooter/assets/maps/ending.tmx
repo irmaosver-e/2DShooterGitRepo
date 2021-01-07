@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<map version="1.4" tiledversion="1.4.2" orientation="orthogonal" renderorder="right-down" width="20" height="15" tilewidth="32" tileheight="32" infinite="0" nextlayerid="10" nextobjectid="19">
+<map version="1.4" tiledversion="1.4.2" orientation="orthogonal" renderorder="right-down" width="20" height="15" tilewidth="32" tileheight="32" infinite="0" nextlayerid="10" nextobjectid="20">
  <properties>
-  <property name="mainMenuMusic" value="loop"/>
+  <property name="endingMusic" value="loop"/>
  </properties>
  <tileset firstgid="1" source="../tilesets/MenuPartsA.tsx"/>
  <tileset firstgid="5" source="../tilesets/MenuButtons.tsx"/>
@@ -20,20 +20,11 @@
   </layer>
  </group>
  <objectgroup id="8" name="Object Layer Buttons">
-  <object id="13" name="MenuButton" type="playbutton" gid="5" x="129" y="192" width="192" height="64">
+  <object id="19" name="MenuButton" type="menuButton" gid="10" x="220.838" y="310.888" width="192" height="64">
    <properties>
-    <property name="AnimationList" value="play"/>
+    <property name="AnimationList" value="menu"/>
     <property name="VsCollision" value="mousepointer"/>
-    <property name="callbackID" value="menuToPlay"/>
-    <property name="sfx" value="buttonSelect_SFX"/>
-   </properties>
-  </object>
-  <object id="14" name="MenuButton" type="exitbutton" gid="6" x="341" y="304" width="192" height="64">
-   <properties>
-    <property name="AnimationList" value="exit"/>
-    <property name="VsCollision" value="mousepointer"/>
-    <property name="callbackID" value="exitFromMenu"/>
-    <property name="sfx" value="buttonSelect_SFX"/>
+    <property name="callbackID" value="gameOverToMain"/>
    </properties>
   </object>
   <object id="16" name="Cursor" type="mousepointer" gid="17" x="315" y="235" width="32" height="32">

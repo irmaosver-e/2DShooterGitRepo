@@ -70,6 +70,7 @@ void Game::render()
 
 void Game::update()
 {
+	TheSoundManager::Instance().update();
 	TheGameStateMachine::Instance().update();
 }
 

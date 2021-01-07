@@ -68,7 +68,7 @@ private:
 
 	// keyboard specific
 	const Uint8* m_keyboardState;
-
+	const Uint8* m_keyboardLastState;
 };
 
 typedef InputHandler TheInputHandler;
