@@ -88,16 +88,21 @@ void SDLGameObject::inView()
 
 void SDLGameObject::handleAnimation()
 {
-	//needs checking, seems redundant, should use play animation instead
-	refreshTextureVariables();
-	m_currentFrame = (SDL_GetTicks() / m_animSpeed) % m_numFrames;
+	//loops animation
+	if (playAnimation(0, (m_numFrames - 1)))
+	{
+		resetAnimation();
+	}
 }
 
 void SDLGameObject::refreshTextureVariables()
 {
 	m_numFrames = TheTextureManager::Instance().getAnimationFrameCount(m_textureID);
 	m_middleFrame = (m_numFrames > 1) ? ((m_numFrames / 2) + (m_numFrames % 2)) - 1 : 0;
-	m_animSpeed = TheTextureManager::Instance().getAnimationRef(m_textureID).frameDuration;
+	if (m_numFrames > 0)
+	{
+		m_animSpeed = TheTextureManager::Instance().getAnimationRef(m_textureID).frameDuration;
+	}
 }
 
 bool SDLGameObject::playAnimation(int startFrame, int endFrame)

@@ -1,14 +1,15 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<map version="1.4" tiledversion="1.4.2" orientation="orthogonal" renderorder="right-down" width="20" height="15" tilewidth="32" tileheight="32" infinite="0" nextlayerid="10" nextobjectid="19">
+<map version="1.4" tiledversion="1.4.2" orientation="orthogonal" renderorder="right-down" width="20" height="15" tilewidth="32" tileheight="32" infinite="0" nextlayerid="10" nextobjectid="21">
  <properties>
   <property name="mainMenuMusic" value="loop"/>
  </properties>
  <tileset firstgid="1" source="../tilesets/MenuPartsA.tsx"/>
  <tileset firstgid="5" source="../tilesets/MenuButtons.tsx"/>
  <tileset firstgid="17" source="../tilesets/Cursor.tsx"/>
+ <tileset firstgid="23" source="../tilesets/Explosions.tsx"/>
  <group id="3" name="BackGround">
   <imagelayer id="2" name="BGWallpaper">
-   <image source="../images/MenuBG.png" width="640" height="480"/>
+   <image source="../images/MainMenuBG.png" width="640" height="480"/>
    <properties>
     <property name="type" value="AnimatedGraphic"/>
    </properties>

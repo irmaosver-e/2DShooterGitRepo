@@ -4,7 +4,7 @@
 void AnimatedGraphic::load(const LoaderParams& rParams)
 {
 	SDLGameObject::load(rParams);
-	m_animSpeed = rParams.getAnimSpeed();
+	refreshTextureVariables();
 }
 
 void AnimatedGraphic::draw()
@@ -14,7 +14,10 @@ void AnimatedGraphic::draw()
 
 void AnimatedGraphic::update()
 {
-	//m_currentFrame = int(((SDL_GetTicks() / (1000 / m_animSpeed)) % m_numFrames));
+	if (m_numFrames > 0)
+	{
+		SDLGameObject::update();
+	}
 }
 
 void AnimatedGraphic::clean()

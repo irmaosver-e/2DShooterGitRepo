@@ -26,8 +26,9 @@ exitFromMenu / resumePlay / restartPlay = 2
 		</STAGE>
 		<SOUND>
 		    <music subpath="music/" filename="Stage1Music.ogg" musicID= "stageMusic1"/>
-			<sfx filename="boom.wav" sfxID= "explode"/>
-			<sfx filename="phaser.wav" sfxID= "shoot"/>
+			<sfx subpath="fx/" filename="shipExplosion.ogg" sfxID= "shipExplode"/>
+			<sfx subpath="fx/" filename="boom.wav" sfxID= "explode"/>
+			<sfx subpath="fx/" filename="phaser.wav" sfxID= "shoot"/>
 			<!--
 			<sfx subpath="assets/" filename="fx.wav" sfxID= "sfx1"/>
 			-->

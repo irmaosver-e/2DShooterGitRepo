@@ -11,7 +11,7 @@
  <tileset firstgid="247" source="../tilesets/Explosions.tsx"/>
  <tileset firstgid="263" source="../tilesets/Industrial.tsx"/>
  <group id="2" name="BackGround" locked="1">
-  <imagelayer id="3" name="BGWallPaper" locked="1">
+  <imagelayer id="3" name="StarsWallPaper" locked="1">
    <image source="../images/StarryBG.png" width="490" height="480"/>
    <properties>
     <property name="ScrollSpeed" type="float" value="9"/>

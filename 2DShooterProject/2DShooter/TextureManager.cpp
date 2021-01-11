@@ -131,6 +131,18 @@ void TextureManager::clearTextureMap()
 	m_textureMap.clear();
 }
 
+int TextureManager::getAnimationFrameCount(std::string& animName)
+{
+	int frameCount = 0;
+
+	if (m_animationMap.find(animName) != m_animationMap.end())
+	{
+		frameCount = m_animationMap[animName].tileIDs.size();
+	}
+
+	return frameCount;
+}
+
 /*
 //possible implementation
 void TextureManager::clearFromTextureMap(std::string id)

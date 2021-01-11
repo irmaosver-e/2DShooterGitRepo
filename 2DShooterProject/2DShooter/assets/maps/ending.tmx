@@ -7,27 +7,22 @@
  <tileset firstgid="5" source="../tilesets/MenuButtons.tsx"/>
  <tileset firstgid="17" source="../tilesets/Cursor.tsx"/>
  <group id="3" name="BackGround">
-  <imagelayer id="2" name="BGWallpaper">
-   <image source="../images/MenuBG.png" width="640" height="480"/>
+  <imagelayer id="2" name="EndWallpaper">
+   <image source="../images/EndingBG.png" width="640" height="480"/>
    <properties>
     <property name="type" value="AnimatedGraphic"/>
    </properties>
   </imagelayer>
-  <layer id="1" name="BGTiles" width="20" height="15">
-   <data encoding="base64" compression="zlib">
-   eJxjYBgFgwkwEqmOiaauGAWjgDqAmUh1LESqAwAPUAAL
-  </data>
-  </layer>
  </group>
  <objectgroup id="8" name="Object Layer Buttons">
-  <object id="19" name="MenuButton" type="menuButton" gid="10" x="220.838" y="310.888" width="192" height="64">
+  <object id="19" name="MenuButton" type="menuButton" gid="10" x="20.838" y="98.7423" width="192" height="64">
    <properties>
     <property name="AnimationList" value="menu"/>
     <property name="VsCollision" value="mousepointer"/>
     <property name="callbackID" value="gameOverToMain"/>
    </properties>
   </object>
-  <object id="16" name="Cursor" type="mousepointer" gid="17" x="315" y="235" width="32" height="32">
+  <object id="16" name="Cursor" type="mousepointer" gid="17" x="43.7449" y="164.555" width="32" height="32">
    <properties>
     <property name="AnimationList" value="arrow"/>
    </properties>

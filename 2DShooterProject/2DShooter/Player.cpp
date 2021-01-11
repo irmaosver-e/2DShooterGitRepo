@@ -128,6 +128,7 @@ void Player::collision()
 		
 	if (!m_invulnerable)
 	{
+		TheSoundManager::Instance().playSound("shipExplode", 0);
 		m_requestedDirectAction = DEATH_ACT;
 	}
 }

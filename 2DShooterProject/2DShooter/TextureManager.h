@@ -27,7 +27,7 @@ public:
 	//possible implementation
 	//void clearFromTextureMap(std::string id);
 
-	int getAnimationFrameCount(std::string& animName) { return m_animationMap[animName].tileIDs.size(); }
+	int getAnimationFrameCount(std::string& animName);
 
 	Animation& getAnimationRef(std::string& animName) { return m_animationMap[animName]; }
 	

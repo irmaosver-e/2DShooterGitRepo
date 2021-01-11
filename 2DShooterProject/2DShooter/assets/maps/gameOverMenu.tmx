@@ -7,7 +7,7 @@
  <tileset firstgid="5" source="../tilesets/MenuButtons.tsx"/>
  <tileset firstgid="17" source="../tilesets/Cursor.tsx"/>
  <group id="3" name="BackGround">
-  <imagelayer id="2" name="BGWallpaper">
+  <imagelayer id="2" name="GOverWallpaper">
    <image source="../images/MenuBG.png" width="640" height="480"/>
    <properties>
     <property name="type" value="AnimatedGraphic"/>
